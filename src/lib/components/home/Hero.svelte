@@ -32,9 +32,9 @@
 				Agentic healthcare, built on your <span class="text-gradient-l">digital twin</span>.
 			</h1>
 			<p class="hero-sub" use:reveal={{ delay: 140 }}>
-				Auracare turns your own health data into a living model of you — and a companion that acts
-				on it. Our first product, <strong>Twin</strong>, ships in the coming months: the first step
-				toward agentic clinical decision support.
+				Auracare turns your own health data into a living model of you. Our first product,
+				<strong>Twin</strong>, is a wellness companion that acts on it — and the first step toward
+				the agentic clinical decision support we’re building. Shipping in the coming months.
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
 				<a class="cta-primary" href="/#waitlist">Join the waitlist</a>

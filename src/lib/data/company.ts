@@ -43,9 +43,9 @@ export const PRODUCTS: Product[] = [
 	{
 		key: 'twin',
 		name: 'Twin',
-		tagline: 'Your health, as a living model',
+		tagline: 'A wellness companion, in your messages',
 		blurb:
-			'A personal health digital twin built from the wearables and apps you already use. Twin notices your patterns and checks in over iMessage — our first consumer product, and the way we learn the digital organism.',
+			'Built on a personal digital twin of your everyday health data, Twin is a wellness companion — it spots your patterns and checks in over iMessage. Our first consumer product, and how we begin building the digital organism.',
 		status: 'ships-soon',
 		statusLabel: 'Ships soon',
 		href: '/product'

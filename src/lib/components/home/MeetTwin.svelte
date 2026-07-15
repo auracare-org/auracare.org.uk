@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { reveal } from '$lib/actions/motion';
+	import { onMount } from 'svelte';
+	import { reveal, prefersReducedMotion } from '$lib/actions/motion';
 
 	type Tier = 'gentle' | 'spicy' | 'nuclear';
 
@@ -19,16 +20,39 @@
 	};
 
 	let tier = $state<Tier>('spicy');
-	let typing = $state(false);
-	let timer: ReturnType<typeof setTimeout> | undefined;
+	let roastTyping = $state(false);
+	let tierTimer: ReturnType<typeof setTimeout> | undefined;
 
 	function setTier(t: Tier) {
 		if (t === tier) return;
 		tier = t;
-		typing = true;
-		clearTimeout(timer);
-		timer = setTimeout(() => (typing = false), 650);
+		roastTyping = true;
+		clearTimeout(tierTimer);
+		tierTimer = setTimeout(() => (roastTyping = false), 700);
 	}
+
+	// Sequenced reveal of the four messages, then a floating reply indicator on the user's side.
+	const TOTAL = 4;
+	const STEP = 950; // ms between messages — slow enough to read
+	let shown = $state(0);
+	let userReplying = $state(false);
+
+	onMount(() => {
+		if (prefersReducedMotion()) {
+			shown = TOTAL;
+			userReplying = true;
+			return;
+		}
+		const timers: ReturnType<typeof setTimeout>[] = [];
+		for (let i = 0; i < TOTAL; i++) {
+			timers.push(setTimeout(() => (shown = i + 1), 400 + i * STEP));
+		}
+		timers.push(setTimeout(() => (userReplying = true), 400 + TOTAL * STEP + 350));
+		return () => {
+			timers.forEach(clearTimeout);
+			clearTimeout(tierTimer);
+		};
+	});
 </script>
 
 <section class="twin" aria-labelledby="twin-heading">
@@ -85,18 +109,25 @@
 						</div>
 					</div>
 					<div class="chat-body">
-						<div class="bubble in b1">
+						<div class="msg in" class:show={shown >= 1}>
 							Morning. You slept 6h12 — about 40 minutes short of your groove. Ease in today. ☕
 						</div>
-						<div class="bubble in b2" aria-live="polite">
-							{#if typing}
+						<div class="msg in" class:show={shown >= 2} aria-live="polite">
+							{#if roastTyping}
 								<span class="typing"><i></i><i></i><i></i></span>
 							{:else}
 								{roast[tier]}
 							{/if}
 						</div>
-						<div class="bubble out b3">brutal</div>
-						<div class="bubble in b4">Love you. Hydrate. We ride tomorrow. 🚴</div>
+						<div class="msg out" class:show={shown >= 3}>brutal</div>
+						<div class="msg in" class:show={shown >= 4}>
+							Love you. Hydrate. We ride tomorrow. 🚴
+						</div>
+						{#if userReplying}
+							<div class="msg out typing-bubble show" aria-label="You are typing">
+								<span class="typing"><i></i><i></i><i></i></span>
+							</div>
+						{/if}
 					</div>
 					<div class="chat-input">
 						<span>iMessage</span>
@@ -214,8 +245,7 @@
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
-		height: 33rem;
-		max-height: 70vh;
+		height: 34rem;
 	}
 	.chat-head {
 		display: flex;
@@ -225,6 +255,7 @@
 		background: rgba(255, 255, 255, 0.85);
 		backdrop-filter: blur(8px);
 		border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+		flex: none;
 	}
 	.chat-avatar {
 		width: 2.1rem;
@@ -247,46 +278,45 @@
 	}
 	.chat-body {
 		flex: 1;
+		min-height: 0;
 		padding: 1rem 0.85rem;
 		display: flex;
 		flex-direction: column;
+		justify-content: flex-end;
 		gap: 0.5rem;
 		overflow: hidden;
 	}
-	.bubble {
+	.msg {
+		flex: none;
 		max-width: 82%;
 		padding: 0.6rem 0.85rem;
 		border-radius: 1.15rem;
 		font-size: 0.86rem;
 		line-height: 1.4;
 		opacity: 0;
-		transform: translateY(8px) scale(0.98);
-		animation: bubbleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+		transform: translateY(10px) scale(0.96);
+		transition:
+			opacity 0.45s ease,
+			transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 	}
-	.bubble.in {
+	.msg.show {
+		opacity: 1;
+		transform: none;
+	}
+	.msg.in {
 		align-self: flex-start;
 		background: #e9e9eb;
 		color: #111;
 		border-bottom-left-radius: 0.35rem;
 	}
-	.bubble.out {
+	.msg.out {
 		align-self: flex-end;
 		background: linear-gradient(135deg, #3b82f6, #2f6bff);
 		color: #fff;
 		border-bottom-right-radius: 0.35rem;
 	}
-	.b1 {
-		animation-delay: 0.15s;
-	}
-	.b2 {
-		animation-delay: 0.5s;
-		min-height: 2.4rem;
-	}
-	.b3 {
-		animation-delay: 0.9s;
-	}
-	.b4 {
-		animation-delay: 1.2s;
+	.typing-bubble {
+		padding: 0.7rem 0.95rem;
 	}
 	.typing {
 		display: inline-flex;
@@ -299,17 +329,21 @@
 		height: 0.4rem;
 		border-radius: 999px;
 		background: #b0b0b6;
-		animation: typingBounce 1.2s ease-in-out infinite;
+		animation: typingBounce 1.3s ease-in-out infinite;
+	}
+	.msg.out .typing i {
+		background: rgba(255, 255, 255, 0.9);
 	}
 	.typing i:nth-child(2) {
-		animation-delay: 0.15s;
+		animation-delay: 0.18s;
 	}
 	.typing i:nth-child(3) {
-		animation-delay: 0.3s;
+		animation-delay: 0.36s;
 	}
 	.chat-input {
 		padding: 0.7rem 1rem 1.1rem;
 		background: rgba(255, 255, 255, 0.85);
+		flex: none;
 	}
 	.chat-input span {
 		display: block;
@@ -327,12 +361,6 @@
 		filter: blur(10px);
 	}
 
-	@keyframes bubbleIn {
-		to {
-			opacity: 1;
-			transform: none;
-		}
-	}
 	@keyframes typingBounce {
 		0%,
 		60%,

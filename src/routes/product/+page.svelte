@@ -44,9 +44,9 @@
 		<span class="eyebrow" use:reveal>The product</span>
 		<h1 use:reveal={{ delay: 60 }}>Meet Twin — your health,<br />as a living model.</h1>
 		<p use:reveal={{ delay: 130 }}>
-			Twin turns the data you already generate into a personal health digital twin, then checks in
-			like someone who’s actually paying attention. It’s our first product — and the way we learn
-			the digital organism that will power agentic clinical decision support.
+			Twin is a wellness companion. It turns the data you already generate into a personal digital
+			twin, then checks in like someone who’s actually paying attention. It’s our first product —
+			and the first step toward the agentic clinical decision support we’re building.
 		</p>
 		<div class="phero-cta" use:reveal={{ delay: 200 }}>
 			<a class="cta-primary" href="/#waitlist">Join the waitlist</a>
