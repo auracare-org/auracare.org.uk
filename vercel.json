@@ -1,19 +1,19 @@
 {
-  "buildCommand": "yarn build",
-  "framework": "sveltekit",
-  "headers": [
-    {
-      "source": "/.well-known/com.apple.remotemanagement",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/json"
-        },
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        }
-      ]
-    }
-  ]
+	"buildCommand": "yarn build",
+	"framework": "sveltekit",
+	"headers": [
+		{
+			"source": "/.well-known/com.apple.remotemanagement",
+			"headers": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Access-Control-Allow-Origin",
+					"value": "*"
+				}
+			]
+		}
+	]
 }

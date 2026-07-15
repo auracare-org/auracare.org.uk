@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+	<defs>
+		<radialGradient id="orb" cx="50%" cy="45%" r="55%">
+			<stop offset="0%" stop-color="#ffffff" />
+			<stop offset="55%" stop-color="#8aa0ff" />
+			<stop offset="100%" stop-color="#2f4ec0" stop-opacity="0" />
+		</radialGradient>
+		<radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+			<stop offset="0%" stop-color="#6180ff" stop-opacity="0.55" />
+			<stop offset="100%" stop-color="#6180ff" stop-opacity="0" />
+		</radialGradient>
+		<linearGradient id="ink" x1="0" y1="0" x2="1" y2="1">
+			<stop offset="0%" stop-color="#171a21" />
+			<stop offset="55%" stop-color="#1c1f25" />
+			<stop offset="100%" stop-color="#14161c" />
+		</linearGradient>
+	</defs>
+
+	<rect width="1200" height="630" fill="url(#ink)" />
+	<circle cx="980" cy="150" r="360" fill="url(#glow1)" />
+	<circle cx="1010" cy="300" r="150" fill="url(#orb)" opacity="0.9" />
+	<ellipse cx="1010" cy="300" rx="230" ry="80" fill="none" stroke="#aebfff" stroke-opacity="0.35" stroke-width="2" transform="rotate(-20 1010 300)" />
+	<circle cx="1010" cy="300" r="230" fill="none" stroke="#aebfff" stroke-opacity="0.18" stroke-width="2" />
+
+	<text x="80" y="120" font-family="'DM Sans','Poppins',Arial,sans-serif" font-size="34" font-weight="700" fill="#ffffff" letter-spacing="1">auracare</text>
+
+	<text x="80" y="300" font-family="'DM Sans','Poppins',Arial,sans-serif" font-size="72" font-weight="700" fill="#ffffff">Agentic healthcare,</text>
+	<text x="80" y="380" font-family="'DM Sans','Poppins',Arial,sans-serif" font-size="72" font-weight="700" fill="#8aa0ff">built on your digital twin.</text>
+
+	<text x="80" y="470" font-family="'Poppins',Arial,sans-serif" font-size="30" font-weight="400" fill="#c3ccf0">Meet Twin — your health, as a living model.</text>
+
+	<rect x="80" y="520" width="10" height="40" rx="3" fill="#ef4444" />
+	<text x="108" y="549" font-family="'Poppins',Arial,sans-serif" font-size="26" font-weight="600" fill="#ffd3d3">Now raising our Seed round — stephen@auracare.org.uk</text>
+</svg>
