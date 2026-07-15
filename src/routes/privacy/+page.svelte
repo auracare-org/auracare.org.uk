@@ -69,11 +69,12 @@
 				address and the mobile identity you use to message Twin — together with basic app and
 				delivery logs that keep the service reliable and secure.
 			</p>
-			<h3>Health signals you connect</h3>
+			<h3>Health &amp; wellness data you connect</h3>
 			<p>
-				When you connect a source, Twin processes the health and wellness signals it provides —
-				things like sleep, heart-rate variability, resting heart rate, activity and, where a device
-				supplies them, readings such as SpO₂ or glucose patterns.
+				When you connect a source, Twin processes the general health and wellness information it
+				provides — such as sleep, activity and recovery trends from the wearables and apps you
+				choose to link. You decide which sources to connect, and you can disconnect any of them at
+				any time.
 			</p>
 			<p>
 				Health data is <strong>special-category personal data</strong> under the UK GDPR. We treat it

@@ -54,15 +54,6 @@
 		position: relative;
 		overflow: hidden;
 	}
-	.seed-banner::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		width: 22%;
-		background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-		animation: sheen 5.5s ease-in-out infinite;
-		pointer-events: none;
-	}
 	.seed-inner {
 		display: flex;
 		align-items: center;
@@ -88,8 +79,6 @@
 		height: 0.5rem;
 		border-radius: 999px;
 		background: #fff;
-		box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
-		animation: pulseGlow 2s ease-in-out infinite;
 	}
 	.seed-em {
 		font-weight: 800;

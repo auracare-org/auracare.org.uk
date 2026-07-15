@@ -1,6 +1,6 @@
 import { geoNaturalEarth1, geoPath, type GeoProjection } from 'd3-geo';
 import { feature } from 'topojson-client';
-import worldData from 'world-atlas/countries-110m.json';
+import worldData from 'world-atlas/countries-50m.json';
 
 /**
  * Fixed internal coordinate space — the SVG scales responsively via viewBox,
@@ -27,14 +27,17 @@ const pathGen = geoPath(projection);
 
 export interface CountryPath {
 	id: string;
+	name: string;
 	d: string;
 }
 
 /** All country outlines as SVG path data, precomputed once. */
 export const countryPaths: CountryPath[] = countriesFc.features
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// Key by array index — always unique (some 50m features share an ISO id, e.g. 036).
 	.map((f: any, i: number) => ({
-		id: f.id != null ? `country-${f.id}` : `country-i${i}`,
+		id: `country-${i}`,
+		name: (f.properties && f.properties.name) || '',
 		d: pathGen(f) ?? ''
 	}))
 	.filter((c: CountryPath) => c.d.length > 0);

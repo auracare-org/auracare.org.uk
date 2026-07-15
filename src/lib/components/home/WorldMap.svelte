@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { scrollProgress, prefersReducedMotion } from '$lib/actions/motion';
-	import { VIEWBOX, countryPaths, project, arcPath } from '$lib/map/geo';
+	import { VIEWBOX, countryPaths, arcPath } from '$lib/map/geo';
 	import { MARKET_WAVES, MARKET_POINTS, MARKET_ARCS, type MarketTone } from '$lib/data/company';
 
 	const toneColor: Record<MarketTone, string> = {
@@ -14,23 +14,62 @@
 		deferred: '#6b7280'
 	};
 
-	const maxWave = MARKET_WAVES.length - 1;
+	// Map each market entry onto its world-atlas country name.
+	const ATLAS_ALIAS: Record<string, string> = {
+		'United States': 'United States of America',
+		'United Kingdom (MHRA Airlock)': 'United Kingdom'
+	};
 
+	interface MarketMeta {
+		tone: MarketTone;
+		wave: number;
+		display: string;
+		label: string;
+	}
+
+	const marketByCountry = new Map<string, MarketMeta>();
+	for (const p of MARKET_POINTS) {
+		const atlas = ATLAS_ALIAS[p.name] ?? p.name;
+		const display = p.name === 'United Kingdom (MHRA Airlock)' ? 'United Kingdom' : p.name;
+		const existing = marketByCountry.get(atlas);
+		// Keep the earliest wave a country belongs to, so it lights up as soon as it appears.
+		if (!existing || p.wave < existing.wave) {
+			marketByCountry.set(atlas, { tone: p.tone, wave: p.wave, display, label: p.label });
+		}
+	}
+
+	const countries = countryPaths.map((c) => ({ ...c, market: marketByCountry.get(c.name) }));
+
+	const maxWave = MARKET_WAVES.length - 1;
 	let activeWave = $state(0);
 	let pinned = $state(false);
 
-	// Precompute pixel positions for every market point.
-	const points = MARKET_POINTS.map((p) => ({ ...p, xy: project(p.coords) })).filter(
-		(p) => p.xy
-	) as ((typeof MARKET_POINTS)[number] & { xy: [number, number] })[];
-
 	const arcs = MARKET_ARCS.map((a) => ({ ...a, d: arcPath(a.from, a.to) })).filter((a) => a.d);
-
 	const currentWave = $derived(MARKET_WAVES[Math.min(activeWave, maxWave)]);
+
+	// Floating hover tooltip (Leaflet-style), driven by event delegation on the svg.
+	let hovered = $state<{ name: string; label?: string } | null>(null);
+	let tipX = $state(0);
+	let tipY = $state(0);
+
+	function onMove(e: MouseEvent) {
+		const t = e.target as Element | null;
+		const name = t && 'dataset' in t ? (t as HTMLElement).dataset.name : undefined;
+		if (name) {
+			const label = (t as HTMLElement).dataset.label || undefined;
+			hovered = { name, label };
+			tipX = e.clientX;
+			tipY = e.clientY;
+		} else {
+			hovered = null;
+		}
+	}
+	function onLeave() {
+		hovered = null;
+	}
 
 	function onProgress(p: number) {
 		if (!pinned) return;
-		// spread the waves across the middle 80% of the scroll for comfortable pacing
 		const t = Math.min(1, Math.max(0, (p - 0.08) / 0.84));
 		activeWave = Math.round(t * maxWave);
 	}
@@ -39,14 +78,13 @@
 		const mq = window.matchMedia('(min-width: 780px)');
 		const apply = () => {
 			pinned = mq.matches && !prefersReducedMotion();
-			if (!pinned) activeWave = maxWave; // show everything at once
+			if (!pinned) activeWave = maxWave; // show every wave at once
 		};
 		apply();
 		mq.addEventListener('change', apply);
 		return () => mq.removeEventListener('change', apply);
 	});
 
-	// Points grouped by wave for the accessible list.
 	const pointsByWave = MARKET_WAVES.map((w) => ({
 		wave: w,
 		markets: MARKET_POINTS.filter((p) => p.wave === w.order).map((p) => p.name)
@@ -68,21 +106,30 @@
 			</div>
 
 			<div class="map-stage">
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
 				<svg
 					class="map-svg"
 					viewBox={VIEWBOX}
 					preserveAspectRatio="xMidYMid meet"
 					role="img"
 					aria-labelledby="map-heading"
+					onmousemove={onMove}
+					onmouseleave={onLeave}
 				>
-					<!-- base countries -->
 					<g class="map-countries">
-						{#each countryPaths as c (c.id)}
-							<path d={c.d} />
+						{#each countries as c (c.id)}
+							{@const lit = !!c.market && activeWave >= c.market.wave}
+							<path
+								d={c.d}
+								class:is-market={!!c.market}
+								class:lit
+								data-name={c.market ? c.market.display : c.name}
+								data-label={c.market ? c.market.label : null}
+								style={c.market ? `--tone:${toneColor[c.market.tone]}` : ''}
+							/>
 						{/each}
 					</g>
 
-					<!-- evidence-factory arcs (wave 1) -->
 					{#each arcs as a}
 						<path
 							class="map-arc"
@@ -91,16 +138,14 @@
 							style="stroke:{toneColor.clinical}"
 						/>
 					{/each}
-
-					<!-- market pins -->
-					{#each points as p}
-						{@const on = activeWave >= p.wave}
-						<g class="map-pin" class:on transform="translate({p.xy[0]},{p.xy[1]})">
-							<circle class="pin-halo" r="11" style="fill:{toneColor[p.tone]}" />
-							<circle class="pin-dot" r="3.4" style="fill:{toneColor[p.tone]}" />
-						</g>
-					{/each}
 				</svg>
+
+				{#if hovered}
+					<div class="map-tip" style="left:{tipX}px; top:{tipY}px">
+						<strong>{hovered.name}</strong>
+						{#if hovered.label}<span>{hovered.label}</span>{/if}
+					</div>
+				{/if}
 			</div>
 
 			<div class="container-wide map-foot">
@@ -139,7 +184,6 @@
 	.map-section {
 		position: relative;
 	}
-	/* On desktop the scroller is tall and the inner stage pins while waves fire. */
 	.map-scroller.pinned {
 		height: 340vh;
 	}
@@ -165,6 +209,7 @@
 		margin-top: 0.75rem;
 	}
 	.map-stage {
+		position: relative;
 		width: 100%;
 		max-width: 78rem;
 		margin: 1rem auto 0;
@@ -180,14 +225,42 @@
 		max-height: 58vh;
 		overflow: visible;
 	}
+
+	/* Base countries + coloured market fills */
 	.map-countries path {
-		fill: rgba(255, 255, 255, 0.06);
-		stroke: rgba(174, 191, 255, 0.16);
-		stroke-width: 0.4;
+		fill: rgba(255, 255, 255, 0.05);
+		stroke: rgba(174, 191, 255, 0.14);
+		stroke-width: 0.35;
+		transition:
+			fill 0.6s ease,
+			fill-opacity 0.6s ease;
 	}
+	.map-countries path.is-market {
+		fill-opacity: 0.12;
+	}
+	.map-countries path.lit {
+		fill: var(--tone);
+		fill-opacity: 0.9;
+		stroke: rgba(255, 255, 255, 0.35);
+		stroke-width: 0.4;
+		filter: drop-shadow(0 0 5px color-mix(in srgb, var(--tone) 55%, transparent));
+	}
+	/* Leaflet-style hover highlight on any country */
+	.map-countries path:hover {
+		fill: rgba(255, 255, 255, 0.2);
+		stroke: rgba(255, 255, 255, 0.7);
+		stroke-width: 0.6;
+		cursor: default;
+	}
+	.map-countries path.lit:hover {
+		fill: var(--tone);
+		fill-opacity: 1;
+		filter: drop-shadow(0 0 9px color-mix(in srgb, var(--tone) 75%, transparent));
+	}
+
 	.map-arc {
 		fill: none;
-		stroke-width: 1.6;
+		stroke-width: 1.4;
 		stroke-linecap: round;
 		stroke-dasharray: 1000;
 		stroke-dashoffset: 1000;
@@ -195,30 +268,38 @@
 		transition:
 			stroke-dashoffset 1.1s ease,
 			opacity 0.5s ease;
-		filter: drop-shadow(0 0 6px rgba(97, 128, 255, 0.6));
+		filter: drop-shadow(0 0 5px rgba(97, 128, 255, 0.55));
+		pointer-events: none;
 	}
 	.map-arc.on {
-		opacity: 0.9;
+		opacity: 0.85;
 		stroke-dashoffset: 0;
 	}
-	.map-pin {
-		opacity: 0;
-		transition:
-			opacity 0.5s ease,
-			transform 0.5s ease;
+
+	/* Floating tooltip */
+	.map-tip {
+		position: fixed;
+		z-index: 60;
+		transform: translate(-50%, calc(-100% - 14px));
+		pointer-events: none;
+		background: rgba(20, 22, 28, 0.95);
+		border: 1px solid rgba(174, 191, 255, 0.28);
+		border-radius: 10px;
+		padding: 0.4rem 0.7rem;
+		box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+		white-space: nowrap;
+		max-width: 16rem;
 	}
-	.map-pin.on {
-		opacity: 1;
+	.map-tip strong {
+		display: block;
+		color: #fff;
+		font-size: 0.85rem;
 	}
-	.pin-halo {
-		opacity: 0.28;
-		transform-origin: center;
-	}
-	.map-pin.on .pin-halo {
-		animation: pulseGlow 2.6s ease-in-out infinite;
-	}
-	.pin-dot {
-		filter: drop-shadow(0 0 4px currentColor);
+	.map-tip span {
+		display: block;
+		color: rgba(226, 232, 255, 0.7);
+		font-size: 0.74rem;
+		white-space: normal;
 	}
 
 	.map-foot {

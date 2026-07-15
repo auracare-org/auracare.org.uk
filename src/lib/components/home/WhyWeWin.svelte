@@ -127,45 +127,11 @@
 		height: 100%;
 		overflow: visible;
 	}
-	.lobe {
-		transform-origin: center;
-		transform-box: fill-box;
-		animation: lobePulse 6s ease-in-out infinite;
-		animation-delay: calc(var(--i) * -2s);
-	}
-	.core {
-		transform-origin: center;
-		transform-box: fill-box;
-		animation: corePulse 4s ease-in-out infinite;
-	}
 	.venn-num {
 		font-family: var(--font-family-heading);
 		font-size: 5px;
 		font-weight: 700;
 		fill: var(--color-primary-700);
-	}
-
-	@keyframes lobePulse {
-		0%,
-		100% {
-			transform: scale(1);
-			fill-opacity: 0.14;
-		}
-		50% {
-			transform: scale(1.03);
-			fill-opacity: 0.22;
-		}
-	}
-	@keyframes corePulse {
-		0%,
-		100% {
-			opacity: 0.75;
-			transform: scale(0.96);
-		}
-		50% {
-			opacity: 1;
-			transform: scale(1.06);
-		}
 	}
 
 	/* Pillars */
@@ -224,13 +190,6 @@
 	@media (min-width: 860px) {
 		.layout {
 			grid-template-columns: 0.95fr 1.05fr;
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.lobe,
-		.core {
-			animation: none;
 		}
 	}
 </style>

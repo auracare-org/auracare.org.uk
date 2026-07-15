@@ -47,7 +47,7 @@
 	/* --- Digital twin sources ------------------------------------- */
 	const TWIN_SOURCES = [
 		'Wearables & continuous sensors',
-		'Lab results & vitals',
+		'Lab results & records',
 		'Clinical notes & history',
 		'What a person tells us, in their own words'
 	];
@@ -268,8 +268,8 @@
 			</p>
 			<p use:reveal={{ delay: 180 }}>
 				Every source is encoded into the same vocabulary and stamped with when it was true, so the
-				twin can answer not just <em>what is your heart rate</em> but
-				<em>how has it changed, and does that matter now</em>.
+				twin can answer not just <em>what a reading was</em> but
+				<em>how it has changed, and whether that matters now</em>.
 			</p>
 		</div>
 		<ul class="twin-sources" use:reveal={{ delay: 140 }}>
@@ -481,22 +481,6 @@
 		font-weight: 700;
 		font-size: 1.6rem;
 		fill: var(--color-primary-700);
-	}
-	.loop-path {
-		animation: loopDash 1.4s linear infinite;
-	}
-	.loop-return {
-		animation-direction: reverse;
-	}
-	@keyframes loopDash {
-		to {
-			stroke-dashoffset: -16;
-		}
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.loop-path {
-			animation: none;
-		}
 	}
 
 	.loop-list {

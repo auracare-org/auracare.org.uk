@@ -255,10 +255,7 @@
 		pointer-events: none;
 	}
 	.node {
-		transform-origin: center;
-		transform-box: fill-box;
-		animation: nodePulse 4.5s ease-in-out infinite;
-		animation-delay: calc(var(--i) * -0.55s);
+		opacity: 0.7;
 	}
 
 	.stat-tiles {
@@ -296,20 +293,7 @@
 		color: rgba(226, 232, 255, 0.72) !important;
 	}
 
-	@keyframes nodePulse {
-		0%,
-		100% {
-			opacity: 0.55;
-			transform: scale(0.94);
-		}
-		50% {
-			opacity: 1;
-			transform: scale(1.08);
-		}
-	}
-
 	@media (prefers-reduced-motion: reduce) {
-		.node,
 		.tech-orbs .bubble {
 			animation: none;
 		}

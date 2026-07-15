@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
-	import { CONNECTORS, SIGNALS } from '$lib/data/company';
+	import { CONNECTORS } from '$lib/data/company';
 
 	const steps = [
 		{
@@ -9,7 +9,7 @@
 		},
 		{
 			title: 'Twin builds your health digital twin',
-			body: 'Every source is translated into one shared health vocabulary, so your signals become a single, living model of you.'
+			body: 'Every source is translated into one shared vocabulary, so it all becomes a single, living model of you.'
 		},
 		{
 			title: 'Twin checks in through the day',
@@ -53,42 +53,7 @@
 			</ul>
 		</div>
 
-		<div class="signals" use:reveal={{ delay: 120 }}>
-			<h3 class="signals-title">The signals Twin watches</h3>
-			<ul class="chips" aria-label="Health signals Twin watches">
-				{#each SIGNALS as signal, i}
-					<li
-						class="chip signal"
-						class:is-sensitive={signal.sensitive}
-						use:reveal={{ delay: 40 + i * 35 }}
-					>
-						{#if signal.sensitive}
-							<svg
-								class="lock"
-								viewBox="0 0 24 24"
-								aria-hidden="true"
-								width="14"
-								height="14"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							>
-								<rect x="4" y="11" width="16" height="9" rx="2" />
-								<path d="M8 11V7a4 4 0 0 1 8 0v4" />
-							</svg>
-							<span class="sr-only">Sensitive signal:</span>
-						{/if}
-						<span class="chip-name">{signal.label}</span>
-						{#if signal.note}
-							<span class="chip-note">— {signal.note}</span>
-						{/if}
-					</li>
-				{/each}
-			</ul>
-			<p class="closing" use:reveal>Worth the notification, or it stays quiet.</p>
-		</div>
+		<p class="closing" use:reveal={{ delay: 120 }}>Worth the notification, or it stays quiet.</p>
 	</div>
 </section>
 
@@ -152,8 +117,7 @@
 		max-width: 46ch;
 		margin-bottom: 1.5rem;
 	}
-	.wall-title,
-	.signals-title {
+	.wall-title {
 		font-size: clamp(1.15rem, 1.8vw, 1.4rem);
 		letter-spacing: -0.01em;
 	}
@@ -198,44 +162,12 @@
 		border-radius: 999px;
 	}
 
-	/* Signals */
-	.signals {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-	}
-	.signals .chips {
-		margin-top: 1.25rem;
-	}
-	.chip-note {
-		color: var(--color-neutral-500);
-		font-size: 0.82rem;
-	}
-	.signal.is-sensitive {
-		border-color: var(--color-primary-200);
-		background: var(--color-primary-50);
-	}
-	.lock {
-		color: var(--color-primary-600);
-		flex-shrink: 0;
-	}
-
 	.closing {
-		margin-top: 1.75rem;
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
 		font-family: var(--font-family-heading);
 		font-size: clamp(1.1rem, 1.8vw, 1.35rem);
 		font-weight: 600;
 		color: var(--color-neutral-800);
-	}
-
-	.sr-only {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		padding: 0;
-		margin: -1px;
-		overflow: hidden;
-		clip: rect(0, 0, 0, 0);
-		white-space: nowrap;
-		border: 0;
 	}
 
 	@media (min-width: 720px) {

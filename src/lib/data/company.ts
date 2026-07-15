@@ -74,7 +74,7 @@ export const PRODUCTS: Product[] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* Connectors + signals                                               */
+/* Connectors                                                         */
 /* ------------------------------------------------------------------ */
 
 export interface Connector {
@@ -92,24 +92,6 @@ export const CONNECTORS: Connector[] = [
 	{ name: 'Fitbit', kind: 'wearable' },
 	{ name: 'Withings', kind: 'sensor' },
 	{ name: 'Dexcom', kind: 'sensor' }
-];
-
-export interface Signal {
-	label: string;
-	note?: string;
-	sensitive?: boolean;
-}
-
-export const SIGNALS: Signal[] = [
-	{ label: 'Sleep' },
-	{ label: 'Readiness & recovery' },
-	{ label: 'Heart-rate variability' },
-	{ label: 'Resting heart rate' },
-	{ label: 'Activity & strain' },
-	{ label: 'SpO₂' },
-	{ label: 'Blood pressure', note: 'where a device provides it' },
-	{ label: 'Glucose', note: 'patterns only', sensitive: true },
-	{ label: 'Body composition', note: 'patterns only', sensitive: true }
 ];
 
 /* ------------------------------------------------------------------ */
