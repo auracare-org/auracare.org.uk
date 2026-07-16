@@ -48,17 +48,6 @@
 </script>
 
 <section class="tech aura-space section-y">
-	<div class="tech-orbs" aria-hidden="true">
-		<span
-			class="bubble"
-			style="--bubble-size:380px;--bubble-color:rgba(97,128,255,.30);--bubble-blur:20px; top:-12%; left:-6%"
-		></span>
-		<span
-			class="bubble"
-			style="--bubble-size:320px;--bubble-color:rgba(56,127,245,.24);--bubble-blur:16px; bottom:-14%; right:-4%"
-		></span>
-	</div>
-
 	<div class="container-wide tech-grid">
 		<div class="tech-copy">
 			<span class="eyebrow" use:reveal>The technology</span>
@@ -93,26 +82,29 @@
 				aria-hidden="true"
 				preserveAspectRatio="xMidYMid meet"
 			>
-				<defs>
-					<radialGradient id="techNode" cx="50%" cy="50%" r="55%">
-						<stop offset="0%" stop-color="#eaf0ff" />
-						<stop offset="60%" stop-color="#8aa0ff" />
-						<stop offset="100%" stop-color="#2f4ec0" stop-opacity="0" />
-					</radialGradient>
-				</defs>
 				{#each edges as [a, b]}
 					<line
 						x1={nodes[a].x}
 						y1={nodes[a].y}
 						x2={nodes[b].x}
 						y2={nodes[b].y}
-						stroke="#aebfff"
-						stroke-opacity="0.28"
-						stroke-width="0.4"
+						stroke="#94abff"
+						stroke-opacity="0.22"
+						stroke-width="0.35"
 					/>
 				{/each}
 				{#each nodes as n, i}
-					<circle cx={n.x} cy={n.y} r={n.r} fill="url(#techNode)" class="node" style="--i:{i}" />
+					<circle
+						cx={n.x}
+						cy={n.y}
+						r={n.r}
+						fill="#0e1015"
+						stroke="#94abff"
+						stroke-opacity="0.55"
+						stroke-width="0.5"
+						class="node"
+						style="--i:{i}"
+					/>
 				{/each}
 			</svg>
 
@@ -142,14 +134,7 @@
 	.tech {
 		position: relative;
 		overflow: hidden;
-	}
-	.tech-orbs {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-	}
-	.tech-orbs .bubble {
-		animation: auraFloat 10s ease-in-out infinite;
+		border-block: 1px solid var(--color-border-dark);
 	}
 	.tech-grid {
 		position: relative;
@@ -166,10 +151,7 @@
 		margin-block: 0.75rem 1.25rem;
 	}
 	.text-gradient-l {
-		background: linear-gradient(100deg, #8aa0ff, #cdd9ff);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
+		color: var(--color-primary-300);
 	}
 	.tech-lead {
 		font-size: clamp(1rem, 1.5vw, 1.14rem);
@@ -203,39 +185,36 @@
 		align-items: center;
 		gap: 0.45rem;
 		background: #fff;
-		color: var(--color-primary-700);
-		font-weight: 600;
-		padding: 0.85rem 1.6rem;
-		border-radius: 999px;
-		box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
-		transition:
-			transform 0.2s ease,
-			box-shadow 0.2s ease,
-			color 0.2s ease;
+		color: var(--color-ink);
+		font-weight: 500;
+		font-size: 0.98rem;
+		padding: 0.8rem 1.5rem;
+		border-radius: 10px;
+		transition: background 0.15s ease;
 	}
 	.cta-primary:hover {
-		color: var(--color-primary-800);
-		transform: translateY(-2px);
-		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.32);
+		background: #e8eaf2;
+		color: var(--color-ink);
 	}
 	.cta-ghost {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.4rem;
-		color: #eaf0ff;
-		font-weight: 600;
-		padding: 0.85rem 1.2rem;
-		border-radius: 999px;
-		border: 1px solid rgba(255, 255, 255, 0.25);
+		color: rgba(226, 230, 240, 0.9);
+		font-weight: 500;
+		font-size: 0.98rem;
+		padding: 0.8rem 1.35rem;
+		border-radius: 10px;
+		border: 1px solid var(--color-border-dark-strong);
 		transition:
-			background 0.2s ease,
-			transform 0.2s ease,
-			color 0.2s ease;
+			background 0.15s ease,
+			border-color 0.15s ease,
+			color 0.15s ease;
 	}
 	.cta-ghost:hover {
 		color: #fff;
-		background: rgba(255, 255, 255, 0.1);
-		transform: translateY(-2px);
+		border-color: rgba(255, 255, 255, 0.35);
+		background: rgba(255, 255, 255, 0.04);
 	}
 
 	/* Visual side */
@@ -267,36 +246,28 @@
 		margin: 0;
 	}
 	.stat-tile {
-		background: rgba(255, 255, 255, 0.06);
-		border: 1px solid rgba(255, 255, 255, 0.14);
-		backdrop-filter: blur(8px);
-		border-radius: var(--radius-2xl);
+		background: var(--color-surface-dark-raised);
+		border: 1px solid var(--color-border-dark);
+		border-radius: var(--radius-lg);
 		padding: clamp(1.1rem, 2.6vw, 1.6rem);
-		box-shadow: var(--shadow-glass-glow);
 	}
 	.stat-value {
 		font-family: var(--font-family-heading);
-		font-weight: 700;
+		font-weight: 600;
 		font-size: clamp(1.8rem, 4vw, 2.6rem);
 		line-height: 1;
-		letter-spacing: -0.02em;
-		background: linear-gradient(100deg, #ffffff, #8aa0ff);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
+		letter-spacing: -0.03em;
+		color: #ffffff;
+		font-variant-numeric: tabular-nums;
 		min-height: 1em;
 	}
 	.stat-label {
 		margin-top: 0.5rem;
-		font-size: 0.86rem;
-		line-height: 1.35;
-		color: rgba(226, 232, 255, 0.72) !important;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.tech-orbs .bubble {
-			animation: none;
-		}
+		font-family: var(--font-family-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.04em;
+		line-height: 1.4;
+		color: rgba(226, 230, 240, 0.55) !important;
 	}
 
 	@media (min-width: 900px) {

@@ -115,23 +115,14 @@
 		flex-wrap: wrap;
 		gap: 0.35rem 0.9rem;
 		padding: 0.85rem 1.25rem;
-		border-radius: var(--radius-md);
+		border-radius: 10px;
 		color: #fff;
 		/* Each successive stage sits deeper in the brand-blue ramp. */
-		background: linear-gradient(
-			100deg,
-			color-mix(
-				in srgb,
-				var(--color-primary-500),
-				var(--color-primary-700) calc(var(--depth) * 26%)
-			),
-			color-mix(
-				in srgb,
-				var(--color-primary-600),
-				var(--color-primary-800) calc(var(--depth) * 26%)
-			)
+		background: color-mix(
+			in srgb,
+			var(--color-primary-500),
+			var(--color-primary-800) calc(var(--depth) * 30%)
 		);
-		box-shadow: 0 12px 28px color-mix(in srgb, var(--color-primary-600) 22%, transparent);
 		transform: scaleX(0);
 		transform-origin: left center;
 		transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
@@ -145,18 +136,20 @@
 		transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 	.funnel-label {
-		font-family: var(--font-family-heading);
-		font-size: 0.72rem;
-		font-weight: 700;
-		letter-spacing: 0.14em;
+		font-family: var(--font-family-mono);
+		font-size: 0.68rem;
+		font-weight: 500;
+		letter-spacing: 0.12em;
 		text-transform: uppercase;
-		opacity: 0.85;
+		opacity: 0.75;
 	}
 	.funnel-value {
 		font-family: var(--font-family-heading);
 		font-size: clamp(1.35rem, 2.4vw, 1.9rem);
-		font-weight: 700;
+		font-weight: 600;
+		letter-spacing: -0.02em;
 		line-height: 1;
+		font-variant-numeric: tabular-nums;
 	}
 	.funnel-note {
 		font-size: 0.9rem;
@@ -191,16 +184,18 @@
 		display: block;
 		font-family: var(--font-family-heading);
 		font-size: clamp(1.7rem, 3.2vw, 2.4rem);
-		font-weight: 700;
+		font-weight: 600;
+		letter-spacing: -0.03em;
 		line-height: 1;
-		color: var(--color-primary-600);
+		color: var(--color-ink);
+		font-variant-numeric: tabular-nums;
 	}
 	.stat-label {
 		display: block;
 		margin-top: 0.5rem;
-		font-size: 0.92rem;
+		font-size: 0.9rem;
 		line-height: 1.45;
-		color: var(--color-neutral-700);
+		color: var(--color-ink-faint);
 	}
 
 	.visually-hidden {

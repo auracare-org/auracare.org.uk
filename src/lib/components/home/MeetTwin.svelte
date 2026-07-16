@@ -134,7 +134,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="phone-glow" aria-hidden="true"></div>
 		</div>
 	</div>
 </section>
@@ -142,7 +141,8 @@
 <style>
 	.twin {
 		padding-block: clamp(4rem, 9vw, 8rem);
-		background: linear-gradient(180deg, #f5f8ff, #eaefff 60%, #f5f8ff);
+		background: var(--color-surface-alt);
+		border-block: 1px solid var(--color-border-default);
 	}
 	.twin-grid {
 		display: grid;
@@ -173,25 +173,27 @@
 	.tier-track {
 		display: inline-flex;
 		background: #fff;
-		border: 1px solid rgba(79, 111, 237, 0.16);
-		border-radius: 999px;
+		border: 1px solid var(--color-border-default);
+		border-radius: 10px;
 		padding: 0.25rem;
-		box-shadow: 0 6px 18px rgba(47, 78, 192, 0.1);
+		box-shadow: var(--shadow-xs);
 	}
 	.tier-btn {
 		font-size: 0.85rem;
-		font-weight: 600;
-		color: var(--color-neutral-600);
+		font-weight: 500;
+		color: var(--color-ink-faint);
 		padding: 0.45rem 1.1rem;
-		border-radius: 999px;
+		border-radius: 7px;
 		transition:
-			color 0.2s ease,
-			background 0.2s ease;
+			color 0.15s ease,
+			background 0.15s ease;
+	}
+	.tier-btn:hover {
+		color: var(--color-ink);
 	}
 	.tier-btn.active {
 		color: #fff;
-		background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
-		box-shadow: 0 4px 12px rgba(47, 78, 192, 0.28);
+		background: var(--color-primary-600);
 	}
 
 	.safeword {
@@ -265,7 +267,7 @@
 		place-items: center;
 		color: #fff;
 		font-size: 1.1rem;
-		background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-700));
+		background: var(--color-primary-600);
 	}
 	.chat-head strong {
 		display: block;
@@ -311,7 +313,7 @@
 	}
 	.msg.out {
 		align-self: flex-end;
-		background: linear-gradient(135deg, #3b82f6, #2f6bff);
+		background: #2f6bff;
 		color: #fff;
 		border-bottom-right-radius: 0.35rem;
 	}
@@ -353,14 +355,6 @@
 		font-size: 0.8rem;
 		color: #9a9a9e;
 	}
-	.phone-glow {
-		position: absolute;
-		inset: -12% -18%;
-		background: radial-gradient(circle at 50% 40%, rgba(97, 128, 255, 0.35), transparent 60%);
-		z-index: 0;
-		filter: blur(10px);
-	}
-
 	@keyframes typingBounce {
 		0%,
 		60%,

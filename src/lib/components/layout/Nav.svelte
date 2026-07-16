@@ -107,10 +107,10 @@
 
 <style>
 	.nav {
-		background: rgba(255, 255, 255, 0.82);
+		background: rgba(252, 252, 253, 0.88);
 		backdrop-filter: blur(14px);
 		-webkit-backdrop-filter: blur(14px);
-		border-bottom: 1px solid rgba(79, 111, 237, 0.1);
+		border-bottom: 1px solid var(--color-border-default);
 	}
 	.nav-inner {
 		display: flex;
@@ -135,15 +135,15 @@
 	.nav-item {
 		font-size: 0.9rem;
 		font-weight: 500;
-		color: var(--color-neutral-800);
-		transition: color 0.2s ease;
+		color: var(--color-ink-soft);
+		transition: color 0.15s ease;
 		white-space: nowrap;
 	}
-	.nav-item:hover,
-	.nav-item.active {
-		color: var(--color-primary-600);
+	.nav-item:hover {
+		color: var(--color-ink);
 	}
 	.nav-item.active {
+		color: var(--color-ink);
 		font-weight: 600;
 	}
 	.nav-ext {
@@ -153,6 +153,9 @@
 		color: var(--color-primary-600);
 		font-weight: 500;
 	}
+	.nav-ext:hover {
+		color: var(--color-primary-700);
+	}
 	.nav-cta {
 		display: none;
 		align-items: center;
@@ -161,32 +164,29 @@
 	}
 	.nav-invest {
 		font-size: 0.88rem;
-		font-weight: 600;
-		color: var(--color-primary-700);
+		font-weight: 500;
+		color: var(--color-ink-soft);
 		padding: 0.5rem 0.4rem;
 	}
 	.nav-invest:hover {
-		color: var(--color-primary-800);
+		color: var(--color-ink);
 	}
 	.nav-waitlist {
 		font-size: 0.88rem;
-		font-weight: 600;
+		font-weight: 500;
 		color: #fff;
 		background: var(--color-primary-600);
 		padding: 0.55rem 1.1rem;
-		border-radius: 999px;
-		box-shadow: 0 8px 20px rgba(47, 78, 192, 0.25);
-		transition:
-			transform 0.2s ease,
-			box-shadow 0.2s ease,
-			background 0.2s ease;
+		border-radius: 10px;
+		box-shadow:
+			inset 0 1px 0 rgba(255, 255, 255, 0.12),
+			var(--shadow-xs);
+		transition: background 0.15s ease;
 		white-space: nowrap;
 	}
 	.nav-waitlist:hover {
-		background: var(--color-primary-500);
+		background: var(--color-primary-700);
 		color: #fff;
-		transform: translateY(-1px);
-		box-shadow: 0 12px 26px rgba(47, 78, 192, 0.32);
 	}
 	.nav-burger {
 		margin-left: auto;
@@ -194,8 +194,8 @@
 		display: inline-flex;
 	}
 	.nav-mobile {
-		border-top: 1px solid rgba(79, 111, 237, 0.08);
-		background: rgba(255, 255, 255, 0.96);
+		border-top: 1px solid var(--color-border-default);
+		background: rgba(252, 252, 253, 0.98);
 	}
 	.nav-mobile-inner {
 		display: flex;
@@ -214,7 +214,7 @@
 		gap: 0.6rem;
 		margin-top: 0.6rem;
 		padding-top: 0.9rem;
-		border-top: 1px solid rgba(79, 111, 237, 0.08);
+		border-top: 1px solid var(--color-border-default);
 	}
 	.nav-mobile-cta .nav-waitlist,
 	.nav-mobile-cta .nav-invest {

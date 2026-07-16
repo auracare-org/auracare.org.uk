@@ -26,35 +26,21 @@
 				<article class="glass-card card" use:reveal={{ delay: 140 + i * 120 }}>
 					<div class="motif" aria-hidden="true">
 						{#if product.key === 'twin'}
-							<!-- orb -->
+							<!-- twin core -->
 							<svg viewBox="0 0 48 48" fill="none">
-								<defs>
-									<radialGradient id="pnOrb" cx="42%" cy="38%" r="62%">
-										<stop offset="0%" stop-color="#eaf0ff" />
-										<stop offset="55%" stop-color="#6180ff" />
-										<stop offset="100%" stop-color="#2f4ec0" />
-									</radialGradient>
-								</defs>
-								<circle cx="24" cy="24" r="13" fill="url(#pnOrb)" />
+								<circle cx="24" cy="24" r="8" fill="#2f4ec0" />
+								<circle cx="24" cy="24" r="13" stroke="#c0cdff" stroke-width="1.4" />
 								<ellipse
 									cx="24"
 									cy="24"
 									rx="20"
 									ry="7.5"
 									fill="none"
-									stroke="#387ff5"
-									stroke-opacity="0.5"
+									stroke="#2f4ec0"
 									stroke-width="1.4"
+									stroke-dasharray="3 4"
+									stroke-linecap="round"
 									transform="rotate(-20 24 24)"
-								/>
-								<circle
-									cx="24"
-									cy="24"
-									r="13"
-									fill="none"
-									stroke="#fff"
-									stroke-opacity="0.6"
-									stroke-width="0.8"
 								/>
 							</svg>
 						{:else if product.key === 'reasoning'}
@@ -62,13 +48,13 @@
 							<svg viewBox="0 0 48 48" fill="none">
 								<path
 									d="M14 30a11 11 0 1 1 4 8"
-									stroke="#387ff5"
+									stroke="#2f4ec0"
 									stroke-width="2.4"
 									stroke-linecap="round"
 								/>
 								<path
 									d="M18 30v9h9"
-									stroke="#6180ff"
+									stroke="#94abff"
 									stroke-width="2.4"
 									stroke-linecap="round"
 									stroke-linejoin="round"
@@ -88,14 +74,14 @@
 							<svg viewBox="0 0 48 48" fill="none">
 								<path
 									d="M14 16 24 24 34 12M24 24 20 36M24 24 36 32"
-									stroke="#6180ff"
-									stroke-width="1.8"
+									stroke="#c0cdff"
+									stroke-width="1.6"
 									stroke-linecap="round"
 								/>
-								<circle cx="14" cy="16" r="3.4" fill="#387ff5" />
+								<circle cx="14" cy="16" r="3.4" fill="#94abff" />
 								<circle cx="34" cy="12" r="3.4" fill="#2f4ec0" />
-								<circle cx="24" cy="24" r="4.2" fill="#6180ff" />
-								<circle cx="20" cy="36" r="3.2" fill="#387ff5" />
+								<circle cx="24" cy="24" r="4.2" fill="#2f4ec0" />
+								<circle cx="20" cy="36" r="3.2" fill="#94abff" />
 								<circle cx="36" cy="32" r="3.2" fill="#2f4ec0" />
 							</svg>
 						{/if}

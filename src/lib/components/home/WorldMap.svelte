@@ -229,7 +229,7 @@
 	/* Base countries + coloured market fills */
 	.map-countries path {
 		fill: rgba(255, 255, 255, 0.05);
-		stroke: rgba(174, 191, 255, 0.14);
+		stroke: rgba(255, 255, 255, 0.1);
 		stroke-width: 0.35;
 		transition:
 			fill 0.6s ease,
@@ -240,27 +240,25 @@
 	}
 	.map-countries path.lit {
 		fill: var(--tone);
-		fill-opacity: 0.9;
-		stroke: rgba(255, 255, 255, 0.35);
+		fill-opacity: 0.85;
+		stroke: rgba(255, 255, 255, 0.3);
 		stroke-width: 0.4;
-		filter: drop-shadow(0 0 5px color-mix(in srgb, var(--tone) 55%, transparent));
 	}
 	/* Leaflet-style hover highlight on any country */
 	.map-countries path:hover {
-		fill: rgba(255, 255, 255, 0.2);
-		stroke: rgba(255, 255, 255, 0.7);
+		fill: rgba(255, 255, 255, 0.18);
+		stroke: rgba(255, 255, 255, 0.6);
 		stroke-width: 0.6;
 		cursor: default;
 	}
 	.map-countries path.lit:hover {
 		fill: var(--tone);
 		fill-opacity: 1;
-		filter: drop-shadow(0 0 9px color-mix(in srgb, var(--tone) 75%, transparent));
 	}
 
 	.map-arc {
 		fill: none;
-		stroke-width: 1.4;
+		stroke-width: 1.2;
 		stroke-linecap: round;
 		stroke-dasharray: 1000;
 		stroke-dashoffset: 1000;
@@ -268,7 +266,6 @@
 		transition:
 			stroke-dashoffset 1.1s ease,
 			opacity 0.5s ease;
-		filter: drop-shadow(0 0 5px rgba(97, 128, 255, 0.55));
 		pointer-events: none;
 	}
 	.map-arc.on {
@@ -282,11 +279,11 @@
 		z-index: 60;
 		transform: translate(-50%, calc(-100% - 14px));
 		pointer-events: none;
-		background: rgba(20, 22, 28, 0.95);
-		border: 1px solid rgba(174, 191, 255, 0.28);
-		border-radius: 10px;
+		background: var(--color-surface-dark-raised);
+		border: 1px solid var(--color-border-dark-strong);
+		border-radius: 8px;
 		padding: 0.4rem 0.7rem;
-		box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 		white-space: nowrap;
 		max-width: 16rem;
 	}
@@ -318,12 +315,15 @@
 	}
 	.cap-badge {
 		flex: none;
-		font-size: 0.72rem;
-		font-weight: 700;
+		font-family: var(--font-family-mono);
+		font-size: 0.68rem;
+		font-weight: 500;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
 		color: #fff;
 		background: var(--c);
-		padding: 0.3rem 0.6rem;
-		border-radius: 999px;
+		padding: 0.3rem 0.55rem;
+		border-radius: 6px;
 	}
 	.map-caption strong {
 		color: #fff;

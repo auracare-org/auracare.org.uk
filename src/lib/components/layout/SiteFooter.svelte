@@ -69,6 +69,11 @@
 <style>
 	.footer {
 		padding-block: clamp(3rem, 6vw, 5rem) 2rem;
+		border-top: 1px solid var(--color-border-dark);
+	}
+	.footer-col h4 {
+		font-family: var(--font-family-mono);
+		font-weight: 500;
 	}
 	.footer-grid {
 		display: grid;

@@ -95,11 +95,10 @@
 	}
 	.tl-track {
 		height: 100%;
-		background: rgba(174, 191, 255, 0.14);
+		background: var(--color-border-dark);
 	}
 	.tl-fill {
-		background: linear-gradient(180deg, #94a3b8 0%, #94a3b8 32%, #6180ff 52%, #387ff5 100%);
-		box-shadow: 0 0 16px rgba(97, 128, 255, 0.55);
+		background: var(--color-primary-400);
 		transition: height 0.15s linear;
 	}
 	.tl-track,
@@ -127,8 +126,7 @@
 		height: 22px;
 		border-radius: 999px;
 		background: var(--dot);
-		border: 3px solid #14161c;
-		box-shadow: 0 0 0 3px color-mix(in srgb, var(--dot) 40%, transparent);
+		border: 4px solid var(--color-surface-dark);
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -139,19 +137,17 @@
 		height: 28px;
 		left: 5px;
 		top: 3px;
-		box-shadow:
-			0 0 0 4px rgba(97, 128, 255, 0.35),
-			0 0 22px rgba(97, 128, 255, 0.7);
+		box-shadow: 0 0 0 1px var(--color-primary-400);
 	}
 	.tl-card {
 		padding: 1.25rem 1.4rem;
 		position: relative;
 	}
 	.tl-date {
-		font-family: var(--font-family-heading);
-		font-size: 0.75rem;
-		font-weight: 700;
-		letter-spacing: 0.06em;
+		font-family: var(--font-family-mono);
+		font-size: 0.72rem;
+		font-weight: 500;
+		letter-spacing: 0.08em;
 		text-transform: uppercase;
 		color: var(--color-primary-300);
 	}
@@ -163,21 +159,21 @@
 		font-size: 0.92rem;
 	}
 	.fork-card {
-		border-color: rgba(97, 128, 255, 0.4);
-		box-shadow: 0 0 30px rgba(97, 128, 255, 0.25);
+		border-color: rgba(148, 171, 255, 0.45);
 	}
 	.tl-forklabel {
 		position: absolute;
 		top: -0.7rem;
 		right: 1.2rem;
-		background: linear-gradient(90deg, #387ff5, #6180ff);
+		background: var(--color-primary-600);
 		color: #fff;
-		font-size: 0.66rem;
-		font-weight: 700;
+		font-family: var(--font-family-mono);
+		font-size: 0.62rem;
+		font-weight: 500;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		padding: 0.2rem 0.6rem;
-		border-radius: 999px;
+		padding: 0.22rem 0.55rem;
+		border-radius: 6px;
 	}
 
 	/* Desktop: centre spine with alternating cards */

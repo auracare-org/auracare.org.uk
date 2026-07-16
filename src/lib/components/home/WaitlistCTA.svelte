@@ -33,17 +33,6 @@
 </script>
 
 <section id="waitlist" class="waitlist aura-space">
-	<div class="waitlist-orbs" aria-hidden="true">
-		<span
-			class="bubble"
-			style="--bubble-size:380px;--bubble-color:rgba(97,128,255,.32);--bubble-blur:20px; top:-12%; left:-6%"
-		></span>
-		<span
-			class="bubble"
-			style="--bubble-size:300px;--bubble-color:rgba(56,127,245,.24);--bubble-blur:16px; bottom:-14%; right:-4%"
-		></span>
-	</div>
-
 	<div class="container-wide waitlist-grid">
 		<div class="waitlist-copy">
 			<span class="eyebrow" use:reveal>Join us</span>
@@ -127,14 +116,7 @@
 		position: relative;
 		padding-block: clamp(4rem, 9vw, 7rem);
 		overflow: hidden;
-	}
-	.waitlist-orbs {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-	}
-	.waitlist-orbs .bubble {
-		animation: auraFloat 10s ease-in-out infinite;
+		border-top: 1px solid var(--color-border-dark);
 	}
 	.waitlist-grid {
 		position: relative;
@@ -151,10 +133,7 @@
 		margin-block: 0.6rem 1.1rem;
 	}
 	.text-gradient-l {
-		background: linear-gradient(100deg, #8aa0ff, #cdd9ff);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
+		color: var(--color-primary-300);
 	}
 	.lede {
 		font-size: clamp(1rem, 1.5vw, 1.15rem);
@@ -192,22 +171,22 @@
 	.field input {
 		width: 100%;
 		padding: 0.8rem 1rem;
-		border-radius: var(--radius-md);
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		background: rgba(255, 255, 255, 0.08);
+		border-radius: 10px;
+		border: 1px solid var(--color-border-dark-strong);
+		background: rgba(255, 255, 255, 0.04);
 		color: #fff;
 		font-size: 1rem;
 		transition:
-			border-color 0.2s ease,
-			box-shadow 0.2s ease;
+			border-color 0.15s ease,
+			box-shadow 0.15s ease;
 	}
 	.field input::placeholder {
-		color: rgba(226, 232, 255, 0.45);
+		color: rgba(226, 230, 240, 0.4);
 	}
 	.field input:focus-visible {
 		outline: none;
-		border-color: #6180ff;
-		box-shadow: 0 0 0 3px rgba(97, 128, 255, 0.35);
+		border-color: var(--color-primary-400);
+		box-shadow: 0 0 0 3px rgba(97, 128, 255, 0.25);
 	}
 	.field input[aria-invalid='true'] {
 		border-color: rgba(255, 255, 255, 0.5);
@@ -251,24 +230,19 @@
 	.submit {
 		margin-top: 0.25rem;
 		background: #fff;
-		color: var(--color-primary-700);
-		font-weight: 600;
+		color: var(--color-ink);
+		font-weight: 500;
 		font-size: 1rem;
-		padding: 0.85rem 1.6rem;
-		border-radius: 999px;
-		box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
-		transition:
-			transform 0.2s ease,
-			box-shadow 0.2s ease,
-			color 0.2s ease;
+		padding: 0.8rem 1.5rem;
+		border-radius: 10px;
+		transition: background 0.15s ease;
 	}
 	.submit:hover {
-		color: var(--color-primary-800);
-		transform: translateY(-2px);
-		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.32);
+		background: #e8eaf2;
+		color: var(--color-ink);
 	}
 	.submit:focus-visible {
-		outline: 2px solid #6180ff;
+		outline: 2px solid var(--color-primary-400);
 		outline-offset: 3px;
 	}
 

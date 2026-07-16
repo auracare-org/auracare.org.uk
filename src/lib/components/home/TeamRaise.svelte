@@ -109,17 +109,10 @@
 
 	.card {
 		padding: 1.5rem;
-		border-radius: var(--radius-2xl);
+		border-radius: var(--radius-lg);
 		display: flex;
 		flex-direction: column;
 		gap: 1.1rem;
-		transition:
-			transform 0.25s ease,
-			box-shadow 0.25s ease;
-	}
-	.card:hover {
-		transform: translateY(-4px);
-		box-shadow: var(--shadow-glass-glow);
 	}
 
 	.avatar {
@@ -140,12 +133,14 @@
 		height: 100%;
 		display: grid;
 		place-items: center;
-		font-family: var(--font-family-heading);
-		font-weight: 700;
-		font-size: 1.35rem;
-		color: #fff;
-		letter-spacing: 0.01em;
-		background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-600));
+		font-family: var(--font-family-mono);
+		font-weight: 500;
+		font-size: 1.2rem;
+		color: var(--color-primary-700);
+		letter-spacing: 0.02em;
+		background: var(--color-primary-50);
+		border: 1px solid var(--color-primary-100);
+		border-radius: inherit;
 	}
 
 	.body h3 {
@@ -183,14 +178,14 @@
 		border-bottom-color: currentColor;
 	}
 
-	/* Investor CTA — brand blue / glass, never red */
+	/* Investor CTA — flat brand panel */
 	.raise {
 		margin-top: clamp(2.5rem, 5vw, 3.75rem);
 		padding: clamp(1.75rem, 4vw, 2.75rem);
 		border-radius: var(--radius-4xl);
-		background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-800));
+		background: var(--color-primary-700);
+		border: 1px solid rgba(255, 255, 255, 0.08);
 		color: #fff;
-		box-shadow: var(--shadow-glass-glow);
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
@@ -219,18 +214,14 @@
 		gap: 0.45rem;
 		background: #fff;
 		color: var(--color-primary-700);
-		font-weight: 600;
-		padding: 0.85rem 1.6rem;
-		border-radius: 999px;
-		box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
-		transition:
-			transform 0.2s ease,
-			box-shadow 0.2s ease;
+		font-weight: 500;
+		padding: 0.8rem 1.5rem;
+		border-radius: 10px;
+		transition: background 0.15s ease;
 	}
 	.raise-cta:hover {
+		background: var(--color-primary-50);
 		color: var(--color-primary-800);
-		transform: translateY(-2px);
-		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.28);
 	}
 
 	@media (min-width: 620px) {

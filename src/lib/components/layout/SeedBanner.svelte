@@ -49,7 +49,8 @@
 
 <style>
 	.seed-banner {
-		background: linear-gradient(90deg, #dc2626, #ef4444 45%, #dc2626);
+		background: var(--color-surface-dark);
+		border-bottom: 1px solid var(--color-border-dark);
 		color: #fff;
 		position: relative;
 		overflow: hidden;
@@ -59,14 +60,16 @@
 		align-items: center;
 		justify-content: center;
 		gap: 1rem;
-		padding-block: 0.5rem;
+		padding-block: 0.55rem;
 		position: relative;
 	}
 	.seed-text {
 		margin: 0;
-		color: #fff;
-		font-size: 0.82rem;
-		font-weight: 600;
+		color: rgba(226, 230, 240, 0.85);
+		font-family: var(--font-family-mono);
+		font-size: 0.74rem;
+		font-weight: 400;
+		letter-spacing: 0.02em;
 		text-align: center;
 		display: flex;
 		align-items: center;
@@ -75,29 +78,27 @@
 		justify-content: center;
 	}
 	.seed-dot {
-		width: 0.5rem;
-		height: 0.5rem;
+		width: 0.4rem;
+		height: 0.4rem;
 		border-radius: 999px;
-		background: #fff;
+		background: var(--color-primary-400);
 	}
 	.seed-em {
-		font-weight: 800;
-		text-decoration: underline;
-		text-underline-offset: 3px;
-		text-decoration-thickness: 2px;
+		font-weight: 600;
+		color: #fff;
 	}
 	.seed-sep {
-		opacity: 0.7;
+		opacity: 0.4;
 	}
 	.seed-text a {
 		color: #fff;
 		text-decoration: underline;
-		text-underline-offset: 2px;
-		font-weight: 700;
+		text-underline-offset: 3px;
+		text-decoration-color: rgba(255, 255, 255, 0.3);
+		font-weight: 500;
 	}
 	.seed-text a:hover {
-		color: #fff;
-		opacity: 0.85;
+		text-decoration-color: #fff;
 	}
 	.seed-close {
 		position: absolute;
@@ -107,12 +108,15 @@
 		justify-content: center;
 		width: 1.75rem;
 		height: 1.75rem;
-		border-radius: 999px;
-		color: rgba(255, 255, 255, 0.9);
-		transition: background 0.2s ease;
+		border-radius: 6px;
+		color: rgba(255, 255, 255, 0.6);
+		transition:
+			background 0.15s ease,
+			color 0.15s ease;
 	}
 	.seed-close:hover {
-		background: rgba(255, 255, 255, 0.18);
+		background: rgba(255, 255, 255, 0.08);
+		color: #fff;
 	}
 	@media (max-width: 640px) {
 		.seed-close {

@@ -34,14 +34,6 @@
 			<!-- Decorative Venn -->
 			<figure class="venn" use:reveal={{ delay: 120 }} aria-hidden="true">
 				<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-					<defs>
-						<radialGradient id="vennCore" cx="50%" cy="52%" r="42%">
-							<stop offset="0%" stop-color="#ffffff" />
-							<stop offset="45%" stop-color="#9fb3ff" />
-							<stop offset="100%" stop-color="#6180ff" stop-opacity="0" />
-						</radialGradient>
-					</defs>
-
 					{#each circles as c, i}
 						<circle
 							class="lobe"
@@ -49,16 +41,16 @@
 							cx={c.cx}
 							cy={c.cy}
 							r={R}
-							fill="#387ff5"
-							fill-opacity="0.16"
+							fill="#2f4ec0"
+							fill-opacity="0.07"
 							stroke="#2f4ec0"
-							stroke-opacity="0.5"
-							stroke-width="0.5"
+							stroke-opacity="0.45"
+							stroke-width="0.4"
 						/>
 					{/each}
 
-					<!-- glowing overlap centre -->
-					<circle class="core" cx="50" cy="52" r="15" fill="url(#vennCore)" />
+					<!-- overlap centre -->
+					<circle class="core" cx="50" cy="52" r="5" fill="#2f4ec0" />
 
 					{#each labels as l, i}
 						<text class="venn-num" x={l.x} y={l.y} text-anchor={l.anchor} dominant-baseline="middle"
@@ -128,10 +120,10 @@
 		overflow: visible;
 	}
 	.venn-num {
-		font-family: var(--font-family-heading);
-		font-size: 5px;
-		font-weight: 700;
-		fill: var(--color-primary-700);
+		font-family: var(--font-family-mono);
+		font-size: 4.5px;
+		font-weight: 500;
+		fill: var(--color-primary-600);
 	}
 
 	/* Pillars */
@@ -156,12 +148,13 @@
 		place-items: center;
 		width: 2rem;
 		height: 2rem;
-		border-radius: 999px;
-		background: var(--color-primary-600);
-		color: #fff;
-		font-family: var(--font-family-heading);
-		font-weight: 700;
-		font-size: 0.95rem;
+		border-radius: 8px;
+		background: var(--color-primary-50);
+		border: 1px solid var(--color-primary-100);
+		color: var(--color-primary-700);
+		font-family: var(--font-family-mono);
+		font-weight: 500;
+		font-size: 0.85rem;
 	}
 	.pillar h3 {
 		font-size: 1.08rem;

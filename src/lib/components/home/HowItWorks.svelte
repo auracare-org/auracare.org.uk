@@ -78,25 +78,23 @@
 	}
 	.step {
 		position: relative;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--color-border-strong);
 	}
 	.step-num {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.75rem;
-		height: 2.75rem;
-		border-radius: 999px;
-		font-family: var(--font-family-heading);
-		font-weight: 700;
-		font-size: 1.15rem;
-		color: #fff;
-		background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
-		box-shadow: var(--shadow-glass-glow);
+		font-family: var(--font-family-mono);
+		font-weight: 500;
+		font-size: 0.8rem;
+		letter-spacing: 0.08em;
+		color: var(--color-primary-600);
+	}
+	.step-num::before {
+		content: '0';
 	}
 	.step h3 {
 		font-size: clamp(1.1rem, 1.6vw, 1.3rem);
 		line-height: 1.25;
-		margin-block: 1rem 0.5rem;
+		margin-block: 0.9rem 0.5rem;
 		letter-spacing: -0.01em;
 	}
 	.step p {
@@ -110,8 +108,8 @@
 		margin-top: clamp(3rem, 6vw, 4.5rem);
 		padding: clamp(1.5rem, 3vw, 2.25rem);
 		border-radius: var(--radius-4xl);
-		background: linear-gradient(180deg, var(--color-primary-50), var(--color-neutral-0));
-		border: 1px solid var(--color-primary-100);
+		background: var(--color-surface-alt);
+		border: 1px solid var(--color-border-default);
 	}
 	.wall-head {
 		max-width: 46ch;

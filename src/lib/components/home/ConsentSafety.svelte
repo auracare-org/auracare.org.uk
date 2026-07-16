@@ -96,9 +96,8 @@
 
 <style>
 	.safety {
-		background:
-			radial-gradient(120% 80% at 100% 0%, rgba(97, 128, 255, 0.06), transparent 60%),
-			linear-gradient(180deg, var(--color-neutral-0), var(--color-primary-50));
+		background: var(--color-surface-alt);
+		border-block: 1px solid var(--color-border-default);
 	}
 	.head {
 		max-width: 46rem;
@@ -123,11 +122,10 @@
 		border-radius: 999px;
 	}
 	.badge-dot {
-		width: 0.55rem;
-		height: 0.55rem;
+		width: 0.5rem;
+		height: 0.5rem;
 		border-radius: 999px;
-		background: #34d399;
-		box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.2);
+		background: #10b981;
 	}
 
 	.split {
