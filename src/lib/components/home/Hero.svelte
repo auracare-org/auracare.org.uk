@@ -1,16 +1,36 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT, PLATFORM_NOTE } from '$lib/data/company';
+	import { onMount } from 'svelte';
+	import WaitlistModal from '$lib/components/shared/WaitlistModal.svelte';
 
-	// Connector chips positioned around the core (percentages within the square visual).
-	const chips = [
-		{ name: 'Apple Health', x: 50, y: 7 },
-		{ name: 'Oura', x: 89, y: 27 },
-		{ name: 'Whoop', x: 93, y: 64 },
-		{ name: 'Dexcom', x: 60, y: 93 },
-		{ name: 'Garmin', x: 15, y: 82 },
-		{ name: 'Fitbit', x: 8, y: 38 }
+	let showModal = $state(false);
+
+	const devices = [
+		{ name: 'Apple Health', icon: '/icons/brands/apple.svg', color: '#000000', x: 50, y: 5 },
+		{ name: 'Oura', icon: '/icons/brands/oura.svg', color: '#0066CC', x: 90, y: 25 },
+		{ name: 'Whoop', icon: '/icons/brands/whoop.svg', color: '#FF0050', x: 93, y: 62 },
+		{ name: 'Dexcom', icon: '/icons/brands/dexcom.svg', color: '#00A3E0', x: 62, y: 92 },
+		{ name: 'Garmin', icon: '/icons/brands/garmin.svg', color: '#007CC3', x: 14, y: 80 },
+		{ name: 'Fitbit', icon: '/icons/brands/fitbit.svg', color: '#00B0B9', x: 7, y: 36 }
 	];
+
+	const avatarNames = [
+		'sarah', 'marcus', 'priya', 'chen', 'amara', 'james',
+		'fatima', 'oliver', 'yuki', 'elena', 'raj', 'sofia'
+	];
+
+	let currentAvatarName = $state(avatarNames[0]);
+	let avatarIndex = 1;
+
+	onMount(() => {
+		const avatarInterval = setInterval(() => {
+			currentAvatarName = avatarNames[avatarIndex % avatarNames.length];
+			avatarIndex++;
+		}, 3500);
+
+		return () => clearInterval(avatarInterval);
+	});
 </script>
 
 <section class="hero">
@@ -23,15 +43,15 @@
 			<p class="hero-sub" use:reveal={{ delay: 140 }}>
 				Auracare turns your own health data into a living model of you. Our first product,
 				<strong>Twin</strong>, is a wellness companion that acts on it — and the first step toward
-				the agentic clinical decision support we’re building. Shipping in the coming months.
+				the agentic clinical decision support we're building. Shipping in the coming months.
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
-				<a class="cta-primary" href="/#waitlist">Join the waitlist</a>
+				<button class="cta-primary" onclick={() => showModal = true}>Join the waitlist</button>
 				<a
 					class="cta-ghost"
 					href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Seed%20round"
 				>
-					We’re raising a Seed round <span aria-hidden="true">→</span>
+					We're raising a seed round <span aria-hidden="true">→</span>
 				</a>
 			</div>
 			<p class="hero-note" use:reveal={{ delay: 280 }}>{PLATFORM_NOTE}</p>
@@ -39,24 +59,24 @@
 
 		<div class="hero-visual" use:reveal={{ delay: 120 }} aria-hidden="true">
 			<svg class="hero-orbits" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-				<!-- flow lines from each connector to the centre -->
-				{#each chips as c}
+				{#each devices as device, i}
 					<line
-						x1={c.x}
-						y1={c.y}
+						x1={device.x}
+						y1={device.y}
 						x2="50"
 						y2="50"
 						stroke="#c6cbdc"
 						stroke-width="0.35"
 						stroke-dasharray="1.5 2.5"
 						class="flow-line"
+						style="--i: {i};"
 					/>
 				{/each}
 
-				<!-- concentric hairline rings -->
 				<circle cx="50" cy="50" r="34" fill="none" stroke="#dcdfe9" stroke-width="0.3" />
 				<circle cx="50" cy="50" r="24" fill="none" stroke="#e4e7ef" stroke-width="0.3" />
-				<g class="orbit orbit-a">
+
+				<g class="orbit">
 					<circle
 						cx="50"
 						cy="50"
@@ -69,19 +89,33 @@
 					/>
 				</g>
 
-				<!-- core -->
-				<circle cx="50" cy="50" r="11.5" fill="#ffffff" stroke="#dcdfe9" stroke-width="0.3" />
-				<circle cx="50" cy="50" r="9.5" fill="#2f4ec0" />
+				<circle cx="50" cy="50" r="14" fill="#ffffff" stroke="#dcdfe9" stroke-width="0.3" />
 			</svg>
 
-			{#each chips as c}
-				<span class="hero-chip" style="left:{c.x}%; top:{c.y}%">{c.name}</span>
+			{#each devices as device, i}
+				<div class="chip" style="left:{device.x}%; top:{device.y}%; --i: {i};">
+					<div class="chip-icon" style="background-color: {device.color}">
+						<img src={device.icon} alt={device.name} />
+					</div>
+					<span class="chip-name">{device.name}</span>
+				</div>
 			{/each}
 
-			<span class="hero-twin-label">your twin</span>
+			<div class="avatar-wrap">
+				{#key currentAvatarName}
+					<img
+						src="https://www.tapback.co/api/avatar/{currentAvatarName}.webp"
+						alt=""
+						class="avatar"
+					/>
+				{/key}
+				<span class="twin-label">your twin</span>
+			</div>
 		</div>
 	</div>
 </section>
+
+<WaitlistModal bind:open={showModal} />
 
 <style>
 	.hero {
@@ -135,7 +169,9 @@
 		font-weight: 500;
 		font-size: 0.98rem;
 		padding: 0.8rem 1.5rem;
-		border-radius: 10px;
+		border-radius: 6px;
+		border: none;
+		cursor: pointer;
 		box-shadow:
 			inset 0 1px 0 rgba(255, 255, 255, 0.12),
 			var(--shadow-xs);
@@ -144,6 +180,10 @@
 	.cta-primary:hover {
 		background: var(--color-primary-700);
 		color: #fff;
+	}
+	.cta-primary:focus-visible {
+		outline: 2px solid var(--color-primary-400);
+		outline-offset: 3px;
 	}
 	.cta-ghost {
 		display: inline-flex;
@@ -170,7 +210,7 @@
 		max-width: 30rem;
 	}
 
-	/* Visual — flat technical diagram */
+	/* Visual */
 	.hero-visual {
 		position: relative;
 		width: 100%;
@@ -187,38 +227,124 @@
 	}
 	.orbit {
 		transform-origin: 50% 50%;
-	}
-	.orbit-a {
-		animation: spinSlow 24s linear infinite;
+		animation: spin 28s linear infinite;
 	}
 	.flow-line {
-		animation: dashFlow 90s linear infinite;
+		animation: dash 90s linear infinite;
+		animation-delay: calc(var(--i) * 0.5s);
 	}
-	.hero-chip {
+
+	/* Chips */
+	.chip {
 		position: absolute;
 		transform: translate(-50%, -50%);
+		display: flex;
+		align-items: center;
+		gap: 0.45rem;
 		background: #fff;
 		border: 1px solid var(--color-border-default);
 		box-shadow: var(--shadow-xs);
-		color: var(--color-ink);
-		font-size: 0.74rem;
-		font-weight: 500;
-		padding: 0.32rem 0.65rem;
+		padding: 0.35rem 0.7rem 0.35rem 0.35rem;
 		border-radius: 999px;
 		white-space: nowrap;
+		animation: fadeUp 0.6s ease-out both;
+		animation-delay: calc(0.3s + var(--i) * 0.1s);
 	}
-	.hero-twin-label {
+	.chip-icon {
+		width: 26px;
+		height: 26px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 5px;
+		flex-shrink: 0;
+	}
+	.chip-icon img {
+		width: 100%;
+		height: 100%;
+		filter: brightness(0) invert(1);
+	}
+	.chip-name {
+		color: var(--color-ink);
+		font-size: 0.72rem;
+		font-weight: 500;
+	}
+
+	/* Avatar */
+	.avatar-wrap {
 		position: absolute;
 		left: 50%;
 		top: 50%;
 		transform: translate(-50%, -50%);
-		color: #fff;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.avatar {
+		width: 88px;
+		height: 88px;
+		border-radius: 50%;
+		border: 3px solid #fff;
+		box-shadow: 0 4px 24px rgba(47, 78, 192, 0.12);
+		background: #f4f5f7;
+		animation: avatarIn 0.5s ease-out both;
+	}
+	.twin-label {
+		margin-top: 0.6rem;
+		color: var(--color-ink-faint);
 		font-family: var(--font-family-mono);
-		font-size: 0.62rem;
+		font-size: 0.6rem;
 		font-weight: 500;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		pointer-events: none;
+	}
+
+	/* Animations */
+	@keyframes spin {
+		to { transform: rotate(360deg); }
+	}
+	@keyframes dash {
+		to { stroke-dashoffset: -100; }
+	}
+	@keyframes fadeUp {
+		from {
+			opacity: 0;
+			transform: translate(-50%, -50%) translateY(12px);
+		}
+		to {
+			opacity: 1;
+			transform: translate(-50%, -50%) translateY(0);
+		}
+	}
+	@keyframes avatarIn {
+		from {
+			opacity: 0;
+			transform: scale(0.85);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	/* Responsive */
+	@media (max-width: 640px) {
+		.chip-name {
+			display: none;
+		}
+		.chip {
+			padding: 0.3rem;
+		}
+		.chip-icon {
+			width: 24px;
+			height: 24px;
+			padding: 5px;
+		}
+		.avatar {
+			width: 64px;
+			height: 64px;
+		}
 	}
 
 	@media (min-width: 900px) {

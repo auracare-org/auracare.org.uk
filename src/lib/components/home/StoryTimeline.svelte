@@ -11,7 +11,7 @@
 	};
 </script>
 
-<section class="story aura-space" id="timeline" aria-labelledby="story-heading">
+<section class="story section-y" id="timeline" aria-labelledby="story-heading">
 	<div class="container-wide">
 		<div class="story-head">
 			<span class="eyebrow" use:reveal>Our story</span>
@@ -65,6 +65,7 @@
 <style>
 	.story {
 		overflow: clip;
+		background: var(--color-neutral-0);
 	}
 	.story-head {
 		text-align: center;
@@ -91,7 +92,7 @@
 		position: absolute;
 		top: 0;
 		width: 3px;
-		border-radius: 3px;
+		border-radius: var(--radius-xs);
 	}
 	.tl-track {
 		height: 100%;
@@ -126,7 +127,7 @@
 		height: 22px;
 		border-radius: 999px;
 		background: var(--dot);
-		border: 4px solid var(--color-surface-dark);
+		border: 4px solid var(--color-neutral-0);
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -137,7 +138,8 @@
 		height: 28px;
 		left: 5px;
 		top: 3px;
-		box-shadow: 0 0 0 1px var(--color-primary-400);
+		outline: 1px solid var(--color-primary-400);
+		outline-offset: 0px;
 	}
 	.tl-card {
 		padding: 1.25rem 1.4rem;
@@ -159,7 +161,7 @@
 		font-size: 0.92rem;
 	}
 	.fork-card {
-		border-color: rgba(148, 171, 255, 0.45);
+		border-color: var(--color-border-strong);
 	}
 	.tl-forklabel {
 		position: absolute;
@@ -173,7 +175,7 @@
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 		padding: 0.22rem 0.55rem;
-		border-radius: 6px;
+		border-radius: var(--radius-sm);
 	}
 
 	/* Desktop: centre spine with alternating cards */

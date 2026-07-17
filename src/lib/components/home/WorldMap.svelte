@@ -94,77 +94,77 @@
 <section class="map-section aura-space" aria-labelledby="map-heading">
 	<div class="map-scroller" class:pinned use:scrollProgress={{ onProgress }}>
 		<div class="map-sticky">
-			<div class="container-wide map-head">
-				<span class="eyebrow">Global rollout</span>
-				<h2 id="map-heading">
-					Approval portability, not market size,<br />decides where we go next.
-				</h2>
-				<p class="map-sub">
-					One clinical deployment can feed several regulatory dossiers at once — so we sequence by
-					how far an approval travels, not by how big a market looks.
-				</p>
-			</div>
+			<div class="container-wide map-grid">
+				<div class="map-head">
+					<span class="eyebrow">Global rollout</span>
+					<h2 id="map-heading">
+						Approval portability, not market size, decides where we go next.
+					</h2>
+					<p class="map-sub">
+						One clinical deployment can feed several regulatory dossiers at once — so we sequence by
+						how far an approval travels, not by how big a market looks.
+					</p>
 
-			<div class="map-stage">
-				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<svg
-					class="map-svg"
-					viewBox={VIEWBOX}
-					preserveAspectRatio="xMidYMid meet"
-					role="img"
-					aria-labelledby="map-heading"
-					onmousemove={onMove}
-					onmouseleave={onLeave}
-				>
-					<g class="map-countries">
-						{#each countries as c (c.id)}
-							{@const lit = !!c.market && activeWave >= c.market.wave}
+					<div class="map-caption" aria-live="polite">
+						<span class="cap-badge" style="--c:{toneColor[currentWave.tone]}"
+							>Wave {currentWave.order + 1}</span
+						>
+						<div>
+							<strong>{currentWave.title}</strong>
+							<span>{currentWave.caption}</span>
+						</div>
+					</div>
+					<ol class="map-legend">
+						{#each MARKET_WAVES as w}
+							<li class:active={activeWave >= w.order}>
+								<span class="dot" style="background:{toneColor[w.tone]}"></span>{w.title}
+							</li>
+						{/each}
+					</ol>
+				</div>
+
+				<div class="map-stage">
+					<!-- svelte-ignore a11y_no_static_element_interactions -->
+					<svg
+						class="map-svg"
+						viewBox={VIEWBOX}
+						preserveAspectRatio="xMidYMid meet"
+						role="img"
+						aria-labelledby="map-heading"
+						onmousemove={onMove}
+						onmouseleave={onLeave}
+					>
+						<g class="map-countries">
+							{#each countries as c (c.id)}
+								{@const lit = !!c.market && activeWave >= c.market.wave}
+								<path
+									d={c.d}
+									class:is-market={!!c.market}
+									class:lit
+									data-name={c.market ? c.market.display : c.name}
+									data-label={c.market ? c.market.label : null}
+									style={c.market ? `--tone:${toneColor[c.market.tone]}` : ''}
+								/>
+							{/each}
+						</g>
+
+						{#each arcs as a}
 							<path
-								d={c.d}
-								class:is-market={!!c.market}
-								class:lit
-								data-name={c.market ? c.market.display : c.name}
-								data-label={c.market ? c.market.label : null}
-								style={c.market ? `--tone:${toneColor[c.market.tone]}` : ''}
+								class="map-arc"
+								class:on={activeWave >= a.wave}
+								d={a.d}
+								style="stroke:{toneColor.clinical}"
 							/>
 						{/each}
-					</g>
+					</svg>
 
-					{#each arcs as a}
-						<path
-							class="map-arc"
-							class:on={activeWave >= a.wave}
-							d={a.d}
-							style="stroke:{toneColor.clinical}"
-						/>
-					{/each}
-				</svg>
-
-				{#if hovered}
-					<div class="map-tip" style="left:{tipX}px; top:{tipY}px">
-						<strong>{hovered.name}</strong>
-						{#if hovered.label}<span>{hovered.label}</span>{/if}
-					</div>
-				{/if}
-			</div>
-
-			<div class="container-wide map-foot">
-				<div class="map-caption" aria-live="polite">
-					<span class="cap-badge" style="--c:{toneColor[currentWave.tone]}"
-						>Wave {currentWave.order + 1}</span
-					>
-					<div>
-						<strong>{currentWave.title}</strong>
-						<span>{currentWave.caption}</span>
-					</div>
+					{#if hovered}
+						<div class="map-tip" style="left:{tipX}px; top:{tipY}px">
+							<strong>{hovered.name}</strong>
+							{#if hovered.label}<span>{hovered.label}</span>{/if}
+						</div>
+					{/if}
 				</div>
-				<ol class="map-legend">
-					{#each MARKET_WAVES as w}
-						<li class:active={activeWave >= w.order}>
-							<span class="dot" style="background:{toneColor[w.tone]}"></span>{w.title}
-						</li>
-					{/each}
-				</ol>
 			</div>
 		</div>
 	</div>
@@ -199,25 +199,35 @@
 		justify-content: center;
 		padding-block: 1.5rem;
 	}
+	.map-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2rem;
+		align-items: center;
+	}
 	.map-head h2 {
-		font-size: clamp(1.7rem, 3.6vw, 2.9rem);
-		line-height: 1.1;
+		font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+		line-height: 1.15;
 		margin-top: 0.5rem;
 	}
 	.map-sub {
-		max-width: 40rem;
+		max-width: 28rem;
 		margin-top: 0.75rem;
 	}
 	.map-stage {
 		position: relative;
 		width: 100%;
-		max-width: 78rem;
-		margin: 1rem auto 0;
-		padding-inline: 1rem;
-		flex: 1 1 auto;
-		min-height: 0;
 		display: flex;
 		align-items: center;
+		border: 1px solid var(--color-border-dark);
+		border-radius: var(--radius-lg);
+		padding: 1rem;
+		background: var(--color-surface-dark);
+	}
+	@media (min-width: 900px) {
+		.map-grid {
+			grid-template-columns: 0.45fr 0.55fr;
+		}
 	}
 	.map-svg {
 		width: 100%;
@@ -228,8 +238,8 @@
 
 	/* Base countries + coloured market fills */
 	.map-countries path {
-		fill: rgba(255, 255, 255, 0.05);
-		stroke: rgba(255, 255, 255, 0.1);
+		fill: var(--color-neutral-alpha-invert-05);
+		stroke: var(--color-white-alpha-10);
 		stroke-width: 0.35;
 		transition:
 			fill 0.6s ease,
@@ -241,13 +251,13 @@
 	.map-countries path.lit {
 		fill: var(--tone);
 		fill-opacity: 0.85;
-		stroke: rgba(255, 255, 255, 0.3);
+		stroke: var(--color-white-alpha-20);
 		stroke-width: 0.4;
 	}
 	/* Leaflet-style hover highlight on any country */
 	.map-countries path:hover {
-		fill: rgba(255, 255, 255, 0.18);
-		stroke: rgba(255, 255, 255, 0.6);
+		fill: var(--color-white-alpha-20);
+		stroke: var(--color-dark-overlay-60);
 		stroke-width: 0.6;
 		cursor: default;
 	}
@@ -281,9 +291,9 @@
 		pointer-events: none;
 		background: var(--color-surface-dark-raised);
 		border: 1px solid var(--color-border-dark-strong);
-		border-radius: 8px;
+		border-radius: var(--radius-md);
 		padding: 0.4rem 0.7rem;
-		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+		box-shadow: var(--shadow-md);
 		white-space: nowrap;
 		max-width: 16rem;
 	}
@@ -294,20 +304,13 @@
 	}
 	.map-tip span {
 		display: block;
-		color: rgba(226, 232, 255, 0.7);
+		color: var(--color-white-alpha-70);
 		font-size: 0.74rem;
 		white-space: normal;
 	}
 
-	.map-foot {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem 2rem;
-		justify-content: space-between;
-		align-items: center;
-		margin-top: 1.25rem;
-	}
 	.map-caption {
+		margin-top: 1.5rem;
 		display: flex;
 		align-items: center;
 		gap: 0.75rem;
@@ -323,7 +326,7 @@
 		color: #fff;
 		background: var(--c);
 		padding: 0.3rem 0.55rem;
-		border-radius: 6px;
+		border-radius: var(--radius-sm);
 	}
 	.map-caption strong {
 		color: #fff;
@@ -331,7 +334,7 @@
 		font-size: 0.95rem;
 	}
 	.map-caption span {
-		color: rgba(226, 232, 255, 0.7);
+		color: var(--color-white-alpha-70);
 		font-size: 0.85rem;
 	}
 	.map-legend {
@@ -347,11 +350,11 @@
 		align-items: center;
 		gap: 0.4rem;
 		font-size: 0.78rem;
-		color: rgba(226, 232, 255, 0.4);
+		color: var(--color-dark-overlay-40);
 		transition: color 0.3s ease;
 	}
 	.map-legend li.active {
-		color: rgba(226, 232, 255, 0.92);
+		color: var(--color-white-alpha-80);
 	}
 	.map-legend .dot {
 		width: 0.5rem;

@@ -6,6 +6,16 @@
 		EMERGENCY_ROUTING,
 		NON_DEVICE_DISCLAIMER
 	} from '$lib/data/company';
+	import { onMount } from 'svelte';
+
+	let activeRegion = $state(0);
+
+	onMount(() => {
+		const interval = setInterval(() => {
+			activeRegion = (activeRegion + 1) % EMERGENCY_ROUTING.length;
+		}, 3000);
+		return () => clearInterval(interval);
+	});
 </script>
 
 <section class="safety section-y">
@@ -17,76 +27,84 @@
 					>knows the difference</span
 				>.
 			</h2>
-			<span class="badge" use:reveal={{ delay: 120 }}>
-				<span class="badge-dot" aria-hidden="true"></span>
-				Safety, always on
-			</span>
+			<p class="head-note" use:reveal={{ delay: 120 }}>Safety is structural, not a feature flag.</p>
 		</div>
 
-		<div class="split">
-			<div class="glass-card panel panel-does" use:reveal={{ delay: 80 }}>
-				<h3>What Twin does</h3>
-				<ul class="list">
-					{#each TWIN_DOES as item}
-						<li>
-							<span class="ic ic-check" aria-hidden="true">
-								<svg viewBox="0 0 20 20" fill="none">
-									<path
-										d="M5 10.5l3.2 3.2L15 6.5"
-										stroke="currentColor"
-										stroke-width="2.2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-								</svg>
-							</span>
-							<span>{item}</span>
-						</li>
+		<div class="safety-table glass-card" use:reveal={{ delay: 80 }}>
+			<table>
+				<thead>
+					<tr>
+						<th class="col-does">What Twin does</th>
+						<th class="col-never">What Twin never does</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each Array(Math.max(TWIN_DOES.length, TWIN_NEVER.length)) as _, i}
+						<tr>
+							<td>
+								{#if i < TWIN_DOES.length}
+									<span class="ic ic-check" aria-hidden="true">
+										<svg viewBox="0 0 20 20" fill="none">
+											<path d="M5 10.5l3.2 3.2L15 6.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+										</svg>
+									</span>
+									<span>{TWIN_DOES[i]}</span>
+								{/if}
+							</td>
+							<td>
+								{#if i < TWIN_NEVER.length}
+									<span class="ic ic-cross" aria-hidden="true">
+										<svg viewBox="0 0 20 20" fill="none">
+											<path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+										</svg>
+									</span>
+									<span>{TWIN_NEVER[i]}</span>
+								{/if}
+							</td>
+						</tr>
 					{/each}
-				</ul>
-			</div>
-
-			<div class="glass-card panel panel-never" use:reveal={{ delay: 140 }}>
-				<h3>What Twin never does</h3>
-				<ul class="list">
-					{#each TWIN_NEVER as item}
-						<li>
-							<span class="ic ic-cross" aria-hidden="true">
-								<svg viewBox="0 0 20 20" fill="none">
-									<path
-										d="M6 6l8 8M14 6l-8 8"
-										stroke="currentColor"
-										stroke-width="2.2"
-										stroke-linecap="round"
-									/>
-								</svg>
-							</span>
-							<span>{item}</span>
-						</li>
-					{/each}
-				</ul>
-			</div>
+				</tbody>
+			</table>
 		</div>
 
-		<div class="routing">
-			<div class="routing-head" use:reveal>
-				<h3>If something is urgent, Twin routes you to real help</h3>
-				<p class="caption">Region-aware — always confirmed, never assumed.</p>
+		<div class="routing" use:reveal={{ delay: 100 }}>
+			<div class="routing-center">
+				<p class="routing-statement">
+					Twin <span class="red">never</span> diagnoses, treats, or prescribes.
+					<br />If something is urgent, it routes you to <span class="red">real help</span>.
+				</p>
 			</div>
-			<div class="regions">
-				{#each EMERGENCY_ROUTING as region, i}
-					<div class="glass-card region" use:reveal={{ delay: 80 + i * 80 }}>
-						<h4>{region.region}</h4>
-						<dl class="lines">
-							{#each region.lines as line}
-								<div class="line">
-									<dt>{line.label}</dt>
-									<dd>{line.value}</dd>
-								</div>
-							{/each}
-						</dl>
+
+			<div class="routing-visual">
+				<div class="twin-bubble">
+					<div class="twin-avatar">
+						<img src="/favicon.svg" alt="Twin" />
 					</div>
-				{/each}
+					<div class="twin-arrow" aria-hidden="true">
+						<svg width="48" height="24" viewBox="0 0 48 24" fill="none">
+							<path d="M0 12h40M40 12l-6-5M40 12l-6 5" stroke="var(--color-primary-600)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+					</div>
+				</div>
+
+				<div class="help-card glass-card">
+					<p class="help-label">Region-aware routing</p>
+					{#key activeRegion}
+						<div class="help-region help-region-anim">
+							<span class="help-flag">{EMERGENCY_ROUTING[activeRegion].region}</span>
+							<div class="help-numbers">
+								{#each EMERGENCY_ROUTING[activeRegion].lines as line}
+									<span class="help-num"><strong>{line.value}</strong> <small>{line.label}</small></span>
+								{/each}
+							</div>
+						</div>
+					{/key}
+					<div class="region-dots" aria-hidden="true">
+						{#each EMERGENCY_ROUTING as _, i}
+							<button class="region-dot" class:active={activeRegion === i} onclick={() => activeRegion = i}></button>
+						{/each}
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -109,50 +127,54 @@
 		letter-spacing: -0.02em;
 		margin: 0.75rem 0 1.25rem;
 	}
-	.badge {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.8rem;
-		font-weight: 600;
-		color: #0f7a55;
-		background: rgba(52, 211, 153, 0.12);
-		border: 1px solid rgba(52, 211, 153, 0.35);
-		padding: 0.4rem 0.85rem;
-		border-radius: 999px;
-	}
-	.badge-dot {
-		width: 0.5rem;
-		height: 0.5rem;
-		border-radius: 999px;
-		background: #10b981;
+	.head-note {
+		font-size: 0.9rem;
+		color: var(--color-ink-soft);
+		margin-top: 0.5rem;
 	}
 
-	.split {
+	.safety-table {
+		padding: 0;
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+	}
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+	thead tr {
 		display: grid;
-		grid-template-columns: 1fr;
-		gap: clamp(1rem, 2.5vw, 1.5rem);
+		grid-template-columns: 1fr 1fr;
 	}
-	.panel {
-		padding: clamp(1.5rem, 3vw, 2rem);
-		border-radius: var(--radius-2xl);
+	thead th {
+		font-size: 0.92rem;
+		font-weight: 600;
+		color: var(--color-ink);
+		text-align: left;
+		padding: 1rem 1.25rem;
+		border-bottom: 1px solid var(--color-border-default);
 	}
-	.panel h3 {
-		font-size: 1.15rem;
-		margin-bottom: 1.25rem;
-		color: var(--color-neutral-900);
+	thead th:first-child {
+		border-right: 1px solid var(--color-border-default);
 	}
-	.list {
-		display: flex;
-		flex-direction: column;
-		gap: 0.9rem;
+	tbody tr {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 	}
-	.list li {
+	tbody td {
+		padding: 0.75rem 1.25rem;
 		display: flex;
 		align-items: flex-start;
-		gap: 0.75rem;
+		gap: 0.6rem;
 		line-height: 1.45;
-		color: var(--color-neutral-800);
+		color: var(--color-ink-soft);
+		font-size: 0.9rem;
+	}
+	tbody td:first-child {
+		border-right: 1px solid var(--color-border-default);
+	}
+	tbody tr:not(:last-child) td {
+		border-bottom: 1px solid var(--color-border-default);
 	}
 	.ic {
 		flex: none;
@@ -169,7 +191,7 @@
 	}
 	.ic-check {
 		color: #0f9d63;
-		background: rgba(52, 211, 153, 0.16);
+		background: #dff8ef;
 	}
 	.ic-cross {
 		color: var(--color-neutral-500);
@@ -179,62 +201,125 @@
 	.routing {
 		margin-top: clamp(2.5rem, 5vw, 4rem);
 	}
-	.routing-head h3 {
-		font-size: clamp(1.25rem, 2.4vw, 1.6rem);
-		letter-spacing: -0.01em;
-		color: var(--color-neutral-900);
+	.routing-center {
+		text-align: center;
+		margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
 	}
-	.caption {
-		margin-top: 0.4rem;
-		color: var(--color-neutral-600);
-		font-size: 0.95rem;
+	.routing-statement {
+		font-size: clamp(1.1rem, 2vw, 1.4rem);
+		line-height: 1.5;
+		color: var(--color-ink);
+		font-weight: 500;
+		max-width: 36rem;
+		margin-inline: auto;
 	}
-	.regions {
-		margin-top: 1.5rem;
+	.red {
+		color: #dc2626;
+		font-weight: 700;
+	}
+
+	.routing-visual {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: clamp(0.75rem, 2vw, 1.5rem);
+		flex-wrap: wrap;
+	}
+	.twin-bubble {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+	.twin-avatar {
+		width: 3rem;
+		height: 3rem;
+		background: var(--color-primary-600);
+		border-radius: 50%;
 		display: grid;
-		grid-template-columns: 1fr;
-		gap: clamp(1rem, 2.5vw, 1.5rem);
+		place-items: center;
+		padding: 0.6rem;
 	}
-	.region {
-		padding: clamp(1.25rem, 2.5vw, 1.75rem);
-		border-radius: var(--radius-2xl);
+	.twin-avatar img {
+		width: 100%;
+		height: auto;
+		filter: brightness(0) invert(1);
 	}
-	.region h4 {
-		font-size: 1.05rem;
-		color: var(--color-neutral-900);
-		margin-bottom: 1rem;
-	}
-	.lines {
+	.twin-arrow {
 		display: flex;
-		flex-direction: column;
+		align-items: center;
 	}
-	.line {
+
+	.help-card {
+		padding: 1.25rem 1.5rem;
+		border-radius: var(--radius-lg);
+		max-width: 22rem;
+	}
+	.help-label {
+		font-size: 0.72rem;
+		font-family: var(--font-family-mono);
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--color-ink-faint);
+		margin-bottom: 0.75rem;
+	}
+	.help-region {
+		padding: 0.5rem 0;
+	}
+	.help-region-anim {
+		animation: fadeSlide 0.35s ease-out;
+	}
+	@keyframes fadeSlide {
+		from { opacity: 0; transform: translateY(6px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+	.region-dots {
 		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: 1rem;
-		padding: 0.6rem 0;
-		border-top: 1px solid var(--color-neutral-200);
+		gap: 0.4rem;
+		margin-top: 0.6rem;
 	}
-	.line:first-child {
-		border-top: none;
-		padding-top: 0;
+	.region-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 999px;
+		background: var(--color-border-strong);
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		transition: background 0.2s ease;
 	}
-	.line dt {
-		color: var(--color-neutral-600);
-		font-size: 0.9rem;
+	.region-dot.active {
+		background: var(--color-primary-600);
 	}
-	.line dd {
+	.help-flag {
 		font-weight: 600;
-		color: var(--color-neutral-900);
-		text-align: right;
+		font-size: 0.85rem;
+		color: var(--color-ink);
+		display: block;
+		margin-bottom: 0.35rem;
+	}
+	.help-numbers {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.25rem;
+	}
+	.help-num {
+		font-size: 0.82rem;
+		color: var(--color-ink-soft);
+	}
+	.help-num strong {
+		color: #dc2626;
+		font-weight: 700;
+	}
+	.help-num small {
+		color: var(--color-ink-faint);
 	}
 
 	.fineprint {
 		margin-top: clamp(2rem, 4vw, 3rem);
 		font-size: 0.82rem;
 		line-height: 1.6;
-		color: var(--color-neutral-500);
+		color: var(--color-ink-faint);
 		max-width: 44rem;
 	}
 

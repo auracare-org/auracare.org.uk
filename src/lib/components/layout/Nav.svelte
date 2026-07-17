@@ -140,7 +140,7 @@
 		white-space: nowrap;
 	}
 	.nav-item:hover {
-		color: var(--color-ink);
+		color: var(--color-primary-600);
 	}
 	.nav-item.active {
 		color: var(--color-ink);
@@ -150,11 +150,11 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 0.28rem;
-		color: var(--color-primary-600);
-		font-weight: 500;
+		color: var(--color-ink);
+		font-weight: 600;
 	}
 	.nav-ext:hover {
-		color: var(--color-primary-700);
+		color: var(--color-primary-600);
 	}
 	.nav-cta {
 		display: none;
@@ -177,7 +177,7 @@
 		color: #fff;
 		background: var(--color-primary-600);
 		padding: 0.55rem 1.1rem;
-		border-radius: 10px;
+		border-radius: 6px;
 		box-shadow:
 			inset 0 1px 0 rgba(255, 255, 255, 0.12),
 			var(--shadow-xs);
@@ -185,7 +185,7 @@
 		white-space: nowrap;
 	}
 	.nav-waitlist:hover {
-		background: var(--color-primary-700);
+		background: #5971cd;
 		color: #fff;
 	}
 	.nav-burger {

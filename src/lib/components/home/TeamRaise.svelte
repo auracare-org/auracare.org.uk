@@ -71,8 +71,8 @@
 
 		<div class="raise" use:reveal={{ delay: 200 }}>
 			<div class="raise-copy">
-				<span class="pill pill-soon">Seed</span>
-				<h3>We&rsquo;re raising our Seed round.</h3>
+				<span class="raise-label">Seed</span>
+				<h3>We&rsquo;re raising our seed round.</h3>
 				<p>
 					If you back frontier health &mdash; teams turning real, consented data into agentic
 					clinical decision support &mdash; we&rsquo;d love to talk.
@@ -94,7 +94,7 @@
 	}
 	.lede {
 		font-size: clamp(1rem, 1.6vw, 1.15rem);
-		color: var(--color-neutral-600);
+		color: var(--color-ink-soft);
 		max-width: 40rem;
 	}
 
@@ -155,7 +155,7 @@
 		margin-top: 0.15rem;
 	}
 	.bio {
-		color: var(--color-neutral-600);
+		color: var(--color-ink-soft);
 		font-size: 0.9rem;
 		line-height: 1.55;
 		margin-top: 0.7rem;
@@ -184,7 +184,7 @@
 		padding: clamp(1.75rem, 4vw, 2.75rem);
 		border-radius: var(--radius-4xl);
 		background: var(--color-primary-700);
-		border: 1px solid rgba(255, 255, 255, 0.08);
+		border: 1px solid var(--color-border-dark);
 		color: #fff;
 		display: flex;
 		flex-wrap: wrap;
@@ -195,6 +195,14 @@
 	.raise-copy {
 		max-width: 44rem;
 	}
+	.raise-label {
+		font-family: var(--font-family-mono);
+		font-size: 0.7rem;
+		font-weight: 500;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-white-alpha-80);
+	}
 	.raise-copy h3 {
 		font-size: clamp(1.35rem, 2.4vw, 1.8rem);
 		letter-spacing: -0.01em;
@@ -202,7 +210,7 @@
 		color: #fff;
 	}
 	.raise-copy p {
-		color: rgba(234, 240, 255, 0.85);
+		color: var(--color-white-alpha-80);
 		font-size: 1rem;
 		line-height: 1.6;
 		margin: 0;
@@ -216,7 +224,7 @@
 		color: var(--color-primary-700);
 		font-weight: 500;
 		padding: 0.8rem 1.5rem;
-		border-radius: 10px;
+		border-radius: var(--radius-sm);
 		transition: background 0.15s ease;
 	}
 	.raise-cta:hover {

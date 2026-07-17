@@ -98,7 +98,7 @@
 		letter-spacing: -0.01em;
 	}
 	.step p {
-		color: var(--color-neutral-600);
+		color: var(--color-ink-soft);
 		line-height: 1.6;
 		max-width: 34ch;
 	}
@@ -107,9 +107,10 @@
 	.wall {
 		margin-top: clamp(3rem, 6vw, 4.5rem);
 		padding: clamp(1.5rem, 3vw, 2.25rem);
-		border-radius: var(--radius-4xl);
-		background: var(--color-surface-alt);
+		border-radius: var(--radius-lg);
+		background: var(--color-neutral-0);
 		border: 1px solid var(--color-border-default);
+		box-shadow: var(--shadow-xs);
 	}
 	.wall-head {
 		max-width: 46ch;
@@ -121,7 +122,7 @@
 	}
 	.wall-note {
 		margin-top: 0.5rem;
-		color: var(--color-neutral-600);
+		color: var(--color-ink-soft);
 		line-height: 1.6;
 	}
 
@@ -138,17 +139,17 @@
 		align-items: center;
 		gap: 0.4rem;
 		padding: 0.5rem 0.85rem;
-		border-radius: 999px;
+		border-radius: var(--radius-md);
 		font-size: 0.9rem;
 		background: var(--color-neutral-0);
-		border: 1px solid var(--color-neutral-200);
-		box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+		border: 1px solid var(--color-border-default);
+		box-shadow: var(--shadow-xs);
 	}
 	.connector {
 		font-weight: 500;
 	}
 	.chip-name {
-		color: var(--color-neutral-800);
+		color: var(--color-ink);
 	}
 	.chip-kind {
 		font-size: 0.68rem;
@@ -157,7 +158,7 @@
 		color: var(--color-primary-600);
 		background: var(--color-primary-50);
 		padding: 0.1rem 0.4rem;
-		border-radius: 999px;
+		border-radius: var(--radius-xs);
 	}
 
 	.closing {
@@ -165,7 +166,7 @@
 		font-family: var(--font-family-heading);
 		font-size: clamp(1.1rem, 1.8vw, 1.35rem);
 		font-weight: 600;
-		color: var(--color-neutral-800);
+		color: var(--color-ink);
 	}
 
 	@media (min-width: 720px) {

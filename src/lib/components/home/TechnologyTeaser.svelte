@@ -88,8 +88,7 @@
 						y1={nodes[a].y}
 						x2={nodes[b].x}
 						y2={nodes[b].y}
-						stroke="#94abff"
-						stroke-opacity="0.22"
+						stroke="var(--color-white-alpha-15)"
 						stroke-width="0.35"
 					/>
 				{/each}
@@ -98,9 +97,8 @@
 						cx={n.x}
 						cy={n.y}
 						r={n.r}
-						fill="#0e1015"
-						stroke="#94abff"
-						stroke-opacity="0.55"
+						fill="var(--color-surface-dark)"
+						stroke="var(--color-white-alpha-20)"
 						stroke-width="0.5"
 						class="node"
 						style="--i:{i}"
@@ -159,7 +157,6 @@
 		max-width: 36rem;
 	}
 	.tech-lead strong {
-		color: #fff;
 		font-weight: 600;
 	}
 	.tech-status {
@@ -170,7 +167,7 @@
 		margin-top: 1.25rem;
 		font-size: 0.92rem;
 		line-height: 1.5;
-		color: rgba(226, 232, 255, 0.82) !important;
+		color: var(--color-white-alpha-80);
 		max-width: 34rem;
 	}
 
@@ -189,7 +186,7 @@
 		font-weight: 500;
 		font-size: 0.98rem;
 		padding: 0.8rem 1.5rem;
-		border-radius: 10px;
+		border-radius: var(--radius-sm);
 		transition: background 0.15s ease;
 	}
 	.cta-primary:hover {
@@ -200,11 +197,11 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 0.4rem;
-		color: rgba(226, 230, 240, 0.9);
+		color: var(--color-white-alpha-80);
 		font-weight: 500;
 		font-size: 0.98rem;
 		padding: 0.8rem 1.35rem;
-		border-radius: 10px;
+		border-radius: var(--radius-sm);
 		border: 1px solid var(--color-border-dark-strong);
 		transition:
 			background 0.15s ease,
@@ -213,8 +210,8 @@
 	}
 	.cta-ghost:hover {
 		color: #fff;
-		border-color: rgba(255, 255, 255, 0.35);
-		background: rgba(255, 255, 255, 0.04);
+		border-color: var(--color-white-alpha-20);
+		background: var(--color-white-alpha-10);
 	}
 
 	/* Visual side */
@@ -267,7 +264,7 @@
 		font-size: 0.72rem;
 		letter-spacing: 0.04em;
 		line-height: 1.4;
-		color: rgba(226, 230, 240, 0.55) !important;
+		color: var(--color-dark-overlay-60);
 	}
 
 	@media (min-width: 900px) {

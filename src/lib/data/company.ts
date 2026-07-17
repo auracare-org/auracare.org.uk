@@ -140,7 +140,7 @@ export const TIMELINE: Milestone[] = [
 	},
 	{
 		date: 'Jul 2026',
-		title: 'Raising our Seed round',
+		title: 'Raising our seed round',
 		body: 'We are raising to bring Twin to market and to build out the agentic core. If you invest in frontier healthcare, we would love to talk.',
 		era: 'ai'
 	},

@@ -27,7 +27,7 @@
 		<div class="container-wide seed-inner">
 			<p class="seed-text">
 				<span class="seed-dot" aria-hidden="true"></span>
-				We’re raising our <span class="seed-em">Seed round</span>
+				We’re raising our <span class="seed-em">seed round</span>
 				<span class="seed-sep">—</span>
 				<a href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Seed%20round">
 					get in touch: {CONTACT.seed}

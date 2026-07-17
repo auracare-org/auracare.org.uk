@@ -16,7 +16,7 @@
 
 <Seo
 	title="Auracare AI — Agentic healthcare, built on your digital twin"
-	description="Auracare turns your own health data into a living model of you. Meet Twin — our first product — and the agentic clinical decision support we're building. Now raising our Seed round."
+	description="Auracare turns your own health data into a living model of you. Meet Twin — our first product — and the agentic clinical decision support we're building. Now raising our seed round."
 	path="/"
 />
 

@@ -128,7 +128,7 @@
 	.intro {
 		font-size: clamp(1rem, 1.4vw, 1.12rem);
 		line-height: 1.6;
-		color: var(--color-neutral-600);
+		color: var(--color-ink-soft);
 		max-width: 46rem;
 	}
 	.grid {
@@ -143,7 +143,7 @@
 		align-items: flex-start;
 		gap: 0.75rem;
 		padding: clamp(1.5rem, 2.5vw, 2rem);
-		border-radius: var(--radius-2xl);
+		border-radius: var(--radius-lg);
 		height: 100%;
 	}
 	.motif {
@@ -167,7 +167,7 @@
 		margin-top: -0.35rem;
 	}
 	.blurb {
-		color: var(--color-neutral-600);
+		color: var(--color-ink-soft);
 		line-height: 1.6;
 		font-size: 0.95rem;
 	}
@@ -186,7 +186,7 @@
 	}
 	.card-link:hover {
 		gap: 0.65rem;
-		color: var(--color-primary-700);
+		color: var(--color-bg-button-primary-hover);
 	}
 
 	@media (min-width: 720px) {

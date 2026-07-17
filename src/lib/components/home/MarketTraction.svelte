@@ -115,7 +115,7 @@
 		flex-wrap: wrap;
 		gap: 0.35rem 0.9rem;
 		padding: 0.85rem 1.25rem;
-		border-radius: 10px;
+		border-radius: var(--radius-md);
 		color: #fff;
 		/* Each successive stage sits deeper in the brand-blue ramp. */
 		background: color-mix(
@@ -154,7 +154,7 @@
 	.funnel-note {
 		font-size: 0.9rem;
 		line-height: 1.5;
-		color: var(--color-neutral-600);
+		color: var(--color-ink-faint);
 		max-width: 42rem;
 	}
 
@@ -164,7 +164,7 @@
 		max-width: 46rem;
 		font-size: clamp(1rem, 1.5vw, 1.12rem);
 		line-height: 1.65;
-		color: var(--color-neutral-700);
+		color: var(--color-ink-soft);
 	}
 
 	/* ---- Traction ---- */
@@ -178,7 +178,7 @@
 	}
 	.stat {
 		padding: 1.35rem 1.5rem;
-		border-radius: var(--radius-2xl);
+		border-radius: var(--radius-lg);
 	}
 	.stat-value {
 		display: block;

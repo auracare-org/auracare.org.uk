@@ -102,10 +102,21 @@
 				<div class="phone-notch"></div>
 				<div class="phone-screen">
 					<div class="chat-head">
-						<div class="chat-avatar">◎</div>
-						<div>
+						<div class="chat-head-left">
+							<svg class="chat-back" width="10" height="17" viewBox="0 0 10 17" fill="none">
+								<path d="M9 1L2 8.5L9 16" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>
+						<div class="chat-head-center">
+							<div class="chat-avatar">
+								<img src="/favicon.svg" alt="" />
+							</div>
 							<strong>Twin</strong>
-							<span>active now</span>
+						</div>
+						<div class="chat-head-right">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+								<path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke="#007AFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
 						</div>
 					</div>
 					<div class="chat-body">
@@ -174,7 +185,7 @@
 		display: inline-flex;
 		background: #fff;
 		border: 1px solid var(--color-border-default);
-		border-radius: 10px;
+		border-radius: 6px;
 		padding: 0.25rem;
 		box-shadow: var(--shadow-xs);
 	}
@@ -183,7 +194,7 @@
 		font-weight: 500;
 		color: var(--color-ink-faint);
 		padding: 0.45rem 1.1rem;
-		border-radius: 7px;
+		border-radius: 4px;
 		transition:
 			color 0.15s ease,
 			background 0.15s ease;
@@ -218,7 +229,8 @@
 	.phone-wrap {
 		position: relative;
 		justify-self: center;
-		width: min(320px, 82vw);
+		width: min(280px, 80vw);
+		max-width: 280px;
 	}
 	.phone {
 		position: relative;
@@ -229,6 +241,7 @@
 		box-shadow:
 			0 30px 60px rgba(15, 23, 42, 0.28),
 			inset 0 0 0 2px rgba(255, 255, 255, 0.06);
+		aspect-ratio: 9 / 19.5;
 	}
 	.phone-notch {
 		position: absolute;
@@ -247,36 +260,55 @@
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
-		height: 34rem;
+		height: 100%;
 	}
 	.chat-head {
-		display: flex;
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
 		align-items: center;
-		gap: 0.6rem;
-		padding: 1.7rem 1rem 0.7rem;
-		background: rgba(255, 255, 255, 0.85);
-		backdrop-filter: blur(8px);
-		border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+		padding: 2rem 0.75rem 0.6rem;
+		background: rgba(247, 247, 247, 0.92);
+		backdrop-filter: blur(12px);
+		border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
 		flex: none;
 	}
+	.chat-head-left {
+		display: flex;
+		align-items: center;
+	}
+	.chat-back {
+		opacity: 0.9;
+	}
+	.chat-head-center {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.2rem;
+	}
+	.chat-head-right {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
 	.chat-avatar {
-		width: 2.1rem;
-		height: 2.1rem;
+		width: 2.2rem;
+		height: 2.2rem;
 		border-radius: 999px;
 		display: grid;
 		place-items: center;
-		color: #fff;
-		font-size: 1.1rem;
-		background: var(--color-primary-600);
+		background: #f0f0f0;
+		padding: 0.4rem;
+		border: 1px solid rgba(0, 0, 0, 0.06);
+	}
+	.chat-avatar img {
+		width: 100%;
+		height: auto;
 	}
 	.chat-head strong {
 		display: block;
-		font-size: 0.9rem;
-		color: #111;
-	}
-	.chat-head span {
 		font-size: 0.72rem;
-		color: #8a8a8e;
+		font-weight: 600;
+		color: #000;
 	}
 	.chat-body {
 		flex: 1;
@@ -349,7 +381,7 @@
 	}
 	.chat-input span {
 		display: block;
-		border: 1px solid rgba(0, 0, 0, 0.12);
+		border: 1px solid var(--color-border-default);
 		border-radius: 999px;
 		padding: 0.4rem 0.9rem;
 		font-size: 0.8rem;

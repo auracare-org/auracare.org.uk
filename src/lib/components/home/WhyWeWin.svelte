@@ -2,19 +2,23 @@
 	import { reveal } from '$lib/actions/motion';
 	import { MOAT, MOAT_LINE } from '$lib/data/company';
 
-	// Circle centres for the three-lobe Venn (viewBox 0 0 100 100).
 	const R = 27;
 	const circles = [
-		{ cx: 50, cy: 36 }, // top
-		{ cx: 37, cy: 60 }, // bottom-left
-		{ cx: 63, cy: 60 } // bottom-right
+		{ cx: 50, cy: 36 },
+		{ cx: 37, cy: 60 },
+		{ cx: 63, cy: 60 }
 	];
-	// Where each pillar label sits, pushed toward each circle's outer edge.
 	const labels = [
 		{ x: 50, y: 15, anchor: 'middle' as const },
 		{ x: 18, y: 74, anchor: 'middle' as const },
 		{ x: 82, y: 74, anchor: 'middle' as const }
 	];
+
+	let active = $state<number | null>(null);
+
+	function toggle(i: number) {
+		active = active === i ? null : i;
+	}
 </script>
 
 <section class="why section-y">
@@ -31,47 +35,57 @@
 		</header>
 
 		<div class="layout">
-			<!-- Decorative Venn -->
-			<figure class="venn" use:reveal={{ delay: 120 }} aria-hidden="true">
+			<figure class="venn" use:reveal={{ delay: 120 }}>
 				<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
 					{#each circles as c, i}
 						<circle
 							class="lobe"
-							style="--i:{i}"
+							class:lobe-active={active === i}
 							cx={c.cx}
 							cy={c.cy}
 							r={R}
-							fill="#2f4ec0"
-							fill-opacity="0.07"
-							stroke="#2f4ec0"
-							stroke-opacity="0.45"
-							stroke-width="0.4"
+							fill={active === i ? 'var(--color-primary-100)' : 'var(--color-primary-50)'}
+							stroke={active === i ? 'var(--color-primary-600)' : 'var(--color-primary-100)'}
+							stroke-width={active === i ? '0.8' : '0.4'}
+							role="button"
+							tabindex="0"
+							aria-label={MOAT[i].title}
+							onclick={() => toggle(i)}
+							onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(i); }}
+							style="cursor:pointer; transition: all 0.25s ease;"
 						/>
 					{/each}
 
-					<!-- overlap centre -->
-					<circle class="core" cx="50" cy="52" r="5" fill="#2f4ec0" />
+					<circle class="core" cx="50" cy="52" r="5" fill="var(--color-primary-600)" />
 
 					{#each labels as l, i}
-						<text class="venn-num" x={l.x} y={l.y} text-anchor={l.anchor} dominant-baseline="middle"
-							>{i + 1}</text
-						>
+						<text
+							class="venn-num"
+							class:venn-num-active={active === i}
+							x={l.x}
+							y={l.y}
+							text-anchor={l.anchor}
+							dominant-baseline="middle"
+							style="cursor:pointer;"
+							onclick={() => toggle(i)}
+						>{i + 1}</text>
 					{/each}
 				</svg>
 			</figure>
 
-			<!-- Accessible pillars -->
-			<ol class="pillars">
-				{#each MOAT as pillar, i}
-					<li class="pillar glass-card" use:reveal={{ delay: 120 + i * 90 }}>
-						<span class="idx" aria-hidden="true">{i + 1}</span>
+			<div class="detail-area">
+				{#if active !== null}
+					<div class="detail glass-card" role="region" aria-live="polite">
+						<span class="idx" aria-hidden="true">{active + 1}</span>
 						<div>
-							<h3>{pillar.title}</h3>
-							<p>{pillar.body}</p>
+							<h3>{MOAT[active].title}</h3>
+							<p>{MOAT[active].body}</p>
 						</div>
-					</li>
-				{/each}
-			</ol>
+					</div>
+				{:else}
+					<p class="detail-hint">Click a circle to explore each capability.</p>
+				{/if}
+			</div>
 		</div>
 
 		<p class="moat-line" use:reveal={{ delay: 160 }}>{MOAT_LINE}</p>
@@ -94,23 +108,23 @@
 	.head p {
 		font-size: clamp(1rem, 1.5vw, 1.15rem);
 		line-height: 1.6;
-		color: var(--color-neutral-600);
+		color: var(--color-ink-soft);
 		max-width: 36rem;
 	}
 
 	.layout {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: clamp(2rem, 5vw, 3.5rem);
+		display: flex;
+		flex-direction: column;
 		align-items: center;
-		margin-top: clamp(2rem, 5vw, 3.5rem);
+		gap: 2rem;
+		margin-top: clamp(2rem, 4vw, 3rem);
 	}
 
 	/* Venn */
 	.venn {
 		position: relative;
 		width: 100%;
-		max-width: 24rem;
+		max-width: 18rem;
 		margin: 0 auto;
 		aspect-ratio: 1;
 	}
@@ -122,25 +136,34 @@
 	.venn-num {
 		font-family: var(--font-family-mono);
 		font-size: 4.5px;
-		font-weight: 500;
+		font-weight: 600;
 		fill: var(--color-primary-600);
 	}
-
-	/* Pillars */
-	.pillars {
-		list-style: none;
-		display: grid;
-		gap: 1rem;
-		margin: 0;
-		padding: 0;
-		counter-reset: none;
+	.venn-num-active {
+		font-weight: 700;
+		font-size: 5px;
 	}
-	.pillar {
+
+	/* Detail area below Venn */
+	.detail-area {
+		width: 100%;
+		max-width: 32rem;
+		min-height: 5rem;
+		text-align: center;
+	}
+	.detail {
 		display: flex;
 		gap: 1rem;
 		align-items: flex-start;
 		padding: 1.25rem 1.4rem;
-		border-radius: var(--radius-2xl);
+		border-radius: var(--radius-lg);
+		text-align: left;
+		animation: fadeUp 0.3s ease-out;
+	}
+	.detail-hint {
+		color: var(--color-ink-faint);
+		font-size: 0.9rem;
+		padding-top: 1rem;
 	}
 	.idx {
 		flex: none;
@@ -148,7 +171,7 @@
 		place-items: center;
 		width: 2rem;
 		height: 2rem;
-		border-radius: 8px;
+		border-radius: var(--radius-md);
 		background: var(--color-primary-50);
 		border: 1px solid var(--color-primary-100);
 		color: var(--color-primary-700);
@@ -156,16 +179,20 @@
 		font-weight: 500;
 		font-size: 0.85rem;
 	}
-	.pillar h3 {
+	.detail h3 {
 		font-size: 1.08rem;
 		line-height: 1.3;
 		margin: 0 0 0.3rem;
 	}
-	.pillar p {
+	.detail p {
 		margin: 0;
 		font-size: 0.94rem;
 		line-height: 1.55;
-		color: var(--color-neutral-600);
+		color: var(--color-ink-soft);
+	}
+	@keyframes fadeUp {
+		from { opacity: 0; transform: translateY(8px); }
+		to { opacity: 1; transform: translateY(0); }
 	}
 
 	.moat-line {
@@ -177,12 +204,7 @@
 		text-align: center;
 		max-width: 42rem;
 		margin-inline: auto;
-		color: var(--color-neutral-800);
+		color: var(--color-ink);
 	}
 
-	@media (min-width: 860px) {
-		.layout {
-			grid-template-columns: 0.95fr 1.05fr;
-		}
-	}
 </style>

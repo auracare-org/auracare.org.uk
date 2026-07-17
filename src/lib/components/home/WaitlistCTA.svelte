@@ -97,7 +97,7 @@
 			{/if}
 
 			<div class="investors">
-				<p class="investors-line">Investors &mdash; we&rsquo;re raising our Seed round.</p>
+				<p class="investors-line">Investors &mdash; we&rsquo;re raising our seed round.</p>
 				<a
 					class="investors-link"
 					href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Seed%20round"
@@ -171,25 +171,22 @@
 	.field input {
 		width: 100%;
 		padding: 0.8rem 1rem;
-		border-radius: 10px;
+		border-radius: var(--radius-sm);
 		border: 1px solid var(--color-border-dark-strong);
 		background: rgba(255, 255, 255, 0.04);
 		color: #fff;
 		font-size: 1rem;
-		transition:
-			border-color 0.15s ease,
-			box-shadow 0.15s ease;
+		transition: border-color 0.15s ease;
 	}
 	.field input::placeholder {
-		color: rgba(226, 230, 240, 0.4);
+		color: var(--color-ink-faint);
 	}
 	.field input:focus-visible {
 		outline: none;
 		border-color: var(--color-primary-400);
-		box-shadow: 0 0 0 3px rgba(97, 128, 255, 0.25);
 	}
 	.field input[aria-invalid='true'] {
-		border-color: rgba(255, 255, 255, 0.5);
+		border-color: var(--color-border-error);
 	}
 
 	.consent {
@@ -234,7 +231,7 @@
 		font-weight: 500;
 		font-size: 1rem;
 		padding: 0.8rem 1.5rem;
-		border-radius: 10px;
+		border-radius: var(--radius-sm);
 		transition: background 0.15s ease;
 	}
 	.submit:hover {
@@ -259,8 +256,8 @@
 		width: 2.4rem;
 		height: 2.4rem;
 		border-radius: 999px;
-		background: rgba(52, 211, 153, 0.18);
-		border: 1px solid rgba(52, 211, 153, 0.5);
+		background: #0d2e23;
+		border: 1px solid #1a6a4d;
 		color: #34d399;
 		font-size: 1.2rem;
 		font-weight: 700;
@@ -282,7 +279,7 @@
 	.investors {
 		margin-top: 1.75rem;
 		padding-top: 1.5rem;
-		border-top: 1px solid rgba(255, 255, 255, 0.14);
+		border-top: 1px solid var(--color-border-dark);
 	}
 	.investors-line {
 		font-size: 0.9rem;
