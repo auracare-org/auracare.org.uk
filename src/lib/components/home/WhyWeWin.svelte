@@ -157,13 +157,18 @@
 		overflow: visible;
 	}
 	.lobe {
-		fill: rgba(var(--color-primary-rgb, 79 70 229), 0.04);
-		stroke: var(--color-primary-400);
+		fill: rgba(47, 78, 192, 0.05);
+		stroke: var(--color-primary-300);
 		stroke-width: 1.5;
+		outline: none;
 		transition: all 0.25s ease;
 	}
+	.lobe:focus-visible {
+		stroke: var(--color-primary-600);
+		stroke-width: 2;
+	}
 	.lobe-active {
-		fill: rgba(var(--color-primary-rgb, 79 70 229), 0.12);
+		fill: rgba(47, 78, 192, 0.1);
 		stroke: var(--color-primary-600);
 		stroke-width: 2;
 	}

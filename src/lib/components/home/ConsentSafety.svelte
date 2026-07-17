@@ -8,12 +8,27 @@
 	} from '$lib/data/company';
 	import { onMount } from 'svelte';
 
-	let activeRegion = $state(0);
+	// Flatten all helplines into a single list with region info
+	const helplines = EMERGENCY_ROUTING.flatMap(r =>
+		r.lines.map(l => ({ ...l, region: r.region }))
+	);
+
+	// Positions for helpline nodes scattered to the right (x%, y%)
+	const nodePositions = [
+		{ x: 62, y: 12 },
+		{ x: 82, y: 8 },
+		{ x: 88, y: 35 },
+		{ x: 85, y: 62 },
+		{ x: 68, y: 82 },
+		{ x: 48, y: 88 }
+	];
+
+	let activeNode = $state(0);
 
 	onMount(() => {
 		const interval = setInterval(() => {
-			activeRegion = (activeRegion + 1) % EMERGENCY_ROUTING.length;
-		}, 3000);
+			activeNode = (activeNode + 1) % helplines.length;
+		}, 2200);
 		return () => clearInterval(interval);
 	});
 </script>
@@ -75,35 +90,48 @@
 				</p>
 			</div>
 
-			<div class="routing-visual">
-				<div class="twin-bubble">
-					<div class="twin-avatar">
-						<img src="/favicon.svg" alt="Twin" />
-					</div>
-					<div class="twin-arrow" aria-hidden="true">
-						<svg width="48" height="24" viewBox="0 0 48 24" fill="none">
-							<path d="M0 12h40M40 12l-6-5M40 12l-6 5" stroke="var(--color-primary-600)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-						</svg>
-					</div>
+			<div class="routing-canvas" aria-label="Twin routing to emergency helplines">
+				<svg class="routing-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+					<defs>
+						<linearGradient id="flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+							<stop offset="0%" stop-color="#dc2626" stop-opacity="0.9" />
+							<stop offset="100%" stop-color="#ef4444" stop-opacity="0.3" />
+						</linearGradient>
+					</defs>
+
+					{#each nodePositions as pos, i}
+						<path
+							class="route-path"
+							class:route-active={activeNode === i}
+							d="M 18 50 C {30 + i * 3} {50 - (i - 2.5) * 8}, {pos.x - 15} {pos.y + (pos.y < 50 ? 10 : -10)}, {pos.x} {pos.y}"
+							fill="none"
+							stroke={activeNode === i ? 'url(#flow-grad)' : '#e2e5ea'}
+							stroke-width={activeNode === i ? '1.2' : '0.5'}
+							stroke-linecap="round"
+						/>
+					{/each}
+				</svg>
+
+				<div class="twin-node">
+					<img src="/favicon.svg" alt="Twin" class="twin-icon" />
 				</div>
 
-				<div class="help-card glass-card">
-					<p class="help-label">Region-aware routing</p>
-					{#key activeRegion}
-						<div class="help-region help-region-anim">
-							<span class="help-flag">{EMERGENCY_ROUTING[activeRegion].region}</span>
-							<div class="help-numbers">
-								{#each EMERGENCY_ROUTING[activeRegion].lines as line}
-									<span class="help-num"><strong>{line.value}</strong> <small>{line.label}</small></span>
-								{/each}
-							</div>
-						</div>
-					{/key}
-					<div class="region-dots" aria-hidden="true">
-						{#each EMERGENCY_ROUTING as _, i}
-							<button class="region-dot" class:active={activeRegion === i} onclick={() => activeRegion = i}></button>
-						{/each}
-					</div>
+				{#each helplines as line, i}
+					<button
+						class="help-node"
+						class:help-node-active={activeNode === i}
+						style="left:{nodePositions[i].x}%; top:{nodePositions[i].y}%"
+						onclick={() => activeNode = i}
+					>
+						<span class="help-node-value">{line.value}</span>
+						<span class="help-node-label">{line.label}</span>
+					</button>
+				{/each}
+
+				<div class="routing-info" aria-live="polite">
+					<span class="routing-info-region">{helplines[activeNode].region}</span>
+					<strong class="routing-info-num">{helplines[activeNode].value}</strong>
+					<span class="routing-info-type">{helplines[activeNode].label}</span>
 				</div>
 			</div>
 		</div>
@@ -218,101 +246,110 @@
 		font-weight: 700;
 	}
 
-	.routing-visual {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: clamp(0.75rem, 2vw, 1.5rem);
-		flex-wrap: wrap;
-	}
-	.twin-bubble {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-	}
-	.twin-avatar {
-		width: 3rem;
-		height: 3rem;
-		background: var(--color-primary-600);
-		border-radius: 50%;
-		display: grid;
-		place-items: center;
-		padding: 0.6rem;
-	}
-	.twin-avatar img {
+	.routing-canvas {
+		position: relative;
 		width: 100%;
-		height: auto;
-		filter: brightness(0) invert(1);
+		max-width: 36rem;
+		aspect-ratio: 1;
+		margin: 0 auto;
 	}
-	.twin-arrow {
-		display: flex;
-		align-items: center;
+	.routing-svg {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+	}
+	.route-path {
+		transition: stroke 0.4s ease, stroke-width 0.4s ease;
+	}
+	.route-active {
+		stroke-dasharray: 200;
+		stroke-dashoffset: 200;
+		animation: flowIn 0.8s ease-out forwards;
+	}
+	@keyframes flowIn {
+		to { stroke-dashoffset: 0; }
 	}
 
-	.help-card {
-		padding: 1.25rem 1.5rem;
-		border-radius: var(--radius-lg);
-		max-width: 22rem;
+	.twin-node {
+		position: absolute;
+		left: 8%;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 3.2rem;
+		height: 3.2rem;
 	}
-	.help-label {
-		font-size: 0.72rem;
-		font-family: var(--font-family-mono);
-		font-weight: 500;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		color: var(--color-ink-faint);
-		margin-bottom: 0.75rem;
+	.twin-icon {
+		width: 100%;
+		height: 100%;
+		border-radius: 12px;
 	}
-	.help-region {
-		padding: 0.5rem 0;
-	}
-	.help-region-anim {
-		animation: fadeSlide 0.35s ease-out;
-	}
-	@keyframes fadeSlide {
-		from { opacity: 0; transform: translateY(6px); }
-		to { opacity: 1; transform: translateY(0); }
-	}
-	.region-dots {
+
+	.help-node {
+		position: absolute;
+		transform: translate(-50%, -50%);
 		display: flex;
-		gap: 0.4rem;
-		margin-top: 0.6rem;
-	}
-	.region-dot {
-		width: 6px;
-		height: 6px;
-		border-radius: 999px;
-		background: var(--color-border-strong);
-		border: none;
-		padding: 0;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.15rem;
+		padding: 0.4rem 0.6rem;
+		border-radius: var(--radius-md);
+		border: 1px solid var(--color-border-default);
+		background: #fff;
 		cursor: pointer;
-		transition: background 0.2s ease;
+		transition: all 0.3s ease;
+		box-shadow: var(--shadow-xs);
 	}
-	.region-dot.active {
-		background: var(--color-primary-600);
+	.help-node-active {
+		border-color: #dc2626;
+		background: #fef2f2;
+		box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08), var(--shadow-sm);
+		transform: translate(-50%, -50%) scale(1.08);
 	}
-	.help-flag {
-		font-weight: 600;
-		font-size: 0.85rem;
-		color: var(--color-ink);
-		display: block;
-		margin-bottom: 0.35rem;
-	}
-	.help-numbers {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem 1.25rem;
-	}
-	.help-num {
-		font-size: 0.82rem;
-		color: var(--color-ink-soft);
-	}
-	.help-num strong {
-		color: #dc2626;
+	.help-node-value {
+		font-size: 0.78rem;
 		font-weight: 700;
+		color: var(--color-ink);
 	}
-	.help-num small {
+	.help-node-active .help-node-value {
+		color: #dc2626;
+	}
+	.help-node-label {
+		font-size: 0.58rem;
 		color: var(--color-ink-faint);
+		white-space: nowrap;
+	}
+
+	.routing-info {
+		position: absolute;
+		bottom: 4%;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		padding: 0.5rem 1rem;
+		border-radius: var(--radius-md);
+		background: #fff;
+		border: 1px solid var(--color-border-default);
+		box-shadow: var(--shadow-xs);
+		white-space: nowrap;
+	}
+	.routing-info-region {
+		font-size: 0.72rem;
+		font-weight: 500;
+		color: var(--color-ink-faint);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+	.routing-info-num {
+		font-size: 0.9rem;
+		color: #dc2626;
+	}
+	.routing-info-type {
+		font-size: 0.78rem;
+		color: var(--color-ink-soft);
 	}
 
 	.fineprint {
