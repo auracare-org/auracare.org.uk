@@ -28,7 +28,7 @@
 	onMount(() => {
 		const interval = setInterval(() => {
 			activeNode = (activeNode + 1) % helplines.length;
-		}, 2200);
+		}, 3500);
 		return () => clearInterval(interval);
 	});
 </script>
@@ -261,12 +261,12 @@
 		pointer-events: none;
 	}
 	.route-path {
-		transition: stroke 0.4s ease, stroke-width 0.4s ease;
+		transition: stroke 0.6s cubic-bezier(0.4, 0, 0.2, 1), stroke-width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 	.route-active {
 		stroke-dasharray: 200;
 		stroke-dashoffset: 200;
-		animation: flowIn 0.8s ease-out forwards;
+		animation: flowIn 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 	}
 	@keyframes flowIn {
 		to { stroke-dashoffset: 0; }
@@ -298,14 +298,14 @@
 		border: 1px solid var(--color-border-default);
 		background: #fff;
 		cursor: pointer;
-		transition: all 0.3s ease;
+		transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 		box-shadow: var(--shadow-xs);
 	}
 	.help-node-active {
 		border-color: #dc2626;
 		background: #fef2f2;
-		box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08), var(--shadow-sm);
-		transform: translate(-50%, -50%) scale(1.08);
+		box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.06), var(--shadow-sm);
+		transform: translate(-50%, -50%) scale(1.04);
 	}
 	.help-node-value {
 		font-size: 0.78rem;
