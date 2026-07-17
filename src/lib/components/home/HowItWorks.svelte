@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { reveal } from '$lib/actions/motion';
 	import { CONNECTORS } from '$lib/data/company';
 
@@ -16,6 +17,73 @@
 			body: 'A morning brief, an evening wrap, and a nudge only when your data says something worth saying.'
 		}
 	];
+
+	const connectorMeta: Record<string, { icon: string; color: string }> = {
+		'Apple Health': { icon: '/icons/brands/apple.svg', color: '#000000' },
+		'Google Health Connect': { icon: '/icons/brands/google.svg', color: '#4285F4' },
+		'Samsung Health': { icon: '/icons/brands/samsung.svg', color: '#1428A0' },
+		Oura: { icon: '/icons/brands/oura.svg', color: '#0066CC' },
+		Whoop: { icon: '/icons/brands/whoop.svg', color: '#FF0050' },
+		Garmin: { icon: '/icons/brands/garmin.svg', color: '#007CC3' },
+		Fitbit: { icon: '/icons/brands/fitbit.svg', color: '#00B0B9' },
+		Withings: { icon: '/icons/brands/withings.svg', color: '#00BCD4' },
+		Dexcom: { icon: '/icons/brands/dexcom.svg', color: '#00A3E0' }
+	};
+
+	let activeIndex = $state<number | null>(null);
+	let isMobile = $state(false);
+	let userInteracted = $state(false);
+	let interval: ReturnType<typeof setInterval> | undefined;
+
+	function startCycle() {
+		if (interval) clearInterval(interval);
+		interval = setInterval(() => {
+			if (!userInteracted) {
+				activeIndex = ((activeIndex ?? -1) + 1) % CONNECTORS.length;
+			}
+		}, 2000);
+	}
+
+	function handleCardInteract(index: number) {
+		userInteracted = true;
+		activeIndex = index;
+		if (interval) {
+			clearInterval(interval);
+			interval = undefined;
+		}
+	}
+
+	onMount(() => {
+		const mq = window.matchMedia('(max-width: 719px)');
+		isMobile = mq.matches;
+
+		function onMediaChange(e: MediaQueryListEvent) {
+			isMobile = e.matches;
+			userInteracted = false;
+			if (e.matches) {
+				activeIndex = 0;
+				startCycle();
+			} else {
+				activeIndex = null;
+				if (interval) {
+					clearInterval(interval);
+					interval = undefined;
+				}
+			}
+		}
+
+		mq.addEventListener('change', onMediaChange);
+
+		if (isMobile) {
+			activeIndex = 0;
+			startCycle();
+		}
+
+		return () => {
+			mq.removeEventListener('change', onMediaChange);
+			if (interval) clearInterval(interval);
+		};
+	});
 </script>
 
 <section class="how section-y">
@@ -43,11 +111,30 @@
 					shared language.
 				</p>
 			</div>
-			<ul class="chips connectors" aria-label="Supported data sources">
+			<ul class="connector-grid" aria-label="Supported data sources">
 				{#each CONNECTORS as connector, i}
-					<li class="chip connector" use:reveal={{ delay: 60 + i * 40 }}>
-						<span class="chip-name">{connector.name}</span>
-						<span class="chip-kind">{connector.kind}</span>
+					{@const meta = connectorMeta[connector.name]}
+					<li
+						class="connector-card"
+						class:active={activeIndex === i}
+						style:--brand-color={meta?.color ?? 'currentColor'}
+						use:reveal={{ delay: 60 + i * 40 }}
+						onmouseenter={() => { if (!isMobile) activeIndex = i; }}
+						onmouseleave={() => { if (!isMobile) activeIndex = null; }}
+						ontouchstart={() => handleCardInteract(i)}
+						role="listitem"
+					>
+						{#if meta}
+							<img
+								class="connector-icon"
+								src={meta.icon}
+								alt=""
+								width="32"
+								height="32"
+								loading="lazy"
+							/>
+						{/if}
+						<span class="connector-name">{connector.name}</span>
 					</li>
 				{/each}
 			</ul>
@@ -126,39 +213,57 @@
 		line-height: 1.6;
 	}
 
-	.chips {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.65rem;
+	/* Connector grid */
+	.connector-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0.75rem;
 		list-style: none;
 		padding: 0;
 		margin: 0;
 	}
-	.chip {
-		display: inline-flex;
+	.connector-card {
+		display: flex;
+		flex-direction: column;
 		align-items: center;
-		gap: 0.4rem;
-		padding: 0.5rem 0.85rem;
+		justify-content: center;
+		gap: 0.6rem;
+		padding: 1.25rem 0.75rem;
 		border-radius: var(--radius-md);
-		font-size: 0.9rem;
 		background: var(--color-neutral-0);
 		border: 1px solid var(--color-border-default);
 		box-shadow: var(--shadow-xs);
+		transition:
+			border-color 0.25s ease,
+			box-shadow 0.25s ease,
+			background-color 0.25s ease;
+		cursor: default;
 	}
-	.connector {
+	.connector-icon {
+		width: 32px;
+		height: 32px;
+		object-fit: contain;
+		filter: grayscale(1) opacity(0.55);
+		transition: filter 0.25s ease;
+	}
+	.connector-name {
+		font-size: 0.8rem;
 		font-weight: 500;
+		color: var(--color-ink-soft);
+		text-align: center;
+		line-height: 1.2;
+		transition: color 0.25s ease;
 	}
-	.chip-name {
+	.connector-card.active {
+		border-color: var(--brand-color);
+		box-shadow: 0 0 0 1px var(--brand-color), var(--shadow-xs);
+		background: color-mix(in srgb, var(--brand-color) 4%, var(--color-neutral-0));
+	}
+	.connector-card.active .connector-icon {
+		filter: grayscale(0) opacity(1);
+	}
+	.connector-card.active .connector-name {
 		color: var(--color-ink);
-	}
-	.chip-kind {
-		font-size: 0.68rem;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		color: var(--color-primary-600);
-		background: var(--color-primary-50);
-		padding: 0.1rem 0.4rem;
-		border-radius: var(--radius-xs);
 	}
 
 	.closing {
@@ -169,10 +274,34 @@
 		color: var(--color-ink);
 	}
 
+	@media (max-width: 719px) {
+		.connector-grid {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 0.6rem;
+		}
+		.connector-card {
+			padding: 1rem 0.5rem;
+		}
+		.connector-name {
+			font-size: 0.72rem;
+		}
+	}
+
 	@media (min-width: 720px) {
 		.steps {
 			grid-template-columns: repeat(3, 1fr);
 			gap: clamp(1.75rem, 3vw, 2.75rem);
+		}
+		.connector-card:hover {
+			border-color: var(--brand-color);
+			box-shadow: 0 0 0 1px var(--brand-color), var(--shadow-xs);
+			background: color-mix(in srgb, var(--brand-color) 4%, var(--color-neutral-0));
+		}
+		.connector-card:hover .connector-icon {
+			filter: grayscale(0) opacity(1);
+		}
+		.connector-card:hover .connector-name {
+			color: var(--color-ink);
 		}
 	}
 </style>

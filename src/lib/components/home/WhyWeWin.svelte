@@ -9,9 +9,15 @@
 		{ cx: 63, cy: 60 }
 	];
 	const labels = [
-		{ x: 50, y: 15, anchor: 'middle' as const },
-		{ x: 18, y: 74, anchor: 'middle' as const },
-		{ x: 82, y: 74, anchor: 'middle' as const }
+		{ x: 50, y: 2, anchor: 'middle' as const },
+		{ x: 12, y: 84, anchor: 'middle' as const },
+		{ x: 88, y: 84, anchor: 'middle' as const }
+	];
+	/* Lines from each label to the nearest circle edge */
+	const connectors = [
+		{ x1: 50, y1: 5, x2: 50, y2: 9 },
+		{ x1: 14, y1: 81, x2: 17.5, y2: 78.7 },
+		{ x1: 86, y1: 81, x2: 82.5, y2: 78.7 }
 	];
 
 	let active = $state<number | null>(null);
@@ -44,9 +50,6 @@
 							cx={c.cx}
 							cy={c.cy}
 							r={R}
-							fill={active === i ? 'var(--color-primary-100)' : 'var(--color-primary-50)'}
-							stroke={active === i ? 'var(--color-primary-600)' : 'var(--color-primary-100)'}
-							stroke-width={active === i ? '0.8' : '0.4'}
 							role="button"
 							tabindex="0"
 							aria-label={MOAT[i].title}
@@ -56,16 +59,36 @@
 						/>
 					{/each}
 
-					<circle class="core" cx="50" cy="52" r="5" fill="var(--color-primary-600)" />
+					<circle class="core" cx="50" cy="52" r="3" />
 
+					<!-- Connector lines from labels to circles -->
+					{#each connectors as cn, i}
+						<line
+							class="connector"
+							class:connector-active={active === i}
+							x1={cn.x1}
+							y1={cn.y1}
+							x2={cn.x2}
+							y2={cn.y2}
+						/>
+					{/each}
+
+					<!-- Number labels outside circles -->
 					{#each labels as l, i}
+						<circle
+							class="num-bg"
+							class:num-bg-active={active === i}
+							cx={l.x}
+							cy={l.y}
+							r="4.5"
+						/>
 						<text
 							class="venn-num"
 							class:venn-num-active={active === i}
 							x={l.x}
 							y={l.y}
 							text-anchor={l.anchor}
-							dominant-baseline="middle"
+							dominant-baseline="central"
 							style="cursor:pointer;"
 							onclick={() => toggle(i)}
 						>{i + 1}</text>
@@ -124,7 +147,7 @@
 	.venn {
 		position: relative;
 		width: 100%;
-		max-width: 18rem;
+		max-width: 22rem;
 		margin: 0 auto;
 		aspect-ratio: 1;
 	}
@@ -133,15 +156,52 @@
 		height: 100%;
 		overflow: visible;
 	}
+	.lobe {
+		fill: rgba(var(--color-primary-rgb, 79 70 229), 0.04);
+		stroke: var(--color-primary-400);
+		stroke-width: 1.5;
+		transition: all 0.25s ease;
+	}
+	.lobe-active {
+		fill: rgba(var(--color-primary-rgb, 79 70 229), 0.12);
+		stroke: var(--color-primary-600);
+		stroke-width: 2;
+	}
+	.core {
+		fill: var(--color-primary-400);
+		opacity: 0.5;
+		transition: opacity 0.25s ease;
+	}
+	.connector {
+		stroke: var(--color-primary-300);
+		stroke-width: 0.7;
+		transition: stroke 0.25s ease;
+	}
+	.connector-active {
+		stroke: var(--color-primary-600);
+		stroke-width: 1;
+	}
+	.num-bg {
+		fill: var(--color-neutral-0);
+		stroke: var(--color-primary-200);
+		stroke-width: 0.8;
+		transition: all 0.25s ease;
+	}
+	.num-bg-active {
+		stroke: var(--color-primary-600);
+		fill: var(--color-primary-50);
+	}
 	.venn-num {
 		font-family: var(--font-family-mono);
-		font-size: 4.5px;
+		font-size: 6.5px;
 		font-weight: 600;
 		fill: var(--color-primary-600);
+		transition: all 0.25s ease;
 	}
 	.venn-num-active {
 		font-weight: 700;
-		font-size: 5px;
+		font-size: 7px;
+		fill: var(--color-primary-700);
 	}
 
 	/* Detail area below Venn */

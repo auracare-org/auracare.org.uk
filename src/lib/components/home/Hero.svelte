@@ -20,16 +20,79 @@
 		'fatima', 'oliver', 'yuki', 'elena', 'raj', 'sofia'
 	];
 
+	// Animation phases: 'chips' | 'dataflow' | 'avatar' | 'hold' | 'fadeout'
+	type Phase = 'chips' | 'dataflow' | 'avatar' | 'hold' | 'fadeout';
+	let phase: Phase = $state('chips');
 	let currentAvatarName = $state(avatarNames[0]);
-	let avatarIndex = 1;
+	let avatarIndex = $state(0);
+	// Chip order offset — rotates which chip appears first each cycle
+	let chipStartOffset = $state(0);
+
+	// Compute the order indices for stagger: chip at position i gets delay based on its
+	// distance from the current start offset (wrapping clockwise)
+	let chipDelayOrder = $derived(
+		devices.map((_, i) => (i - chipStartOffset + devices.length) % devices.length)
+	);
+
+	// Timing constants (ms)
+	const CHIP_STAGGER = 180; // delay between each chip appearing
+	const CHIP_PHASE_DURATION = CHIP_STAGGER * devices.length + 400; // all chips in + settle
+	const DATAFLOW_DURATION = 1200;
+	const AVATAR_DURATION = 600;
+	const HOLD_DURATION = 1800;
+	const FADEOUT_DURATION = 600;
 
 	onMount(() => {
-		const avatarInterval = setInterval(() => {
-			currentAvatarName = avatarNames[avatarIndex % avatarNames.length];
-			avatarIndex++;
-		}, 3500);
+		let timeout: ReturnType<typeof setTimeout>;
+		let cancelled = false;
 
-		return () => clearInterval(avatarInterval);
+		function runCycle() {
+			if (cancelled) return;
+
+			// Phase 1: Chips fade in
+			phase = 'chips';
+
+			timeout = setTimeout(() => {
+				if (cancelled) return;
+				// Phase 2: Data flows to center
+				phase = 'dataflow';
+
+				timeout = setTimeout(() => {
+					if (cancelled) return;
+					// Phase 3: Avatar morphs in
+					phase = 'avatar';
+
+					timeout = setTimeout(() => {
+						if (cancelled) return;
+						// Phase 4: Hold
+						phase = 'hold';
+
+						timeout = setTimeout(() => {
+							if (cancelled) return;
+							// Phase 5: Fade everything out
+							phase = 'fadeout';
+
+							timeout = setTimeout(() => {
+								if (cancelled) return;
+								// Advance to next avatar and randomize chip start
+								avatarIndex = (avatarIndex + 1) % avatarNames.length;
+								currentAvatarName = avatarNames[avatarIndex];
+								chipStartOffset = Math.floor(Math.random() * devices.length);
+								// Restart cycle
+								runCycle();
+							}, FADEOUT_DURATION);
+						}, HOLD_DURATION);
+					}, AVATAR_DURATION);
+				}, DATAFLOW_DURATION);
+			}, CHIP_PHASE_DURATION);
+		}
+
+		runCycle();
+
+		return () => {
+			cancelled = true;
+			clearTimeout(timeout);
+		};
 	});
 </script>
 
@@ -57,7 +120,7 @@
 			<p class="hero-note" use:reveal={{ delay: 280 }}>{PLATFORM_NOTE}</p>
 		</div>
 
-		<div class="hero-visual" use:reveal={{ delay: 120 }} aria-hidden="true">
+		<div class="hero-visual" use:reveal={{ delay: 120 }} aria-hidden="true" data-phase={phase}>
 			<svg class="hero-orbits" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
 				{#each devices as device, i}
 					<line
@@ -69,7 +132,7 @@
 						stroke-width="0.35"
 						stroke-dasharray="1.5 2.5"
 						class="flow-line"
-						style="--i: {i};"
+						style="--i: {chipDelayOrder[i]};"
 					/>
 				{/each}
 
@@ -93,7 +156,10 @@
 			</svg>
 
 			{#each devices as device, i}
-				<div class="chip" style="left:{device.x}%; top:{device.y}%; --i: {i};">
+				<div
+					class="chip"
+					style="left:{device.x}%; top:{device.y}%; --i: {chipDelayOrder[i]};"
+				>
 					<div class="chip-icon" style="background-color: {device.color}">
 						<img src={device.icon} alt={device.name} />
 					</div>
@@ -229,9 +295,28 @@
 		transform-origin: 50% 50%;
 		animation: spin 28s linear infinite;
 	}
+
+	/* Flow lines: hidden by default, animated during dataflow phase */
 	.flow-line {
-		animation: dash 90s linear infinite;
-		animation-delay: calc(var(--i) * 0.5s);
+		stroke-dasharray: 1.5 2.5;
+		stroke-dashoffset: 40;
+		opacity: 0;
+		transition:
+			stroke-dashoffset 1s ease-out,
+			opacity 0.3s ease;
+		transition-delay: calc(var(--i) * 0.12s);
+	}
+	[data-phase='dataflow'] .flow-line,
+	[data-phase='avatar'] .flow-line,
+	[data-phase='hold'] .flow-line {
+		stroke-dashoffset: 0;
+		opacity: 1;
+	}
+	[data-phase='fadeout'] .flow-line {
+		stroke-dashoffset: 0;
+		opacity: 0;
+		transition:
+			opacity 0.5s ease;
 	}
 
 	/* Chips */
@@ -247,9 +332,27 @@
 		padding: 0.35rem 0.7rem 0.35rem 0.35rem;
 		border-radius: 999px;
 		white-space: nowrap;
-		animation: fadeUp 0.6s ease-out both;
-		animation-delay: calc(0.3s + var(--i) * 0.1s);
+		opacity: 0;
+		transition:
+			opacity 0.45s ease-out,
+			transform 0.45s ease-out;
+		transition-delay: calc(var(--i) * 0.18s);
 	}
+	/* Chips phase: staggered clockwise fade-in */
+	[data-phase='chips'] .chip,
+	[data-phase='dataflow'] .chip,
+	[data-phase='avatar'] .chip,
+	[data-phase='hold'] .chip {
+		opacity: 1;
+		transform: translate(-50%, -50%) translateY(0);
+	}
+	/* Initial state for incoming chips (slightly offset up) */
+	[data-phase='fadeout'] .chip {
+		opacity: 0;
+		transform: translate(-50%, -50%) translateY(4px);
+		transition-delay: calc(var(--i) * 0.05s);
+	}
+
 	.chip-icon {
 		width: 26px;
 		height: 26px;
@@ -280,7 +383,25 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		opacity: 0;
+		transition:
+			opacity 0.5s ease-out,
+			transform 0.5s ease-out;
+		transform: translate(-50%, -50%) scale(0.88);
 	}
+	[data-phase='avatar'] .avatar-wrap,
+	[data-phase='hold'] .avatar-wrap {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
+	[data-phase='fadeout'] .avatar-wrap {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(0.92);
+		transition:
+			opacity 0.45s ease,
+			transform 0.45s ease;
+	}
+
 	.avatar {
 		width: 88px;
 		height: 88px;
@@ -288,7 +409,6 @@
 		border: 3px solid #fff;
 		box-shadow: 0 4px 24px rgba(47, 78, 192, 0.12);
 		background: #f4f5f7;
-		animation: avatarIn 0.5s ease-out both;
 	}
 	.twin-label {
 		margin-top: 0.6rem;
@@ -303,29 +423,6 @@
 	/* Animations */
 	@keyframes spin {
 		to { transform: rotate(360deg); }
-	}
-	@keyframes dash {
-		to { stroke-dashoffset: -100; }
-	}
-	@keyframes fadeUp {
-		from {
-			opacity: 0;
-			transform: translate(-50%, -50%) translateY(12px);
-		}
-		to {
-			opacity: 1;
-			transform: translate(-50%, -50%) translateY(0);
-		}
-	}
-	@keyframes avatarIn {
-		from {
-			opacity: 0;
-			transform: scale(0.85);
-		}
-		to {
-			opacity: 1;
-			transform: scale(1);
-		}
 	}
 
 	/* Responsive */
