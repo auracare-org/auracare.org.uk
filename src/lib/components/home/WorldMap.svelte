@@ -14,7 +14,6 @@
 		deferred: '#6b7280'
 	};
 
-	// Map each market entry onto its world-atlas country name.
 	const ATLAS_ALIAS: Record<string, string> = {
 		'United States': 'United States of America',
 		'United Kingdom (MHRA Airlock)': 'United Kingdom'
@@ -32,7 +31,6 @@
 		const atlas = ATLAS_ALIAS[p.name] ?? p.name;
 		const display = p.name === 'United Kingdom (MHRA Airlock)' ? 'United Kingdom' : p.name;
 		const existing = marketByCountry.get(atlas);
-		// Keep the earliest wave a country belongs to, so it lights up as soon as it appears.
 		if (!existing || p.wave < existing.wave) {
 			marketByCountry.set(atlas, { tone: p.tone, wave: p.wave, display, label: p.label });
 		}
@@ -47,7 +45,6 @@
 	const arcs = MARKET_ARCS.map((a) => ({ ...a, d: arcPath(a.from, a.to) })).filter((a) => a.d);
 	const currentWave = $derived(MARKET_WAVES[Math.min(activeWave, maxWave)]);
 
-	// Floating hover tooltip (Leaflet-style), driven by event delegation on the svg.
 	let hovered = $state<{ name: string; label?: string } | null>(null);
 	let tipX = $state(0);
 	let tipY = $state(0);
@@ -78,7 +75,7 @@
 		const mq = window.matchMedia('(min-width: 780px)');
 		const apply = () => {
 			pinned = mq.matches && !prefersReducedMotion();
-			if (!pinned) activeWave = maxWave; // show every wave at once
+			if (!pinned) activeWave = maxWave;
 		};
 		apply();
 		mq.addEventListener('change', apply);
@@ -94,7 +91,8 @@
 <section class="map-section aura-space" aria-labelledby="map-heading">
 	<div class="map-scroller" class:pinned use:scrollProgress={{ onProgress }}>
 		<div class="map-sticky">
-			<div class="container-wide map-grid">
+			<div class="container-wide map-layout">
+				<!-- Header above -->
 				<div class="map-head">
 					<span class="eyebrow">Global rollout</span>
 					<h2 id="map-heading">
@@ -104,25 +102,9 @@
 						One clinical deployment can feed several regulatory dossiers at once — so we sequence by
 						how far an approval travels, not by how big a market looks.
 					</p>
-
-					<div class="map-caption" aria-live="polite">
-						<span class="cap-badge" style="--c:{toneColor[currentWave.tone]}"
-							>Wave {currentWave.order + 1}</span
-						>
-						<div>
-							<strong>{currentWave.title}</strong>
-							<span>{currentWave.caption}</span>
-						</div>
-					</div>
-					<ol class="map-legend">
-						{#each MARKET_WAVES as w}
-							<li class:active={activeWave >= w.order}>
-								<span class="dot" style="background:{toneColor[w.tone]}"></span>{w.title}
-							</li>
-						{/each}
-					</ol>
 				</div>
 
+				<!-- Map in the middle -->
 				<div class="map-stage">
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<svg
@@ -165,11 +147,30 @@
 						</div>
 					{/if}
 				</div>
+
+				<!-- Wave info + legend below -->
+				<div class="map-foot">
+					<div class="wave-info" aria-live="polite">
+						{#key currentWave.order}
+							<div class="wave-slide">
+								<span class="cap-badge" style="--c:{toneColor[currentWave.tone]}">Wave {currentWave.order + 1}</span>
+								<strong>{currentWave.title}</strong>
+								<span class="wave-caption">{currentWave.caption}</span>
+							</div>
+						{/key}
+					</div>
+					<ol class="map-legend">
+						{#each MARKET_WAVES as w}
+							<li class:active={activeWave >= w.order}>
+								<span class="dot" style="background:{toneColor[w.tone]}"></span>{w.title}
+							</li>
+						{/each}
+					</ol>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- Accessible text equivalent of the map -->
 	<div class="sr-only">
 		<h3>Market rollout by wave</h3>
 		<ul>
@@ -188,7 +189,7 @@
 		height: 340vh;
 	}
 	.map-sticky {
-		padding-block: clamp(3rem, 6vw, 5rem);
+		padding-block: clamp(2.5rem, 5vw, 4rem);
 	}
 	.pinned .map-sticky {
 		position: sticky;
@@ -197,13 +198,20 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		padding-block: 1.5rem;
+		padding-block: 1rem;
 	}
-	.map-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 2rem;
-		align-items: center;
+
+	.map-layout {
+		display: flex;
+		flex-direction: column;
+		gap: clamp(1rem, 2vw, 1.5rem);
+	}
+
+	/* Header */
+	.map-head {
+		text-align: center;
+		max-width: 38rem;
+		margin: 0 auto;
 	}
 	.map-head h2 {
 		font-size: clamp(1.5rem, 2.8vw, 2.2rem);
@@ -211,39 +219,32 @@
 		margin-top: 0.5rem;
 	}
 	.map-sub {
-		max-width: 28rem;
-		margin-top: 0.75rem;
+		margin-top: 0.6rem;
+		font-size: 0.92rem;
 	}
+
+	/* Map */
 	.map-stage {
 		position: relative;
 		width: 100%;
-		display: flex;
-		align-items: center;
 		border: 1px solid var(--color-border-dark);
 		border-radius: var(--radius-lg);
-		padding: 1rem;
+		padding: 0.75rem;
 		background: var(--color-surface-dark);
-	}
-	@media (min-width: 900px) {
-		.map-grid {
-			grid-template-columns: 0.45fr 0.55fr;
-		}
 	}
 	.map-svg {
 		width: 100%;
 		height: auto;
-		max-height: 58vh;
+		max-height: 50vh;
 		overflow: visible;
 	}
 
-	/* Base countries + coloured market fills */
+	/* Countries */
 	.map-countries path {
 		fill: var(--color-neutral-alpha-invert-05);
 		stroke: var(--color-white-alpha-10);
 		stroke-width: 0.35;
-		transition:
-			fill 0.6s ease,
-			fill-opacity 0.6s ease;
+		transition: fill 0.6s ease, fill-opacity 0.6s ease;
 	}
 	.map-countries path.is-market {
 		fill-opacity: 0.12;
@@ -254,7 +255,6 @@
 		stroke: var(--color-white-alpha-20);
 		stroke-width: 0.4;
 	}
-	/* Leaflet-style hover highlight on any country */
 	.map-countries path:hover {
 		fill: var(--color-white-alpha-20);
 		stroke: var(--color-dark-overlay-60);
@@ -273,9 +273,7 @@
 		stroke-dasharray: 1000;
 		stroke-dashoffset: 1000;
 		opacity: 0;
-		transition:
-			stroke-dashoffset 1.1s ease,
-			opacity 0.5s ease;
+		transition: stroke-dashoffset 1.1s ease, opacity 0.5s ease;
 		pointer-events: none;
 	}
 	.map-arc.on {
@@ -283,7 +281,7 @@
 		stroke-dashoffset: 0;
 	}
 
-	/* Floating tooltip */
+	/* Tooltip */
 	.map-tip {
 		position: fixed;
 		z-index: 60;
@@ -309,12 +307,30 @@
 		white-space: normal;
 	}
 
-	.map-caption {
-		margin-top: 1.5rem;
+	/* Footer: wave info + legend */
+	.map-foot {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+	}
+	.wave-info {
+		position: relative;
+		min-height: 2.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+	.wave-slide {
 		display: flex;
 		align-items: center;
 		gap: 0.75rem;
-		min-height: 2.75rem;
+		animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+	@keyframes slideIn {
+		from { opacity: 0; transform: translateX(20px); }
+		to { opacity: 1; transform: translateX(0); }
 	}
 	.cap-badge {
 		flex: none;
@@ -328,18 +344,19 @@
 		padding: 0.3rem 0.55rem;
 		border-radius: var(--radius-sm);
 	}
-	.map-caption strong {
+	.wave-info strong {
 		color: #fff;
-		display: block;
 		font-size: 0.95rem;
 	}
-	.map-caption span {
+	.wave-caption {
 		color: var(--color-white-alpha-70);
 		font-size: 0.85rem;
 	}
+
 	.map-legend {
 		display: flex;
 		flex-wrap: wrap;
+		justify-content: center;
 		gap: 0.4rem 1rem;
 		list-style: none;
 		margin: 0;
@@ -349,7 +366,7 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 0.4rem;
-		font-size: 0.78rem;
+		font-size: 0.75rem;
 		color: var(--color-dark-overlay-40);
 		transition: color 0.3s ease;
 	}
@@ -357,8 +374,8 @@
 		color: var(--color-white-alpha-80);
 	}
 	.map-legend .dot {
-		width: 0.5rem;
-		height: 0.5rem;
+		width: 0.45rem;
+		height: 0.45rem;
 		border-radius: 999px;
 		opacity: 0.5;
 	}
@@ -382,8 +399,10 @@
 		.map-svg {
 			max-height: none;
 		}
-		.map-head h2 br {
-			display: none;
+		.wave-slide {
+			flex-wrap: wrap;
+			justify-content: center;
+			text-align: center;
 		}
 	}
 </style>
