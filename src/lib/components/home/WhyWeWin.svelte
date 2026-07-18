@@ -23,7 +23,7 @@
 
 		<div class="layout">
 			<div class="venn-wrap" use:reveal={{ delay: 120 }}>
-				<svg class="venn-svg" viewBox="0 0 320 260" fill="none">
+				<svg class="venn-svg" viewBox="0 0 320 245" fill="none">
 					<!-- Three overlapping circles -->
 					<circle
 						class="lobe" class:lobe-active={active === 0}
@@ -64,10 +64,10 @@
 					<text class="num" class:num-text-active={active === 1} x="22" y="208" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(1)}>2</text>
 					<text class="num" class:num-text-active={active === 2} x="298" y="208" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(2)}>3</text>
 
-					<!-- Title text right next to each number -->
+					<!-- Title text next to each number -->
 					<text class="label-svg" class:label-svg-active={active === 0} x="284" y="28" text-anchor="start" dominant-baseline="central" onclick={() => toggle(0)}>{MOAT[0].title}</text>
-					<text class="label-svg" class:label-svg-active={active === 1} x="42" y="208" text-anchor="start" dominant-baseline="central" onclick={() => toggle(1)}>{MOAT[1].title}</text>
-					<text class="label-svg" class:label-svg-active={active === 2} x="278" y="208" text-anchor="end" dominant-baseline="central" onclick={() => toggle(2)}>{MOAT[2].title}</text>
+					<text class="label-svg" class:label-svg-active={active === 1} x="22" y="230" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(1)}>{MOAT[1].title}</text>
+					<text class="label-svg" class:label-svg-active={active === 2} x="298" y="230" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(2)}>{MOAT[2].title}</text>
 				</svg>
 			</div>
 
