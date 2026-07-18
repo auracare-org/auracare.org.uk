@@ -139,34 +139,55 @@
 		border-block: 1px solid var(--color-border-dark);
 	}
 
-	/* Fluid grid background */
+	/* Fluid grid background — flowing square blobs */
 	.fluid-grid {
 		position: absolute;
 		inset: 0;
 		display: grid;
 		grid-template-columns: repeat(12, 1fr);
 		grid-template-rows: repeat(8, 1fr);
-		gap: 1px;
-		opacity: 0.35;
+		gap: 0;
 		pointer-events: auto;
 	}
 	.fluid-cell {
 		position: relative;
-		background: var(--color-surface-dark);
-		border: 1px solid var(--color-border-dark);
-		transition: background 0.6s ease, border-color 0.4s ease;
-		animation: fluidPulse 6s ease-in-out infinite;
-		animation-delay: calc((var(--col) * 0.15s) + (var(--row) * 0.2s));
+		background: transparent;
+		transition: background 0.5s ease;
+		cursor: crosshair;
 	}
-	.fluid-cell:hover {
-		background: rgba(97, 128, 255, 0.12);
-		border-color: rgba(97, 128, 255, 0.3);
-		opacity: 1;
-		z-index: 10;
+	.fluid-cell::after {
+		content: '';
+		position: absolute;
+		inset: 15%;
+		border-radius: 3px;
+		background: rgba(97, 128, 255, 0.03);
+		border: 1px solid rgba(97, 128, 255, 0.06);
+		transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+		animation: drift 8s ease-in-out infinite;
+		animation-delay: calc((var(--col) * 0.3s) + (var(--row) * 0.4s));
 	}
-	@keyframes fluidPulse {
-		0%, 100% { background: var(--color-surface-dark); }
-		50% { background: rgba(97, 128, 255, 0.04); }
+	.fluid-cell:hover::after {
+		inset: 5%;
+		background: rgba(97, 128, 255, 0.15);
+		border-color: rgba(97, 128, 255, 0.4);
+	}
+	@keyframes drift {
+		0%, 100% {
+			inset: 15%;
+			transform: translate(0, 0);
+		}
+		25% {
+			inset: 12% 18% 18% 12%;
+			transform: translate(2px, -1px);
+		}
+		50% {
+			inset: 18% 12% 12% 18%;
+			transform: translate(-1px, 2px);
+		}
+		75% {
+			inset: 14% 16% 16% 14%;
+			transform: translate(1px, 1px);
+		}
 	}
 
 	.cell-label {
@@ -184,6 +205,7 @@
 		border-radius: 4px;
 		white-space: nowrap;
 		pointer-events: none;
+		z-index: 20;
 		animation: tipIn 0.15s ease-out;
 	}
 	@keyframes tipIn {
