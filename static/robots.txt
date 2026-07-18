@@ -1,3 +1,5 @@
-# allow crawling everything by default
+# Auracare AI
 User-agent: *
-Disallow:
+Allow: /
+
+Sitemap: https://auracare.org.uk/sitemap.xml
