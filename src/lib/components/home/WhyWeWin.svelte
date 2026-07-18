@@ -2,21 +2,6 @@
 	import { reveal } from '$lib/actions/motion';
 	import { MOAT, MOAT_LINE } from '$lib/data/company';
 
-	const R = 24;
-	const circles = [
-		{ cx: 50, cy: 32 },
-		{ cx: 36, cy: 58 },
-		{ cx: 64, cy: 58 }
-	];
-
-	// Labels positioned to the side of each circle, connected by dashed lines
-	// 1 = top-right of circle 1, 2 = left of circle 2, 3 = right of circle 3
-	const annotations = [
-		{ numX: 82, numY: 18, lineX1: 50 + R - 4, lineY1: 32 - R + 6, lineX2: 79, lineY2: 18 },
-		{ numX: 8, numY: 62, lineX1: 36 - R + 4, lineY1: 58, lineX2: 11, lineY2: 62 },
-		{ numX: 92, numY: 62, lineX1: 64 + R - 4, lineY1: 58, lineX2: 89, lineY2: 62 }
-	];
-
 	let active = $state<number | null>(null);
 
 	function toggle(i: number) {
@@ -37,70 +22,54 @@
 		</header>
 
 		<div class="layout">
-			<figure class="venn" use:reveal={{ delay: 120 }}>
-				<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-					{#each circles as c, i}
-						<circle
-							class="lobe"
-							class:lobe-active={active === i}
-							cx={c.cx}
-							cy={c.cy}
-							r={R}
-							role="button"
-							tabindex="0"
-							aria-label={MOAT[i].title}
-							onclick={() => toggle(i)}
-							onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(i); }}
-						/>
-					{/each}
+			<div class="venn-wrap" use:reveal={{ delay: 120 }}>
+				<svg class="venn-svg" viewBox="0 0 320 260" fill="none">
+					<!-- Three overlapping circles -->
+					<circle
+						class="lobe" class:lobe-active={active === 0}
+						cx="160" cy="100" r="72"
+						onclick={() => toggle(0)}
+						role="button" tabindex="0" aria-label={MOAT[0].title}
+						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(0); }}
+					/>
+					<circle
+						class="lobe" class:lobe-active={active === 1}
+						cx="120" cy="162" r="72"
+						onclick={() => toggle(1)}
+						role="button" tabindex="0" aria-label={MOAT[1].title}
+						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(1); }}
+					/>
+					<circle
+						class="lobe" class:lobe-active={active === 2}
+						cx="200" cy="162" r="72"
+						onclick={() => toggle(2)}
+						role="button" tabindex="0" aria-label={MOAT[2].title}
+						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(2); }}
+					/>
 
-					<circle class="core" cx="50" cy="50" r="2.5" />
+					<!-- Center dot -->
+					<circle cx="160" cy="142" r="4" fill="var(--color-primary-400)" opacity="0.5" />
 
-					<!-- Dashed connector lines from circles to side labels -->
-					{#each annotations as a, i}
-						<line
-							class="connector"
-							class:connector-active={active === i}
-							x1={a.lineX1}
-							y1={a.lineY1}
-							x2={a.lineX2}
-							y2={a.lineY2}
-							stroke-dasharray="2 2"
-						/>
-					{/each}
+					<!-- Dashed lines to labels -->
+					<line class="dash" class:dash-active={active === 0} x1="220" y1="52" x2="252" y2="36" />
+					<line class="dash" class:dash-active={active === 1} x1="60" y1="190" x2="32" y2="200" />
+					<line class="dash" class:dash-active={active === 2} x1="260" y1="190" x2="288" y2="200" />
 
-					<!-- Number badges to the side -->
-					{#each annotations as a, i}
-						<circle
-							class="num-bg"
-							class:num-bg-active={active === i}
-							cx={a.numX}
-							cy={a.numY}
-							r="5"
-						/>
-						<text
-							class="venn-num"
-							class:venn-num-active={active === i}
-							x={a.numX}
-							y={a.numY}
-							text-anchor="middle"
-							dominant-baseline="central"
-							onclick={() => toggle(i)}
-						>{i + 1}</text>
-					{/each}
+					<!-- Number circles -->
+					<circle class="num-circle" class:num-active={active === 0} cx="264" cy="28" r="14" />
+					<circle class="num-circle" class:num-active={active === 1} cx="22" cy="208" r="14" />
+					<circle class="num-circle" class:num-active={active === 2} cx="298" cy="208" r="14" />
+
+					<text class="num" class:num-text-active={active === 0} x="264" y="28" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(0)}>1</text>
+					<text class="num" class:num-text-active={active === 1} x="22" y="208" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(1)}>2</text>
+					<text class="num" class:num-text-active={active === 2} x="298" y="208" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(2)}>3</text>
+
+					<!-- Title text right next to each number -->
+					<text class="label-svg" class:label-svg-active={active === 0} x="284" y="28" text-anchor="start" dominant-baseline="central" onclick={() => toggle(0)}>{MOAT[0].title}</text>
+					<text class="label-svg" class:label-svg-active={active === 1} x="42" y="208" text-anchor="start" dominant-baseline="central" onclick={() => toggle(1)}>{MOAT[1].title}</text>
+					<text class="label-svg" class:label-svg-active={active === 2} x="278" y="208" text-anchor="end" dominant-baseline="central" onclick={() => toggle(2)}>{MOAT[2].title}</text>
 				</svg>
-
-				<!-- Side title labels (HTML for better typography) -->
-				<button class="side-label side-label-1" class:side-label-active={active === 0} onclick={() => toggle(0)}>
-					{MOAT[0].title}
-				</button>
-				<button class="side-label side-label-2" class:side-label-active={active === 1} onclick={() => toggle(1)}>
-					{MOAT[1].title}
-				</button>
-				<button class="side-label side-label-3" class:side-label-active={active === 2} onclick={() => toggle(2)}>
-					{MOAT[2].title}
-				</button>
-			</figure>
+			</div>
 
 			<div class="detail-area">
 				{#if active !== null}
@@ -149,108 +118,87 @@
 		margin-top: clamp(2rem, 4vw, 3rem);
 	}
 
-	/* Venn */
-	.venn {
+	/* Venn container */
+	.venn-wrap {
 		position: relative;
 		width: 100%;
-		max-width: 28rem;
+		max-width: 26rem;
 		margin: 0 auto;
-		aspect-ratio: 1.2;
 	}
-	.venn svg {
+	.venn-svg {
 		width: 100%;
-		height: 100%;
+		height: auto;
 		overflow: visible;
 	}
+
+	/* Circles */
 	.lobe {
-		fill: rgba(47, 78, 192, 0.04);
-		stroke: var(--color-primary-300);
-		stroke-width: 1.2;
-		outline: none;
+		fill: rgba(47, 78, 192, 0.03);
+		stroke: var(--color-primary-200);
+		stroke-width: 1.5;
 		cursor: pointer;
-		transition: all 0.3s ease;
+		outline: none;
+		transition: fill 0.3s ease, stroke 0.3s ease;
 	}
-	.lobe:focus-visible {
-		stroke: var(--color-primary-600);
-		stroke-width: 1.8;
+	.lobe:hover {
+		fill: rgba(47, 78, 192, 0.06);
+		stroke: var(--color-primary-400);
 	}
 	.lobe-active {
-		fill: rgba(47, 78, 192, 0.1);
-		stroke: var(--color-primary-600);
+		fill: rgba(47, 78, 192, 0.08);
+		stroke: var(--color-primary-500);
 		stroke-width: 1.8;
 	}
-	.core {
-		fill: var(--color-primary-500);
-		opacity: 0.6;
-	}
-	.connector {
+
+	/* Dashed connector lines */
+	.dash {
 		stroke: var(--color-primary-200);
-		stroke-width: 0.6;
+		stroke-width: 1.2;
+		stroke-dasharray: 4 4;
 		transition: stroke 0.3s ease;
 	}
-	.connector-active {
-		stroke: var(--color-primary-600);
-		stroke-width: 0.8;
+	.dash-active {
+		stroke: var(--color-primary-500);
 	}
-	.num-bg {
-		fill: var(--color-neutral-0);
+
+	/* Number circles */
+	.num-circle {
+		fill: #fff;
 		stroke: var(--color-primary-200);
-		stroke-width: 0.7;
-		cursor: pointer;
+		stroke-width: 1.2;
 		transition: all 0.3s ease;
 	}
-	.num-bg-active {
-		stroke: var(--color-primary-600);
+	.num-active {
+		stroke: var(--color-primary-500);
 		fill: var(--color-primary-50);
 	}
-	.venn-num {
+	.num {
 		font-family: var(--font-family-mono);
-		font-size: 5.5px;
+		font-size: 12px;
 		font-weight: 600;
-		fill: var(--color-primary-600);
+		fill: var(--color-primary-500);
 		cursor: pointer;
-		transition: all 0.3s ease;
+		transition: fill 0.3s ease;
 	}
-	.venn-num-active {
-		font-weight: 700;
+	.num-text-active {
 		fill: var(--color-primary-700);
 	}
 
-	/* Side labels (HTML positioned absolutely) */
-	.side-label {
-		position: absolute;
-		font-size: 0.72rem;
+	/* SVG title labels next to numbers */
+	.label-svg {
+		font-family: var(--font-family-sans);
+		font-size: 10px;
 		font-weight: 500;
-		color: var(--color-ink-faint);
-		background: none;
-		border: none;
-		padding: 0;
+		fill: var(--color-ink-faint);
 		cursor: pointer;
-		max-width: 8rem;
-		line-height: 1.3;
-		text-align: left;
-		transition: color 0.3s ease;
+		transition: fill 0.3s ease;
 	}
-	.side-label:hover,
-	.side-label-active {
-		color: var(--color-primary-600);
-	}
-	.side-label-1 {
-		top: 8%;
-		right: 2%;
-		text-align: right;
-	}
-	.side-label-2 {
-		bottom: 22%;
-		left: 0;
-	}
-	.side-label-3 {
-		bottom: 22%;
-		right: 0;
-		text-align: right;
+	.label-svg:hover,
+	.label-svg-active {
+		fill: var(--color-primary-600);
 	}
 
-	/* Detail area below Venn */
+	/* Detail card */
 	.detail-area {
 		width: 100%;
 		max-width: 32rem;
