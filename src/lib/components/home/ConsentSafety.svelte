@@ -111,8 +111,8 @@
 							/>
 						{/if}
 					{/each}
-					<!-- Active path on top -->
-					{#if activeNode !== null}
+					<!-- Active path on top — #key forces re-mount so animation restarts -->
+					{#key activeNode}
 						{@const pos = nodePositions[activeNode]}
 						<path
 							class="route-path route-active"
@@ -122,7 +122,7 @@
 							stroke-width="1.2"
 							stroke-linecap="round"
 						/>
-					{/if}
+					{/key}
 				</svg>
 
 				<div class="twin-node">
@@ -277,9 +277,9 @@
 		transition: stroke 0.6s cubic-bezier(0.4, 0, 0.2, 1), stroke-width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 	.route-active {
-		stroke-dasharray: 200;
-		stroke-dashoffset: 200;
-		animation: flowIn 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+		stroke-dasharray: 400;
+		stroke-dashoffset: 400;
+		animation: flowIn 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 	}
 	@keyframes flowIn {
 		to { stroke-dashoffset: 0; }

@@ -21,7 +21,6 @@
 	const formatK = (n: number) => `${Math.round(n / 1_000).toLocaleString()}k`;
 	const formatM = (n: number) => `${(n / 1_000_000).toFixed(1)}M`;
 
-	// Medical concepts for the fluid grid
 	const concepts = [
 		'Hypertension', 'Diabetes mellitus', 'Asthma', 'Heart failure',
 		'Atrial fibrillation', 'COPD', 'Pneumonia', 'Anaemia',
@@ -55,32 +54,145 @@
 		'Varicose veins', 'Lymphoedema', 'Anaphylaxis', 'Angioedema'
 	];
 
-	const GRID_COLS = 12;
-	const GRID_ROWS = 8;
-	const TOTAL = GRID_COLS * GRID_ROWS;
+	const PARTICLE_COUNT = 400;
 
-	let hoveredCell = $state<number | null>(null);
-	let sectionEl = $state<HTMLElement | null>(null);
+	interface Particle {
+		x: number;
+		y: number;
+		vx: number;
+		vy: number;
+		size: number;
+		opacity: number;
+		concept: string;
+	}
 
-	// Assign a concept to each cell
-	const cellConcepts = Array.from({ length: TOTAL }, (_, i) => concepts[i % concepts.length]);
+	let canvasEl = $state<HTMLCanvasElement | null>(null);
+	let tooltip = $state<{ text: string; x: number; y: number } | null>(null);
+	let particlesArr: Particle[] = [];
+	let w = 0;
+	let h = 0;
+
+	function seed(s: number) {
+		return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
+	}
+
+	onMount(() => {
+		const canvas = canvasEl!;
+		const ctx = canvas.getContext('2d')!;
+		const dpr = window.devicePixelRatio || 1;
+		const rand = seed(42);
+
+		function resize() {
+			const rect = canvas.parentElement!.getBoundingClientRect();
+			w = rect.width;
+			h = rect.height;
+			canvas.width = w * dpr;
+			canvas.height = h * dpr;
+			canvas.style.width = w + 'px';
+			canvas.style.height = h + 'px';
+			ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+		}
+
+		resize();
+
+		// Init particles
+		for (let i = 0; i < PARTICLE_COUNT; i++) {
+			particlesArr.push({
+				x: rand() * w,
+				y: rand() * h,
+				vx: (rand() - 0.5) * 0.6,
+				vy: (rand() - 0.5) * 0.4,
+				size: 1.5 + rand() * 3,
+				opacity: 0.1 + rand() * 0.35,
+				concept: concepts[i % concepts.length]
+			});
+		}
+
+		let raf: number;
+
+		function frame() {
+			ctx.clearRect(0, 0, w, h);
+
+			for (const p of particlesArr) {
+				// Move
+				p.x += p.vx;
+				p.y += p.vy;
+
+				// Wrap around edges
+				if (p.x < -10) p.x = w + 10;
+				if (p.x > w + 10) p.x = -10;
+				if (p.y < -10) p.y = h + 10;
+				if (p.y > h + 10) p.y = -10;
+
+				// Draw square
+				ctx.fillStyle = `rgba(97, 128, 255, ${p.opacity})`;
+				ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+			}
+
+			raf = requestAnimationFrame(frame);
+		}
+
+		frame();
+
+		const ro = new ResizeObserver(() => {
+			resize();
+			// Redistribute particles that are now out of bounds
+			for (const p of particlesArr) {
+				if (p.x > w) p.x = rand() * w;
+				if (p.y > h) p.y = rand() * h;
+			}
+		});
+		ro.observe(canvas.parentElement!);
+
+		// Hover detection
+		function onMouseMove(e: MouseEvent) {
+			const rect = canvas.getBoundingClientRect();
+			const mx = e.clientX - rect.left;
+			const my = e.clientY - rect.top;
+			const hitRadius = 14;
+
+			let found: Particle | null = null;
+			for (const p of particlesArr) {
+				const dx = mx - p.x;
+				const dy = my - p.y;
+				if (Math.abs(dx) < hitRadius && Math.abs(dy) < hitRadius) {
+					found = p;
+					break;
+				}
+			}
+
+			if (found) {
+				tooltip = { text: found.concept, x: e.clientX, y: e.clientY };
+			} else {
+				tooltip = null;
+			}
+		}
+
+		function onMouseLeave() {
+			tooltip = null;
+		}
+
+		canvas.addEventListener('mousemove', onMouseMove);
+		canvas.addEventListener('mouseleave', onMouseLeave);
+
+		return () => {
+			cancelAnimationFrame(raf);
+			ro.disconnect();
+			canvas.removeEventListener('mousemove', onMouseMove);
+			canvas.removeEventListener('mouseleave', onMouseLeave);
+		};
+	});
 </script>
 
-<section class="tech aura-space section-y" bind:this={sectionEl}>
-	<!-- Fluid grid background -->
-	<div class="fluid-grid" aria-hidden="true">
-		{#each cellConcepts as concept, i}
-			<div
-				class="fluid-cell"
-				style="--col:{i % GRID_COLS}; --row:{Math.floor(i / GRID_COLS)};"
-				onmouseenter={() => hoveredCell = i}
-				onmouseleave={() => hoveredCell = null}
-			>
-				{#if hoveredCell === i}
-					<span class="cell-label">{concept}</span>
-				{/if}
+<section class="tech aura-space section-y">
+	<!-- Canvas fluid background -->
+	<div class="fluid-field">
+		<canvas bind:this={canvasEl} class="fluid-canvas"></canvas>
+		{#if tooltip}
+			<div class="particle-tip" style="left:{tooltip.x}px; top:{tooltip.y}px;">
+				{tooltip.text}
 			</div>
-		{/each}
+		{/if}
 	</div>
 
 	<div class="container-wide tech-grid">
@@ -139,62 +251,25 @@
 		border-block: 1px solid var(--color-border-dark);
 	}
 
-	/* Fluid grid background — flowing square blobs */
-	.fluid-grid {
+	.fluid-field {
 		position: absolute;
 		inset: 0;
-		display: grid;
-		grid-template-columns: repeat(12, 1fr);
-		grid-template-rows: repeat(8, 1fr);
-		gap: 0;
-		pointer-events: auto;
+		z-index: 0;
+		pointer-events: none;
 	}
-	.fluid-cell {
-		position: relative;
-		background: transparent;
-		transition: background 0.5s ease;
+	.fluid-canvas {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: auto;
 		cursor: crosshair;
 	}
-	.fluid-cell::after {
-		content: '';
-		position: absolute;
-		inset: 15%;
-		border-radius: 3px;
-		background: rgba(97, 128, 255, 0.03);
-		border: 1px solid rgba(97, 128, 255, 0.06);
-		transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-		animation: drift 8s ease-in-out infinite;
-		animation-delay: calc((var(--col) * 0.3s) + (var(--row) * 0.4s));
-	}
-	.fluid-cell:hover::after {
-		inset: 5%;
-		background: rgba(97, 128, 255, 0.15);
-		border-color: rgba(97, 128, 255, 0.4);
-	}
-	@keyframes drift {
-		0%, 100% {
-			inset: 15%;
-			transform: translate(0, 0);
-		}
-		25% {
-			inset: 12% 18% 18% 12%;
-			transform: translate(2px, -1px);
-		}
-		50% {
-			inset: 18% 12% 12% 18%;
-			transform: translate(-1px, 2px);
-		}
-		75% {
-			inset: 14% 16% 16% 14%;
-			transform: translate(1px, 1px);
-		}
-	}
 
-	.cell-label {
-		position: absolute;
-		bottom: calc(100% + 4px);
-		left: 50%;
-		transform: translateX(-50%);
+	.particle-tip {
+		position: fixed;
+		z-index: 20;
+		transform: translate(-50%, calc(-100% - 12px));
 		background: rgba(20, 24, 40, 0.95);
 		border: 1px solid rgba(97, 128, 255, 0.3);
 		color: var(--color-primary-300);
@@ -205,12 +280,6 @@
 		border-radius: 4px;
 		white-space: nowrap;
 		pointer-events: none;
-		z-index: 20;
-		animation: tipIn 0.15s ease-out;
-	}
-	@keyframes tipIn {
-		from { opacity: 0; transform: translateX(-50%) translateY(3px); }
-		to { opacity: 1; transform: translateX(-50%) translateY(0); }
 	}
 
 	/* Content grid */
@@ -221,6 +290,11 @@
 		grid-template-columns: 1fr;
 		gap: clamp(2.5rem, 5vw, 4rem);
 		align-items: center;
+		pointer-events: none;
+	}
+	.tech-grid :global(a),
+	.tech-grid :global(button) {
+		pointer-events: auto;
 	}
 	.tech-copy h2 {
 		font-size: clamp(1.9rem, 4.4vw, 3rem);
