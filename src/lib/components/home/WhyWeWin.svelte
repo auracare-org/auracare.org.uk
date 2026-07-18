@@ -24,13 +24,13 @@
 		<div class="layout">
 			<div class="venn-wrap" use:reveal={{ delay: 120 }}>
 				<svg class="venn-svg" viewBox="0 0 320 245" fill="none">
-					<!-- Three overlapping circles -->
+					<!-- Three overlapping circles — drawn 3, 2, 1 so 1 is on top -->
 					<circle
-						class="lobe" class:lobe-active={active === 0}
-						cx="160" cy="100" r="72"
-						onclick={() => toggle(0)}
-						role="button" tabindex="0" aria-label={MOAT[0].title}
-						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(0); }}
+						class="lobe" class:lobe-active={active === 2}
+						cx="200" cy="162" r="72"
+						onclick={() => toggle(2)}
+						role="button" tabindex="0" aria-label={MOAT[2].title}
+						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(2); }}
 					/>
 					<circle
 						class="lobe" class:lobe-active={active === 1}
@@ -40,11 +40,11 @@
 						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(1); }}
 					/>
 					<circle
-						class="lobe" class:lobe-active={active === 2}
-						cx="200" cy="162" r="72"
-						onclick={() => toggle(2)}
-						role="button" tabindex="0" aria-label={MOAT[2].title}
-						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(2); }}
+						class="lobe" class:lobe-active={active === 0}
+						cx="160" cy="100" r="72"
+						onclick={() => toggle(0)}
+						role="button" tabindex="0" aria-label={MOAT[0].title}
+						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(0); }}
 					/>
 
 					<!-- Center dot -->

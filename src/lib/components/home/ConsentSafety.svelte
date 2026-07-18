@@ -98,17 +98,31 @@
 						</linearGradient>
 					</defs>
 
+					<!-- Inactive paths first -->
 					{#each nodePositions as pos, i}
+						{#if activeNode !== i}
+							<path
+								class="route-path"
+								d="M 18 50 C {30 + i * 3} {50 - (i - 2.5) * 8}, {pos.x - 15} {pos.y + (pos.y < 50 ? 10 : -10)}, {pos.x} {pos.y}"
+								fill="none"
+								stroke="#e2e5ea"
+								stroke-width="0.5"
+								stroke-linecap="round"
+							/>
+						{/if}
+					{/each}
+					<!-- Active path on top -->
+					{#if activeNode !== null}
+						{@const pos = nodePositions[activeNode]}
 						<path
-							class="route-path"
-							class:route-active={activeNode === i}
-							d="M 18 50 C {30 + i * 3} {50 - (i - 2.5) * 8}, {pos.x - 15} {pos.y + (pos.y < 50 ? 10 : -10)}, {pos.x} {pos.y}"
+							class="route-path route-active"
+							d="M 18 50 C {30 + activeNode * 3} {50 - (activeNode - 2.5) * 8}, {pos.x - 15} {pos.y + (pos.y < 50 ? 10 : -10)}, {pos.x} {pos.y}"
 							fill="none"
-							stroke={activeNode === i ? 'url(#flow-grad)' : '#e2e5ea'}
-							stroke-width={activeNode === i ? '1.2' : '0.5'}
+							stroke="url(#flow-grad)"
+							stroke-width="1.2"
 							stroke-linecap="round"
 						/>
-					{/each}
+					{/if}
 				</svg>
 
 				<div class="twin-node">
