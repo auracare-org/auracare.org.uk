@@ -67,7 +67,8 @@
 
 	function onProgress(p: number) {
 		if (!pinned) return;
-		const t = Math.min(1, Math.max(0, (p - 0.08) / 0.84));
+		// Map 5%–65% of scroll to all waves, so wave 7 is reached well before unstick
+		const t = Math.min(1, Math.max(0, (p - 0.05) / 0.6));
 		activeWave = Math.round(t * maxWave);
 	}
 

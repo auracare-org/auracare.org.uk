@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { reveal, countUp } from '$lib/actions/motion';
 	import { CONTACT, ONTOLOGY_STATS } from '$lib/data/company';
+	import { onMount } from 'svelte';
 
-	// Interpret each stat: numeric tiles (532k, 1.3M) animate; textual tiles (ICD-11, LOINC) stay put.
 	type Tile =
 		| { kind: 'number'; target: number; suffix: 'k' | 'M'; label: string }
 		| { kind: 'text'; value: string; label: string };
@@ -18,36 +18,71 @@
 		return { kind: 'text', value: s.value, label: s.label };
 	});
 
-	// Formatters that reproduce the original display string as the count lands.
 	const formatK = (n: number) => `${Math.round(n / 1_000).toLocaleString()}k`;
 	const formatM = (n: number) => `${(n / 1_000_000).toFixed(1)}M`;
 
-	// Decorative node-graph motif — soft cluster of nodes joined by edges.
-	const nodes = [
-		{ x: 50, y: 46, r: 5.5 },
-		{ x: 22, y: 24, r: 3.2 },
-		{ x: 78, y: 22, r: 3.6 },
-		{ x: 84, y: 62, r: 3 },
-		{ x: 58, y: 82, r: 3.4 },
-		{ x: 24, y: 70, r: 3 },
-		{ x: 12, y: 48, r: 2.6 },
-		{ x: 64, y: 14, r: 2.4 }
+	// Medical concepts for the fluid grid
+	const concepts = [
+		'Hypertension', 'Diabetes mellitus', 'Asthma', 'Heart failure',
+		'Atrial fibrillation', 'COPD', 'Pneumonia', 'Anaemia',
+		'Hypothyroidism', 'Chronic kidney disease', 'Osteoarthritis',
+		'Depression', 'Anxiety disorder', 'Migraine', 'Epilepsy',
+		'Gout', 'Psoriasis', 'Crohn\'s disease', 'Coeliac disease',
+		'Type 2 diabetes', 'Angina pectoris', 'DVT', 'Pulmonary embolism',
+		'Sepsis', 'Meningitis', 'Sarcoidosis', 'Lupus', 'Vasculitis',
+		'Hepatitis B', 'Cirrhosis', 'Pancreatitis', 'Cholecystitis',
+		'Appendicitis', 'Diverticulitis', 'Endometriosis', 'PCOS',
+		'Preeclampsia', 'Osteoporosis', 'Rheumatoid arthritis',
+		'Multiple sclerosis', 'Parkinson\'s disease', 'Motor neurone disease',
+		'Myocardial infarction', 'Stroke', 'Aortic stenosis',
+		'Mitral regurgitation', 'Cardiomyopathy', 'Pericarditis',
+		'Pleural effusion', 'Bronchiectasis', 'Interstitial lung disease',
+		'Obstructive sleep apnoea', 'Pulmonary fibrosis', 'Tuberculosis',
+		'HIV', 'Malaria', 'Dengue fever', 'Lyme disease', 'Cellulitis',
+		'Osteomyelitis', 'Glomerulonephritis', 'Nephrotic syndrome',
+		'Renal calculi', 'Benign prostatic hyperplasia', 'Bladder cancer',
+		'Breast cancer', 'Lung cancer', 'Colorectal cancer', 'Melanoma',
+		'Lymphoma', 'Leukaemia', 'Myeloma', 'Thyroid cancer',
+		'Dementia', 'Bipolar disorder', 'Schizophrenia', 'ADHD',
+		'Autism spectrum', 'Anorexia nervosa', 'OCD', 'PTSD',
+		'Iron deficiency', 'B12 deficiency', 'Folate deficiency',
+		'Hyperkalaemia', 'Hyponatraemia', 'Hypercalcaemia',
+		'Addison\'s disease', 'Cushing\'s syndrome', 'Acromegaly',
+		'Pheochromocytoma', 'Conn\'s syndrome', 'Grave\'s disease',
+		'Hashimoto\'s', 'Diabetic ketoacidosis', 'Hypoglycaemia',
+		'Metabolic syndrome', 'Dyslipidaemia', 'Familial hypercholesterolaemia',
+		'Peripheral arterial disease', 'Raynaud\'s phenomenon',
+		'Varicose veins', 'Lymphoedema', 'Anaphylaxis', 'Angioedema'
 	];
-	const edges = [
-		[0, 1],
-		[0, 2],
-		[0, 3],
-		[0, 4],
-		[0, 5],
-		[1, 6],
-		[1, 7],
-		[2, 7],
-		[3, 4],
-		[5, 6]
-	];
+
+	const GRID_COLS = 12;
+	const GRID_ROWS = 8;
+	const TOTAL = GRID_COLS * GRID_ROWS;
+
+	let hoveredCell = $state<number | null>(null);
+	let sectionEl = $state<HTMLElement | null>(null);
+
+	// Assign a concept to each cell
+	const cellConcepts = Array.from({ length: TOTAL }, (_, i) => concepts[i % concepts.length]);
 </script>
 
-<section class="tech aura-space section-y">
+<section class="tech aura-space section-y" bind:this={sectionEl}>
+	<!-- Fluid grid background -->
+	<div class="fluid-grid" aria-hidden="true">
+		{#each cellConcepts as concept, i}
+			<div
+				class="fluid-cell"
+				style="--col:{i % GRID_COLS}; --row:{Math.floor(i / GRID_COLS)};"
+				onmouseenter={() => hoveredCell = i}
+				onmouseleave={() => hoveredCell = null}
+			>
+				{#if hoveredCell === i}
+					<span class="cell-label">{concept}</span>
+				{/if}
+			</div>
+		{/each}
+	</div>
+
 	<div class="container-wide tech-grid">
 		<div class="tech-copy">
 			<h2 use:reveal={{ delay: 60 }}>
@@ -75,36 +110,6 @@
 		</div>
 
 		<div class="tech-visual" use:reveal={{ delay: 160 }}>
-			<svg
-				class="node-graph"
-				viewBox="0 0 100 100"
-				aria-hidden="true"
-				preserveAspectRatio="xMidYMid meet"
-			>
-				{#each edges as [a, b]}
-					<line
-						x1={nodes[a].x}
-						y1={nodes[a].y}
-						x2={nodes[b].x}
-						y2={nodes[b].y}
-						stroke="var(--color-white-alpha-15)"
-						stroke-width="0.35"
-					/>
-				{/each}
-				{#each nodes as n, i}
-					<circle
-						cx={n.x}
-						cy={n.y}
-						r={n.r}
-						fill="var(--color-surface-dark)"
-						stroke="var(--color-white-alpha-20)"
-						stroke-width="0.5"
-						class="node"
-						style="--i:{i}"
-					/>
-				{/each}
-			</svg>
-
 			<dl class="stat-tiles">
 				{#each tiles as t, i}
 					<div class="stat-tile" use:reveal={{ delay: 120 + i * 90 }}>
@@ -133,6 +138,60 @@
 		overflow: hidden;
 		border-block: 1px solid var(--color-border-dark);
 	}
+
+	/* Fluid grid background */
+	.fluid-grid {
+		position: absolute;
+		inset: 0;
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		grid-template-rows: repeat(8, 1fr);
+		gap: 1px;
+		opacity: 0.35;
+		pointer-events: auto;
+	}
+	.fluid-cell {
+		position: relative;
+		background: var(--color-surface-dark);
+		border: 1px solid var(--color-border-dark);
+		transition: background 0.6s ease, border-color 0.4s ease;
+		animation: fluidPulse 6s ease-in-out infinite;
+		animation-delay: calc((var(--col) * 0.15s) + (var(--row) * 0.2s));
+	}
+	.fluid-cell:hover {
+		background: rgba(97, 128, 255, 0.12);
+		border-color: rgba(97, 128, 255, 0.3);
+		opacity: 1;
+		z-index: 10;
+	}
+	@keyframes fluidPulse {
+		0%, 100% { background: var(--color-surface-dark); }
+		50% { background: rgba(97, 128, 255, 0.04); }
+	}
+
+	.cell-label {
+		position: absolute;
+		bottom: calc(100% + 4px);
+		left: 50%;
+		transform: translateX(-50%);
+		background: rgba(20, 24, 40, 0.95);
+		border: 1px solid rgba(97, 128, 255, 0.3);
+		color: var(--color-primary-300);
+		font-family: var(--font-family-mono);
+		font-size: 0.62rem;
+		font-weight: 500;
+		padding: 0.25rem 0.5rem;
+		border-radius: 4px;
+		white-space: nowrap;
+		pointer-events: none;
+		animation: tipIn 0.15s ease-out;
+	}
+	@keyframes tipIn {
+		from { opacity: 0; transform: translateX(-50%) translateY(3px); }
+		to { opacity: 1; transform: translateX(-50%) translateY(0); }
+	}
+
+	/* Content grid */
 	.tech-grid {
 		position: relative;
 		z-index: 1;
@@ -202,10 +261,7 @@
 		padding: 0.8rem 1.35rem;
 		border-radius: var(--radius-sm);
 		border: 1px solid var(--color-border-dark-strong);
-		transition:
-			background 0.15s ease,
-			border-color 0.15s ease,
-			color 0.15s ease;
+		transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 	}
 	.cta-ghost:hover {
 		color: #fff;
@@ -220,19 +276,6 @@
 		max-width: 32rem;
 		margin-inline: auto;
 	}
-	.node-graph {
-		position: absolute;
-		inset: -6% -4%;
-		width: 108%;
-		height: 108%;
-		overflow: visible;
-		opacity: 0.55;
-		pointer-events: none;
-	}
-	.node {
-		opacity: 0.7;
-	}
-
 	.stat-tiles {
 		position: relative;
 		z-index: 1;
@@ -242,7 +285,8 @@
 		margin: 0;
 	}
 	.stat-tile {
-		background: var(--color-surface-dark-raised);
+		background: rgba(15, 18, 30, 0.85);
+		backdrop-filter: blur(8px);
 		border: 1px solid var(--color-border-dark);
 		border-radius: var(--radius-lg);
 		padding: clamp(1.1rem, 2.6vw, 1.6rem);
