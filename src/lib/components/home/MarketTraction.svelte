@@ -15,7 +15,6 @@
 <section class="market section-y">
 	<div class="container-wide">
 		<header class="market-head">
-			<span class="eyebrow" use:reveal>The opportunity</span>
 			<h2 use:reveal={{ delay: 60 }}>
 				We built our own model instead of <span class="text-gradient">quoting a report</span>.
 			</h2>

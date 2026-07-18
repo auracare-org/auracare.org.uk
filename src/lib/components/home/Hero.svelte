@@ -99,7 +99,6 @@
 <section class="hero">
 	<div class="container-wide hero-grid">
 		<div class="hero-copy">
-			<span class="eyebrow" use:reveal>Agentic healthcare</span>
 			<h1 use:reveal={{ delay: 60 }}>
 				Agentic healthcare, built on your <em>digital twin</em>.
 			</h1>

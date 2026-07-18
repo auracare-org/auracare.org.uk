@@ -58,7 +58,6 @@
 <section class="twin" aria-labelledby="twin-heading">
 	<div class="container-wide twin-grid">
 		<div class="twin-copy">
-			<span class="eyebrow" use:reveal>Meet Twin</span>
 			<h2 id="twin-heading" use:reveal={{ delay: 60 }}>
 				The version of you that actually went to bed on time.
 			</h2>

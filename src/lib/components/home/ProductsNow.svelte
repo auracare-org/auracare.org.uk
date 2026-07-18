@@ -11,7 +11,6 @@
 
 <section class="products section-y">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>What we're building now</span>
 		<h2 use:reveal={{ delay: 60 }}>
 			Three things, shipping on <span class="text-gradient">three horizons</span>.
 		</h2>

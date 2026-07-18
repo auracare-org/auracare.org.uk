@@ -50,7 +50,6 @@
 <section class="tech aura-space section-y">
 	<div class="container-wide tech-grid">
 		<div class="tech-copy">
-			<span class="eyebrow" use:reveal>The technology</span>
 			<h2 use:reveal={{ delay: 60 }}>
 				From the ontology up: <span class="text-gradient-l">532,000 clinical concepts</span> you can
 				see.

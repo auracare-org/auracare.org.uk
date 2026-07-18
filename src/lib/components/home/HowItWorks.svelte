@@ -88,7 +88,6 @@
 
 <section class="how section-y">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>How Twin works</span>
 		<h2 use:reveal={{ delay: 60 }}>
 			From the devices on your wrist to a model that <span class="text-gradient">checks in</span>.
 		</h2>

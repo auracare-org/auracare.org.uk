@@ -14,7 +14,6 @@
 <section class="story section-y" id="timeline" aria-labelledby="story-heading">
 	<div class="container-wide">
 		<div class="story-head">
-			<span class="eyebrow" use:reveal>Our story</span>
 			<h2 id="story-heading" use:reveal={{ delay: 60 }}>
 				We learned the NHS from the inside.<br />Then we built what it couldn’t.
 			</h2>

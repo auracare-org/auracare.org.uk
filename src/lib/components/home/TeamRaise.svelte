@@ -18,8 +18,7 @@
 
 <section class="team section-y">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>The team</span>
-		<h2 use:reveal={{ delay: 60 }}>A small, founder-led team.</h2>
+		<h2 use:reveal>A small, founder-led team.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>Spanning {locations}.</p>
 
 		<ul class="grid" role="list">

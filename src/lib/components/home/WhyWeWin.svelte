@@ -30,8 +30,7 @@
 <section class="why section-y">
 	<div class="container-wide">
 		<header class="head">
-			<span class="eyebrow" use:reveal>The category we're defining</span>
-			<h2 use:reveal={{ delay: 60 }}>
+			<h2 use:reveal>
 				Three capabilities. <span class="text-gradient">Most tools hold one.</span>
 			</h2>
 			<p use:reveal={{ delay: 140 }}>

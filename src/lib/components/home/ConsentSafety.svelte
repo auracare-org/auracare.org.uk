@@ -36,8 +36,7 @@
 <section class="safety section-y">
 	<div class="container-wide">
 		<div class="head">
-			<span class="eyebrow" use:reveal>Consent &amp; safety</span>
-			<h2 use:reveal={{ delay: 60 }}>
+			<h2 use:reveal>
 				A wellness sidekick, not a doctor — and it <span class="text-gradient"
 					>knows the difference</span
 				>.
