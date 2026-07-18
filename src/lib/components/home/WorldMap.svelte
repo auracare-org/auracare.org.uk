@@ -186,7 +186,7 @@
 		position: relative;
 	}
 	.map-scroller.pinned {
-		height: 340vh;
+		height: 500vh;
 	}
 	.map-sticky {
 		padding-block: clamp(2.5rem, 5vw, 4rem);
