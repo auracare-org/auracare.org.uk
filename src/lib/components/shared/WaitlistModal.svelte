@@ -27,8 +27,8 @@
 
 		submitted = true;
 
-		const subject = encodeURIComponent('Twin waitlist');
-		const body = encodeURIComponent(`Please add me to the Twin waitlist.\n\nEmail: ${value}\n`);
+		const subject = encodeURIComponent('Auratwin waitlist');
+		const body = encodeURIComponent(`Please add me to the Auratwin waitlist.\n\nEmail: ${value}\n`);
 		window.location.href = `mailto:${CONTACT.general}?subject=${subject}&body=${body}`;
 	}
 
@@ -59,29 +59,47 @@
 </script>
 
 {#if open}
-	<div class="modal-backdrop" onclick={handleBackdropClick} onkeydown={handleKeydown} role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+	<div
+		class="modal-backdrop"
+		onclick={handleBackdropClick}
+		onkeydown={handleKeydown}
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="modal-title"
+		tabindex="-1"
+	>
 		<div class="modal-content glass-card">
 			<button class="modal-close" onclick={closeModal} aria-label="Close modal">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<svg
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
 					<line x1="18" y1="6" x2="6" y2="18"></line>
 					<line x1="6" y1="6" x2="18" y2="18"></line>
 				</svg>
 			</button>
 
 			<div class="modal-header">
-				<h2 id="modal-title">Join the <span class="text-gradient">Twin</span> waitlist</h2>
+				<h2 id="modal-title">Join the <span class="text-gradient">Auratwin</span> waitlist</h2>
 				<p class="modal-subtitle">
-					Twin turns the wearables you already wear into a living model of you. Be first to know when it launches.
+					Auratwin turns the wearables you already wear into a living model of you. Be first to know
+					when it launches.
 				</p>
 			</div>
 
 			{#if submitted}
 				<div class="success" role="status" aria-live="polite">
 					<span class="success-mark" aria-hidden="true">✓</span>
-					<p class="success-title">You're on the list — we'll be in touch.</p>
+					<p class="success-title">You're on the list. We'll be in touch.</p>
 					<p class="success-sub">
 						Your mail app should have opened with a pre-filled message. If it didn't, email us at
-						<a href="mailto:{CONTACT.general}?subject=Twin%20waitlist">{CONTACT.general}</a>.
+						<a href="mailto:{CONTACT.general}?subject=Auratwin%20waitlist">{CONTACT.general}</a>.
 					</p>
 				</div>
 			{:else}
@@ -109,7 +127,7 @@
 							aria-describedby={error ? 'modal-error' : undefined}
 						/>
 						<label for="modal-consent">
-							I agree to be contacted about Twin's launch. See our
+							I agree to be contacted about Auratwin's launch. See our
 							<a href="/privacy" target="_blank">Privacy policy</a>.
 						</label>
 					</div>

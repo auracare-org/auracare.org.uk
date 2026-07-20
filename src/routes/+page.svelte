@@ -4,6 +4,7 @@
 	import ProductsNow from '$lib/components/home/ProductsNow.svelte';
 	import MeetTwin from '$lib/components/home/MeetTwin.svelte';
 	import HowItWorks from '$lib/components/home/HowItWorks.svelte';
+	import MeetAuracare from '$lib/components/home/MeetAuracare.svelte';
 	import WhyWeWin from '$lib/components/home/WhyWeWin.svelte';
 	import ConsentSafety from '$lib/components/home/ConsentSafety.svelte';
 	import StoryTimeline from '$lib/components/home/StoryTimeline.svelte';
@@ -15,17 +16,18 @@
 </script>
 
 <Seo
-	title="Auracare AI — Agentic healthcare, built on your digital twin"
-	description="Auracare turns your own health data into a living model of you. Meet Twin — our first product — and the agentic clinical decision support we're building. Now raising our seed round."
+	title="Auracare: the world's most personalised healthcare"
+	description="Auracare builds two products on one patient model: Auratwin, a wellness companion that lives in your messages, and Auracare, clinical decision support that works inside the consultation. Now raising our seed round."
 	path="/"
 />
 
 <Hero />
 <ProductsNow />
 <MeetTwin />
-<HowItWorks />
-<WhyWeWin />
 <ConsentSafety />
+<HowItWorks />
+<MeetAuracare />
+<WhyWeWin />
 <StoryTimeline />
 <WorldMap />
 <MarketTraction />

@@ -8,7 +8,7 @@
 		try {
 			dismissed = localStorage.getItem('auracare-seed-dismissed') === '1';
 		} catch {
-			/* storage unavailable — keep showing */
+			/* storage unavailable, keep showing */
 		}
 	});
 
@@ -27,10 +27,9 @@
 		<div class="container-wide seed-inner">
 			<p class="seed-text">
 				<span class="seed-dot" aria-hidden="true"></span>
-				We’re raising our <span class="seed-em">seed round</span>
-				<span class="seed-sep">—</span>
-				<a href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Seed%20round">
-					get in touch: {CONTACT.seed}
+				<span>We’re raising our <span class="seed-em">seed round</span>.</span>
+				<a href="mailto:{CONTACT.seed}?subject=Auracare%20AI%3A%20Seed%20round">
+					Get in touch: {CONTACT.seed}
 				</a>
 			</p>
 			<button class="seed-close" onclick={dismiss} aria-label="Dismiss announcement">
@@ -68,7 +67,7 @@
 		color: rgba(226, 230, 240, 0.85);
 		font-family: var(--font-family-mono);
 		font-size: 0.74rem;
-		font-weight: 400;
+		font-weight: 700;
 		letter-spacing: 0.02em;
 		text-align: center;
 		display: flex;
@@ -86,9 +85,6 @@
 	.seed-em {
 		font-weight: 600;
 		color: #fff;
-	}
-	.seed-sep {
-		opacity: 0.4;
 	}
 	.seed-text a {
 		color: #fff;

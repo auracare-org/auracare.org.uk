@@ -25,14 +25,14 @@
 </script>
 
 <svelte:head>
-	<title>Auracare AI — Agentic healthcare, built on your digital twin</title>
+	<title>Auracare: the world's most personalised healthcare</title>
 	<script type="application/ld+json">
 		{
 			"@context": "https://schema.org",
 			"@type": "Organization",
 			"name": "Auracare Health LTD",
 			"alternateName": "Auracare AI",
-			"description": "Agentic healthcare built on a personal health digital twin. Our first product, Twin, turns your own health data into a living model of you.",
+			"description": "Auracare builds two products on one patient model: Auratwin, a wellness companion that lives in your messages, and Auracare, clinical decision support that works inside the consultation.",
 			"url": "https://auracare.org.uk",
 			"logo": "https://auracare.org.uk/SVG/Asset 5.svg",
 			"foundingDate": "2025",

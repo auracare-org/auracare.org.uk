@@ -2,7 +2,7 @@
 
 @theme {
 	/* ============================================================= */
-	/* Brand palette — unchanged                                     */
+	/* Brand palette: unchanged                                      */
 	/* ============================================================= */
 	--color-primary-50: #eff2ff;
 	--color-primary-100: #dce2ff;
@@ -28,7 +28,7 @@
 	--color-neutral-900: #343844;
 	--color-neutral-1000: #1c1f25;
 
-	/* Semantic ink & surface tokens — aligned to Figma text/header and text/body */
+	/* Semantic ink & surface tokens, aligned to Figma text/header and text/body */
 	--color-ink: #212529;
 	--color-ink-soft: #495565;
 	--color-ink-faint: #6c757d;
@@ -101,7 +101,7 @@
 	--spacing-xxxl: 48px;
 	--spacing-section-xl: 64px;
 
-	/* Radii — from Figma design system */
+	/* Radii from Figma design system */
 	--radius-xs: 4px;
 	--radius-sm: 6px;
 	--radius-md: 8px;
@@ -111,12 +111,14 @@
 	--radius-3xl: 32px;
 	--radius-4xl: 40px;
 
-	/* Typography — from Figma design system */
+	/* Typography from Figma design system */
 	--font-family-heading: 'DM Sans', 'Helvetica Neue', system-ui, sans-serif;
 	--font-family-sans: 'Poppins', 'Helvetica Neue', system-ui, sans-serif;
-	--font-family-mono: 'Spline Sans Mono', ui-monospace, 'SF Mono', monospace;
+	/* Was a monospace face used for eyebrows/pills/labels — reads too "AI".
+	   Repointed to the heading sans so those labels feel human. */
+	--font-family-mono: 'DM Sans', 'Helvetica Neue', system-ui, sans-serif;
 
-	/* Shadows — quiet, layered; no glow */
+	/* Shadows: quiet, layered; no glow */
 	--shadow-xs: 0 1px 2px rgba(20, 22, 29, 0.05);
 	--shadow-sm: 0 1px 2px rgba(20, 22, 29, 0.05), 0 4px 12px -4px rgba(20, 22, 29, 0.08);
 	--shadow-md: 0 1px 2px rgba(20, 22, 29, 0.05), 0 12px 32px -16px rgba(20, 22, 29, 0.16);
@@ -544,7 +546,7 @@
 	color: var(--color-primary-700);
 	border: 1px solid var(--color-primary-100);
 	font-family: var(--font-family-mono);
-	font-weight: 500;
+	font-weight: 700;
 	font-size: 0.8rem;
 	letter-spacing: 0.04em;
 	border-radius: 8px;
@@ -736,7 +738,7 @@
 	color: var(--color-ink-soft);
 }
 
-/* Decorative bubbles — retired. Kept as a no-op so old markup renders clean. */
+/* Decorative bubbles: retired. Kept as a no-op so old markup renders clean. */
 .bubble {
 	display: none;
 }
@@ -790,7 +792,7 @@
 	color: var(--color-ink-soft);
 }
 
-/* Floating circles — retired */
+/* Floating circles: retired */
 @utility floating-circle {
 	display: none;
 }
@@ -830,7 +832,7 @@
 
 /* Utility Classes */
 @layer utilities {
-	/* Accent word inside headings — solid brand blue, no gradient. */
+	/* Accent word inside headings: solid brand blue, no gradient. */
 	.text-gradient {
 		color: var(--color-primary-600);
 	}
@@ -882,7 +884,7 @@
 }
 
 /* =================================================================== */
-/*  AURACARE — shared design layer                                     */
+/*  AURACARE: shared design layer                                      */
 /* =================================================================== */
 
 @utility container-wide {
@@ -896,14 +898,14 @@
 	position: relative;
 }
 
-/* Small mono kicker above headings — the system's fingerprint. */
+/* Small mono kicker above headings: the system's fingerprint. */
 @utility eyebrow {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.6rem;
 	font-family: var(--font-family-mono);
 	font-size: 0.72rem;
-	font-weight: 500;
+	font-weight: 700;
 	letter-spacing: 0.14em;
 	text-transform: uppercase;
 	color: var(--color-primary-600);
@@ -916,7 +918,7 @@
 	}
 }
 
-/* Dark editorial section — flat near-black, hairline separations. */
+/* Dark editorial section: flat near-black, hairline separations. */
 .aura-space {
 	position: relative;
 	color: rgba(226, 230, 240, 0.64);
@@ -938,7 +940,7 @@
 	color: #ffffff;
 }
 
-/* Card — flat surface, hairline border. Name kept from the old system. */
+/* Card: flat surface, hairline border. Name kept from the old system. */
 .glass-card {
 	background: #ffffff;
 	border: 1px solid var(--color-border-default);
@@ -966,14 +968,14 @@
 	text-shadow: none;
 }
 
-/* Status pills — flat, mono, squared. */
+/* Status pills: flat, mono, squared. */
 .pill {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.45rem;
 	font-family: var(--font-family-mono);
 	font-size: 0.68rem;
-	font-weight: 500;
+	font-weight: 700;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
 	padding: 0.3rem 0.6rem;

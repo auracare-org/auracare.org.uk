@@ -6,7 +6,7 @@
 
 <Seo
 	title="Privacy"
-	description="How Auracare handles your data: UK GDPR, special-category health data, per-source revocable consent, and what Twin never does."
+	description="How Auracare handles your data: UK GDPR, special-category health data, per-source revocable consent, and what Auratwin never does."
 	path="/privacy"
 	noindex={false}
 />
@@ -23,7 +23,7 @@
 			Your health data, <span class="text-gradient-l">on your terms</span>.
 		</h1>
 		<p class="lede" use:reveal={{ delay: 140 }}>
-			This policy explains what we collect, why, and the control you keep over it. Twin connects
+			This policy explains what we collect, why, and the control you keep over it. Auratwin connects
 			only the sources you choose, and your consent is explicit, per-source and revocable at any
 			time.
 		</p>
@@ -36,8 +36,8 @@
 		<article class="prose" use:reveal>
 			<p class="evolving">
 				<em
-					>This policy is an early draft and will evolve — with clearer detail and, where relevant,
-					supporting documentation — before Twin’s public launch. Material changes will be
+					>This policy is an early draft and will evolve (with clearer detail and, where relevant,
+					supporting documentation) before Auratwin’s public launch. Material changes will be
 					communicated in-app or by email.</em
 				>
 			</p>
@@ -52,29 +52,29 @@
 
 			<h2 id="scope">What this policy covers</h2>
 			<p>
-				This policy covers <strong>Twin</strong>, our consumer product that builds a personal health
-				“digital twin” from the wearables and apps you connect, and checks in with you over
+				This policy covers <strong>Auratwin</strong>, our consumer product that builds a personal
+				health “digital twin” from the wearables and apps you connect, and checks in with you over
 				iMessage.
 			</p>
 			<p>
-				Twin is a <strong>general-wellness product, not a medical device</strong>. It is designed to
-				help you understand your own patterns — it does not diagnose, treat, dose or clinically
-				interpret your data.
+				Auratwin is a <strong>general-wellness product, not a medical device</strong>. It is
+				designed to help you understand your own patterns. It does not diagnose, treat, dose or
+				clinically interpret your data.
 			</p>
 
 			<h2 id="data-we-process">The data we process</h2>
 			<h3>Account data</h3>
 			<p>
-				When you join, we process the details needed to run your account — such as your name, email
-				address and the mobile identity you use to message Twin — together with basic app and
+				When you join, we process the details needed to run your account (such as your name, email
+				address and the mobile identity you use to message Auratwin), together with basic app and
 				delivery logs that keep the service reliable and secure.
 			</p>
 			<h3>Health &amp; wellness data you connect</h3>
 			<p>
-				When you connect a source, Twin processes the general health and wellness information it
-				provides — such as sleep, activity and recovery trends from the wearables and apps you
-				choose to link. You decide which sources to connect, and you can disconnect any of them at
-				any time.
+				When you connect a source, Auratwin processes the general health and wellness information it
+				provides, such as sleep, activity and recovery trends from the wearables and apps you choose
+				to link. You decide which sources to connect, and you can disconnect any of them at any
+				time.
 			</p>
 			<p>
 				Health data is <strong>special-category personal data</strong> under the UK GDPR. We treat it
@@ -88,15 +88,15 @@
 			</p>
 			<ul>
 				<li>
-					<strong>Explicit</strong> — you actively opt in before any health data is processed.
+					<strong>Explicit</strong>: you actively opt in before any health data is processed.
 				</li>
 				<li>
-					<strong>Per-source</strong> — you consent to each connector separately, and can connect or
+					<strong>Per-source</strong>: you consent to each connector separately, and can connect or
 					disconnect them one at a time.
 				</li>
 				<li>
-					<strong>Revocable at any time</strong> — withdrawing consent is as easy as giving it, and stops
-					future processing of that source.
+					<strong>Revocable at any time</strong>: withdrawing consent is as easy as giving it, and
+					stops future processing of that source.
 				</li>
 			</ul>
 
@@ -106,7 +106,7 @@
 				<li>build and maintain your personal health digital twin;</li>
 				<li>learn your baselines and notice meaningful changes;</li>
 				<li>
-					send you check-ins — a morning brief, an evening wrap, and nudges when your data warrants
+					send you check-ins: a morning brief, an evening wrap, and nudges when your data warrants
 					one;
 				</li>
 				<li>operate, secure and improve the service.</li>
@@ -115,15 +115,15 @@
 
 			<h2 id="connectors">Wearable connectors</h2>
 			<p>
-				Twin only pulls data from the sources you explicitly connect. Nothing is collected from a
-				source you have not authorised. Connections use each provider’s standard authorisation flow,
-				and the access tokens we hold on your behalf are <strong>encrypted at rest</strong>. When
-				you disconnect a source, we stop pulling new data from it.
+				Auratwin only pulls data from the sources you explicitly connect. Nothing is collected from
+				a source you have not authorised. Connections use each provider’s standard authorisation
+				flow, and the access tokens we hold on your behalf are <strong>encrypted at rest</strong>.
+				When you disconnect a source, we stop pulling new data from it.
 			</p>
 
 			<h2 id="residency">Where your data is processed</h2>
 			<p>
-				We are building Twin to process your data within our own UK/EU cloud tenant. This is a
+				We are building Auratwin to process your data within our own UK/EU cloud tenant. This is a
 				direction of travel, not a guarantee of every processing arrangement today; we will update
 				this section as that infrastructure matures. Where data is processed outside the UK, we put
 				appropriate safeguards in place as required by the UK GDPR.
@@ -133,8 +133,8 @@
 			<p>
 				<strong>We do not sell your data.</strong> We do not share your health data with third parties
 				without your consent. We use a small number of service providers (for example, cloud hosting
-				and message delivery) strictly to operate Twin; they act on our instructions under contract and
-				may not use your data for their own purposes. We may disclose data where we are legally required
+				and message delivery) strictly to operate Auratwin; they act on our instructions under contract
+				and may not use your data for their own purposes. We may disclose data where we are legally required
 				to do so.
 			</p>
 
@@ -153,7 +153,7 @@
 				<li><strong>rectify</strong> data that is inaccurate or incomplete;</li>
 				<li><strong>erase</strong> your data (“the right to be forgotten”);</li>
 				<li>
-					<strong>port</strong> your data — receive it in a portable, machine-readable format;
+					<strong>port</strong> your data: receive it in a portable, machine-readable format;
 				</li>
 				<li>
 					<strong>withdraw consent</strong> at any time, per source, without affecting past processing;
@@ -172,8 +172,8 @@
 
 			<h2 id="emergencies">Emergencies &amp; safety routing</h2>
 			<p>
-				Twin is not an emergency service and cannot summon help. If Twin surfaces safety
-				information, it routes you to the right lines for your region — for example:
+				Auratwin is not an emergency service and cannot summon help. If Auratwin surfaces safety
+				information, it routes you to the right lines for your region, for example:
 			</p>
 			<div class="routing" role="list">
 				{#each EMERGENCY_ROUTING as region}
@@ -195,7 +195,7 @@
 				immediately.
 			</p>
 
-			<h2 id="what-twin-never-does">What Twin never does</h2>
+			<h2 id="what-twin-never-does">What Auratwin never does</h2>
 			<p>{NON_DEVICE_DISCLAIMER}</p>
 			<ul class="never">
 				{#each TWIN_NEVER as item}

@@ -10,38 +10,43 @@
 		},
 		{
 			title: 'Safety-first, by design',
-			body: 'We are honest about what our system does and does not do. Twin is general wellness, never a medical device, and every claim we make is one we can stand behind.'
+			body: 'We are honest about what our systems do and do not do. Auratwin is general wellness, never a medical device; Auracare is decision support, where the clinician always makes the final call. Every claim we make is one we can stand behind.'
 		},
 		{
 			title: 'Real infrastructure, not a wrapper',
-			body: 'A live ontology of 532,000 clinical concepts and a neuro-symbolic reasoning core in active development. We are building the hard parts, not prompting over someone else’s.'
+			body: 'One patient model both products share: a live ontology of 532,000 clinical concepts and a neuro-symbolic reasoning core in active development. We are building the hard parts, not prompting over someone else’s.'
 		},
 		{
 			title: 'Ship and learn',
-			body: 'Twin puts a health digital twin in real people’s messages so we learn from consented, real-world data — and let what we learn shape the agentic system.'
+			body: 'We ship on both sides and learn from both. Auratwin puts a health digital twin in real people’s messages, learning from consented, real-world data; Auracare goes into live clinical trials with doctors, learning inside the consultation. Both run on one shared patient model, so every lesson on either side sharpens the core the other relies on.'
 		}
 	];
 
 	const roles = [
 		{
 			title: 'ML / Neuro-symbolic Engineer',
-			body: 'Build the reasoning core — a learned graph model paired with an auditable symbolic layer grounded in SNOMED CT and ICD-11.',
-			subject: 'Careers — ML / Neuro-symbolic Engineer'
+			body: 'Build the reasoning core: a learned graph model paired with an auditable symbolic layer grounded in SNOMED CT and ICD-11.',
+			subject: 'Careers: ML / Neuro-symbolic Engineer'
 		},
 		{
 			title: 'Mobile Engineer (Kotlin Multiplatform + Svelte)',
-			body: 'Own the surfaces Twin lives on: a shared Kotlin Multiplatform core and Svelte web, from device connections to the daily check-in.',
-			subject: 'Careers — Mobile Engineer'
+			body: 'Own the surfaces Auratwin lives on: a shared Kotlin Multiplatform core and Svelte web, from device connections to the daily check-in.',
+			subject: 'Careers: Mobile Engineer'
 		},
 		{
 			title: 'Data / Connectors Engineer',
-			body: 'Turn wearables, apps and health platforms into clean, comparable signals — reliable pipelines with consent and privacy built in.',
-			subject: 'Careers — Data / Connectors Engineer'
+			body: 'Turn wearables, apps, health platforms and our own devices into clean, comparable signals that feed both the twin and the clinical core: reliable pipelines with consent and privacy built in.',
+			subject: 'Careers: Data / Connectors Engineer'
+		},
+		{
+			title: 'Hardware / Firmware Engineer',
+			body: 'Build the closed hardware-to-software link behind Auracare: our own recording stethoscope, BP monitor and otoscope, streaming clinical-grade readings straight into the reasoning core.',
+			subject: 'Careers: Hardware / Firmware Engineer'
 		},
 		{
 			title: 'Clinical & Regulatory Lead',
-			body: 'Hold the line between wellness and clinical decision support: safety framing, evidence generation and the regulatory path ahead.',
-			subject: 'Careers — Clinical & Regulatory Lead'
+			body: 'Hold the line between wellness and clinical decision support: safety framing, evidence generation and the regulatory path ahead for Auracare.',
+			subject: 'Careers: Clinical & Regulatory Lead'
 		}
 	];
 
@@ -75,37 +80,38 @@
 			Build the health system that <span class="text-gradient-l">should exist</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>
-			We are building agentic clinical decision support grounded in a personal health digital twin —
-			starting with <strong>Twin</strong>, the product that puts a living model of you into your own
-			messages. It is early, ambitious and honest work. If that sounds like your kind of problem,
-			we’d love to meet you.
+			We are <strong>Auracare</strong>, a small team building agentic healthcare on one shared
+			patient model: <strong>Auratwin</strong> for people, in the messages they already use, and
+				<strong>Auracare</strong> for clinicians, inside the consultation. The work is early and
+			ambitious, and we are honest about it. If the hardest problems in health are your kind of
+			problem, come say hello.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 220 }}>
 			<a class="cta-primary" href="#roles">See open roles</a>
-			<a class="cta-ghost" href={mailto('Careers — speculative application')}>
+			<a class="cta-ghost" href={mailto('Careers: speculative application')}>
 				Pitch us a role <span aria-hidden="true">→</span>
 			</a>
 		</div>
 	</div>
 </section>
 
-<!-- 2) Why now -->
+<!-- 2) Why you -->
 <section class="section-y why">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Why now</span>
+		<span class="eyebrow" use:reveal>Why you</span>
 		<h2 use:reveal={{ delay: 60 }}>
-			We learned health systems from the inside — then set out to build what they couldn’t.
+			The moment to build this well is now, and it’s a small team that builds it.
 		</h2>
 		<div class="why-grid">
 			<p use:reveal={{ delay: 120 }}>
-				Auracare started inside UK primary care, piloting data tooling across twenty clinics and
-				pharmacies. We saw the structural and technological gaps up close — and we saw where the
-				existing systems simply couldn’t go.
+				You won’t be lost in an org chart at Auracare. We’re a handful of people taking on a
+				genuinely hard, consequential problem, and every person shapes where it goes.
 			</p>
 			<p use:reveal={{ delay: 180 }}>
-				In May 2026 we pivoted. Everything we learned about complex, high-stakes health systems now
-				points in one direction: agentic decision support built on a personal digital twin. The
-				window to build it well is open now, and the team that builds it is forming now.
+				It’s real today: the shared patient model is live, Auratwin ships first, and Auracare
+					follows it into the clinic. We’re looking for engineers, clinicians and data people who
+				light up at unsolved work, who want to build the hard parts themselves, and who care about
+				getting safety right because people are on the other end of it.
 			</p>
 		</div>
 	</div>
@@ -134,7 +140,7 @@
 		<h2 use:reveal={{ delay: 60 }}>Where we’re hiring.</h2>
 		<p class="roles-note" use:reveal={{ delay: 120 }}>
 			These roles are illustrative of where we need strength, not a rigid list. If your shape is
-			close — or genuinely different but compelling — write to us anyway. We hire people, not job
+			close, or genuinely different but compelling, write to us anyway. We hire people, not job
 			descriptions.
 		</p>
 		<div class="role-grid">
@@ -161,7 +167,7 @@
 			We are always glad to hear from exceptional people across engineering, data, clinical and
 			everything in between. Send us a note about the problem you want to work on.
 		</p>
-		<a class="cta-primary" href={mailto('Careers — speculative application')}> Get in touch </a>
+		<a class="cta-primary" href={mailto('Careers: speculative application')}> Get in touch </a>
 		<p class="closing-address">{CONTACT.general}</p>
 	</div>
 </section>

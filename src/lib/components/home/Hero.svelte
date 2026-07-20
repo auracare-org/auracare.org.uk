@@ -6,26 +6,40 @@
 
 	let showModal = $state(false);
 
+	// Everyday-life signal categories, not brand names: the picture, not the plumbing.
+	// Muted, cohesive palette: one desaturated jewel tone per signal, similar
+	// lightness/saturation so the set reads as designed rather than a rainbow.
 	const devices = [
-		{ name: 'Apple Health', icon: '/icons/brands/apple.svg', color: '#000000', x: 50, y: 5 },
-		{ name: 'Oura', icon: '/icons/brands/oura.svg', color: '#0066CC', x: 90, y: 25 },
-		{ name: 'Whoop', icon: '/icons/brands/whoop.svg', color: '#FF0050', x: 93, y: 62 },
-		{ name: 'Dexcom', icon: '/icons/brands/dexcom.svg', color: '#00A3E0', x: 62, y: 92 },
-		{ name: 'Garmin', icon: '/icons/brands/garmin.svg', color: '#007CC3', x: 14, y: 80 },
-		{ name: 'Fitbit', icon: '/icons/brands/fitbit.svg', color: '#00B0B9', x: 7, y: 36 }
+		{ name: 'Sleep', glyph: 'sleep', color: '#3f4c78', x: 50, y: 5 }, // indigo
+		{ name: 'Movement', glyph: 'movement', color: '#2f7168', x: 90, y: 25 }, // teal
+		{ name: 'Nutrition', glyph: 'nutrition', color: '#4e7350', x: 93, y: 62 }, // moss
+		{ name: 'Screen time', glyph: 'screen', color: '#8a6d3c', x: 62, y: 92 }, // bronze
+		{ name: 'Location', glyph: 'location', color: '#9a5a4c', x: 14, y: 80 }, // clay
+		{ name: 'Wearables', glyph: 'wearables', color: '#6a5487', x: 7, y: 36 } // plum
 	];
 
 	const avatarNames = [
-		'sarah', 'marcus', 'priya', 'chen', 'amara', 'james',
-		'fatima', 'oliver', 'yuki', 'elena', 'raj', 'sofia'
+		'sarah',
+		'marcus',
+		'priya',
+		'chen',
+		'amara',
+		'james',
+		'fatima',
+		'oliver',
+		'yuki',
+		'elena',
+		'raj',
+		'sofia'
 	];
 
 	// Animation phases: 'chips' | 'dataflow' | 'avatar' | 'hold' | 'fadeout'
 	type Phase = 'chips' | 'dataflow' | 'avatar' | 'hold' | 'fadeout';
 	let phase: Phase = $state('chips');
+	let mounted = $state(false);
 	let currentAvatarName = $state(avatarNames[0]);
 	let avatarIndex = $state(0);
-	// Chip order offset — rotates which chip appears first each cycle
+	// Chip order offset: rotates which chip appears first each cycle
 	let chipStartOffset = $state(0);
 
 	// Compute the order indices for stagger: chip at position i gets delay based on its
@@ -45,6 +59,11 @@
 	onMount(() => {
 		let timeout: ReturnType<typeof setTimeout>;
 		let cancelled = false;
+
+		// Trigger the one-time staggered chip entrance; chips then stay put for good.
+		requestAnimationFrame(() => {
+			if (!cancelled) mounted = true;
+		});
 
 		function runCycle() {
 			if (cancelled) return;
@@ -100,15 +119,16 @@
 	<div class="container-wide hero-grid">
 		<div class="hero-copy">
 			<h1 use:reveal={{ delay: 60 }}>
-				Agentic healthcare, built on your <em>digital twin</em>.
+				The world's most personalised <em>healthcare</em>.
 			</h1>
 			<p class="hero-sub" use:reveal={{ delay: 140 }}>
-				Auracare turns your own health data into a living model of you. Our first product,
-				<strong>Twin</strong>, is a wellness companion that acts on it — and the first step toward
-				the agentic clinical decision support we're building. Shipping in the coming months.
+				Auracare builds two products on one model of you.
+				<strong>Auratwin</strong>, a wellness companion that lives in your messages, and
+				<strong>Auracare</strong>, clinical decision support that works inside the consultation.
+				Auratwin ships in the coming months.
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
-				<button class="cta-primary" onclick={() => showModal = true}>Join the waitlist</button>
+				<button class="cta-primary" onclick={() => (showModal = true)}>Join the waitlist</button>
 				<a
 					class="cta-ghost"
 					href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Seed%20round"
@@ -119,7 +139,13 @@
 			<p class="hero-note" use:reveal={{ delay: 280 }}>{PLATFORM_NOTE}</p>
 		</div>
 
-		<div class="hero-visual" use:reveal={{ delay: 120 }} aria-hidden="true" data-phase={phase}>
+		<div
+			class="hero-visual"
+			use:reveal={{ delay: 120 }}
+			aria-hidden="true"
+			data-phase={phase}
+			data-mounted={mounted}
+		>
 			<svg class="hero-orbits" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
 				{#each devices as device, i}
 					<line
@@ -155,12 +181,44 @@
 			</svg>
 
 			{#each devices as device, i}
-				<div
-					class="chip"
-					style="left:{device.x}%; top:{device.y}%; --i: {chipDelayOrder[i]};"
-				>
+				<div class="chip" style="left:{device.x}%; top:{device.y}%; --i: {i};">
 					<div class="chip-icon" style="background-color: {device.color}">
-						<img src={device.icon} alt={device.name} />
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="#fff"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							aria-hidden="true"
+						>
+							{#if device.glyph === 'sleep'}
+								<path
+									d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+									fill="#fff"
+									stroke="none"
+									transform="translate(1.8 1.8) scale(0.85)"
+								/>
+							{:else if device.glyph === 'movement'}
+								<path d="M3 12h4l2.5 6L14 6l2.5 6H21" />
+							{:else if device.glyph === 'nutrition'}
+								<path
+									d="M12 8.5C10.8 6.3 8 5.6 6.2 7 4.4 8.4 4.2 11.6 5.4 14.6 6.3 17 7.8 21 10 21c1 0 1.2-.6 2-.6s1 .6 2 .6c2.2 0 3.7-4 4.6-6.4 1.2-3 1-6.2-.8-7.6C18 5.6 15.2 6.3 14 8.5"
+								/><path d="M12 8.5C12.3 6 14 4.3 16.5 4.3 16.5 6.8 14.8 8.5 12 8.5z" />
+							{:else if device.glyph === 'screen'}
+								<rect x="7" y="3" width="10" height="18" rx="1.5" /><path d="M11 18h2" />
+							{:else if device.glyph === 'location'}
+								<path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z" /><circle
+									cx="12"
+									cy="10"
+									r="2"
+								/>
+							{:else}
+								<rect x="8" y="7" width="8" height="10" rx="1.5" /><path
+									d="M9 7l.5-3h5l.5 3M9 17l.5 3h5l.5-3"
+								/>
+							{/if}
+						</svg>
 					</div>
 					<span class="chip-name">{device.name}</span>
 				</div>
@@ -314,8 +372,7 @@
 	[data-phase='fadeout'] .flow-line {
 		stroke-dashoffset: 0;
 		opacity: 0;
-		transition:
-			opacity 0.5s ease;
+		transition: opacity 0.5s ease;
 	}
 
 	/* Chips */
@@ -332,24 +389,16 @@
 		border-radius: 999px;
 		white-space: nowrap;
 		opacity: 0;
+		transform: translate(-50%, -50%) translateY(4px);
 		transition:
 			opacity 0.45s ease-out,
 			transform 0.45s ease-out;
 		transition-delay: calc(var(--i) * 0.18s);
 	}
-	/* Chips phase: staggered clockwise fade-in */
-	[data-phase='chips'] .chip,
-	[data-phase='dataflow'] .chip,
-	[data-phase='avatar'] .chip,
-	[data-phase='hold'] .chip {
+	/* One-time staggered entrance; chips then stay for the life of the section. */
+	[data-mounted='true'] .chip {
 		opacity: 1;
 		transform: translate(-50%, -50%) translateY(0);
-	}
-	/* Initial state for incoming chips (slightly offset up) */
-	[data-phase='fadeout'] .chip {
-		opacity: 0;
-		transform: translate(-50%, -50%) translateY(4px);
-		transition-delay: calc(var(--i) * 0.05s);
 	}
 
 	.chip-icon {
@@ -362,10 +411,9 @@
 		padding: 5px;
 		flex-shrink: 0;
 	}
-	.chip-icon img {
+	.chip-icon svg {
 		width: 100%;
 		height: 100%;
-		filter: brightness(0) invert(1);
 	}
 	.chip-name {
 		color: var(--color-ink);
@@ -414,14 +462,16 @@
 		color: var(--color-ink-faint);
 		font-family: var(--font-family-mono);
 		font-size: 0.6rem;
-		font-weight: 500;
+		font-weight: 700;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 	}
 
 	/* Animations */
 	@keyframes spin {
-		to { transform: rotate(360deg); }
+		to {
+			transform: rotate(360deg);
+		}
 	}
 
 	/* Responsive */

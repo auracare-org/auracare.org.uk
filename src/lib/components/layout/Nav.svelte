@@ -5,15 +5,31 @@
 
 	let mobileOpen = $state(false);
 
+	const productMenu = [
+		{
+			href: '/product',
+			label: 'Auratwin',
+			desc: 'Your digital twin, in your messages',
+			tag: 'Consumer'
+		},
+		{
+			href: '/product/auracare',
+			label: 'Auracare',
+			desc: 'Decision support inside the consultation',
+			tag: 'Clinical'
+		}
+	];
+
 	const links = [
-		{ href: '/product', label: 'Product' },
 		{ href: '/technology', label: 'Technology' },
-		{ href: '/company', label: 'Company' },
 		{ href: '/careers', label: 'Careers' }
 	];
 
 	const isActive = (href: string) =>
 		page.url.pathname === href || (href !== '/' && page.url.pathname.startsWith(href + '/'));
+
+	// The Product tab is active on /product and any product sub-page.
+	const productActive = () => page.url.pathname.startsWith('/product');
 </script>
 
 <nav class="nav" aria-label="Primary">
@@ -23,6 +39,43 @@
 		</a>
 
 		<div class="nav-links">
+			<div class="nav-dd">
+				<a href="/product" class="nav-item nav-dd-trigger" class:active={productActive()}>
+					Product
+					<svg
+						class="nav-caret"
+						width="10"
+						height="10"
+						viewBox="0 0 12 12"
+						fill="none"
+						aria-hidden="true"
+					>
+						<path
+							d="M3 4.5L6 7.5L9 4.5"
+							stroke="currentColor"
+							stroke-width="1.6"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						/>
+					</svg>
+				</a>
+				<div class="nav-submenu" role="menu">
+					{#each productMenu as item}
+						<a
+							href={item.href}
+							class="nav-sub-item"
+							class:active={page.url.pathname === item.href}
+							role="menuitem"
+						>
+							<span class="nav-sub-top">
+								<span class="nav-sub-label">{item.label}</span>
+								<span class="nav-sub-tag">{item.tag}</span>
+							</span>
+							<span class="nav-sub-desc">{item.desc}</span>
+						</a>
+					{/each}
+				</div>
+			</div>
 			{#each links as link}
 				<a href={link.href} class="nav-item" class:active={isActive(link.href)}>{link.label}</a>
 			{/each}
@@ -80,6 +133,17 @@
 	{#if mobileOpen}
 		<div class="nav-mobile" transition:slide={{ duration: 250 }}>
 			<div class="container-wide nav-mobile-inner">
+				<span class="nav-mobile-group">Product</span>
+				{#each productMenu as item}
+					<a
+						href={item.href}
+						class="nav-mobile-item nav-mobile-sub"
+						onclick={() => (mobileOpen = false)}
+					>
+						<span class="nav-mobile-sub-label">{item.label}</span>
+						<span class="nav-mobile-sub-desc">{item.desc}</span>
+					</a>
+				{/each}
 				{#each links as link}
 					<a href={link.href} class="nav-mobile-item" onclick={() => (mobileOpen = false)}
 						>{link.label}</a
@@ -146,6 +210,112 @@
 		color: var(--color-ink);
 		font-weight: 600;
 	}
+	/* Product dropdown */
+	.nav-dd {
+		position: relative;
+		display: inline-flex;
+	}
+	.nav-dd-trigger {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.28rem;
+	}
+	.nav-caret {
+		transition: transform 0.2s ease;
+		opacity: 0.7;
+	}
+	.nav-dd:hover .nav-caret,
+	.nav-dd:focus-within .nav-caret {
+		transform: rotate(180deg);
+	}
+	.nav-submenu {
+		position: absolute;
+		top: calc(100% + 0.6rem);
+		left: 50%;
+		transform: translateX(-50%) translateY(6px);
+		width: 20rem;
+		display: grid;
+		gap: 0.15rem;
+		padding: 0.5rem;
+		background: rgba(252, 252, 253, 0.98);
+		backdrop-filter: blur(14px);
+		-webkit-backdrop-filter: blur(14px);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow-lg, 0 20px 40px rgba(15, 23, 42, 0.14));
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transition:
+			opacity 0.18s ease,
+			transform 0.18s ease,
+			visibility 0.18s;
+		z-index: 20;
+	}
+	/* Invisible bridge so the menu doesn't close when crossing the gap. */
+	.nav-submenu::before {
+		content: '';
+		position: absolute;
+		top: -0.7rem;
+		left: 0;
+		right: 0;
+		height: 0.7rem;
+	}
+	.nav-dd:hover .nav-submenu,
+	.nav-dd:focus-within .nav-submenu {
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+		transform: translateX(-50%) translateY(0);
+	}
+	.nav-sub-item {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+		padding: 0.7rem 0.8rem;
+		border-radius: 8px;
+		transition: background 0.15s ease;
+	}
+	.nav-sub-item:hover,
+	.nav-sub-item.active {
+		background: var(--color-primary-50);
+	}
+	.nav-sub-top {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.nav-sub-label {
+		font-size: 0.92rem;
+		font-weight: 600;
+		color: var(--color-ink);
+	}
+	.nav-sub-item:hover .nav-sub-label,
+	.nav-sub-item.active .nav-sub-label {
+		color: var(--color-primary-700);
+	}
+	.nav-sub-tag {
+		font-family: var(--font-family-mono);
+		font-size: 0.6rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+		background: var(--color-primary-50);
+		border: 1px solid var(--color-primary-100);
+		padding: 0.1rem 0.4rem;
+		border-radius: 999px;
+	}
+	.nav-sub-item:hover .nav-sub-tag,
+	.nav-sub-item.active .nav-sub-tag {
+		background: #fff;
+	}
+	.nav-sub-desc {
+		font-size: 0.78rem;
+		line-height: 1.35;
+		color: var(--color-ink-faint);
+	}
+
 	.nav-ext {
 		display: inline-flex;
 		align-items: center;
@@ -208,6 +378,30 @@
 		font-weight: 500;
 		color: var(--color-neutral-800);
 		padding: 0.6rem 0;
+	}
+	.nav-mobile-group {
+		font-family: var(--font-family-mono);
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-ink-faint);
+		padding: 0.6rem 0 0.15rem;
+	}
+	.nav-mobile-sub {
+		display: flex;
+		flex-direction: column;
+		gap: 0.1rem;
+		padding: 0.5rem 0 0.5rem 0.9rem;
+		border-left: 2px solid var(--color-border-default);
+	}
+	.nav-mobile-sub-label {
+		font-weight: 600;
+		color: var(--color-neutral-900);
+	}
+	.nav-mobile-sub-desc {
+		font-size: 0.8rem;
+		color: var(--color-ink-faint);
 	}
 	.nav-mobile-cta {
 		display: flex;

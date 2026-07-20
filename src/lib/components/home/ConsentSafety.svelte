@@ -1,16 +1,11 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
-	import {
-		TWIN_DOES,
-		TWIN_NEVER,
-		EMERGENCY_ROUTING,
-		NON_DEVICE_DISCLAIMER
-	} from '$lib/data/company';
+	import { TWIN_DOES, TWIN_NEVER, EMERGENCY_ROUTING } from '$lib/data/company';
 	import { onMount } from 'svelte';
 
 	// Flatten all helplines into a single list with region info
-	const helplines = EMERGENCY_ROUTING.flatMap(r =>
-		r.lines.map(l => ({ ...l, region: r.region }))
+	const helplines = EMERGENCY_ROUTING.flatMap((r) =>
+		r.lines.map((l) => ({ ...l, region: r.region }))
 	);
 
 	// Positions for helpline nodes scattered to the right (x%, y%)
@@ -37,59 +32,62 @@
 	<div class="container-wide">
 		<div class="head">
 			<h2 use:reveal>
-				A wellness sidekick, not a doctor — and it <span class="text-gradient"
+				A wellness sidekick, not a doctor, and it <span class="text-gradient"
 					>knows the difference</span
 				>.
 			</h2>
 			<p class="head-note" use:reveal={{ delay: 120 }}>Safety is structural, not a feature flag.</p>
 		</div>
 
-		<div class="safety-table glass-card" use:reveal={{ delay: 80 }}>
-			<table>
-				<thead>
-					<tr>
-						<th class="col-does">What Twin does</th>
-						<th class="col-never">What Twin never does</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#each Array(Math.max(TWIN_DOES.length, TWIN_NEVER.length)) as _, i}
-						<tr>
-							<td>
-								{#if i < TWIN_DOES.length}
-									<span class="ic ic-check" aria-hidden="true">
-										<svg viewBox="0 0 20 20" fill="none">
-											<path d="M5 10.5l3.2 3.2L15 6.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-										</svg>
-									</span>
-									<span>{TWIN_DOES[i]}</span>
-								{/if}
-							</td>
-							<td>
-								{#if i < TWIN_NEVER.length}
-									<span class="ic ic-cross" aria-hidden="true">
-										<svg viewBox="0 0 20 20" fill="none">
-											<path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
-										</svg>
-									</span>
-									<span>{TWIN_NEVER[i]}</span>
-								{/if}
-							</td>
-						</tr>
-					{/each}
-				</tbody>
-			</table>
+		<div class="does glass-card" use:reveal={{ delay: 80 }}>
+			<p class="does-label">What your Auratwin does</p>
+			<ul class="does-grid">
+				{#each TWIN_DOES as item}
+					<li>
+						<span class="ic ic-check" aria-hidden="true">
+							<svg viewBox="0 0 20 20" fill="none">
+								<path
+									d="M5 10.5l3.2 3.2L15 6.5"
+									stroke="currentColor"
+									stroke-width="2.2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						</span>
+						<span>{item}</span>
+					</li>
+				{/each}
+			</ul>
 		</div>
 
 		<div class="routing" use:reveal={{ delay: 100 }}>
-			<div class="routing-center">
+			<div class="routing-lede">
 				<p class="routing-statement">
-					Twin <span class="red">never</span> diagnoses, treats, or prescribes.
-					<br />If something is urgent, it routes you to <span class="red">real help</span>.
+					Auratwin knows its limits. If something is urgent, it routes you to
+					<span class="red">real help</span>.
 				</p>
+				<p class="never-label">What it <span class="red">never</span> does</p>
+				<ul class="never-list">
+					{#each TWIN_NEVER as item}
+						<li>
+							<span class="ic ic-cross" aria-hidden="true">
+								<svg viewBox="0 0 20 20" fill="none">
+									<path
+										d="M6 6l8 8M14 6l-8 8"
+										stroke="currentColor"
+										stroke-width="2.2"
+										stroke-linecap="round"
+									/>
+								</svg>
+							</span>
+							<span>{item}</span>
+						</li>
+					{/each}
+				</ul>
 			</div>
 
-			<div class="routing-canvas" aria-label="Twin routing to emergency helplines">
+			<div class="routing-canvas" aria-label="Auratwin routing to emergency helplines">
 				<svg class="routing-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
 					<defs>
 						<linearGradient id="flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -103,7 +101,8 @@
 						{#if activeNode !== i}
 							<path
 								class="route-path"
-								d="M 18 50 C {30 + i * 3} {50 - (i - 2.5) * 8}, {pos.x - 15} {pos.y + (pos.y < 50 ? 10 : -10)}, {pos.x} {pos.y}"
+								d="M 18 50 C {30 + i * 3} {50 - (i - 2.5) * 8}, {pos.x - 15} {pos.y +
+									(pos.y < 50 ? 10 : -10)}, {pos.x} {pos.y}"
 								fill="none"
 								stroke="#e2e5ea"
 								stroke-width="0.5"
@@ -111,12 +110,13 @@
 							/>
 						{/if}
 					{/each}
-					<!-- Active path on top — #key forces re-mount so animation restarts -->
+					<!-- Active path on top. #key forces re-mount so animation restarts -->
 					{#key activeNode}
 						{@const pos = nodePositions[activeNode]}
 						<path
 							class="route-path route-active"
-							d="M 18 50 C {30 + activeNode * 3} {50 - (activeNode - 2.5) * 8}, {pos.x - 15} {pos.y + (pos.y < 50 ? 10 : -10)}, {pos.x} {pos.y}"
+							d="M 18 50 C {30 + activeNode * 3} {50 - (activeNode - 2.5) * 8}, {pos.x -
+								15} {pos.y + (pos.y < 50 ? 10 : -10)}, {pos.x} {pos.y}"
 							fill="none"
 							stroke="url(#flow-grad)"
 							stroke-width="1.2"
@@ -126,7 +126,7 @@
 				</svg>
 
 				<div class="twin-node">
-					<img src="/favicon.svg" alt="Twin" class="twin-icon" />
+					<img src="/favicon.svg" alt="Auratwin" class="twin-icon" />
 				</div>
 
 				{#each helplines as line, i}
@@ -134,7 +134,7 @@
 						class="help-node"
 						class:help-node-active={activeNode === i}
 						style="left:{nodePositions[i].x}%; top:{nodePositions[i].y}%"
-						onclick={() => activeNode = i}
+						onclick={() => (activeNode = i)}
 					>
 						<span class="help-node-value">{line.value}</span>
 						<span class="help-node-label">{line.label}</span>
@@ -148,8 +148,6 @@
 				</div>
 			</div>
 		</div>
-
-		<p class="fineprint" use:reveal>{NON_DEVICE_DISCLAIMER}</p>
 	</div>
 </section>
 
@@ -174,48 +172,33 @@
 		margin-top: 0.5rem;
 	}
 
-	.safety-table {
-		padding: 0;
+	.does {
+		padding: clamp(1.25rem, 2.5vw, 1.75rem);
 		border-radius: var(--radius-lg);
-		overflow: hidden;
 	}
-	table {
-		width: 100%;
-		border-collapse: collapse;
-	}
-	thead tr {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-	}
-	thead th {
-		font-size: 0.92rem;
+	.does-label {
+		font-size: 0.78rem;
 		font-weight: 600;
-		color: var(--color-ink);
-		text-align: left;
-		padding: 1rem 1.25rem;
-		border-bottom: 1px solid var(--color-border-default);
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--color-ink-faint);
+		margin: 0 0 1.1rem;
 	}
-	thead th:first-child {
-		border-right: 1px solid var(--color-border-default);
-	}
-	tbody tr {
+	.does-grid {
+		list-style: none;
+		margin: 0;
+		padding: 0;
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 1fr;
+		gap: 0.85rem 2rem;
 	}
-	tbody td {
-		padding: 0.75rem 1.25rem;
+	.does-grid li {
 		display: flex;
 		align-items: flex-start;
 		gap: 0.6rem;
 		line-height: 1.45;
-		color: var(--color-ink-soft);
-		font-size: 0.9rem;
-	}
-	tbody td:first-child {
-		border-right: 1px solid var(--color-border-default);
-	}
-	tbody tr:not(:last-child) td {
-		border-bottom: 1px solid var(--color-border-default);
+		color: var(--color-ink);
+		font-size: 0.95rem;
 	}
 	.ic {
 		flex: none;
@@ -241,18 +224,46 @@
 
 	.routing {
 		margin-top: clamp(2.5rem, 5vw, 4rem);
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: clamp(1.5rem, 3vw, 2.5rem);
+		align-items: center;
 	}
-	.routing-center {
+	.routing-lede {
 		text-align: center;
-		margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
 	}
 	.routing-statement {
 		font-size: clamp(1.1rem, 2vw, 1.4rem);
 		line-height: 1.5;
 		color: var(--color-ink);
 		font-weight: 500;
-		max-width: 36rem;
-		margin-inline: auto;
+		max-width: 32rem;
+		margin: 0 auto;
+	}
+	.never-label {
+		font-size: 0.78rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--color-ink-faint);
+		margin: 1.5rem 0 0.85rem;
+	}
+	.never-list {
+		list-style: none;
+		margin: 0 auto;
+		padding: 0;
+		display: inline-grid;
+		gap: 0.7rem;
+		text-align: left;
+		max-width: 26rem;
+	}
+	.never-list li {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.6rem;
+		line-height: 1.4;
+		color: var(--color-ink-soft);
+		font-size: 0.9rem;
 	}
 	.red {
 		color: #dc2626;
@@ -274,7 +285,9 @@
 		pointer-events: none;
 	}
 	.route-path {
-		transition: stroke 0.6s cubic-bezier(0.4, 0, 0.2, 1), stroke-width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+		transition:
+			stroke 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+			stroke-width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 	.route-active {
 		stroke-dasharray: 400;
@@ -282,7 +295,9 @@
 		animation: flowIn 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 	}
 	@keyframes flowIn {
-		to { stroke-dashoffset: 0; }
+		to {
+			stroke-dashoffset: 0;
+		}
 	}
 
 	.twin-node {
@@ -317,7 +332,9 @@
 	.help-node-active {
 		border-color: #dc2626;
 		background: #fef2f2;
-		box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.06), var(--shadow-sm);
+		box-shadow:
+			0 0 0 3px rgba(220, 38, 38, 0.06),
+			var(--shadow-sm);
 		transform: translate(-50%, -50%) scale(1.04);
 	}
 	.help-node-value {
@@ -336,7 +353,7 @@
 
 	.routing-info {
 		position: absolute;
-		bottom: 4%;
+		bottom: -4%;
 		left: 50%;
 		transform: translateX(-50%);
 		display: flex;
@@ -365,20 +382,22 @@
 		color: var(--color-ink-soft);
 	}
 
-	.fineprint {
-		margin-top: clamp(2rem, 4vw, 3rem);
-		font-size: 0.82rem;
-		line-height: 1.6;
-		color: var(--color-ink-faint);
-		max-width: 44rem;
-	}
-
 	@media (min-width: 720px) {
-		.split {
+		.does-grid {
 			grid-template-columns: 1fr 1fr;
 		}
-		.regions {
-			grid-template-columns: repeat(2, 1fr);
+		.routing {
+			grid-template-columns: 0.9fr 1.1fr;
+			gap: clamp(2rem, 4vw, 3.5rem);
+		}
+		.routing-lede {
+			text-align: left;
+		}
+		.routing-statement {
+			margin-inline: 0;
+		}
+		.never-list {
+			margin-inline: 0;
 		}
 	}
 </style>

@@ -15,7 +15,7 @@
 	<div class="container-wide">
 		<div class="story-head">
 			<h2 id="story-heading" use:reveal={{ delay: 60 }}>
-				We learned the NHS from the inside.<br />Then we built what it couldn’t.
+				We began at the front line of care.<br />We built on every lesson it taught us.
 			</h2>
 			<p use:reveal={{ delay: 120 }}>
 				Auracare didn’t start with a digital twin. It started with twenty pharmacies, a wall we
@@ -147,7 +147,7 @@
 	.tl-date {
 		font-family: var(--font-family-mono);
 		font-size: 0.72rem;
-		font-weight: 500;
+		font-weight: 700;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 		color: var(--color-primary-300);
@@ -170,7 +170,7 @@
 		color: #fff;
 		font-family: var(--font-family-mono);
 		font-size: 0.62rem;
-		font-weight: 500;
+		font-weight: 700;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 		padding: 0.22rem 0.55rem;

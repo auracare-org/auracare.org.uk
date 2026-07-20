@@ -3,50 +3,81 @@
 	import { reveal, countUp } from '$lib/actions/motion';
 	import { CONTACT, ONTOLOGY_STATS } from '$lib/data/company';
 
-	/* --- The reasoning loop --------------------------------------- */
+	/* --- Auratwin: how the twin gets built ------------------------ */
+	const TWIN_STEPS = [
+		{
+			n: '01',
+			label: 'Connect',
+			body: 'Link the wearables and health apps you already use. Cloud services sync server-side: the vendor pings us the moment a new record lands and we pull just that record. Phone-native sources push straight from the device, since they expose no server to poll. Either path runs in the background. Nothing to open, nothing to remember.'
+		},
+		{
+			n: '02',
+			label: 'Normalise',
+			body: 'Every source records data its own way. The twin translates each record into one shared format (resting heart rate is the same field whether it came from a ring or a watch), removes duplicates across devices, and timestamps each reading in your local time, so last night’s sleep is counted on the right day. The result is one clean, consistent stream instead of a dozen feeds that don’t line up.'
+		},
+		{
+			n: '03',
+			label: 'Converse',
+			body: 'The twin keeps an eye on the normalised stream and messages you first when something shifts (a run of poor recovery, a sedentary streak) and answers when you text back. Just reply in plain language; that is the logging. It all happens in your messages: no new app, no forms, no streaks to keep alive.'
+		}
+	];
+
+	/* Signals the twin ingests. Categories, not a device list, so it
+	   holds regardless of which watch or ring a person owns. */
+	const TWIN_SIGNALS = [
+		{ name: 'Sleep', note: 'Duration, efficiency, deep and REM' },
+		{ name: 'Recovery & HRV', note: 'Readiness, recovery score, resting heart rate' },
+		{ name: 'Activity', note: 'Steps, movement, daily exertion' },
+		{ name: 'Nutrition', note: 'Meals and substances, from a normal text' },
+		{ name: 'Mindfulness', note: 'Meditation and breathing sessions, minutes and streaks' },
+		{ name: 'Context', note: 'Screen time, location and daily rhythm' }
+	];
+
+	/* --- Auracare: the reasoning loop ----------------------------- */
 	const LOOP = [
 		{
 			key: 'input',
 			label: 'Input',
-			body: 'Signals arrive — wearables, labs, notes, a question asked in plain language.'
+			body: 'The prior and the acute, on one timeline: everyday-life signals from the twin, clinical history, and vitals captured live in the room, all as points on a single timestamped record.'
 		},
 		{
 			key: 'encoding',
 			label: 'Encoding',
-			body: 'Each signal is mapped into one shared clinical vocabulary, with a confidence score attached.'
+			body: 'The bridge. Each observation is entity-linked onto the clinical ontology and stamped with when it was true, building the one patient state the core reasons over.'
 		},
 		{
-			key: 'reasoning',
-			label: 'Reasoning',
-			body: 'The neuro-symbolic core weighs the evidence over the knowledge graph to narrow what is likely.'
+			key: 'thinking',
+			label: 'Thinking',
+			body: 'The neuro-symbolic core weighs the evidence over the knowledge graph and returns a distribution over what is likely, never a single guess.'
 		},
 		{
 			key: 'output',
 			label: 'Output',
-			body: 'A grounded, traceable response — every claim linked back to a named source.'
+			body: 'Calibrate, score, diagnose. The distribution is grounded against population data, turned into quantified risk, and read out as a ranked differential with its sources attached.'
 		},
 		{
 			key: 'voi',
 			label: 'Value-of-information',
-			body: 'The loop decides the next-best question — the one that removes the most uncertainty — and asks it.'
+			body: 'The loop asks whether more evidence is worth acquiring. If yes, it picks the single next-best question, exam or test and feeds it back to the top. If not, it converges to a decision.'
 		}
 	];
 
 	/* --- The neuro-symbolic core ---------------------------------- */
 	const SYMBOLIC = [
-		'Grounded in SNOMED CT, ICD-11 and the terminologies medicine already agrees on',
-		'Deterministic and inspectable — you can follow every step',
-		'Authoritative: it holds the veto'
+		'The clinical ontology (SNOMED CT, ICD-11, LOINC, HPO): curated, deterministic, every edge inspectable',
+		'Runs the red-flag and contraindication screens, and reads diagnoses straight off named graph edges',
+		'Authoritative: it holds the veto over anything the learned side proposes'
 	];
 	const LEARNED = [
-		'Reads across messy, multi-modal signals to spot patterns',
-		'Adapts as more consented data flows in',
-		'Advisory: it proposes, it never decides alone'
+		'A Heterogeneous Graph Transformer: a graph neural network that learns patterns across a patient’s linked clinical data',
+		'Bends the generic textbook weights toward this patient’s comorbidities and trajectory, then ranks the shortlist',
+		'Advisory by construction: it proposes and personalises, but never makes an un-gated decision'
 	];
 
-	/* --- Digital twin sources ------------------------------------- */
-	const TWIN_SOURCES = [
-		'Wearables & continuous sensors',
+	/* --- The patient state ---------------------------------------- */
+	const STATE_SOURCES = [
+		'Everyday-life signals from the twin',
+		'Acute vitals, streamed from our own devices',
 		'Lab results & records',
 		'Clinical notes & history',
 		'What a person tells us, in their own words'
@@ -54,7 +85,7 @@
 
 	/* --- Clinical-grade grounding --------------------------------- */
 	const STANDARDS = [
-		{ name: 'SNOMED CT', note: 'Clinical terms' },
+		{ name: 'SNOMED CT', note: 'The anchor' },
 		{ name: 'ICD-11', note: 'Diagnoses' },
 		{ name: 'HPO', note: 'Phenotypes' },
 		{ name: 'LOINC', note: 'Lab codes' },
@@ -63,23 +94,37 @@
 		{ name: 'dm+d', note: 'Medicines' }
 	];
 
-	/* --- Safety & privacy ----------------------------------------- */
+	/* --- Safety overlay: one gate on every stage ------------------ */
 	const SAFEGUARDS = [
 		{
-			title: 'Encoding-confidence gates',
-			body: 'A signal that cannot be mapped with enough confidence is held back, not guessed at.'
+			title: 'Encoding-confidence gate',
+			stage: 'Input · Encoding',
+			body: 'A signal that cannot be mapped to the right concept with enough confidence is flagged, not silently trusted. A mis-linked observation would poison everything downstream.'
 		},
 		{
-			title: 'A full audit log',
-			body: 'Every input, inference and source is recorded, so any answer can be traced after the fact.'
+			title: 'Audit log of decisions',
+			stage: 'Thinking',
+			body: 'Every reasoning step is recorded with its inputs and provenance, so any conclusion can be reconstructed and replayed after the fact.'
 		},
 		{
-			title: 'Red-flag routing',
-			body: 'Anything that reads as urgent is routed to the right emergency or clinical service, immediately.'
+			title: 'Red-flag screen',
+			stage: 'Output',
+			body: 'A hard, authoritative screen over the differential that can escalate or veto regardless of what the learned side proposed.'
 		},
 		{
-			title: 'Jurisdiction awareness',
-			body: 'Guidance and routing adapt to where a person actually is — the standards and services differ by country.'
+			title: 'Jurisdiction guard',
+			stage: 'Value-of-information',
+			body: 'The loop only ever proposes actions permitted where the patient actually is: prescribing authority and what is possible in primary care versus referral.'
+		},
+		{
+			title: 'Contraindication check',
+			stage: 'Prescribing',
+			body: 'The last gate before any terminal action: interactions, allergies and pharmacogenomic contraindications, checked against the medicine.'
+		},
+		{
+			title: 'Clinical assurance sampling',
+			stage: 'On live output',
+			body: 'The empirical face: human clinicians grade sampled live outputs against a harm ladder, with sign-off at every new deployment and ongoing random re-review.'
 		}
 	];
 
@@ -90,14 +135,13 @@
 		if (!m) return null;
 		const num = parseFloat(m[1]);
 		if (Number.isNaN(num)) return null;
-		const decimals = m[1].includes('.') ? 1 : 0;
 		return { num, suffix: m[2] };
 	}
 </script>
 
 <Seo
 	title="Technology"
-	description="A loop, not a pipeline: the neuro-symbolic, ontology-grounded core behind Auracare's agentic clinical decision support."
+	description="Two products on one patient model: how Auratwin builds a high-context digital twin, and how Auracare's neuro-symbolic reasoning loop turns it into grounded, traceable clinical decision support."
 	path="/technology"
 />
 
@@ -118,38 +162,107 @@
 	<div class="container-wide hero-inner">
 		<span class="eyebrow" use:reveal>Technology</span>
 		<h1 use:reveal={{ delay: 60 }}>
-			A loop, <span class="text-gradient-l">not a pipeline</span>.
+			Two products. <span class="text-gradient-l">One patient model.</span>
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>
-			Most health AI runs a fixed pipeline: data in, answer out. We are building something that
-			behaves more like a clinician — a reasoning loop that reasons, then asks the next-best
-			question, then reasons again, always grounded in the knowledge medicine already agrees on.
+			Everything we build stands on a single idea: one timestamped picture of a person, grounded in
+			the language medicine already agrees on. <strong>Auratwin</strong> is a consumer twin that
+			learns your daily life. <strong>Auracare</strong> is clinical decision support that reasons over
+			the whole picture: vitals, history, symptoms and everything the twin captures. This page is how
+			both actually work.
 		</p>
-		<div class="hero-status" use:reveal={{ delay: 220 }}>
-			<span class="pill pill-live">Ontology graph — live today</span>
-			<span class="pill pill-dev">Agentic reasoning engine — in development</span>
+		<nav class="hero-jump" use:reveal={{ delay: 200 }} aria-label="Jump to a product">
+			<a href="#auratwin">Auratwin <span aria-hidden="true">→</span></a>
+			<a href="#auracare">Auracare <span aria-hidden="true">→</span></a>
+		</nav>
+		<div class="hero-status" use:reveal={{ delay: 260 }}>
+			<span class="pill pill-live">Knowledge graph: live today</span>
+			<span class="pill pill-dev">Reasoning engine: in development</span>
 		</div>
 	</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- 1. The reasoning loop                                         -->
+<!-- PART ONE · AURATWIN                                           -->
 <!-- ============================================================ -->
-<section class="section-y loop-section">
+<section id="auratwin" class="section-y twin-product">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>The reasoning loop</span>
-		<h2 use:reveal={{ delay: 60 }}>Five stages that feed back into themselves.</h2>
+		<span class="part-tag" use:reveal>Part one</span>
+		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auratwin · the digital twin</span>
+		<h2 use:reveal={{ delay: 80 }}>The twin builds the picture no clinic ever sees.</h2>
+		<p class="lede" use:reveal={{ delay: 140 }}>
+			Wellness apps fail the moment they demand effort. Auratwin removes it: the signals you already
+			generate flow in on their own, get normalised into one timestamped model of your body, and the
+			twin reaches you where you already talk. The result is a high-context, continuously updated
+			view of daily life: the part of your health that lives between appointments.
+		</p>
+
+		<ol class="twin-steps" use:reveal={{ delay: 160 }}>
+			{#each TWIN_STEPS as step, i}
+				<li class="glass-card twin-step" style="--i:{i}">
+					<span class="step-n" aria-hidden="true">{step.n}</span>
+					<div>
+						<h3>{step.label}</h3>
+						<p>{step.body}</p>
+					</div>
+				</li>
+			{/each}
+		</ol>
+
+		<div class="signals-block">
+			<h3 class="signals-head" use:reveal>Raw signals in, scores out.</h3>
+			<p class="signals-sub" use:reveal={{ delay: 60 }}>
+				Sleep, movement, meals and mindfulness sessions map to one canonical, timestamped schema.
+				From those inputs the twin computes the scores you read: a Sleep Score from sleep stages,
+				duration and consistency; recovery from resting heart rate and heart-rate variability, so
+				every number is derived the same way, whatever device it came from. Wearables sync
+				automatically; anything else is a reply away.
+			</p>
+			<ul class="signals-grid" use:reveal={{ delay: 100 }} aria-label="Signals the twin ingests">
+				{#each TWIN_SIGNALS as sig, i}
+					<li class="signal-chip" style="--i:{i}">
+						<span class="sig-name">{sig.name}</span>
+						<span class="sig-note">{sig.note}</span>
+					</li>
+				{/each}
+			</ul>
+			<p class="ehr-note" use:reveal>
+				Health records can be read into the twin but never acted on by it, per the FD&amp;C Act
+				§520(o)(1)(B) exclusion. The twin gives wellness guidance, not diagnosis.
+			</p>
+		</div>
+	</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART TWO · AURACARE · the reasoning loop                      -->
+<!-- ============================================================ -->
+<section id="auracare" class="section-y loop-section">
+	<div class="container-wide">
+		<span class="part-tag" use:reveal>Part two</span>
+		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracare · clinical reasoning</span>
+		<h2 use:reveal={{ delay: 80 }}>A loop, not a pipeline.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			A pipeline ends when it produces an answer. Our loop treats every answer as the start of a
-			better question — and a translucent safety layer wraps all five stages, end to end.
+			Most health AI runs a fixed pipeline: data in, answer out. Auracare behaves more like a
+			clinician: it reasons, decides the next-best question, then reasons again, always anchored in
+			established medical evidence. A pipeline ends when it produces an answer; our loop treats every
+			answer as the start of a better question, and a safety layer wraps all five stages, end to
+			end.
 		</p>
 
 		<!-- Visual diagram (decorative; the list below is the accessible equivalent) -->
 		<div class="loop-diagram" use:reveal={{ delay: 160 }} aria-hidden="true">
-			<div class="safety-band"><span>Safety — across every stage</span></div>
+			<div class="safety-band"><span>Safety: an overlay on every stage</span></div>
 			<svg class="loop-svg" viewBox="0 0 1000 260" preserveAspectRatio="xMidYMid meet">
 				<defs>
-					<linearGradient id="loopLine" x1="0" y1="0" x2="1" y2="0">
+					<linearGradient
+						id="loopLine"
+						gradientUnits="userSpaceOnUse"
+						x1="80"
+						y1="90"
+						x2="920"
+						y2="90"
+					>
 						<stop offset="0%" stop-color="#6180ff" />
 						<stop offset="100%" stop-color="#387ff5" />
 					</linearGradient>
@@ -166,19 +279,24 @@
 					</marker>
 				</defs>
 
-				<!-- forward path through the five nodes -->
-				<path
-					class="loop-path"
-					d="M110 90 H890"
-					fill="none"
-					stroke="url(#loopLine)"
-					stroke-width="3"
-					stroke-dasharray="8 8"
-					marker-end="url(#loopArrow)"
-				/>
+				<!-- forward connectors: a short, solid arrow floating in the middle
+					 of each pair (1 → 2, 2 → 3, …), so it reads as a chain of steps,
+					 not a single straight pipe -->
+				{#each LOOP.slice(0, -1) as _link, i}
+					<path
+						class="loop-path loop-forward"
+						style="--i:{i}"
+						d="M{110 + i * 195 + 76} 90 H{110 + i * 195 + 120}"
+						fill="none"
+						stroke="url(#loopLine)"
+						stroke-width="3"
+						marker-end="url(#loopArrow)"
+					/>
+				{/each}
 				<!-- return path: value-of-information → input -->
 				<path
 					class="loop-path loop-return"
+					style="--i:4"
 					d="M890 120 V190 H110 V120"
 					fill="none"
 					stroke="url(#loopLine)"
@@ -208,22 +326,25 @@
 			{/each}
 		</ol>
 		<p class="safety-note" use:reveal>
-			<strong>Safety runs across all five.</strong> No stage is left to reason unsupervised — the same
-			guardrails apply from the first signal to the next question asked.
+			<strong>When the loop converges, it acts.</strong> Only once no further question is worth its cost
+			does the core reach a disposition: a prescription, a referral or a lifestyle plan, each one gated
+			by safety and by what is permitted where the patient is.
 		</p>
 	</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- 2. The neuro-symbolic core                                    -->
+<!-- Auracare · the neuro-symbolic core                            -->
 <!-- ============================================================ -->
 <section class="section-y core-section aura-space">
 	<div class="container-wide">
 		<span class="eyebrow" use:reveal>The neuro-symbolic core</span>
 		<h2 use:reveal={{ delay: 60 }}>Two kinds of intelligence, checking each other.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Learned models are powerful and fluent, but they can be confidently wrong. Symbolic systems
-			are rigorous but rigid. We pair them — and give the auditable side the final say.
+			Learned models are fluent but can be confidently wrong. Symbolic systems are rigorous but
+			rigid. We pair them and draw a sharp, named line between the two, because Auracare is a
+			medical device: a regulator’s question is not “is it accurate” but “which decisions crossed
+			onto the learned side, and can you reconstruct them.” We keep that line inspectable.
 		</p>
 
 		<div class="core-grid">
@@ -248,32 +369,43 @@
 		</div>
 
 		<p class="core-line" use:reveal={{ delay: 160 }}>
-			A learned model <em>proposes</em>, an auditable symbolic layer <em>disposes</em>.
+			The learned model <em>proposes</em>. The auditable layer <em>disposes</em>.
+		</p>
+		<p class="core-tail" use:reveal={{ delay: 200 }}>
+			A glass box, not a black box: every conclusion traces back to a named ontology edge or rule,
+			and every step is logged and replayable.
 		</p>
 	</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- 3. The digital twin / patient state                           -->
+<!-- Auracare · the patient state                                  -->
 <!-- ============================================================ -->
 <section class="section-y twin-section">
 	<div class="container-wide twin-grid">
 		<div class="twin-copy">
-			<span class="eyebrow" use:reveal>The digital twin</span>
+			<span class="eyebrow" use:reveal>The patient state</span>
 			<h2 use:reveal={{ delay: 60 }}>One timestamped model of a person.</h2>
 			<p class="lede" use:reveal={{ delay: 120 }}>
-				A person's health does not live in one app. It is scattered across devices, labs and memory.
-				The digital twin pulls those sources into a single, timestamped state — so the reasoning
-				loop always works from one coherent picture, not a dozen partial ones.
+				A person’s health does not live in one app. It is scattered across devices, labs and memory.
+				The patient state pulls those sources onto a single timeline, each observation encoded into
+				the same clinical vocabulary and stamped with when it was true, so the loop always reasons
+				from one coherent picture, not a dozen partial ones.
 			</p>
 			<p use:reveal={{ delay: 180 }}>
-				Every source is encoded into the same vocabulary and stamped with when it was true, so the
-				twin can answer not just <em>what a reading was</em> but
-				<em>how it has changed, and whether that matters now</em>.
+				Because everything is timestamped, the state is longitudinal, not a flat snapshot. It can
+				answer not just <em>what a reading was</em> but
+				<em>how it has changed, and whether that matters now</em>: iron studies rising, a resting
+				heart rate creeping up.
+			</p>
+			<p use:reveal={{ delay: 220 }}>
+				Acute readings arrive the same way. Our own devices (a recording stethoscope, a
+				blood-pressure monitor, an otoscope) stream straight into the core: a closed
+				hardware-to-software link, with no manual entry and no third-party integration in between.
 			</p>
 		</div>
 		<ul class="twin-sources" use:reveal={{ delay: 140 }}>
-			{#each TWIN_SOURCES as source, i}
+			{#each STATE_SOURCES as source, i}
 				<li class="glass-card" style="--i:{i}">
 					<span class="source-line" aria-hidden="true"></span>
 					{source}
@@ -285,15 +417,61 @@
 </section>
 
 <!-- ============================================================ -->
-<!-- 4. The knowledge graph                                        -->
+<!-- Auracare · safety overlay                                     -->
 <!-- ============================================================ -->
-<section class="section-y graph-section aura-space">
+<section class="section-y safety-section aura-space">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>The knowledge graph</span>
+		<span class="eyebrow" use:reveal>Safety by design</span>
+		<h2 use:reveal={{ delay: 60 }}>One gate on every stage.</h2>
+		<p class="lede" use:reveal={{ delay: 120 }}>
+			Safety is an overlay, not a box at the end. Drawing it as a single final filter would imply
+			reasoning can be unsafe as long as the last gate catches it, which is exactly the failure mode
+			a medical device must not have. So the overlay runs through the whole loop, with a different
+			instantiation at each stage.
+		</p>
+
+		<div class="clinician-note" use:reveal={{ delay: 160 }}>
+			<span class="clinician-stage" aria-hidden="true">Clinician-in-the-loop</span>
+			<p>
+				And the outermost gate is a person. Auracare is built to be used
+				<strong>in conjunction with a clinician, never to replace one</strong>. It is a tool that
+				informs and supports their judgement &mdash; the clinician stays accountable for every
+				decision, and their opinion always overrides the model.
+			</p>
+		</div>
+
+		<div class="safety-grid">
+			{#each SAFEGUARDS as item, i}
+				<div class="glass-card safety-card" use:reveal={{ delay: 60 * i }}>
+					<span class="safety-stage">{item.stage}</span>
+					<h3>{item.title}</h3>
+					<p>{item.body}</p>
+				</div>
+			{/each}
+		</div>
+
+		<p class="residency-note" use:reveal>
+			On data residency: the reasoning core is <strong
+				>designed to run inside our own cloud tenant</strong
+			>, so consented health data stays within infrastructure we control. This is an architectural
+			commitment for the agentic engine, which remains in development, and whose regulatory pathway
+			is under active, continuous review.
+		</p>
+	</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- Shared foundation · the knowledge graph                       -->
+<!-- ============================================================ -->
+<section class="section-y graph-section aura-space graph-foundation">
+	<div class="container-wide">
+		<span class="eyebrow" use:reveal>What both products stand on</span>
 		<h2 use:reveal={{ delay: 60 }}>Grounded in what medicine already knows.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			The reasoning is anchored to a live graph of clinical concepts and the relationships between
-			them — the part of the system you can explore for yourself today.
+			The twin and the reasoning core both bind to the same live graph of clinical concepts and the
+			relationships between them. It is not scraped from the open web; it is mapped to the standards
+			clinicians, regulators and health systems already trust, and it is the one part of the system
+			you can explore for yourself today.
 		</p>
 
 		<div class="graph-tiles">
@@ -318,30 +496,9 @@
 			{/each}
 		</div>
 
-		<div class="graph-cta" use:reveal={{ delay: 120 }}>
-			<a class="explore-btn" href={CONTACT.ontologyUrl} target="_blank" rel="noopener noreferrer">
-				Explore the graph <span aria-hidden="true">↗</span>
-			</a>
-			<span class="pill pill-live">Live</span>
-		</div>
-	</div>
-</section>
-
-<!-- ============================================================ -->
-<!-- 5. Clinical-grade grounding                                   -->
-<!-- ============================================================ -->
-<section class="section-y grounding-section">
-	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Clinical-grade grounding</span>
-		<h2 use:reveal={{ delay: 60 }}>Traceable to a named source.</h2>
-		<p class="lede" use:reveal={{ delay: 120 }}>
-			Our knowledge is not scraped from the open web. It is mapped to the standards clinicians,
-			regulators and health systems already trust.
-		</p>
-
 		<ul
 			class="standards-strip"
-			use:reveal={{ delay: 140 }}
+			use:reveal={{ delay: 120 }}
 			aria-label="Standards our knowledge is traceable to"
 		>
 			{#each STANDARDS as std, i}
@@ -352,36 +509,13 @@
 			{/each}
 		</ul>
 		<p class="grounding-caption" use:reveal>Every answer traceable to a named source.</p>
-	</div>
-</section>
 
-<!-- ============================================================ -->
-<!-- 6. Safety & privacy by design                                 -->
-<!-- ============================================================ -->
-<section class="section-y safety-section aura-space">
-	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Safety &amp; privacy by design</span>
-		<h2 use:reveal={{ delay: 60 }}>Built to be checked.</h2>
-		<p class="lede" use:reveal={{ delay: 120 }}>
-			Trust in a health system is earned in the details. These are not features bolted on at the end
-			— they are how the loop is built.
-		</p>
-
-		<div class="safety-grid">
-			{#each SAFEGUARDS as item, i}
-				<div class="glass-card safety-card" use:reveal={{ delay: 70 * i }}>
-					<h3>{item.title}</h3>
-					<p>{item.body}</p>
-				</div>
-			{/each}
+		<div class="graph-cta" use:reveal={{ delay: 120 }}>
+			<a class="explore-btn" href={CONTACT.ontologyUrl} target="_blank" rel="noopener noreferrer">
+				Explore the graph <span aria-hidden="true">↗</span>
+			</a>
+			<span class="pill pill-live">Live</span>
 		</div>
-
-		<p class="residency-note" use:reveal>
-			On data residency: the reasoning core is <strong
-				>designed to run inside our own cloud tenant</strong
-			>, so consented health data stays within infrastructure we control. This is an architectural
-			commitment for the agentic engine — which remains in development.
-		</p>
 	</div>
 </section>
 
@@ -417,11 +551,39 @@
 		line-height: 1.6;
 		max-width: 42rem;
 	}
+	.hero-jump {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 1.75rem;
+	}
+	.hero-jump a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-family: var(--font-family-heading);
+		font-weight: 600;
+		font-size: 0.95rem;
+		color: #eaf0ff;
+		padding: 0.6rem 1.2rem;
+		border-radius: 999px;
+		border: 1px solid rgba(148, 171, 255, 0.35);
+		background: rgba(97, 128, 255, 0.12);
+		transition:
+			transform 0.2s ease,
+			border-color 0.2s ease,
+			background 0.2s ease;
+	}
+	.hero-jump a:hover {
+		transform: translateY(-2px);
+		border-color: rgba(148, 171, 255, 0.7);
+		background: rgba(97, 128, 255, 0.22);
+	}
 	.hero-status {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.6rem;
-		margin-top: 1.75rem;
+		margin-top: 1.25rem;
 	}
 
 	/* ---------------- Shared ---------------- */
@@ -437,8 +599,118 @@
 		line-height: 1.65;
 		max-width: 46rem;
 	}
+	/* Part label sitting above the eyebrow, so each half is unmistakable. */
+	.part-tag {
+		display: inline-block;
+		font-family: var(--font-family-heading);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--color-primary-500);
+		margin-bottom: 0.6rem;
+	}
+	/* Anchor targets clear the sticky nav. */
+	#auratwin,
+	#auracare {
+		scroll-margin-top: 5rem;
+	}
 
-	/* ---------------- 1. Loop ---------------- */
+	/* ---------------- Auratwin ---------------- */
+	.twin-product {
+		background: var(--color-surface-alt);
+		border-block: 1px solid var(--color-border-default);
+	}
+	.twin-steps {
+		list-style: none;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+		margin-top: clamp(2rem, 4vw, 3rem);
+		padding: 0;
+	}
+	.twin-step {
+		display: flex;
+		gap: 1rem;
+		align-items: flex-start;
+		padding: 1.25rem 1.5rem;
+	}
+	.step-n {
+		flex: none;
+		font-family: var(--font-family-mono);
+		font-size: 0.9rem;
+		font-weight: 700;
+		color: var(--color-primary-500);
+		padding-top: 0.15rem;
+	}
+	.twin-step h3 {
+		font-size: 1.1rem;
+		margin-bottom: 0.25rem;
+	}
+	.twin-step p {
+		font-size: 0.95rem;
+		line-height: 1.55;
+		color: var(--color-ink-soft);
+	}
+	.signals-block {
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+	}
+	.signals-head {
+		font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+		letter-spacing: -0.01em;
+	}
+	.signals-sub {
+		margin-top: 0.5rem;
+		font-size: 0.98rem;
+		line-height: 1.6;
+		max-width: 44rem;
+		color: var(--color-ink-soft);
+	}
+	.signals-grid {
+		list-style: none;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.75rem;
+		margin-top: clamp(1.5rem, 3vw, 2rem);
+		padding: 0;
+	}
+	.signal-chip {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		padding: 0.9rem 1.1rem;
+		border-radius: var(--radius-lg);
+		background: #fff;
+		border: 1px solid var(--color-border-default);
+		box-shadow: var(--shadow-xs);
+	}
+	.sig-name {
+		font-family: var(--font-family-heading);
+		font-weight: 700;
+		font-size: 0.98rem;
+		color: var(--color-ink);
+	}
+	.sig-note {
+		font-size: 0.82rem;
+		color: var(--color-neutral-600, #6b7280);
+	}
+	.ehr-note {
+		margin-top: 1.5rem;
+		font-size: 0.85rem;
+		line-height: 1.6;
+		max-width: 48rem;
+		color: var(--color-neutral-600, #6b7280);
+	}
+	@media (min-width: 720px) {
+		.twin-steps {
+			grid-template-columns: repeat(3, 1fr);
+		}
+		.signals-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	/* ---------------- Loop ---------------- */
 	.loop-diagram {
 		position: relative;
 		margin-top: clamp(2rem, 5vw, 3.5rem);
@@ -489,7 +761,6 @@
 		gap: 1rem;
 		margin-top: clamp(2rem, 4vw, 3rem);
 		grid-template-columns: 1fr;
-		counter-reset: none;
 	}
 	.loop-item {
 		display: flex;
@@ -536,7 +807,7 @@
 		}
 	}
 
-	/* ---------------- 2. Core ---------------- */
+	/* ---------------- Core ---------------- */
 	.core-grid {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -610,13 +881,21 @@
 		-webkit-text-fill-color: transparent;
 		font-weight: 700;
 	}
+	.core-tail {
+		margin-top: 0.9rem;
+		text-align: center;
+		font-size: 0.98rem;
+		line-height: 1.6;
+		max-width: 44rem;
+		margin-inline: auto;
+	}
 	@media (min-width: 760px) {
 		.core-grid {
 			grid-template-columns: 1fr 1fr;
 		}
 	}
 
-	/* ---------------- 3. Twin ---------------- */
+	/* ---------------- Patient state ---------------- */
 	.twin-grid {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -665,7 +944,12 @@
 		}
 	}
 
-	/* ---------------- 4. Graph ---------------- */
+	/* ---------------- Graph ---------------- */
+	/* Two dark sections meet here (safety → graph); a hairline keeps them
+	   from reading as one continuous block. */
+	.graph-foundation {
+		border-top: 1px solid var(--color-border-dark);
+	}
 	.graph-tiles {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
@@ -722,13 +1006,13 @@
 		}
 	}
 
-	/* ---------------- 5. Grounding ---------------- */
+	/* ---------------- Grounding chips ---------------- */
 	.standards-strip {
 		list-style: none;
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.75rem;
-		margin-top: clamp(2rem, 4vw, 3rem);
+		margin-top: clamp(1.75rem, 4vw, 2.5rem);
 	}
 	.standard-chip {
 		display: flex;
@@ -736,29 +1020,54 @@
 		gap: 0.1rem;
 		padding: 0.7rem 1.1rem;
 		border-radius: var(--radius-md);
-		background: rgba(255, 255, 255, 0.85);
-		border: 1px solid rgba(79, 111, 237, 0.16);
-		box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.14);
 	}
 	.chip-name {
 		font-family: var(--font-family-heading);
 		font-weight: 700;
-		color: var(--color-primary-700);
+		color: #fff;
 		font-size: 0.95rem;
 	}
 	.chip-note {
 		font-size: 0.72rem;
-		color: var(--color-neutral-500, #6b7280);
+		color: rgba(226, 232, 255, 0.6);
 	}
 	.grounding-caption {
-		margin-top: 1.5rem;
+		margin-top: 1.25rem;
 		font-family: var(--font-family-heading);
 		font-size: clamp(1.05rem, 2vw, 1.35rem);
 		font-weight: 500;
-		color: var(--color-primary-700);
+		color: var(--color-primary-300);
 	}
 
-	/* ---------------- 6. Safety ---------------- */
+	/* ---------------- Safety ---------------- */
+	.clinician-note {
+		margin-top: clamp(1.75rem, 4vw, 2.5rem);
+		max-width: 52rem;
+		padding: clamp(1.25rem, 3vw, 1.75rem);
+		border-radius: var(--radius-md);
+		background: rgba(99, 102, 241, 0.1);
+		border: 1px solid rgba(99, 102, 241, 0.35);
+		border-left: 3px solid var(--color-primary-300);
+	}
+	.clinician-stage {
+		display: inline-block;
+		font-family: var(--font-family-mono);
+		font-size: 0.66rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-primary-300);
+		margin-bottom: 0.5rem;
+	}
+	.clinician-note p {
+		font-size: 1rem;
+		line-height: 1.6;
+	}
+	.clinician-note strong {
+		color: #fff;
+	}
 	.safety-grid {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -767,6 +1076,16 @@
 	}
 	.safety-card {
 		padding: clamp(1.25rem, 3vw, 1.75rem);
+	}
+	.safety-stage {
+		display: inline-block;
+		font-family: var(--font-family-mono);
+		font-size: 0.66rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-primary-300);
+		margin-bottom: 0.5rem;
 	}
 	.safety-card h3 {
 		font-size: 1.1rem;
@@ -792,6 +1111,11 @@
 	@media (min-width: 720px) {
 		.safety-grid {
 			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	@media (min-width: 1000px) {
+		.safety-grid {
+			grid-template-columns: repeat(3, 1fr);
 		}
 	}
 </style>

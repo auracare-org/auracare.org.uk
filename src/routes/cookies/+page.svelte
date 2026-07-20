@@ -62,10 +62,11 @@
 		<article>
 			<h2 use:reveal>What cookies are</h2>
 			<p use:reveal={{ delay: 60 }}>
-				Cookies are tiny text files a website can store in your browser. Related technologies — like <code
+				Cookies are tiny text files a website can store in your browser. Related technologies, like <code
 					>localStorage</code
-				> — do a similar job: they let a page remember something small between visits, such as a setting
-				you have chosen. We use the plain word &ldquo;cookies&rdquo; loosely on this page to cover both.
+				>, do a similar job: they let a page remember something small between visits, such as a
+				setting you have chosen. We use the plain word &ldquo;cookies&rdquo; loosely on this page to
+				cover both.
 			</p>
 
 			<h2 use:reveal>Our approach: keep it minimal</h2>
@@ -83,11 +84,11 @@
 			</p>
 			<ul>
 				<li use:reveal={{ delay: 60 }}>
-					<strong>Banner dismissal</strong> — when you close the site announcement banner, we note
+					<strong>Banner dismissal</strong>: when you close the site announcement banner, we note
 					that in your browser (<code>localStorage</code>) so it does not reappear on every page.
 				</li>
 				<li use:reveal={{ delay: 120 }}>
-					<strong>Consent choice</strong> — when you accept or decline analytics, we remember that
+					<strong>Consent choice</strong>: when you accept or decline analytics, we remember that
 					decision (the <code>cookie-consent</code> value) so we can honour it and stop asking.
 				</li>
 			</ul>
@@ -95,8 +96,8 @@
 			<h2 use:reveal>Analytics (optional)</h2>
 			<p use:reveal={{ delay: 60 }}>
 				To understand which pages people find useful, we use privacy-conscious product analytics
-				provided through Vercel. It measures things in aggregate — page views, rough device and
-				referrer information, broad usage patterns — to help us improve the site. It is designed to
+				provided through Vercel. It measures things in aggregate (page views, rough device and
+				referrer information, broad usage patterns) to help us improve the site. It is designed to
 				be light-touch and is not used to advertise to you or to track you around the wider web.
 			</p>
 			<p use:reveal={{ delay: 120 }}>

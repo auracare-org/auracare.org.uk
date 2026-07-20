@@ -7,16 +7,14 @@
 	const toneColor: Record<MarketTone, string> = {
 		launch: '#6180ff',
 		clinical: '#387ff5',
+		crossover: '#8b7cff',
 		sea: '#4f8dff',
-		downstream: '#2f4ec0',
-		beachhead: '#94abff',
-		researched: '#f0b429',
-		deferred: '#6b7280'
+		expansion: '#f0b429',
+		deferred: '#9ca3af'
 	};
 
 	const ATLAS_ALIAS: Record<string, string> = {
-		'United States': 'United States of America',
-		'United Kingdom (MHRA Airlock)': 'United Kingdom'
+		'United States': 'United States of America'
 	};
 
 	interface MarketMeta {
@@ -29,7 +27,7 @@
 	const marketByCountry = new Map<string, MarketMeta>();
 	for (const p of MARKET_POINTS) {
 		const atlas = ATLAS_ALIAS[p.name] ?? p.name;
-		const display = p.name === 'United Kingdom (MHRA Airlock)' ? 'United Kingdom' : p.name;
+		const display = p.name;
 		const existing = marketByCountry.get(atlas);
 		if (!existing || p.wave < existing.wave) {
 			marketByCountry.set(atlas, { tone: p.tone, wave: p.wave, display, label: p.label });
@@ -39,6 +37,7 @@
 	const countries = countryPaths.map((c) => ({ ...c, market: marketByCountry.get(c.name) }));
 
 	const maxWave = MARKET_WAVES.length - 1;
+	const deferredWave = MARKET_WAVES.find((w) => w.tone === 'deferred')?.order ?? maxWave;
 	let activeWave = $state(0);
 	let pinned = $state(false);
 
@@ -96,11 +95,9 @@
 				<!-- Header above -->
 				<div class="map-head">
 					<span class="eyebrow">Global rollout</span>
-					<h2 id="map-heading">
-						Approval portability, not market size, decides where we go next.
-					</h2>
+					<h2 id="map-heading">Approval portability, not market size, decides where we go next.</h2>
 					<p class="map-sub">
-						One clinical deployment can feed several regulatory dossiers at once — so we sequence by
+						One clinical deployment can feed several regulatory dossiers at once, so we sequence by
 						how far an approval travels, not by how big a market looks.
 					</p>
 				</div>
@@ -120,13 +117,17 @@
 						<g class="map-countries">
 							{#each countries as c (c.id)}
 								{@const lit = !!c.market && activeWave >= c.market.wave}
+								{@const deferred = !c.market && activeWave >= deferredWave}
 								<path
 									d={c.d}
 									class:is-market={!!c.market}
 									class:lit
+									class:deferred
 									data-name={c.market ? c.market.display : c.name}
-									data-label={c.market ? c.market.label : null}
-									style={c.market ? `--tone:${toneColor[c.market.tone]}` : ''}
+									data-label={c.market ? c.market.label : deferred ? 'Rest of world — more to come' : null}
+									style={c.market
+										? `--tone:${toneColor[c.market.tone]}`
+										: `--tone:${toneColor.deferred}`}
 								/>
 							{/each}
 						</g>
@@ -154,7 +155,9 @@
 					<div class="wave-info" aria-live="polite">
 						{#key currentWave.order}
 							<div class="wave-slide">
-								<span class="cap-badge" style="--c:{toneColor[currentWave.tone]}">Wave {currentWave.order + 1}</span>
+								<span class="cap-badge" style="--c:{toneColor[currentWave.tone]}"
+									>Wave {currentWave.order + 1}</span
+								>
 								<strong>{currentWave.title}</strong>
 								<span class="wave-caption">{currentWave.caption}</span>
 							</div>
@@ -245,7 +248,9 @@
 		fill: var(--color-neutral-alpha-invert-05);
 		stroke: var(--color-white-alpha-10);
 		stroke-width: 0.35;
-		transition: fill 0.6s ease, fill-opacity 0.6s ease;
+		transition:
+			fill 0.6s ease,
+			fill-opacity 0.6s ease;
 	}
 	.map-countries path.is-market {
 		fill-opacity: 0.12;
@@ -255,6 +260,17 @@
 		fill-opacity: 0.85;
 		stroke: var(--color-white-alpha-20);
 		stroke-width: 0.4;
+	}
+	/* Wave 6: every remaining country floods grey, "deferred by design" */
+	.map-countries path.deferred {
+		fill: var(--tone);
+		fill-opacity: 0.4;
+		stroke: var(--color-white-alpha-20);
+		stroke-width: 0.4;
+	}
+	.map-countries path.deferred:hover {
+		fill: var(--tone);
+		fill-opacity: 0.6;
 	}
 	.map-countries path:hover {
 		fill: var(--color-white-alpha-20);
@@ -274,7 +290,9 @@
 		stroke-dasharray: 1000;
 		stroke-dashoffset: 1000;
 		opacity: 0;
-		transition: stroke-dashoffset 1.1s ease, opacity 0.5s ease;
+		transition:
+			stroke-dashoffset 1.1s ease,
+			opacity 0.5s ease;
 		pointer-events: none;
 	}
 	.map-arc.on {
@@ -330,14 +348,20 @@
 		animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 	@keyframes slideIn {
-		from { opacity: 0; transform: translateX(20px); }
-		to { opacity: 1; transform: translateX(0); }
+		from {
+			opacity: 0;
+			transform: translateX(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
 	}
 	.cap-badge {
 		flex: none;
 		font-family: var(--font-family-mono);
 		font-size: 0.68rem;
-		font-weight: 500;
+		font-weight: 700;
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
 		color: #fff;
