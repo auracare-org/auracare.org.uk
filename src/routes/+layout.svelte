@@ -3,15 +3,25 @@
 	import { onMount } from 'svelte';
 	import { dev } from '$app/environment';
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
+	import { cookieConsent } from '$lib/stores/cookieConsent';
 	import SeedBanner from '$lib/components/layout/SeedBanner.svelte';
 	import Nav from '$lib/components/layout/Nav.svelte';
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import CookieBanner from '$lib/components/CookieBanner.svelte';
 
-	injectAnalytics({ mode: dev ? 'development' : 'production' });
-
 	let { children } = $props();
 	let headerEl = $state<HTMLElement | null>(null);
+
+	// Only load analytics once the visitor has actively accepted it. This mirrors
+	// the promise on /cookies ("optional and off until you say yes") and keeps us
+	// consent-first under UK PECR/GDPR. Guarded so it injects at most once.
+	let analyticsLoaded = false;
+	$effect(() => {
+		if ($cookieConsent === 'accepted' && !analyticsLoaded) {
+			analyticsLoaded = true;
+			injectAnalytics({ mode: dev ? 'development' : 'production' });
+		}
+	});
 
 	onMount(() => {
 		if (!headerEl) return;
