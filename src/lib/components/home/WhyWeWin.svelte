@@ -3,47 +3,33 @@
 	import { MOAT, MOAT_LINE } from '$lib/data/company';
 
 	let active = $state<number | null>(null);
-	let trackEl = $state<HTMLElement>();
-	let stageEl = $state<HTMLElement>();
+	let scene = $state<HTMLElement>();
 
 	function toggle(i: number) {
 		active = active === i ? null : i;
 	}
 
-	// Geometry (% of the square venn box). All three circles share one
-	// translucent Auracare blue; alpha stacking deepens the overlaps, so the
-	// centre where all three meet reads as the solid brand blue.
-	const LOBES = [
-		{ left: 18, top: 1, lx: 50, ly: 23 }, // top
-		{ left: 2, top: 31, lx: 34, ly: 73 }, // lower-left
-		{ left: 34, top: 31, lx: 66, ly: 73 } // lower-right
-	];
-
-	// Only the circles pin. The heading and closing line flow normally above and
-	// below; a tall track wraps a viewport-height sticky stage holding just the
-	// venn, so as you scroll through, the circles hold at the middle of the
-	// screen and cycle 1 → 2 → 3. Clicks still work; the next scroll recomputes.
+	// Pin the section while scrolling and cycle the active number through
+	// each capability before releasing scroll to continue down the page.
 	$effect(() => {
-		const track = trackEl;
-		const stage = stageEl;
-		if (!track || !stage || typeof window === 'undefined') return;
+		const el = scene;
+		if (!el) return;
+		if (window.matchMedia('(max-width: 700px), (prefers-reduced-motion: reduce)').matches) return;
 
+		const steps = MOAT.length;
 		let raf = 0;
-		const update = () => {
+
+		function update() {
 			raf = 0;
-			const rect = track.getBoundingClientRect();
-			const range = Math.max(1, track.offsetHeight - stage.offsetHeight);
-			const scrolled = -rect.top;
-			if (scrolled <= 0) {
-				active = null;
-				return;
-			}
-			const p = Math.min(1, scrolled / range);
-			active = Math.min(2, Math.floor(p * 3));
-		};
-		const onScroll = () => {
+			const travel = el!.offsetHeight - window.innerHeight;
+			if (travel <= 0) return;
+			const p = Math.min(1, Math.max(0, -el!.getBoundingClientRect().top / travel));
+			active = Math.min(steps - 1, Math.floor(p * steps));
+		}
+
+		function onScroll() {
 			if (!raf) raf = requestAnimationFrame(update);
-		};
+		}
 
 		update();
 		window.addEventListener('scroll', onScroll, { passive: true });
@@ -54,9 +40,20 @@
 			if (raf) cancelAnimationFrame(raf);
 		};
 	});
+
+	// Geometry (% of the square venn box). All three circles share one
+	// translucent Auracare blue; alpha stacking deepens the overlaps, so the
+	// centre where all three meet reads as the solid brand blue.
+	const LOBES = [
+		{ left: 18, top: 1, lx: 50, ly: 23 }, // top
+		{ left: 2, top: 31, lx: 34, ly: 73 }, // lower-left
+		{ left: 34, top: 31, lx: 66, ly: 73 } // lower-right
+	];
 </script>
 
 <section class="why section-y">
+	<div class="scene" bind:this={scene}>
+		<div class="pin">
 	<div class="container-wide">
 		<header class="head">
 			<h2 use:reveal>
@@ -69,65 +66,59 @@
 		</header>
 	</div>
 
-	<!-- Only the circles pin: this tall track wraps a sticky viewport-height
-	     stage so the venn holds mid-screen and cycles 1 → 2 → 3 as you scroll. -->
-	<div class="pin-track" bind:this={trackEl}>
-		<div class="pin-stage" bind:this={stageEl}>
-			<div class="container-wide">
-				<div class="venn-grid">
-					<!-- Left: three translucent circles, labelled 1 / 2 / 3 -->
-					<div class="venn">
-						<div class="lobes" aria-hidden="true">
-							{#each LOBES as l, i}
-								<span
-									class="fill"
-									class:fill-active={active === i}
-									style="left:{l.left}%;top:{l.top}%;"
-								></span>
-							{/each}
-						</div>
+	<div class="container-wide">
+		<div class="venn-grid">
+			<!-- Left: three translucent circles, labelled 1 / 2 / 3 -->
+			<div class="venn">
+				<div class="lobes" aria-hidden="true">
+					{#each LOBES as l, i}
+						<span
+							class="fill"
+							class:fill-active={active === i}
+							style="left:{l.left}%;top:{l.top}%;"
+						></span>
+					{/each}
+				</div>
 
-						<div class="hits">
-							{#each MOAT as pillar, i}
-								<button
-									class="lobe"
-									class:lobe-active={active === i}
-									style="left:{LOBES[i].left}%;top:{LOBES[i].top}%;--lx:{LOBES[i].lx}%;--ly:{LOBES[
-										i
-									].ly}%;"
-									onclick={() => toggle(i)}
-									aria-pressed={active === i}
-									aria-label={pillar.title}
-								>
-									<span class="num">{i + 1}</span>
-								</button>
-							{/each}
-						</div>
-					</div>
-
-					<!-- Right: numbered capabilities, expanding on click/scroll -->
-					<ol class="rows">
-						{#each MOAT as pillar, i}
-							<li>
-								<button
-									class="row"
-									class:row-active={active === i}
-									onclick={() => toggle(i)}
-									aria-expanded={active === i}
-								>
-									<span class="row-num">{i + 1}</span>
-									<span class="row-text">
-										<span class="row-title">{pillar.title}</span>
-										{#if active === i}
-											<span class="row-body">{pillar.body}</span>
-										{/if}
-									</span>
-								</button>
-							</li>
-						{/each}
-					</ol>
+				<div class="hits">
+					{#each MOAT as pillar, i}
+						<button
+							class="lobe"
+							class:lobe-active={active === i}
+							style="left:{LOBES[i].left}%;top:{LOBES[i].top}%;--lx:{LOBES[i].lx}%;--ly:{LOBES[
+								i
+							].ly}%;"
+							onclick={() => toggle(i)}
+							aria-pressed={active === i}
+							aria-label={pillar.title}
+						>
+							<span class="num">{i + 1}</span>
+						</button>
+					{/each}
 				</div>
 			</div>
+
+			<!-- Right: numbered capabilities, expanding on click -->
+			<ol class="rows">
+				{#each MOAT as pillar, i}
+					<li>
+						<button
+							class="row"
+							class:row-active={active === i}
+							onclick={() => toggle(i)}
+							aria-expanded={active === i}
+						>
+							<span class="row-num">{i + 1}</span>
+							<span class="row-text">
+								<span class="row-title">{pillar.title}</span>
+								{#if active === i}
+									<span class="row-body">{pillar.body}</span>
+								{/if}
+							</span>
+						</button>
+					</li>
+				{/each}
+			</ol>
 		</div>
 	</div>
 
@@ -135,34 +126,44 @@
 		<!-- Closing line flows normally beneath the pinned circles. -->
 		<p class="moat-line" use:reveal={{ delay: 160 }}>{MOAT_LINE}</p>
 	</div>
+		</div>
+	</div>
 </section>
 
 <style>
 	.why {
 		background: var(--color-neutral-0);
 	}
+
+	/* Tall scroll track; the inner pin sticks to the viewport and the active
+	   number is cycled from scroll progress before scrolling continues. */
+	.scene {
+		position: relative;
+		height: 200vh;
+	}
+	.pin {
+		position: sticky;
+		top: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding-block: clamp(3rem, 6vw, 5rem);
+	}
+	/* No scroll-pin on narrow screens (stacked content can exceed the
+	   viewport) or when reduced motion is requested: fall back to normal flow. */
+	@media (max-width: 700px), (prefers-reduced-motion: reduce) {
+		.scene {
+			height: auto;
+		}
+		.pin {
+			position: static;
+			padding-block: 0;
+		}
+	}
 	.head {
 		max-width: 44rem;
 	}
 
-	/* Only the circles pin. The stage hugs the venn (no 100vh centring box, which
-	   would strand the circles half a screen below the heading from the first
-	   frame). It flows in right under the heading, then sticks to the middle of
-	   the viewport — top:50% + translateY(-50%) centres a content-height sticky —
-	   while the surplus track height scrolls past, cycling the circles 1 → 2 → 3.
-	   Heading and closing line flow normally above and below. */
-	.pin-track {
-		position: relative;
-		height: 200vh;
-	}
-	.pin-stage {
-		position: sticky;
-		top: 50%;
-		transform: translateY(-50%);
-	}
-	.pin-stage > .container-wide {
-		width: 100%;
-	}
 	.head h2 {
 		font-size: clamp(1.9rem, 4vw, 3rem);
 		line-height: 1.08;

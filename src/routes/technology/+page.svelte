@@ -51,14 +51,19 @@
 			body: 'The neuro-symbolic core weighs the evidence over the knowledge graph and returns a distribution over what is likely, never a single guess.'
 		},
 		{
-			key: 'output',
-			label: 'Output',
-			body: 'Calibrate, score, diagnose. The distribution is grounded against population data, turned into quantified risk, and read out as a ranked differential with its sources attached.'
+			key: 'thesis',
+			label: 'Thesis',
+			body: 'Calibrate, score, diagnose. The distribution is grounded against population data, turned into quantified risk, and stated as a ranked differential with its sources attached: a working thesis, held only as long as the evidence supports it.'
 		},
 		{
 			key: 'voi',
 			label: 'Value-of-information',
-			body: 'The loop asks whether more evidence is worth acquiring. If yes, it picks the single next-best question, exam or test and feeds it back to the top. If not, it converges to a decision.'
+			body: 'The loop asks whether more evidence is worth acquiring. If yes, it picks the single next-best question, exam or test and feeds it back to the top. If not, it converges and hands the thesis on.'
+		},
+		{
+			key: 'outcome',
+			label: 'Medical outcome',
+			body: 'The thesis becomes an action: a referral, a prescription, further testing or a lifestyle plan, each one gated by safety and by what is permitted where the patient actually is.'
 		}
 	];
 
@@ -89,9 +94,7 @@
 		{ name: 'ICD-11', note: 'Diagnoses' },
 		{ name: 'HPO', note: 'Phenotypes' },
 		{ name: 'LOINC', note: 'Lab codes' },
-		{ name: 'NICE', note: 'UK guidance' },
-		{ name: 'MHRA', note: 'UK regulation' },
-		{ name: 'dm+d', note: 'Medicines' }
+		{ name: 'NICE', note: 'UK guidance' }
 	];
 
 	/* --- Safety overlay: one gate on every stage ------------------ */
@@ -108,7 +111,7 @@
 		},
 		{
 			title: 'Red-flag screen',
-			stage: 'Output',
+			stage: 'Thesis',
 			body: 'A hard, authoritative screen over the differential that can escalate or veto regardless of what the learned side proposed.'
 		},
 		{
@@ -197,7 +200,102 @@
 			view of daily life: the part of your health that lives between appointments.
 		</p>
 
-		<ol class="twin-steps" use:reveal={{ delay: 160 }}>
+		<!-- The churn curve behind that first sentence: the same figure as the
+			 deck, redrawn. Left column carries the number, right column the shape. -->
+		<figure class="churn" use:reveal={{ delay: 160 }}>
+			<div class="churn-stat">
+				<span class="churn-only">Only</span>
+				<span
+					class="churn-big"
+					use:countUp={{ value: 4, format: (n: number) => `${Math.round(n)}%` }}>4%</span
+				>
+				<p class="churn-say">
+					of people who install a health app are still active a month later. The other 96% have
+					churned, and almost all of them go in the first two weeks: not because the advice was
+					wrong, but because logging it was work.
+				</p>
+			</div>
+
+			<div class="churn-chart">
+				<span class="churn-axis-label">Share of installers still active</span>
+				<svg
+					class="churn-svg"
+					viewBox="0 0 520 230"
+					preserveAspectRatio="xMidYMid meet"
+					role="img"
+					aria-labelledby="churn-title churn-desc"
+				>
+					<title id="churn-title">Health-app retention decay over the first 30 days</title>
+					<desc id="churn-desc">
+						Of everyone who installs a health app, 20–30% are still active on day one and only 3–4%
+						on day thirty, with the steepest fall in the first two weeks.
+					</desc>
+					<defs>
+						<linearGradient
+							id="churnLine"
+							x1="0"
+							y1="0"
+							x2="520"
+							y2="0"
+							gradientUnits="userSpaceOnUse"
+						>
+							<stop offset="0%" stop-color="#6180ff" />
+							<stop offset="100%" stop-color="#387ff5" />
+						</linearGradient>
+						<linearGradient
+							id="churnFill"
+							x1="0"
+							y1="20"
+							x2="0"
+							y2="190"
+							gradientUnits="userSpaceOnUse"
+						>
+							<stop offset="0%" stop-color="rgba(97,128,255,.22)" />
+							<stop offset="100%" stop-color="rgba(97,128,255,0)" />
+						</linearGradient>
+					</defs>
+
+					<!-- axes -->
+					<line class="churn-ax" x1="40" y1="14" x2="40" y2="190" />
+					<line class="churn-ax" x1="40" y1="190" x2="504" y2="190" />
+
+					<!-- area under the curve, then the curve itself -->
+					<path
+						class="churn-area"
+						d="M40 20 C 52 20 62 96 74 148 C 150 176 300 183 500 185 L 500 190 L 40 190 Z"
+						fill="url(#churnFill)"
+					/>
+					<path
+						class="churn-curve"
+						d="M40 20 C 52 20 62 96 74 148 C 150 176 300 183 500 185"
+						fill="none"
+						stroke="url(#churnLine)"
+						stroke-width="3"
+						stroke-linecap="round"
+					/>
+
+					<!-- the three points the source actually reports -->
+					<circle class="churn-dot" cx="40" cy="20" r="4.5" />
+					<circle class="churn-dot" cx="74" cy="148" r="4.5" />
+					<circle class="churn-dot" cx="500" cy="185" r="4.5" />
+
+					<text class="churn-pt" x="52" y="17">100% · install</text>
+					<text class="churn-pt" x="86" y="145">20–30% · day 1</text>
+					<text class="churn-pt churn-pt-end" x="490" y="176">3–4% · day 30</text>
+					<text class="churn-note" x="120" y="112">steepest drop: the first two weeks</text>
+
+					<text class="churn-tick" x="40" y="206">day 0</text>
+					<text class="churn-tick churn-pt-end" x="504" y="206">day 30</text>
+				</svg>
+			</div>
+
+			<figcaption class="churn-src">
+				Source: Sahha, health-app churn and retention. Day-1 retention averages 20–30% of
+				installers; day-30 averages 3–4%.
+			</figcaption>
+		</figure>
+
+		<ol class="twin-steps" use:reveal={{ delay: 200 }}>
 			{#each TWIN_STEPS as step, i}
 				<li class="glass-card twin-step" style="--i:{i}">
 					<span class="step-n" aria-hidden="true">{step.n}</span>
@@ -235,6 +333,44 @@
 </section>
 
 <!-- ============================================================ -->
+<!-- Auracare · the patient state                                  -->
+<!-- ============================================================ -->
+<section class="section-y twin-section">
+	<div class="container-wide twin-grid">
+		<div class="twin-copy">
+			<span class="eyebrow" use:reveal>The patient state</span>
+			<h2 use:reveal={{ delay: 60 }}>One timestamped model of a person.</h2>
+			<p class="lede" use:reveal={{ delay: 120 }}>
+				A person’s health does not live in one app. It is scattered across devices, labs and memory.
+				The patient state pulls those sources onto a single timeline, each observation encoded into
+				the same clinical vocabulary and stamped with when it was true, so the loop always reasons
+				from one coherent picture, not a dozen partial ones.
+			</p>
+			<p use:reveal={{ delay: 180 }}>
+				Because everything is timestamped, the state is longitudinal, not a flat snapshot. It can
+				answer not just <em>what a reading was</em> but
+				<em>how it has changed, and whether that matters now</em>: iron studies rising, a resting
+				heart rate creeping up.
+			</p>
+			<p use:reveal={{ delay: 220 }}>
+				Acute readings arrive the same way. Our own devices (a recording stethoscope, a
+				blood-pressure monitor, an otoscope) stream straight into the core: a closed
+				hardware-to-software link, with no manual entry and no third-party integration in between.
+			</p>
+		</div>
+		<ul class="twin-sources" use:reveal={{ delay: 140 }}>
+			{#each STATE_SOURCES as source, i}
+				<li class="glass-card" style="--i:{i}">
+					<span class="source-line" aria-hidden="true"></span>
+					{source}
+				</li>
+			{/each}
+			<li class="twin-state glass-card">One timestamped patient state</li>
+		</ul>
+	</div>
+</section>
+
+<!-- ============================================================ -->
 <!-- PART TWO · AURACARE · the reasoning loop                      -->
 <!-- ============================================================ -->
 <section id="auracare" class="section-y loop-section">
@@ -245,9 +381,9 @@
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			Most health AI runs a fixed pipeline: data in, answer out. Auracare behaves more like a
 			clinician: it reasons, decides the next-best question, then reasons again, always anchored in
-			established medical evidence. A pipeline ends when it produces an answer; our loop treats every
-			answer as the start of a better question, and a safety layer wraps all five stages, end to
-			end.
+			established medical evidence. A pipeline ends when it produces an answer; our loop treats
+			every answer as the start of a better question, and only acts once no further question is
+			worth its cost. A safety layer wraps all six stages, end to end.
 		</p>
 
 		<!-- Visual diagram (decorative; the list below is the accessible equivalent) -->
@@ -286,7 +422,7 @@
 					<path
 						class="loop-path loop-forward"
 						style="--i:{i}"
-						d="M{110 + i * 195 + 76} 90 H{110 + i * 195 + 120}"
+						d="M{90 + i * 164 + 62} 90 H{90 + i * 164 + 102}"
 						fill="none"
 						stroke="url(#loopLine)"
 						stroke-width="3"
@@ -296,8 +432,8 @@
 				<!-- return path: value-of-information → input -->
 				<path
 					class="loop-path loop-return"
-					style="--i:4"
-					d="M890 120 V190 H110 V120"
+					style="--i:5"
+					d="M746 120 V190 H90 V120"
 					fill="none"
 					stroke="url(#loopLine)"
 					stroke-width="3"
@@ -307,8 +443,8 @@
 
 				{#each LOOP as _stage, i}
 					<g class="loop-node" style="--i:{i}">
-						<circle cx={110 + i * 195} cy="90" r="30" />
-						<text x={110 + i * 195} y="95" text-anchor="middle">{i + 1}</text>
+						<circle cx={90 + i * 164} cy="90" r="30" />
+						<text x={90 + i * 164} y="95" text-anchor="middle">{i + 1}</text>
 					</g>
 				{/each}
 			</svg>
@@ -326,9 +462,9 @@
 			{/each}
 		</ol>
 		<p class="safety-note" use:reveal>
-			<strong>When the loop converges, it acts.</strong> Only once no further question is worth its cost
-			does the core reach a disposition: a prescription, a referral or a lifestyle plan, each one gated
-			by safety and by what is permitted where the patient is.
+			<strong>Stage five is the only exit.</strong> Nothing reaches a patient until value-of-information
+			says the next question is not worth its cost, and every action that follows is checked against
+			the safety overlay before it leaves the loop.
 		</p>
 	</div>
 </section>
@@ -379,44 +515,6 @@
 </section>
 
 <!-- ============================================================ -->
-<!-- Auracare · the patient state                                  -->
-<!-- ============================================================ -->
-<section class="section-y twin-section">
-	<div class="container-wide twin-grid">
-		<div class="twin-copy">
-			<span class="eyebrow" use:reveal>The patient state</span>
-			<h2 use:reveal={{ delay: 60 }}>One timestamped model of a person.</h2>
-			<p class="lede" use:reveal={{ delay: 120 }}>
-				A person’s health does not live in one app. It is scattered across devices, labs and memory.
-				The patient state pulls those sources onto a single timeline, each observation encoded into
-				the same clinical vocabulary and stamped with when it was true, so the loop always reasons
-				from one coherent picture, not a dozen partial ones.
-			</p>
-			<p use:reveal={{ delay: 180 }}>
-				Because everything is timestamped, the state is longitudinal, not a flat snapshot. It can
-				answer not just <em>what a reading was</em> but
-				<em>how it has changed, and whether that matters now</em>: iron studies rising, a resting
-				heart rate creeping up.
-			</p>
-			<p use:reveal={{ delay: 220 }}>
-				Acute readings arrive the same way. Our own devices (a recording stethoscope, a
-				blood-pressure monitor, an otoscope) stream straight into the core: a closed
-				hardware-to-software link, with no manual entry and no third-party integration in between.
-			</p>
-		</div>
-		<ul class="twin-sources" use:reveal={{ delay: 140 }}>
-			{#each STATE_SOURCES as source, i}
-				<li class="glass-card" style="--i:{i}">
-					<span class="source-line" aria-hidden="true"></span>
-					{source}
-				</li>
-			{/each}
-			<li class="twin-state glass-card">One timestamped patient state</li>
-		</ul>
-	</div>
-</section>
-
-<!-- ============================================================ -->
 <!-- Auracare · safety overlay                                     -->
 <!-- ============================================================ -->
 <section class="section-y safety-section aura-space">
@@ -451,9 +549,10 @@
 		</div>
 
 		<p class="residency-note" use:reveal>
-			On data residency: the reasoning core is <strong
-				>designed to run inside our own cloud tenant</strong
-			>, so consented health data stays within infrastructure we control. This is an architectural
+			On data residency: our approach is <strong>jurisdiction-based</strong>. Auracare will comply
+			with the data residency requirements and local health data laws of each market we operate in,
+			with the reasoning core designed to run inside our own cloud tenant in the applicable region
+			so consented health data stays within infrastructure we control. This is an architectural
 			commitment for the agentic engine, which remains in development, and whose regulatory pathway
 			is under active, continuous review.
 		</p>
@@ -621,6 +720,138 @@
 		background: var(--color-surface-alt);
 		border-block: 1px solid var(--color-border-default);
 	}
+	/* Churn figure: stat and curve stack on mobile, sit side by side above 720. */
+	.churn {
+		margin: clamp(2rem, 4vw, 3rem) 0 0;
+		padding: clamp(1.4rem, 3vw, 2rem);
+		border-radius: var(--radius-2xl);
+		background: #fff;
+		border: 1px solid var(--color-border-default);
+		box-shadow: var(--shadow-xs);
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: clamp(1.4rem, 3vw, 2rem);
+		align-items: center;
+	}
+	.churn-only {
+		display: block;
+		font-family: var(--font-family-heading);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--color-ink-faint);
+	}
+	.churn-big {
+		display: block;
+		font-family: var(--font-family-heading);
+		font-size: clamp(3.2rem, 8vw, 4.5rem);
+		font-weight: 700;
+		line-height: 1;
+		letter-spacing: -0.03em;
+		color: var(--color-primary-600);
+		margin: 0.15rem 0 0.7rem;
+	}
+	.churn-say {
+		font-size: 0.95rem;
+		line-height: 1.6;
+		color: var(--color-ink-soft);
+		max-width: 30rem;
+	}
+	.churn-axis-label {
+		display: block;
+		font-family: var(--font-family-heading);
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-ink-faint);
+		margin-bottom: 0.6rem;
+	}
+	.churn-svg {
+		width: 100%;
+		height: auto;
+		overflow: visible;
+	}
+	.churn-ax {
+		stroke: var(--color-border-default);
+		stroke-width: 1;
+	}
+	.churn-dot {
+		fill: #fff;
+		stroke: var(--color-primary-500);
+		stroke-width: 2.5;
+	}
+	.churn-pt {
+		font-family: var(--font-family-mono);
+		font-size: 12px;
+		fill: var(--color-ink);
+	}
+	.churn-pt-end {
+		text-anchor: end;
+	}
+	.churn-note {
+		font-size: 12px;
+		font-style: italic;
+		fill: var(--color-ink-faint);
+	}
+	.churn-tick {
+		font-family: var(--font-family-mono);
+		font-size: 11px;
+		fill: var(--color-ink-faint);
+	}
+	/* SVG text scales with the viewBox, so a narrow card shrinks these to
+	   nothing: bump the user units back up below the two-column breakpoint. */
+	@media (max-width: 719px) {
+		.churn-pt {
+			font-size: 20px;
+		}
+		.churn-note,
+		.churn-tick {
+			font-size: 18px;
+		}
+	}
+	.churn-src {
+		grid-column: 1 / -1;
+		border-top: 1px solid var(--color-border-default);
+		padding-top: 0.9rem;
+		font-size: 0.8rem;
+		line-height: 1.55;
+		color: var(--color-ink-faint);
+	}
+	/* The curve draws itself in on reveal; static for reduced motion. */
+	@media (prefers-reduced-motion: no-preference) {
+		.churn-curve {
+			stroke-dasharray: 600;
+			stroke-dashoffset: 600;
+		}
+		.churn:global(.reveal--in) .churn-curve {
+			animation: churn-draw 1.4s ease-out forwards;
+		}
+		.churn-area,
+		.churn-dot,
+		.churn-pt,
+		.churn-note {
+			opacity: 0;
+		}
+		.churn:global(.reveal--in) .churn-area,
+		.churn:global(.reveal--in) .churn-dot,
+		.churn:global(.reveal--in) .churn-pt,
+		.churn:global(.reveal--in) .churn-note {
+			animation: churn-fade 0.6s ease-out 0.9s forwards;
+		}
+	}
+	@keyframes churn-draw {
+		to {
+			stroke-dashoffset: 0;
+		}
+	}
+	@keyframes churn-fade {
+		to {
+			opacity: 1;
+		}
+	}
+
 	.twin-steps {
 		list-style: none;
 		display: grid;
@@ -702,6 +933,9 @@
 		color: var(--color-neutral-600, #6b7280);
 	}
 	@media (min-width: 720px) {
+		.churn {
+			grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+		}
 		.twin-steps {
 			grid-template-columns: repeat(3, 1fr);
 		}
@@ -801,9 +1035,6 @@
 	@media (min-width: 800px) {
 		.loop-list {
 			grid-template-columns: repeat(2, 1fr);
-		}
-		.loop-list li:last-child {
-			grid-column: 1 / -1;
 		}
 	}
 

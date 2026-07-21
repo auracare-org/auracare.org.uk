@@ -66,8 +66,11 @@
 
 	function onProgress(p: number) {
 		if (!pinned) return;
-		// Map 5%–65% of scroll to all waves, so wave 7 is reached well before unstick
-		const t = Math.min(1, Math.max(0, (p - 0.05) / 0.6));
+		// The section pins (map fully centered / "reached") around p≈0.22 and unpins
+		// around p≈0.77. Start the wave sequence only once the map is reached, so you
+		// land on Wave 1 and have to scroll again for Wave 2 — instead of the early
+		// waves being spent while the map is still sliding up into view.
+		const t = Math.min(1, Math.max(0, (p - 0.22) / 0.52));
 		activeWave = Math.round(t * maxWave);
 	}
 
@@ -124,7 +127,11 @@
 									class:lit
 									class:deferred
 									data-name={c.market ? c.market.display : c.name}
-									data-label={c.market ? c.market.label : deferred ? 'Rest of world — more to come' : null}
+									data-label={c.market
+										? c.market.label
+										: deferred
+											? 'Rest of world — more to come'
+											: null}
 									style={c.market
 										? `--tone:${toneColor[c.market.tone]}`
 										: `--tone:${toneColor.deferred}`}
@@ -190,7 +197,7 @@
 		position: relative;
 	}
 	.map-scroller.pinned {
-		height: 500vh;
+		height: 340vh;
 	}
 	.map-sticky {
 		padding-block: clamp(2.5rem, 5vw, 4rem);
@@ -213,6 +220,7 @@
 
 	/* Header */
 	.map-head {
+		flex: none;
 		text-align: center;
 		max-width: 38rem;
 		margin: 0 auto;
@@ -229,6 +237,8 @@
 
 	/* Map */
 	.map-stage {
+		/* Never let the caption changing lines squeeze the map (flex-shrink). */
+		flex: none;
 		position: relative;
 		width: 100%;
 		border: 1px solid var(--color-border-dark);
@@ -238,8 +248,11 @@
 	}
 	.map-svg {
 		width: 100%;
-		height: auto;
-		max-height: 50vh;
+		/* Fixed frame: preserveAspectRatio letterboxes the map inside this box, so
+		   its size never depends on the viewport regime, the wave, or the caption
+		   length below it. (A max-height cap alone would let the map fall back to a
+		   width-driven size on taller/narrower layouts.) */
+		height: 42vh;
 		overflow: visible;
 	}
 
@@ -328,6 +341,7 @@
 
 	/* Footer: wave info + legend */
 	.map-foot {
+		flex: none;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -335,7 +349,8 @@
 	}
 	.wave-info {
 		position: relative;
-		min-height: 2.5rem;
+		/* Reserve two lines so a caption wrapping never reflows (and resizes) the map. */
+		min-height: 3.5rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -422,7 +437,9 @@
 
 	@media (max-width: 779px) {
 		.map-svg {
-			max-height: none;
+			/* On mobile the section isn't pinned, so let the map take its natural
+			   width-driven height instead of the fixed desktop frame. */
+			height: auto;
 		}
 		.wave-slide {
 			flex-wrap: wrap;

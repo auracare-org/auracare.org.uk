@@ -590,7 +590,7 @@ export const MOAT: MoatPillar[] = [
 ];
 
 export const MOAT_LINE =
-	'The category we are defining sits at the overlap of all three; most tools hold only one.';
+	'The category we are defining sits at the overlap of all three.';
 
 /* ------------------------------------------------------------------ */
 /* Consent & safety                                                    */
@@ -606,7 +606,7 @@ export const TWIN_DOES = [
 export const TWIN_NEVER = [
 	'Diagnoses, treats or prescribes',
 	'Interprets a reading as a clinical result',
-	'Replaces your doctor, pharmacist or 999/111',
+	'Replaces your doctor, pharmacist or emergency services',
 	'Shares your data without your explicit, per-source consent'
 ];
 

@@ -325,7 +325,7 @@
 		</div>
 
 		<div class="price-card glass-card" use:reveal={{ delay: 140 }}>
-			<span class="price-tag">Free for 6 months</span>
+			<span class="price-tag">Early adopters — 6 months free</span>
 			<div class="price-then">
 				<span class="price-num">$10</span>
 				<span class="price-per">/ month after</span>
