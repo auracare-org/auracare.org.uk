@@ -26,8 +26,8 @@
 
 		submitted = true;
 
-		const subject = encodeURIComponent('Twin waitlist');
-		const body = encodeURIComponent(`Please add me to the Twin waitlist.\n\nEmail: ${value}\n`);
+		const subject = encodeURIComponent('Auratwin waitlist');
+		const body = encodeURIComponent(`Please add me to the Auratwin waitlist.\n\nEmail: ${value}\n`);
 		window.location.href = `mailto:${CONTACT.general}?subject=${subject}&body=${body}`;
 	}
 </script>
@@ -37,10 +37,10 @@
 		<div class="waitlist-copy">
 			<span class="eyebrow" use:reveal>Join us</span>
 			<h2 use:reveal={{ delay: 60 }}>
-				Be first to meet <span class="text-gradient-l">Twin</span>.
+				Be first to meet <span class="text-gradient-l">Auratwin</span>.
 			</h2>
 			<p class="lede" use:reveal={{ delay: 140 }}>
-				Twin turns the wearables you already wear into a living model of you, and checks in over
+				Auratwin turns the wearables you already wear into a living model of you, and checks in over
 				iMessage. Join the waitlist and we&rsquo;ll tell you the moment it&rsquo;s ready.
 			</p>
 
@@ -51,11 +51,11 @@
 			{#if submitted}
 				<div class="success" role="status" aria-live="polite">
 					<span class="success-mark" aria-hidden="true">✓</span>
-					<p class="success-title">You&rsquo;re on the list &mdash; we&rsquo;ll be in touch.</p>
+					<p class="success-title">You&rsquo;re on the list. We&rsquo;ll be in touch.</p>
 					<p class="success-sub">
 						Your mail app should have opened with a pre-filled message. If it didn&rsquo;t, email us
 						at
-						<a href="mailto:{CONTACT.general}?subject=Twin%20waitlist">{CONTACT.general}</a>.
+						<a href="mailto:{CONTACT.general}?subject=Auratwin%20waitlist">{CONTACT.general}</a>.
 					</p>
 				</div>
 			{:else}
@@ -83,7 +83,7 @@
 							aria-describedby={error ? 'waitlist-error' : undefined}
 						/>
 						<label for="waitlist-consent">
-							I agree to be contacted about Twin&rsquo;s launch. See our
+							I agree to be contacted about Auratwin&rsquo;s launch. See our
 							<a href="/privacy">Privacy policy</a>.
 						</label>
 					</div>
@@ -97,7 +97,7 @@
 			{/if}
 
 			<div class="investors">
-				<p class="investors-line">Investors &mdash; we&rsquo;re raising our seed round.</p>
+				<p class="investors-line">Investors: we&rsquo;re raising our seed round.</p>
 				<a
 					class="investors-link"
 					href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Seed%20round"

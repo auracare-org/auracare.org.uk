@@ -9,7 +9,7 @@ export interface TeamMember {
 }
 
 /**
- * The current team — five people, one clean role each.
+ * The current team: five people, one clean role each.
  * Former team members, advisors and interns are intentionally not listed.
  */
 export const team: Record<string, TeamMember> = {
@@ -17,8 +17,8 @@ export const team: Record<string, TeamMember> = {
 		id: 'stephen-okita',
 		name: 'Stephen Okita',
 		img: '/JPG/stephen-okita.jpg',
-		role: 'CEO & CTO',
-		bio: 'Founder. Sets the technical architecture and product direction, and leads the raise.',
+		role: 'Co-founder · CEO & CTO',
+		bio: 'Co-founder, computer science at UC Berkeley. Sets the technical architecture and product direction, and leads business relations in San Francisco.',
 		linkedin: 'https://www.linkedin.com/in/stephen-okita/',
 		website: 'https://stephenokita.com/'
 	},
@@ -26,8 +26,8 @@ export const team: Record<string, TeamMember> = {
 		id: 'hinlun-chen',
 		name: 'Hinlun Chen',
 		img: '/JPG/hinlin-chen.jpg',
-		role: 'COO',
-		bio: 'Runs operations and partnerships, including our Hong Kong presence.',
+		role: 'Co-founder · COO',
+		bio: 'Co-founder, PPE at LSE, and runs three OEM factories in Hong Kong. Leads operations and partnerships, and business relations in Hong Kong and China.',
 		linkedin: 'https://www.linkedin.com/in/hin-lun-chen/',
 		website: 'https://www.hinlun.com/'
 	},
@@ -35,8 +35,8 @@ export const team: Record<string, TeamMember> = {
 		id: 'tanush-pandey',
 		name: 'Tanush Pandey',
 		img: '/JPG/tanush-pandey-new.jpg',
-		role: 'CMO',
-		bio: 'Leads marketing, brand and how we tell the Auracare story.',
+		role: 'Co-founder · CMO',
+		bio: 'Co-founder and our London presence, reading Medicine at Imperial College London. Leads clinical strategy, safety and the medical evidence behind Auracare.',
 		linkedin: 'https://www.linkedin.com/in/tanush-pandey-767a60260/'
 	},
 	'ahnaf-kabir': {
@@ -44,7 +44,7 @@ export const team: Record<string, TeamMember> = {
 		name: 'Ahnaf Kabir',
 		img: '/JPG/ahnaf-kabir.jpg',
 		role: 'Head of IT & Compliance',
-		bio: 'Owns security, internal infrastructure and our compliance programme.',
+		bio: 'Leads security, internal infrastructure and our compliance programme.',
 		linkedin: 'https://www.linkedin.com/in/akn101',
 		website: 'https://akn.me.uk/'
 	},
@@ -52,7 +52,7 @@ export const team: Record<string, TeamMember> = {
 		id: 'karam-salah',
 		name: 'Karam Salah',
 		role: 'Head of ML',
-		bio: 'Leads machine learning — the neuro-symbolic core and graph models behind our reasoning.'
+		bio: 'Leads machine learning: the neuro-symbolic core and graph models behind our reasoning.'
 	}
 };
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { reveal, prefersReducedMotion } from '$lib/actions/motion';
+	import { AURATWIN_EDGE } from '$lib/data/company';
 
 	type Tier = 'gentle' | 'spicy' | 'nuclear';
 
@@ -12,11 +13,25 @@
 
 	const roast: Record<Tier, string> = {
 		gentle:
-			'Your Oura readiness is 34 today. Maybe swap leg day for a walk and a big glass of water? 💧',
+			'Your readiness is 34 today. Maybe swap leg day for a walk and a big glass of water? 💧',
 		spicy:
 			"Readiness 34 and you're “about to crush leg day”? Bold. Your hamstrings have filed a formal complaint.",
 		nuclear:
-			'Readiness 34. Crushing leg day would be crushing something today — mostly you. Sit down. 🪑'
+			"Readiness 34 and you're eyeing the squat rack? Your body is held together by vibes and yesterday's caffeine. Sit down before you become a cautionary tale. 🪑"
+	};
+
+	// Your reply back to Twin, matched to how blunt it just was.
+	const reply: Record<Tier, string> = {
+		gentle: 'fair. walk it is',
+		spicy: 'okay ouch 😭',
+		nuclear: 'brutal'
+	};
+
+	// Twin’s closing message: it softens to match its own tone, not always the same.
+	const closer: Record<Tier, string> = {
+		gentle: 'Love that. Big glass of water and we ease back in tomorrow. 😊',
+		spicy: 'Your hamstrings say thanks. Hydrate, then go crush it tomorrow. 💪',
+		nuclear: 'Love you. Hydrate. We ride tomorrow. 🚴'
 	};
 
 	let tier = $state<Tier>('spicy');
@@ -33,7 +48,7 @@
 
 	// Sequenced reveal of the four messages, then a floating reply indicator on the user's side.
 	const TOTAL = 4;
-	const STEP = 950; // ms between messages — slow enough to read
+	const STEP = 950; // ms between messages, slow enough to read
 	let shown = $state(0);
 	let userReplying = $state(false);
 
@@ -59,13 +74,8 @@
 	<div class="container-wide twin-grid">
 		<div class="twin-copy">
 			<h2 id="twin-heading" use:reveal={{ delay: 60 }}>
-				The version of you that actually went to bed on time.
+				Everything you’d notice about yourself, if you had the time.
 			</h2>
-			<p use:reveal={{ delay: 120 }}>
-				Twin connects the devices you already wear, notices the patterns, and texts you like a
-				sharp, well-rested sibling — funny, specific, and on your side. No new app to live in: it’s
-				right there in your messages.
-			</p>
 
 			<div
 				class="tier"
@@ -92,7 +102,7 @@
 
 			<p class="safeword" use:reveal={{ delay: 220 }}>
 				<span class="safeword-chip">“ease up”</span>
-				Say it any time and Twin instantly cools its tone — and keeps it cool.
+				Say it any time and Twin instantly changes its tone, and keeps it cool.
 			</p>
 		</div>
 
@@ -103,7 +113,13 @@
 					<div class="chat-head">
 						<div class="chat-head-left">
 							<svg class="chat-back" width="10" height="17" viewBox="0 0 10 17" fill="none">
-								<path d="M9 1L2 8.5L9 16" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								<path
+									d="M9 1L2 8.5L9 16"
+									stroke="#007AFF"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
 							</svg>
 						</div>
 						<div class="chat-head-center">
@@ -114,13 +130,19 @@
 						</div>
 						<div class="chat-head-right">
 							<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-								<path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke="#007AFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+								<path
+									d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"
+									stroke="#007AFF"
+									stroke-width="1.5"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
 							</svg>
 						</div>
 					</div>
 					<div class="chat-body">
 						<div class="msg in" class:show={shown >= 1}>
-							Morning. You slept 6h12 — about 40 minutes short of your groove. Ease in today. ☕
+							Morning. You slept 6h12, about 40 minutes short of your groove. Ease in today. ☕
 						</div>
 						<div class="msg in" class:show={shown >= 2} aria-live="polite">
 							{#if roastTyping}
@@ -129,9 +151,13 @@
 								{roast[tier]}
 							{/if}
 						</div>
-						<div class="msg out" class:show={shown >= 3}>brutal</div>
-						<div class="msg in" class:show={shown >= 4}>
-							Love you. Hydrate. We ride tomorrow. 🚴
+						<div class="msg out" class:show={shown >= 3}>{reply[tier]}</div>
+						<div class="msg in" class:show={shown >= 4} aria-live="polite">
+							{#if roastTyping}
+								<span class="typing"><i></i><i></i><i></i></span>
+							{:else}
+								{closer[tier]}
+							{/if}
 						</div>
 						{#if userReplying}
 							<div class="msg out typing-bubble show" aria-label="You are typing">
@@ -145,6 +171,15 @@
 				</div>
 			</div>
 		</div>
+
+		<ul class="edge-grid" aria-label="What makes Auratwin different">
+			{#each AURATWIN_EDGE as item, i (item.title)}
+				<li class="edge-card glass-card" use:reveal={{ delay: 80 + i * 70 }}>
+					<h3>{item.title}</h3>
+					<p>{item.body}</p>
+				</li>
+			{/each}
+		</ul>
 	</div>
 </section>
 
@@ -399,9 +434,45 @@
 		}
 	}
 
+	/* Edge cards */
+	.edge-grid {
+		list-style: none;
+		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+	.edge-card {
+		padding: 1.25rem 1.4rem;
+		border-radius: var(--radius-lg);
+	}
+	.edge-card h3 {
+		font-size: 1.02rem;
+		letter-spacing: -0.01em;
+		margin-bottom: 0.35rem;
+	}
+	.edge-card p {
+		font-size: 0.9rem;
+		line-height: 1.55;
+		color: var(--color-ink-soft);
+		max-width: none;
+	}
+
+	@media (min-width: 640px) {
+		.edge-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
 	@media (min-width: 900px) {
 		.twin-grid {
 			grid-template-columns: 1.05fr 0.95fr;
+		}
+		.edge-grid {
+			/* Span both columns so the four cards spread the full width
+			   instead of cramming into the left column under the copy. */
+			grid-column: 1 / -1;
+			grid-template-columns: repeat(4, 1fr);
 		}
 	}
 </style>

@@ -8,7 +8,7 @@
 	const measures = [
 		{
 			title: 'Motion you can switch off',
-			body: 'We honour your <code>prefers-reduced-motion</code> setting. When it is on, our heavier animations — the orbiting hero, the scroll-driven timeline, the world-map waves and the counting statistics — are disabled or reduced to a simple fade, and every piece of content stays readable without any of them.'
+			body: 'We honour your <code>prefers-reduced-motion</code> setting. When it is on, our heavier animations (the orbiting hero, the scroll-driven timeline, the world-map waves and the counting statistics) are disabled or reduced to a simple fade, and every piece of content stays readable without any of them.'
 		},
 		{
 			title: 'Keyboard-operable throughout',
@@ -16,7 +16,7 @@
 		},
 		{
 			title: 'Text alternatives for visuals',
-			body: 'Our animated world map, company timeline and market charts each carry a plain-language text equivalent, so the underlying data does not depend on seeing — or animating — the graphic.'
+			body: 'Our animated world map, company timeline and market charts each carry a plain-language text equivalent, so the underlying data does not depend on seeing (or animating) the graphic.'
 		},
 		{
 			title: 'Sufficient colour contrast',
@@ -24,7 +24,7 @@
 		},
 		{
 			title: 'Semantic structure',
-			body: 'Pages use proper landmarks and a single, ordered heading outline, with descriptive alt text on meaningful images and accessible names on icon-only buttons — so assistive technology can navigate the page the way it is meant to be read.'
+			body: 'Pages use proper landmarks and a single, ordered heading outline, with descriptive alt text on meaningful images and accessible names on icon-only buttons, so assistive technology can navigate the page the way it is meant to be read.'
 		},
 		{
 			title: 'Responsive and zoomable',
@@ -46,7 +46,7 @@
 			Built to be used by <span class="text-gradient">everyone</span>.
 		</h1>
 		<p class="lede" use:reveal={{ delay: 140 }}>
-			We want the whole Auracare site to be perceivable, operable and understandable — whatever
+			We want the whole Auracare site to be perceivable, operable and understandable, whatever
 			device, browser or assistive technology you use. This statement sets out what we aim for, what
 			we have done, and how to tell us where we fall short.
 		</p>
@@ -87,8 +87,8 @@
 		<div class="block" use:reveal>
 			<h2>Known limitations</h2>
 			<p>
-				We are honest about where we are. A few of our data visualisations — most notably the
-				animated market map, the scrolling timeline and the count-up statistics — are enhanced with
+				We are honest about where we are. A few of our data visualisations (most notably the
+				animated market map, the scrolling timeline and the count-up statistics) are enhanced with
 				motion, and their richest form is the animated one. For each of these we provide a text
 				equivalent that conveys the same information, but we know a text summary is not always a
 				perfect substitute for an interactive graphic.
@@ -104,7 +104,7 @@
 			<h2>Feedback and requesting an accessible format</h2>
 			<p>
 				If you come across a barrier, need this content in a different format, or have any
-				suggestion that would make the site easier to use, please tell us — we take every report
+				suggestion that would make the site easier to use, please tell us. We take every report
 				seriously and will do our best to put things right.
 			</p>
 			<p>

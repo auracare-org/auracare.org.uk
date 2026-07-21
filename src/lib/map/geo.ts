@@ -3,7 +3,7 @@ import { feature } from 'topojson-client';
 import worldData from 'world-atlas/countries-50m.json';
 
 /**
- * Fixed internal coordinate space — the SVG scales responsively via viewBox,
+ * Fixed internal coordinate space: the SVG scales responsively via viewBox,
  * while projected geometry (country paths + market points) stays consistent.
  */
 export const MAP_W = 1000;
@@ -34,7 +34,7 @@ export interface CountryPath {
 /** All country outlines as SVG path data, precomputed once. */
 export const countryPaths: CountryPath[] = countriesFc.features
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	// Key by array index — always unique (some 50m features share an ISO id, e.g. 036).
+	// Key by array index, always unique (some 50m features share an ISO id, e.g. 036).
 	.map((f: any, i: number) => ({
 		id: `country-${i}`,
 		name: (f.properties && f.properties.name) || '',

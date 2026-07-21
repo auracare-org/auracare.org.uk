@@ -3,90 +3,130 @@
 	import { MOAT, MOAT_LINE } from '$lib/data/company';
 
 	let active = $state<number | null>(null);
+	let scene = $state<HTMLElement>();
 
 	function toggle(i: number) {
 		active = active === i ? null : i;
 	}
+
+	// Pin the section while scrolling and cycle the active number through
+	// each capability before releasing scroll to continue down the page.
+	$effect(() => {
+		const el = scene;
+		if (!el) return;
+		if (window.matchMedia('(max-width: 700px), (prefers-reduced-motion: reduce)').matches) return;
+
+		const steps = MOAT.length;
+		let raf = 0;
+
+		function update() {
+			raf = 0;
+			const travel = el!.offsetHeight - window.innerHeight;
+			if (travel <= 0) return;
+			const p = Math.min(1, Math.max(0, -el!.getBoundingClientRect().top / travel));
+			active = Math.min(steps - 1, Math.floor(p * steps));
+		}
+
+		function onScroll() {
+			if (!raf) raf = requestAnimationFrame(update);
+		}
+
+		update();
+		window.addEventListener('scroll', onScroll, { passive: true });
+		window.addEventListener('resize', onScroll);
+		return () => {
+			window.removeEventListener('scroll', onScroll);
+			window.removeEventListener('resize', onScroll);
+			if (raf) cancelAnimationFrame(raf);
+		};
+	});
+
+	// Geometry (% of the square venn box). All three circles share one
+	// translucent Auracare blue; alpha stacking deepens the overlaps, so the
+	// centre where all three meet reads as the solid brand blue.
+	const LOBES = [
+		{ left: 18, top: 1, lx: 50, ly: 23 }, // top
+		{ left: 2, top: 31, lx: 34, ly: 73 }, // lower-left
+		{ left: 34, top: 31, lx: 66, ly: 73 } // lower-right
+	];
 </script>
 
 <section class="why section-y">
+	<div class="scene" bind:this={scene}>
+		<div class="pin">
 	<div class="container-wide">
 		<header class="head">
 			<h2 use:reveal>
 				Three capabilities. <span class="text-gradient">Most tools hold one.</span>
 			</h2>
 			<p use:reveal={{ delay: 140 }}>
-				The hard part of clinical reasoning isn't any single capability — it's holding all three at
-				once, and keeping every step auditable.
+				The hard part of clinical reasoning isn't any single capability: it's holding all three at
+				once, and keeping every step auditable and safe.
 			</p>
 		</header>
+	</div>
 
-		<div class="layout">
-			<div class="venn-wrap" use:reveal={{ delay: 120 }}>
-				<svg class="venn-svg" viewBox="0 0 320 245" fill="none">
-					<!-- Three overlapping circles — drawn 3, 2, 1 so 1 is on top -->
-					<circle
-						class="lobe" class:lobe-active={active === 2}
-						cx="200" cy="162" r="72"
-						onclick={() => toggle(2)}
-						role="button" tabindex="0" aria-label={MOAT[2].title}
-						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(2); }}
-					/>
-					<circle
-						class="lobe" class:lobe-active={active === 1}
-						cx="120" cy="162" r="72"
-						onclick={() => toggle(1)}
-						role="button" tabindex="0" aria-label={MOAT[1].title}
-						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(1); }}
-					/>
-					<circle
-						class="lobe" class:lobe-active={active === 0}
-						cx="160" cy="100" r="72"
-						onclick={() => toggle(0)}
-						role="button" tabindex="0" aria-label={MOAT[0].title}
-						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(0); }}
-					/>
+	<div class="container-wide">
+		<div class="venn-grid">
+			<!-- Left: three translucent circles, labelled 1 / 2 / 3 -->
+			<div class="venn">
+				<div class="lobes" aria-hidden="true">
+					{#each LOBES as l, i}
+						<span
+							class="fill"
+							class:fill-active={active === i}
+							style="left:{l.left}%;top:{l.top}%;"
+						></span>
+					{/each}
+				</div>
 
-					<!-- Center dot -->
-					<circle cx="160" cy="142" r="4" fill="var(--color-primary-400)" opacity="0.5" />
-
-					<!-- Dashed lines to labels -->
-					<line class="dash" class:dash-active={active === 0} x1="220" y1="52" x2="252" y2="36" />
-					<line class="dash" class:dash-active={active === 1} x1="60" y1="190" x2="32" y2="200" />
-					<line class="dash" class:dash-active={active === 2} x1="260" y1="190" x2="288" y2="200" />
-
-					<!-- Number circles -->
-					<circle class="num-circle" class:num-active={active === 0} cx="264" cy="28" r="14" />
-					<circle class="num-circle" class:num-active={active === 1} cx="22" cy="208" r="14" />
-					<circle class="num-circle" class:num-active={active === 2} cx="298" cy="208" r="14" />
-
-					<text class="num" class:num-text-active={active === 0} x="264" y="28" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(0)}>1</text>
-					<text class="num" class:num-text-active={active === 1} x="22" y="208" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(1)}>2</text>
-					<text class="num" class:num-text-active={active === 2} x="298" y="208" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(2)}>3</text>
-
-					<!-- Title text next to each number -->
-					<text class="label-svg" class:label-svg-active={active === 0} x="284" y="28" text-anchor="start" dominant-baseline="central" onclick={() => toggle(0)}>{MOAT[0].title}</text>
-					<text class="label-svg" class:label-svg-active={active === 1} x="22" y="230" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(1)}>{MOAT[1].title}</text>
-					<text class="label-svg" class:label-svg-active={active === 2} x="298" y="230" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(2)}>{MOAT[2].title}</text>
-				</svg>
+				<div class="hits">
+					{#each MOAT as pillar, i}
+						<button
+							class="lobe"
+							class:lobe-active={active === i}
+							style="left:{LOBES[i].left}%;top:{LOBES[i].top}%;--lx:{LOBES[i].lx}%;--ly:{LOBES[
+								i
+							].ly}%;"
+							onclick={() => toggle(i)}
+							aria-pressed={active === i}
+							aria-label={pillar.title}
+						>
+							<span class="num">{i + 1}</span>
+						</button>
+					{/each}
+				</div>
 			</div>
 
-			<div class="detail-area">
-				{#if active !== null}
-					<div class="detail glass-card" role="region" aria-live="polite">
-						<span class="idx" aria-hidden="true">{active + 1}</span>
-						<div>
-							<h3>{MOAT[active].title}</h3>
-							<p>{MOAT[active].body}</p>
-						</div>
-					</div>
-				{:else}
-					<p class="detail-hint">Click a circle to explore each capability.</p>
-				{/if}
-			</div>
+			<!-- Right: numbered capabilities, expanding on click -->
+			<ol class="rows">
+				{#each MOAT as pillar, i}
+					<li>
+						<button
+							class="row"
+							class:row-active={active === i}
+							onclick={() => toggle(i)}
+							aria-expanded={active === i}
+						>
+							<span class="row-num">{i + 1}</span>
+							<span class="row-text">
+								<span class="row-title">{pillar.title}</span>
+								{#if active === i}
+									<span class="row-body">{pillar.body}</span>
+								{/if}
+							</span>
+						</button>
+					</li>
+				{/each}
+			</ol>
 		</div>
+	</div>
 
+	<div class="container-wide">
+		<!-- Closing line flows normally beneath the pinned circles. -->
 		<p class="moat-line" use:reveal={{ delay: 160 }}>{MOAT_LINE}</p>
+	</div>
+		</div>
 	</div>
 </section>
 
@@ -94,9 +134,36 @@
 	.why {
 		background: var(--color-neutral-0);
 	}
+
+	/* Tall scroll track; the inner pin sticks to the viewport and the active
+	   number is cycled from scroll progress before scrolling continues. */
+	.scene {
+		position: relative;
+		height: 200vh;
+	}
+	.pin {
+		position: sticky;
+		top: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding-block: clamp(3rem, 6vw, 5rem);
+	}
+	/* No scroll-pin on narrow screens (stacked content can exceed the
+	   viewport) or when reduced motion is requested: fall back to normal flow. */
+	@media (max-width: 700px), (prefers-reduced-motion: reduce) {
+		.scene {
+			height: auto;
+		}
+		.pin {
+			position: static;
+			padding-block: 0;
+		}
+	}
 	.head {
 		max-width: 44rem;
 	}
+
 	.head h2 {
 		font-size: clamp(1.9rem, 4vw, 3rem);
 		line-height: 1.08;
@@ -110,147 +177,185 @@
 		max-width: 36rem;
 	}
 
-	.layout {
-		display: flex;
-		flex-direction: column;
+	.venn-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 22rem) 1fr;
+		gap: clamp(2rem, 5vw, 4rem);
 		align-items: center;
-		gap: 1.5rem;
-		margin-top: clamp(2rem, 4vw, 3rem);
+		max-width: 56rem;
+		margin: clamp(1.5rem, 4vw, 2.5rem) auto 0;
+	}
+	@media (max-width: 700px) {
+		.venn-grid {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+			justify-items: center;
+		}
 	}
 
-	/* Venn container */
-	.venn-wrap {
+	/* Square venn box */
+	.venn {
 		position: relative;
 		width: 100%;
-		max-width: 26rem;
-		margin: 0 auto;
+		max-width: 22rem;
+		aspect-ratio: 1 / 1;
 	}
-	.venn-svg {
-		width: 100%;
-		height: auto;
-		overflow: visible;
+	.lobes,
+	.hits {
+		position: absolute;
+		inset: 0;
+	}
+	.lobes {
+		pointer-events: none;
 	}
 
-	/* Circles */
+	/* Circles: one translucent brand blue; overlaps deepen via alpha */
+	.fill {
+		position: absolute;
+		width: 64%;
+		aspect-ratio: 1 / 1;
+		border-radius: 50%;
+		background: rgba(47, 78, 192, 0.12);
+		border: 1px solid var(--color-border-strong);
+		transition:
+			background 0.3s ease,
+			border-color 0.3s ease;
+	}
+	.fill-active {
+		background: rgba(47, 78, 192, 0.22);
+		border-color: var(--color-primary-500);
+	}
+
+	/* Transparent, precisely-round hit targets carrying the numbers */
 	.lobe {
-		fill: rgba(47, 78, 192, 0.03);
-		stroke: var(--color-primary-200);
-		stroke-width: 1.5;
+		position: absolute;
+		width: 64%;
+		aspect-ratio: 1 / 1;
+		padding: 0;
+		border: none;
+		background: transparent;
+		border-radius: 50%;
+		clip-path: circle(50%);
 		cursor: pointer;
 		outline: none;
-		transition: fill 0.3s ease, stroke 0.3s ease;
-	}
-	.lobe:hover {
-		fill: rgba(47, 78, 192, 0.06);
-		stroke: var(--color-primary-400);
-	}
-	.lobe-active {
-		fill: rgba(47, 78, 192, 0.08);
-		stroke: var(--color-primary-500);
-		stroke-width: 1.8;
 	}
 
-	/* Dashed connector lines */
-	.dash {
-		stroke: var(--color-primary-200);
-		stroke-width: 1.2;
-		stroke-dasharray: 4 4;
-		transition: stroke 0.3s ease;
-	}
-	.dash-active {
-		stroke: var(--color-primary-500);
-	}
-
-	/* Number circles */
-	.num-circle {
-		fill: #fff;
-		stroke: var(--color-primary-200);
-		stroke-width: 1.2;
-		transition: all 0.3s ease;
-	}
-	.num-active {
-		stroke: var(--color-primary-500);
-		fill: var(--color-primary-50);
-	}
 	.num {
+		position: absolute;
+		left: var(--lx);
+		top: var(--ly);
+		transform: translate(-50%, -50%);
+		display: grid;
+		place-items: center;
+		width: 1.65rem;
+		height: 1.65rem;
+		border-radius: var(--radius-sm);
+		background: #fff;
+		border: 1px solid var(--color-border-default);
+		color: var(--color-primary-600);
 		font-family: var(--font-family-mono);
-		font-size: 12px;
-		font-weight: 600;
-		fill: var(--color-primary-500);
-		cursor: pointer;
-		transition: fill 0.3s ease;
+		font-size: 0.8rem;
+		font-weight: 700;
+		transition:
+			border-color 0.3s ease,
+			color 0.3s ease;
 	}
-	.num-text-active {
-		fill: var(--color-primary-700);
+	.lobe:hover .num {
+		border-color: var(--color-border-strong);
 	}
-
-	/* SVG title labels next to numbers */
-	.label-svg {
-		font-family: var(--font-family-sans);
-		font-size: 10px;
-		font-weight: 500;
-		fill: var(--color-ink-faint);
-		cursor: pointer;
-		transition: fill 0.3s ease;
-	}
-	.label-svg:hover,
-	.label-svg-active {
-		fill: var(--color-primary-600);
+	.lobe-active .num {
+		border-color: var(--color-primary-500);
+		color: var(--color-primary-700);
 	}
 
-	/* Detail card */
-	.detail-area {
+	/* Right column: flat, hairline-separated, editorial.
+	   min-height reserves space so expanding a row doesn't shift the diagram. */
+	.rows {
+		list-style: none;
+		margin: 0;
+		padding: 0;
 		width: 100%;
-		max-width: 32rem;
-		min-height: 5rem;
-		text-align: center;
-	}
-	.detail {
 		display: flex;
-		gap: 1rem;
+		flex-direction: column;
+		justify-content: center;
+		min-height: 15rem;
+	}
+	.rows li + li {
+		border-top: 1px solid var(--color-border-default);
+	}
+	.row {
+		display: flex;
+		gap: 0.9rem;
 		align-items: flex-start;
-		padding: 1.25rem 1.4rem;
-		border-radius: var(--radius-lg);
+		width: 100%;
+		padding: 1rem 0.25rem;
+		border: none;
+		background: transparent;
 		text-align: left;
-		animation: fadeUp 0.3s ease-out;
+		cursor: pointer;
 	}
-	.detail-hint {
-		color: var(--color-ink-faint);
-		font-size: 0.9rem;
-		padding-top: 1rem;
-	}
-	.idx {
+	.row-num {
 		flex: none;
 		display: grid;
 		place-items: center;
-		width: 2rem;
-		height: 2rem;
-		border-radius: var(--radius-md);
-		background: var(--color-primary-50);
-		border: 1px solid var(--color-primary-100);
-		color: var(--color-primary-700);
+		width: 1.65rem;
+		height: 1.65rem;
+		border-radius: var(--radius-sm);
+		background: #fff;
+		border: 1px solid var(--color-border-default);
+		color: var(--color-primary-600);
 		font-family: var(--font-family-mono);
-		font-weight: 500;
-		font-size: 0.85rem;
+		font-size: 0.8rem;
+		font-weight: 700;
+		transition:
+			background 0.25s ease,
+			border-color 0.25s ease,
+			color 0.25s ease;
 	}
-	.detail h3 {
-		font-size: 1.08rem;
+	.row:hover .row-num {
+		border-color: var(--color-border-strong);
+	}
+	.row-active .row-num {
+		background: var(--color-primary-600);
+		border-color: var(--color-primary-600);
+		color: #fff;
+	}
+	.row-text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		min-width: 0;
+		padding-top: 0.15rem;
+	}
+	.row-title {
+		font-size: 1rem;
+		font-weight: 600;
 		line-height: 1.3;
-		margin: 0 0 0.3rem;
+		color: var(--color-ink);
+		transition: color 0.25s ease;
 	}
-	.detail p {
-		margin: 0;
-		font-size: 0.94rem;
+	.row-active .row-title {
+		color: var(--color-primary-700);
+	}
+	.row-body {
+		font-size: 0.92rem;
 		line-height: 1.55;
 		color: var(--color-ink-soft);
+		animation: fadeUp 0.25s ease-out;
 	}
 	@keyframes fadeUp {
-		from { opacity: 0; transform: translateY(8px); }
-		to { opacity: 1; transform: translateY(0); }
+		from {
+			opacity: 0;
+			transform: translateY(4px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
 	.moat-line {
-		margin-top: clamp(2rem, 4vw, 3rem);
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
 		font-family: var(--font-family-heading);
 		font-size: clamp(1.15rem, 2.2vw, 1.6rem);
 		line-height: 1.4;
@@ -259,5 +364,16 @@
 		max-width: 42rem;
 		margin-inline: auto;
 		color: var(--color-ink);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.fill,
+		.num,
+		.row-num,
+		.row-title,
+		.row-body {
+			transition: none;
+			animation: none;
+		}
 	}
 </style>

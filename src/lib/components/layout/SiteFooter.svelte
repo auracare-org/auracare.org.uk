@@ -8,7 +8,7 @@
 		<div class="footer-grid">
 			<div class="footer-brand">
 				<img src="/SVG/auracare-white.svg" alt="Auracare" class="footer-logo" />
-				<p class="footer-tag">Agentic healthcare, built on your digital twin.</p>
+				<p class="footer-tag">The world's most personalised healthcare.</p>
 				<a class="footer-ontology" href={CONTACT.ontologyUrl} target="_blank" rel="noopener">
 					Explore the ontology
 					<svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"
@@ -25,16 +25,14 @@
 
 			<nav class="footer-col" aria-label="Product">
 				<h4>Product</h4>
-				<a href="/product">Twin</a>
-				<a href="/technology">Technology</a>
+				<a href="/product">Auratwin</a>
+				<a href="/product/auracare">Auracare</a>
 				<a href={CONTACT.ontologyUrl} target="_blank" rel="noopener">Ontology explorer</a>
 				<a href="/#waitlist">Join the waitlist</a>
 			</nav>
 
 			<nav class="footer-col" aria-label="Company">
 				<h4>Company</h4>
-				<a href="/company">About & team</a>
-				<a href="/company#timeline">Our story</a>
 				<a href="/careers">Careers</a>
 				<a href="mailto:{CONTACT.seed}">For investors</a>
 			</nav>
@@ -73,7 +71,7 @@
 	}
 	.footer-col h4 {
 		font-family: var(--font-family-mono);
-		font-weight: 500;
+		font-weight: 700;
 	}
 	.footer-grid {
 		display: grid;

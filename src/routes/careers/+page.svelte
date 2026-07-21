@@ -3,45 +3,31 @@
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT } from '$lib/data/company';
 
-	const values = [
-		{
-			title: 'Small and founder-led',
-			body: 'A tight team where you own real surface area, talk to the founders every day, and ship without a queue of sign-offs.'
-		},
-		{
-			title: 'Safety-first, by design',
-			body: 'We are honest about what our system does and does not do. Twin is general wellness, never a medical device, and every claim we make is one we can stand behind.'
-		},
-		{
-			title: 'Real infrastructure, not a wrapper',
-			body: 'A live ontology of 532,000 clinical concepts and a neuro-symbolic reasoning core in active development. We are building the hard parts, not prompting over someone else’s.'
-		},
-		{
-			title: 'Ship and learn',
-			body: 'Twin puts a health digital twin in real people’s messages so we learn from consented, real-world data — and let what we learn shape the agentic system.'
-		}
-	];
-
 	const roles = [
 		{
 			title: 'ML / Neuro-symbolic Engineer',
-			body: 'Build the reasoning core — a learned graph model paired with an auditable symbolic layer grounded in SNOMED CT and ICD-11.',
-			subject: 'Careers — ML / Neuro-symbolic Engineer'
+			body: 'Build the reasoning core: a learned graph model paired with an auditable symbolic layer grounded in SNOMED CT and ICD-11.',
+			subject: 'Careers: ML / Neuro-symbolic Engineer'
 		},
 		{
-			title: 'Mobile Engineer (Kotlin Multiplatform + Svelte)',
-			body: 'Own the surfaces Twin lives on: a shared Kotlin Multiplatform core and Svelte web, from device connections to the daily check-in.',
-			subject: 'Careers — Mobile Engineer'
+			title: 'Full Stack Engineer',
+			body: 'Own the surfaces Auratwin lives on: a shared Kotlin Multiplatform core and Svelte web, from device connections to the daily check-in.',
+			subject: 'Careers: Full Stack Engineer'
 		},
 		{
 			title: 'Data / Connectors Engineer',
-			body: 'Turn wearables, apps and health platforms into clean, comparable signals — reliable pipelines with consent and privacy built in.',
-			subject: 'Careers — Data / Connectors Engineer'
+			body: 'Turn wearables, apps, health platforms and our own devices into clean, comparable signals for the twin and the clinical core. A big part of this is automating personal data requests and streamlining user sign-on, so consent and privacy are built in from the start.',
+			subject: 'Careers: Data / Connectors Engineer'
 		},
 		{
-			title: 'Clinical & Regulatory Lead',
-			body: 'Hold the line between wellness and clinical decision support: safety framing, evidence generation and the regulatory path ahead.',
-			subject: 'Careers — Clinical & Regulatory Lead'
+			title: 'Hardware / Firmware Engineer',
+			body: 'Build the closed hardware-to-software link behind Auracare: our own recording stethoscope, BP monitor and otoscope, streaming clinical-grade readings straight into the reasoning core.',
+			subject: 'Careers: Hardware / Firmware Engineer'
+		},
+		{
+			title: 'Clinical & Regulatory Advisor',
+			body: 'Hold the line between wellness and clinical decision support: safety framing, evidence generation and the regulatory path ahead for Auracare.',
+			subject: 'Careers: Clinical & Regulatory Advisor'
 		}
 	];
 
@@ -52,7 +38,7 @@
 
 <Seo
 	title="Careers"
-	description="Help us build agentic healthcare on a personal digital twin. A small, founder-led team hiring across ML, mobile, data and clinical/regulatory."
+	description="We're a small team building agentic healthcare, and we're hiring across ML, mobile, data, hardware and clinical/regulatory."
 	path="/careers"
 />
 
@@ -72,70 +58,44 @@
 	<div class="container-wide hero-inner">
 		<span class="eyebrow" use:reveal>Careers</span>
 		<h1 use:reveal={{ delay: 60 }}>
-			Build the health system that <span class="text-gradient-l">should exist</span>.
+			Come build the health system that <span class="text-gradient-l">should exist</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>
-			We are building agentic clinical decision support grounded in a personal health digital twin —
-			starting with <strong>Twin</strong>, the product that puts a living model of you into your own
-			messages. It is early, ambitious and honest work. If that sounds like your kind of problem,
-			we’d love to meet you.
+			We're <strong>Auracare</strong>: a small team teaching machines to reason about health, for
+			people at home and clinicians in the room. It's early, it's hard, and we won't pretend
+			otherwise. If that sounds like a good time rather than a red flag, keep reading.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 220 }}>
 			<a class="cta-primary" href="#roles">See open roles</a>
-			<a class="cta-ghost" href={mailto('Careers — speculative application')}>
+			<a class="cta-ghost" href={mailto('Careers: speculative application')}>
 				Pitch us a role <span aria-hidden="true">→</span>
 			</a>
 		</div>
 	</div>
 </section>
 
-<!-- 2) Why now -->
+<!-- 2) The honest pitch -->
 <section class="section-y why">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Why now</span>
-		<h2 use:reveal={{ delay: 60 }}>
-			We learned health systems from the inside — then set out to build what they couldn’t.
-		</h2>
-		<div class="why-grid">
-			<p use:reveal={{ delay: 120 }}>
-				Auracare started inside UK primary care, piloting data tooling across twenty clinics and
-				pharmacies. We saw the structural and technological gaps up close — and we saw where the
-				existing systems simply couldn’t go.
-			</p>
-			<p use:reveal={{ delay: 180 }}>
-				In May 2026 we pivoted. Everything we learned about complex, high-stakes health systems now
-				points in one direction: agentic decision support built on a personal digital twin. The
-				window to build it well is open now, and the team that builds it is forming now.
-			</p>
-		</div>
+		<span class="eyebrow" use:reveal>The honest pitch</span>
+		<h2 use:reveal={{ delay: 60 }}>Small team. Big problem. No org chart to hide in.</h2>
+		<p class="why-lede" use:reveal={{ delay: 120 }}>
+			You'll own real work from day one, talk to the founders because there's no one to route
+			around, and ship without collecting a stack of sign-offs. We're building the hard parts
+			ourselves — not wrapping someone else's model — and we take getting safety right seriously,
+			because there are actual people on the other end. Everything else, we try not to.
+		</p>
 	</div>
 </section>
 
-<!-- 3) How we work -->
-<section class="section-y values">
-	<div class="container-wide">
-		<span class="eyebrow" use:reveal>How we work</span>
-		<h2 use:reveal={{ delay: 60 }}>Four things we hold to.</h2>
-		<div class="value-grid">
-			{#each values as v, i}
-				<article class="glass-card value-card" use:reveal={{ delay: 100 + i * 80 }}>
-					<h3>{v.title}</h3>
-					<p>{v.body}</p>
-				</article>
-			{/each}
-		</div>
-	</div>
-</section>
-
-<!-- 4) Open roles -->
+<!-- 3) Open roles -->
 <section class="section-y roles" id="roles">
 	<div class="container-wide">
 		<span class="eyebrow" use:reveal>Open roles</span>
 		<h2 use:reveal={{ delay: 60 }}>Where we’re hiring.</h2>
 		<p class="roles-note" use:reveal={{ delay: 120 }}>
-			These roles are illustrative of where we need strength, not a rigid list. If your shape is
-			close — or genuinely different but compelling — write to us anyway. We hire people, not job
-			descriptions.
+			Titles are a rough guide, not a checklist. Close enough? Interestingly different? Email us
+			anyway — we hire people, not job descriptions.
 		</p>
 		<div class="role-grid">
 			{#each roles as role, i}
@@ -156,12 +116,12 @@
 <!-- 5) Closing CTA -->
 <section class="section-y closing aura-space">
 	<div class="container-wide closing-inner" use:reveal>
-		<h2>Don’t see your role? Tell us what you’d build.</h2>
+		<h2>Don’t see your role? Invent it.</h2>
 		<p>
-			We are always glad to hear from exceptional people across engineering, data, clinical and
-			everything in between. Send us a note about the problem you want to work on.
+			If you're great at something we forgot to list, tell us the problem you'd want to work on.
+			Worst case, we say no and you've written one short email.
 		</p>
-		<a class="cta-primary" href={mailto('Careers — speculative application')}> Get in touch </a>
+		<a class="cta-primary" href={mailto('Careers: speculative application')}> Get in touch </a>
 		<p class="closing-address">{CONTACT.general}</p>
 	</div>
 </section>
@@ -258,38 +218,13 @@
 		max-width: 26ch;
 	}
 
-	/* Why now */
-	.why-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.5rem;
-		margin-top: 1.75rem;
-		max-width: 62rem;
-	}
-	.why-grid p {
-		font-size: 1.05rem;
+	/* The honest pitch */
+	.why-lede {
+		font-size: 1.08rem;
 		line-height: 1.7;
 		color: var(--color-neutral-700);
-	}
-
-	/* Values */
-	.value-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.25rem;
-		margin-top: 2rem;
-	}
-	.value-card {
-		padding: 1.6rem 1.7rem;
-		border-radius: var(--radius-2xl);
-	}
-	.value-card h3 {
-		font-size: 1.18rem;
-		margin-bottom: 0.55rem;
-	}
-	.value-card p {
-		line-height: 1.65;
-		color: var(--color-neutral-700);
+		margin-top: 1.75rem;
+		max-width: 52rem;
 	}
 
 	/* Roles */
@@ -369,14 +304,6 @@
 		opacity: 0.7;
 	}
 
-	@media (min-width: 720px) {
-		.why-grid {
-			grid-template-columns: 1fr 1fr;
-		}
-		.value-grid {
-			grid-template-columns: 1fr 1fr;
-		}
-	}
 	@media (min-width: 900px) {
 		.role-grid {
 			grid-template-columns: 1fr 1fr;

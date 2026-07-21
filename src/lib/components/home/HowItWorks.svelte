@@ -1,34 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { reveal } from '$lib/actions/motion';
-	import { CONNECTORS } from '$lib/data/company';
-
-	const steps = [
-		{
-			title: 'Connect the devices you already own',
-			body: 'Apple Health, Oura, Whoop, Garmin and more — link a source in a tap, revoke it just as easily.'
-		},
-		{
-			title: 'Twin builds your health digital twin',
-			body: 'Every source is translated into one shared vocabulary, so it all becomes a single, living model of you.'
-		},
-		{
-			title: 'Twin checks in through the day',
-			body: 'A morning brief, an evening wrap, and a nudge only when your data says something worth saying.'
-		}
-	];
-
-	const connectorMeta: Record<string, { icon: string; color: string }> = {
-		'Apple Health': { icon: '/icons/brands/apple.svg', color: '#000000' },
-		'Google Health Connect': { icon: '/icons/brands/google.svg', color: '#4285F4' },
-		'Samsung Health': { icon: '/icons/brands/samsung.svg', color: '#1428A0' },
-		Oura: { icon: '/icons/brands/oura.svg', color: '#0066CC' },
-		Whoop: { icon: '/icons/brands/whoop.svg', color: '#FF0050' },
-		Garmin: { icon: '/icons/brands/garmin.svg', color: '#007CC3' },
-		Fitbit: { icon: '/icons/brands/fitbit.svg', color: '#00B0B9' },
-		Withings: { icon: '/icons/brands/withings.svg', color: '#00BCD4' },
-		Dexcom: { icon: '/icons/brands/dexcom.svg', color: '#00A3E0' }
-	};
+	import { DATA_CATEGORIES, DATA_MOAT_NOTE, EHR_NOTE } from '$lib/data/company';
 
 	let activeIndex = $state<number | null>(null);
 	let isMobile = $state(false);
@@ -39,7 +12,7 @@
 		if (interval) clearInterval(interval);
 		interval = setInterval(() => {
 			if (!userInteracted) {
-				activeIndex = ((activeIndex ?? -1) + 1) % CONNECTORS.length;
+				activeIndex = ((activeIndex ?? -1) + 1) % DATA_CATEGORIES.length;
 			}
 		}, 2000);
 	}
@@ -89,57 +62,97 @@
 <section class="how section-y">
 	<div class="container-wide">
 		<h2 use:reveal={{ delay: 60 }}>
-			From the devices on your wrist to a model that <span class="text-gradient">checks in</span>.
+			The pieces become <span class="text-gradient">one picture of you</span>.
 		</h2>
-
-		<ol class="steps">
-			{#each steps as step, i}
-				<li class="step" use:reveal={{ delay: 120 + i * 90 }}>
-					<span class="step-num" aria-hidden="true">{i + 1}</span>
-					<h3>{step.title}</h3>
-					<p>{step.body}</p>
-				</li>
-			{/each}
-		</ol>
+		<p class="lede" use:reveal={{ delay: 100 }}>
+			Every source is translated into one shared vocabulary, so it all becomes a single, living
+			model of you.
+		</p>
 
 		<div class="wall" use:reveal={{ delay: 120 }}>
 			<div class="wall-head">
-				<h3 class="wall-title">Nine sources, one health vocabulary.</h3>
+				<h3 class="wall-title">Connect what you already track</h3>
 				<p class="wall-note">
-					Connect what you already use. Twin speaks each one and translates them all into a single
-					shared language.
+					Sleep, movement, nutrition and more, from the wearables and apps you already use. Link a
+					source in a tap, revoke it just as easily.
 				</p>
+				<p class="wall-note">{DATA_MOAT_NOTE}</p>
 			</div>
-			<ul class="connector-grid" aria-label="Supported data sources">
-				{#each CONNECTORS as connector, i}
-					{@const meta = connectorMeta[connector.name]}
+			<ul class="connector-grid" aria-label="Categories of everyday-life signal">
+				{#each DATA_CATEGORIES as category, i (category.key)}
 					<li
 						class="connector-card"
 						class:active={activeIndex === i}
-						style:--brand-color={meta?.color ?? 'currentColor'}
+						style="--accent: {category.color};"
 						use:reveal={{ delay: 60 + i * 40 }}
-						onmouseenter={() => { if (!isMobile) activeIndex = i; }}
-						onmouseleave={() => { if (!isMobile) activeIndex = null; }}
+						onmouseenter={() => {
+							if (!isMobile) activeIndex = i;
+						}}
+						onmouseleave={() => {
+							if (!isMobile) activeIndex = null;
+						}}
 						ontouchstart={() => handleCardInteract(i)}
 						role="listitem"
 					>
-						{#if meta}
-							<img
-								class="connector-icon"
-								src={meta.icon}
-								alt=""
-								width="32"
-								height="32"
-								loading="lazy"
-							/>
-						{/if}
-						<span class="connector-name">{connector.name}</span>
+						<span class="connector-icon" aria-hidden="true">
+							<svg
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.8"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							>
+								{#if category.key === 'sleep'}
+									<path
+										d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+										fill="currentColor"
+										stroke="none"
+										transform="translate(1.8 1.8) scale(0.85)"
+									/>
+								{:else if category.key === 'movement'}
+									<path d="M3 12h4l2.5 6L14 6l2.5 6H21" />
+								{:else if category.key === 'nutrition'}
+									<path
+										d="M12 8.5C10.8 6.3 8 5.6 6.2 7 4.4 8.4 4.2 11.6 5.4 14.6 6.3 17 7.8 21 10 21c1 0 1.2-.6 2-.6s1 .6 2 .6c2.2 0 3.7-4 4.6-6.4 1.2-3 1-6.2-.8-7.6C18 5.6 15.2 6.3 14 8.5"
+									/><path d="M12 8.5C12.3 6 14 4.3 16.5 4.3 16.5 6.8 14.8 8.5 12 8.5z" />
+								{:else if category.key === 'screen'}
+									<rect x="6" y="3" width="12" height="18" rx="1.5" /><path d="M10 18h4" />
+								{:else if category.key === 'location'}
+									<path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z" /><circle
+										cx="12"
+										cy="10"
+										r="2"
+									/>
+								{:else if category.key === 'wearables'}
+									<rect x="8" y="7" width="8" height="10" rx="1.5" /><path
+										d="M9 7l.5-3h5l.5 3M9 17l.5 3h5l.5-3"
+									/>
+								{:else if category.key === 'platforms'}
+									<rect x="4" y="4" width="7" height="7" rx="1" /><rect
+										x="13"
+										y="4"
+										width="7"
+										height="7"
+										rx="1"
+									/><rect x="4" y="13" width="7" height="7" rx="1" /><rect
+										x="13"
+										y="13"
+										width="7"
+										height="7"
+										rx="1"
+									/>
+								{:else}
+									<path d="M7 3h7l4 4v14H7z" /><path d="M14 3v4h4" /><path d="M10 13h5M10 16h5" />
+								{/if}
+							</svg>
+						</span>
+						<span class="connector-name">{category.label}</span>
 					</li>
 				{/each}
 			</ul>
+			<p class="wall-fine">{EHR_NOTE}</p>
 		</div>
-
-		<p class="closing" use:reveal={{ delay: 120 }}>Worth the notification, or it stays quiet.</p>
 	</div>
 </section>
 
@@ -152,41 +165,12 @@
 		max-width: 22ch;
 	}
 
-	/* Steps */
-	.steps {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: clamp(1.5rem, 3vw, 2.25rem);
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		list-style: none;
-		padding: 0;
-		counter-reset: step;
-	}
-	.step {
-		position: relative;
-		padding-top: 1.25rem;
-		border-top: 1px solid var(--color-border-strong);
-	}
-	.step-num {
-		font-family: var(--font-family-mono);
-		font-weight: 500;
-		font-size: 0.8rem;
-		letter-spacing: 0.08em;
-		color: var(--color-primary-600);
-	}
-	.step-num::before {
-		content: '0';
-	}
-	.step h3 {
-		font-size: clamp(1.1rem, 1.6vw, 1.3rem);
-		line-height: 1.25;
-		margin-block: 0.9rem 0.5rem;
-		letter-spacing: -0.01em;
-	}
-	.step p {
-		color: var(--color-ink-soft);
+	.lede {
+		margin-top: clamp(1rem, 2vw, 1.5rem);
+		max-width: 46ch;
+		font-size: clamp(1rem, 1.4vw, 1.15rem);
 		line-height: 1.6;
-		max-width: 34ch;
+		color: var(--color-ink-soft);
 	}
 
 	/* Connector wall */
@@ -199,7 +183,7 @@
 		box-shadow: var(--shadow-xs);
 	}
 	.wall-head {
-		max-width: 46ch;
+		max-width: 78ch;
 		margin-bottom: 1.5rem;
 	}
 	.wall-title {
@@ -208,14 +192,21 @@
 	}
 	.wall-note {
 		margin-top: 0.5rem;
+		max-width: 78ch;
 		color: var(--color-ink-soft);
 		line-height: 1.6;
+	}
+	.wall-fine {
+		margin-top: 1.5rem;
+		font-size: 0.8rem;
+		line-height: 1.6;
+		color: var(--color-ink-faint);
 	}
 
 	/* Connector grid */
 	.connector-grid {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(4, 1fr);
 		gap: 0.75rem;
 		list-style: none;
 		padding: 0;
@@ -239,11 +230,14 @@
 		cursor: default;
 	}
 	.connector-icon {
-		width: 32px;
-		height: 32px;
-		object-fit: contain;
-		filter: grayscale(1) opacity(0.55);
-		transition: filter 0.25s ease;
+		width: 30px;
+		height: 30px;
+		color: var(--color-ink-faint);
+		transition: color 0.25s ease;
+	}
+	.connector-icon svg {
+		width: 100%;
+		height: 100%;
 	}
 	.connector-name {
 		font-size: 0.8rem;
@@ -254,23 +248,17 @@
 		transition: color 0.25s ease;
 	}
 	.connector-card.active {
-		border-color: var(--brand-color);
-		box-shadow: 0 0 0 1px var(--brand-color), var(--shadow-xs);
-		background: color-mix(in srgb, var(--brand-color) 4%, var(--color-neutral-0));
+		border-color: var(--accent);
+		box-shadow:
+			0 0 0 1px var(--accent),
+			var(--shadow-xs);
+		background: var(--accent);
 	}
 	.connector-card.active .connector-icon {
-		filter: grayscale(0) opacity(1);
+		color: #fff;
 	}
 	.connector-card.active .connector-name {
-		color: var(--color-ink);
-	}
-
-	.closing {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		font-family: var(--font-family-heading);
-		font-size: clamp(1.1rem, 1.8vw, 1.35rem);
-		font-weight: 600;
-		color: var(--color-ink);
+		color: #fff;
 	}
 
 	@media (max-width: 719px) {
@@ -287,20 +275,18 @@
 	}
 
 	@media (min-width: 720px) {
-		.steps {
-			grid-template-columns: repeat(3, 1fr);
-			gap: clamp(1.75rem, 3vw, 2.75rem);
-		}
 		.connector-card:hover {
-			border-color: var(--brand-color);
-			box-shadow: 0 0 0 1px var(--brand-color), var(--shadow-xs);
-			background: color-mix(in srgb, var(--brand-color) 4%, var(--color-neutral-0));
+			border-color: var(--accent);
+			box-shadow:
+				0 0 0 1px var(--accent),
+				var(--shadow-xs);
+			background: var(--accent);
 		}
 		.connector-card:hover .connector-icon {
-			filter: grayscale(0) opacity(1);
+			color: #fff;
 		}
 		.connector-card:hover .connector-name {
-			color: var(--color-ink);
+			color: #fff;
 		}
 	}
 </style>

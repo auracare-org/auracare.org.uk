@@ -27,8 +27,8 @@
 	<text x="80" y="300" font-family="'DM Sans','Poppins',Arial,sans-serif" font-size="72" font-weight="700" fill="#ffffff">Agentic healthcare,</text>
 	<text x="80" y="380" font-family="'DM Sans','Poppins',Arial,sans-serif" font-size="72" font-weight="700" fill="#8aa0ff">built on your digital twin.</text>
 
-	<text x="80" y="470" font-family="'Poppins',Arial,sans-serif" font-size="30" font-weight="400" fill="#c3ccf0">Meet Twin — your health, as a living model.</text>
+	<text x="80" y="470" font-family="'Poppins',Arial,sans-serif" font-size="30" font-weight="400" fill="#c3ccf0">Meet Twin: your health, as a living model.</text>
 
 	<rect x="80" y="520" width="10" height="40" rx="3" fill="#ef4444" />
-	<text x="108" y="549" font-family="'Poppins',Arial,sans-serif" font-size="26" font-weight="600" fill="#ffd3d3">Now raising our Seed round — stephen@auracare.org.uk</text>
+	<text x="108" y="549" font-family="'Poppins',Arial,sans-serif" font-size="26" font-weight="600" fill="#ffd3d3">Now raising our Seed round: stephen@auracare.org.uk</text>
 </svg>

@@ -22,36 +22,111 @@
 	const formatM = (n: number) => `${(n / 1_000_000).toFixed(1)}M`;
 
 	const concepts = [
-		'Hypertension', 'Diabetes mellitus', 'Asthma', 'Heart failure',
-		'Atrial fibrillation', 'COPD', 'Pneumonia', 'Anaemia',
-		'Hypothyroidism', 'Chronic kidney disease', 'Osteoarthritis',
-		'Depression', 'Anxiety disorder', 'Migraine', 'Epilepsy',
-		'Gout', 'Psoriasis', 'Crohn\'s disease', 'Coeliac disease',
-		'Type 2 diabetes', 'Angina pectoris', 'DVT', 'Pulmonary embolism',
-		'Sepsis', 'Meningitis', 'Sarcoidosis', 'Lupus', 'Vasculitis',
-		'Hepatitis B', 'Cirrhosis', 'Pancreatitis', 'Cholecystitis',
-		'Appendicitis', 'Diverticulitis', 'Endometriosis', 'PCOS',
-		'Preeclampsia', 'Osteoporosis', 'Rheumatoid arthritis',
-		'Multiple sclerosis', 'Parkinson\'s disease', 'Motor neurone disease',
-		'Myocardial infarction', 'Stroke', 'Aortic stenosis',
-		'Mitral regurgitation', 'Cardiomyopathy', 'Pericarditis',
-		'Pleural effusion', 'Bronchiectasis', 'Interstitial lung disease',
-		'Obstructive sleep apnoea', 'Pulmonary fibrosis', 'Tuberculosis',
-		'HIV', 'Malaria', 'Dengue fever', 'Lyme disease', 'Cellulitis',
-		'Osteomyelitis', 'Glomerulonephritis', 'Nephrotic syndrome',
-		'Renal calculi', 'Benign prostatic hyperplasia', 'Bladder cancer',
-		'Breast cancer', 'Lung cancer', 'Colorectal cancer', 'Melanoma',
-		'Lymphoma', 'Leukaemia', 'Myeloma', 'Thyroid cancer',
-		'Dementia', 'Bipolar disorder', 'Schizophrenia', 'ADHD',
-		'Autism spectrum', 'Anorexia nervosa', 'OCD', 'PTSD',
-		'Iron deficiency', 'B12 deficiency', 'Folate deficiency',
-		'Hyperkalaemia', 'Hyponatraemia', 'Hypercalcaemia',
-		'Addison\'s disease', 'Cushing\'s syndrome', 'Acromegaly',
-		'Pheochromocytoma', 'Conn\'s syndrome', 'Grave\'s disease',
-		'Hashimoto\'s', 'Diabetic ketoacidosis', 'Hypoglycaemia',
-		'Metabolic syndrome', 'Dyslipidaemia', 'Familial hypercholesterolaemia',
-		'Peripheral arterial disease', 'Raynaud\'s phenomenon',
-		'Varicose veins', 'Lymphoedema', 'Anaphylaxis', 'Angioedema'
+		'Hypertension',
+		'Diabetes mellitus',
+		'Asthma',
+		'Heart failure',
+		'Atrial fibrillation',
+		'COPD',
+		'Pneumonia',
+		'Anaemia',
+		'Hypothyroidism',
+		'Chronic kidney disease',
+		'Osteoarthritis',
+		'Depression',
+		'Anxiety disorder',
+		'Migraine',
+		'Epilepsy',
+		'Gout',
+		'Psoriasis',
+		"Crohn's disease",
+		'Coeliac disease',
+		'Type 2 diabetes',
+		'Angina pectoris',
+		'DVT',
+		'Pulmonary embolism',
+		'Sepsis',
+		'Meningitis',
+		'Sarcoidosis',
+		'Lupus',
+		'Vasculitis',
+		'Hepatitis B',
+		'Cirrhosis',
+		'Pancreatitis',
+		'Cholecystitis',
+		'Appendicitis',
+		'Diverticulitis',
+		'Endometriosis',
+		'PCOS',
+		'Preeclampsia',
+		'Osteoporosis',
+		'Rheumatoid arthritis',
+		'Multiple sclerosis',
+		"Parkinson's disease",
+		'Motor neurone disease',
+		'Myocardial infarction',
+		'Stroke',
+		'Aortic stenosis',
+		'Mitral regurgitation',
+		'Cardiomyopathy',
+		'Pericarditis',
+		'Pleural effusion',
+		'Bronchiectasis',
+		'Interstitial lung disease',
+		'Obstructive sleep apnoea',
+		'Pulmonary fibrosis',
+		'Tuberculosis',
+		'HIV',
+		'Malaria',
+		'Dengue fever',
+		'Lyme disease',
+		'Cellulitis',
+		'Osteomyelitis',
+		'Glomerulonephritis',
+		'Nephrotic syndrome',
+		'Renal calculi',
+		'Benign prostatic hyperplasia',
+		'Bladder cancer',
+		'Breast cancer',
+		'Lung cancer',
+		'Colorectal cancer',
+		'Melanoma',
+		'Lymphoma',
+		'Leukaemia',
+		'Myeloma',
+		'Thyroid cancer',
+		'Dementia',
+		'Bipolar disorder',
+		'Schizophrenia',
+		'ADHD',
+		'Autism spectrum',
+		'Anorexia nervosa',
+		'OCD',
+		'PTSD',
+		'Iron deficiency',
+		'B12 deficiency',
+		'Folate deficiency',
+		'Hyperkalaemia',
+		'Hyponatraemia',
+		'Hypercalcaemia',
+		"Addison's disease",
+		"Cushing's syndrome",
+		'Acromegaly',
+		'Pheochromocytoma',
+		"Conn's syndrome",
+		"Grave's disease",
+		"Hashimoto's",
+		'Diabetic ketoacidosis',
+		'Hypoglycaemia',
+		'Metabolic syndrome',
+		'Dyslipidaemia',
+		'Familial hypercholesterolaemia',
+		'Peripheral arterial disease',
+		"Raynaud's phenomenon",
+		'Varicose veins',
+		'Lymphoedema',
+		'Anaphylaxis',
+		'Angioedema'
 	];
 
 	const PARTICLE_COUNT = 400;
@@ -73,7 +148,10 @@
 	let h = 0;
 
 	function seed(s: number) {
-		return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
+		return () => {
+			s = (s * 16807) % 2147483647;
+			return (s - 1) / 2147483646;
+		};
 	}
 
 	onMount(() => {
@@ -202,9 +280,10 @@
 				see.
 			</h2>
 			<p class="tech-lead" use:reveal={{ delay: 140 }}>
-				Our reasoning is grounded in the terminology medicine already agrees on — SNOMED CT, ICD-11,
-				HPO, LOINC. A learned model proposes; an auditable symbolic layer disposes. That
-				<strong>neuro-symbolic</strong> design means every answer can trace back to a named source.
+				Our reasoning is grounded in the terminology medicine already agrees on: SNOMED CT, ICD-11,
+				HPO, LOINC, the universal language of medicine. A learned model proposes; an auditable symbolic layer disposes. That
+				<strong>neuro-symbolic</strong> design makes it a glass box, not a black box: every answer traces
+				back to a named source.
 			</p>
 			<p class="tech-status" use:reveal={{ delay: 200 }}>
 				<span class="pill pill-live">Live today</span>
@@ -275,7 +354,7 @@
 		color: var(--color-primary-300);
 		font-family: var(--font-family-mono);
 		font-size: 0.62rem;
-		font-weight: 500;
+		font-weight: 700;
 		padding: 0.25rem 0.5rem;
 		border-radius: 4px;
 		white-space: nowrap;
@@ -357,7 +436,10 @@
 		padding: 0.8rem 1.35rem;
 		border-radius: var(--radius-sm);
 		border: 1px solid var(--color-border-dark-strong);
-		transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+		transition:
+			background 0.15s ease,
+			border-color 0.15s ease,
+			color 0.15s ease;
 	}
 	.cta-ghost:hover {
 		color: #fff;
@@ -400,6 +482,7 @@
 	.stat-label {
 		margin-top: 0.5rem;
 		font-family: var(--font-family-mono);
+		font-weight: 700;
 		font-size: 0.72rem;
 		letter-spacing: 0.04em;
 		line-height: 1.4;

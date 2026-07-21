@@ -13,7 +13,7 @@
 	);
 
 	const mailto =
-		'mailto:' + CONTACT.seed + '?subject=' + encodeURIComponent('Auracare AI — Investor enquiry');
+		'mailto:' + CONTACT.seed + '?subject=' + encodeURIComponent('Auracare AI: Investor enquiry');
 </script>
 
 <section class="team section-y">
@@ -73,8 +73,8 @@
 				<span class="raise-label">Seed</span>
 				<h3>We&rsquo;re raising our seed round.</h3>
 				<p>
-					If you back frontier health &mdash; teams turning real, consented data into agentic
-					clinical decision support &mdash; we&rsquo;d love to talk.
+					If you back frontier health (teams turning real, consented data into agentic clinical
+					decision support), we&rsquo;d love to talk.
 				</p>
 			</div>
 			<a class="raise-cta" href={mailto}>
@@ -133,7 +133,7 @@
 		display: grid;
 		place-items: center;
 		font-family: var(--font-family-mono);
-		font-weight: 500;
+		font-weight: 700;
 		font-size: 1.2rem;
 		color: var(--color-primary-700);
 		letter-spacing: 0.02em;
@@ -177,7 +177,7 @@
 		border-bottom-color: currentColor;
 	}
 
-	/* Investor CTA — flat brand panel */
+	/* Investor CTA: flat brand panel */
 	.raise {
 		margin-top: clamp(2.5rem, 5vw, 3.75rem);
 		padding: clamp(1.75rem, 4vw, 2.75rem);
@@ -197,7 +197,7 @@
 	.raise-label {
 		font-family: var(--font-family-mono);
 		font-size: 0.7rem;
-		font-weight: 500;
+		font-weight: 700;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 		color: var(--color-white-alpha-80);
