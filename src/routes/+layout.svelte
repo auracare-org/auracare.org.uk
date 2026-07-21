@@ -25,28 +25,49 @@
 </script>
 
 <svelte:head>
-	<title>Auracare: the world's most personalised healthcare</title>
+	<!-- Per-page <title>, description, canonical and social tags are set by
+	     $lib/components/seo/Seo.svelte on each route. Only site-wide structured
+	     data lives here. -->
 	<script type="application/ld+json">
 		{
 			"@context": "https://schema.org",
-			"@type": "Organization",
-			"name": "Auracare Health LTD",
-			"alternateName": "Auracare AI",
-			"description": "Auracare builds two products on one patient model: Auratwin, a wellness companion that lives in your messages, and Auracare, clinical decision support that works inside the consultation.",
-			"url": "https://auracare.org.uk",
-			"logo": "https://auracare.org.uk/SVG/Asset 5.svg",
-			"foundingDate": "2025",
-			"founder": [
-				{ "@type": "Person", "name": "Stephen Okita" },
-				{ "@type": "Person", "name": "Hinlun Chen" },
-				{ "@type": "Person", "name": "Tanush Pandey" }
-			],
-			"address": { "@type": "PostalAddress", "addressCountry": "GB" },
-			"contactPoint": {
-				"@type": "ContactPoint",
-				"email": "hello@auracare.org.uk",
-				"contactType": "Customer Service"
-			}
+			"@graph": [
+				{
+					"@type": "Organization",
+					"@id": "https://auracare.org.uk/#organization",
+					"name": "Auracare Health LTD",
+					"alternateName": "Auracare AI",
+					"description": "Auracare builds two products on one patient model: Auratwin, a wellness companion that lives in your messages, and Auracare, clinical decision support that works inside the consultation.",
+					"url": "https://auracare.org.uk",
+					"logo": {
+						"@type": "ImageObject",
+						"url": "https://auracare.org.uk/icon-512.png",
+						"width": 512,
+						"height": 512
+					},
+					"foundingDate": "2025",
+					"founder": [
+						{ "@type": "Person", "name": "Stephen Okita" },
+						{ "@type": "Person", "name": "Hinlun Chen" },
+						{ "@type": "Person", "name": "Tanush Pandey" }
+					],
+					"address": { "@type": "PostalAddress", "addressCountry": "GB" },
+					"contactPoint": {
+						"@type": "ContactPoint",
+						"email": "hello@auracare.org.uk",
+						"contactType": "Customer Service"
+					}
+				},
+				{
+					"@type": "WebSite",
+					"@id": "https://auracare.org.uk/#website",
+					"name": "Auracare AI",
+					"url": "https://auracare.org.uk",
+					"description": "Two products on one patient model: Auratwin, a wellness companion in your messages, and Auracare, clinical decision support inside the consultation.",
+					"publisher": { "@id": "https://auracare.org.uk/#organization" },
+					"inLanguage": "en-GB"
+				}
+			]
 		}
 	</script>
 </svelte:head>

@@ -139,6 +139,42 @@
 	path="/product"
 />
 
+<svelte:head>
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "SoftwareApplication",
+			"name": "Auratwin",
+			"applicationCategory": "HealthApplication",
+			"operatingSystem": "iOS, Android",
+			"url": "https://auracare.org.uk/product",
+			"description": "A personal health digital twin that lives in your messages. Auratwin learns your patterns from the wearables and apps you already use, then checks in with a morning brief, a nudge only when it matters, and an evening wrap. A general-wellness product, not a medical device.",
+			"publisher": { "@id": "https://auracare.org.uk/#organization" },
+			"offers": { "@type": "Offer", "availability": "https://schema.org/PreOrder" }
+		}
+	</script>
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			"itemListElement": [
+				{
+					"@type": "ListItem",
+					"position": 1,
+					"name": "Home",
+					"item": "https://auracare.org.uk"
+				},
+				{
+					"@type": "ListItem",
+					"position": 2,
+					"name": "Auratwin",
+					"item": "https://auracare.org.uk/product"
+				}
+			]
+		}
+	</script>
+</svelte:head>
+
 <!-- ================= Hero ================= -->
 <section class="hero">
 	<div class="hero-bg" aria-hidden="true">
