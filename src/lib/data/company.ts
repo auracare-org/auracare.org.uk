@@ -305,7 +305,7 @@ export const MARKET_WAVES: MarketWave[] = [
 		key: 'launch',
 		tone: 'launch',
 		title: 'Wellness launch',
-		caption: 'Auratwin goes direct-to-consumer across every English-speaking market.'
+		caption: 'Auratwin goes direct-to-consumer across our first four markets.'
 	},
 	{
 		order: 1,
@@ -326,7 +326,7 @@ export const MARKET_WAVES: MarketWave[] = [
 		order: 3,
 		key: 'sea',
 		tone: 'sea',
-		title: 'Southeast Asia',
+		title: 'Asia-Pacific',
 		caption: 'Approval portability carries both products across the region.'
 	},
 	{
@@ -369,22 +369,8 @@ export const MARKET_POINTS: MarketPoint[] = [
 		label: 'Wellness launch'
 	},
 	{
-		name: 'Ireland',
-		coords: [-8.2439, 53.4129],
-		tone: 'launch',
-		wave: 0,
-		label: 'Wellness launch'
-	},
-	{
 		name: 'Australia',
 		coords: [133.7751, -25.2744],
-		tone: 'launch',
-		wave: 0,
-		label: 'Wellness launch'
-	},
-	{
-		name: 'New Zealand',
-		coords: [174.7762, -41.2865],
 		tone: 'launch',
 		wave: 0,
 		label: 'Wellness launch'
@@ -420,12 +406,56 @@ export const MARKET_POINTS: MarketPoint[] = [
 		label: 'Auracare and Auratwin now both operate here'
 	},
 	// Wave 4: Southeast Asia
-	{ name: 'Malaysia', coords: [101.6869, 3.139], tone: 'sea', wave: 3, label: 'SEA expansion' },
-	{ name: 'Thailand', coords: [100.5018, 13.7563], tone: 'sea', wave: 3, label: 'SEA expansion' },
-	{ name: 'Vietnam', coords: [106.6297, 10.8231], tone: 'sea', wave: 3, label: 'SEA expansion' },
-	{ name: 'Indonesia', coords: [106.8456, -6.2088], tone: 'sea', wave: 3, label: 'SEA expansion' },
-	{ name: 'Philippines', coords: [121.774, 12.8797], tone: 'sea', wave: 3, label: 'SEA expansion' },
+	{
+		name: 'Malaysia',
+		coords: [101.6869, 3.139],
+		tone: 'sea',
+		wave: 3,
+		label: 'Asia-Pacific expansion'
+	},
+	{
+		name: 'Thailand',
+		coords: [100.5018, 13.7563],
+		tone: 'sea',
+		wave: 3,
+		label: 'Asia-Pacific expansion'
+	},
+	{
+		name: 'Vietnam',
+		coords: [106.6297, 10.8231],
+		tone: 'sea',
+		wave: 3,
+		label: 'Asia-Pacific expansion'
+	},
+	{
+		name: 'Indonesia',
+		coords: [106.8456, -6.2088],
+		tone: 'sea',
+		wave: 3,
+		label: 'Asia-Pacific expansion'
+	},
+	{
+		name: 'Philippines',
+		coords: [121.774, 12.8797],
+		tone: 'sea',
+		wave: 3,
+		label: 'Asia-Pacific expansion'
+	},
+	{
+		name: 'New Zealand',
+		coords: [174.7762, -41.2865],
+		tone: 'sea',
+		wave: 3,
+		label: 'Asia-Pacific expansion'
+	},
 	// Wave 5: Europe & Africa
+	{
+		name: 'Ireland',
+		coords: [-8.2439, 53.4129],
+		tone: 'expansion',
+		wave: 4,
+		label: 'European expansion'
+	},
 	{
 		name: 'France',
 		coords: [2.2137, 46.2276],
@@ -589,8 +619,7 @@ export const MOAT: MoatPillar[] = [
 	}
 ];
 
-export const MOAT_LINE =
-	'The category we are defining sits at the overlap of all three.';
+export const MOAT_LINE = 'The category we are defining sits at the overlap of all three.';
 
 /* ------------------------------------------------------------------ */
 /* Consent & safety                                                    */

@@ -6,7 +6,7 @@
 
 <Seo
 	title="Privacy"
-	description="How Auracare handles your data across the UK, US, Canada, Ireland and Australia: explicit consent, sensitive health data, and the regional privacy rights that apply to you."
+	description="How Auracare handles your data across the UK, US, Canada and Australia: explicit consent, sensitive health data, and the regional privacy rights that apply to you."
 	path="/privacy"
 	noindex={false}
 />
@@ -59,11 +59,12 @@
 			<p>
 				Auratwin is a <strong>general-wellness product, not a medical device</strong>. It is
 				designed to help you understand your own patterns. It does not diagnose, treat, dose or
-				clinically interpret your data.
+				clinically interpret your data. Aura is an AI companion, and will always tell you so: you
+				are never talking to a person.
 			</p>
 			<p>
 				Auratwin launches in the <strong
-					>United Kingdom, the United States, Canada, Ireland and Australia</strong
+					>United Kingdom, the United States, Canada and Australia</strong
 				>. The whole of this policy applies wherever you are; the
 				<a href="#regional">regional terms</a> section adds the rights and commitments specific to
 				your region, and Washington and Nevada residents also have a dedicated
@@ -295,15 +296,14 @@
 
 			<h3 id="ireland-privacy">Ireland &amp; the EEA</h3>
 			<p>
-				For users in Ireland and the wider EEA, we process your data under the
-				<strong>EU GDPR</strong>, with explicit consent (Article 9(2)(a)) as our basis for health
-				data, and the same rights of access, rectification, erasure, portability and withdrawal
-				described above. Aura will always tell you that you are talking to an AI companion, not a
-				person. As a UK company we will appoint and name an <strong>EU representative</strong>
-				(Article 27) in this policy before launch. You may complain to the Irish
+				Auratwin is <strong>not currently available in Ireland or the wider EEA</strong>. This
+				release does not launch there, and we do not offer the service to, or collect data from,
+				people in the EEA. When we do open an EEA market, we will appoint and name our
+				<strong>EU representative</strong> (Article 27 EU GDPR) here, set out the EU-specific rights
+				and the relevant supervisory authority (such as the Irish
 				<a href="https://www.dataprotection.ie/" rel="noopener noreferrer" target="_blank"
 					>Data Protection Commission</a
-				> or your local supervisory authority.
+				>), and update this section before any EEA launch.
 			</p>
 
 			<h2 id="contact">Contact</h2>
