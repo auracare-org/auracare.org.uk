@@ -27,13 +27,13 @@
 			only the sources you choose, and your consent is explicit, per-source and revocable at any
 			time.
 		</p>
-		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 21 July 2026</p>
+		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 22 July 2026</p>
 	</div>
 </section>
 
 <section class="policy section-y">
 	<div class="container-wide">
-		<article class="prose" use:reveal>
+		<article class="prose">
 			<p class="evolving">
 				<em
 					>This policy is an early draft and will evolve (with clearer detail and, where relevant,
@@ -85,10 +85,26 @@
 				to link. You decide which sources to connect, and you can disconnect any of them at any
 				time.
 			</p>
+			<h3>What you tell Aura in conversation</h3>
 			<p>
-				Health data is <strong>sensitive personal data</strong>: special-category data under UK and
-				EU law, and sensitive information under US, Canadian and Australian law. We treat it with
-				the heightened protection that classification requires, wherever you are.
+				Talking to Aura is how the service works, so your conversations are part of the data we
+				process: the things you tell it about how you feel, what you ate and your habits, and the
+				wellness inferences your twin draws from them (for example, your sleep baseline). Voice
+				notes are transcribed and the audio is then discarded; we do not create voiceprints and we
+				do not use biometric identification.
+			</p>
+			<h3>Precise location, only if you opt in</h3>
+			<p>
+				If you separately opt in, Auratwin processes your <strong>precise location</strong> to give your
+				guidance context, such as time zones, travel and where your routines happen. This is optional:
+				Auratwin works fully without it, and you can turn it off at any time. We never use your location
+				to infer visits to healthcare facilities, and we do not geofence health services.
+			</p>
+			<p>
+				Health data, whether it comes from a source you connect or from something you tell Aura, is
+				<strong>sensitive personal data</strong>: special-category data under UK and EU law, and
+				sensitive information under US, Canadian and Australian law. We treat it with the heightened
+				protection that classification requires, wherever you are.
 			</p>
 
 			<h2 id="lawful-basis">Our lawful basis</h2>
@@ -264,21 +280,18 @@
 
 			<h3 id="canada-privacy">Canada</h3>
 			<p>
-				We handle your data under <strong>PIPEDA</strong> and, in Quebec, the Act respecting the
-				protection of personal information in the private sector (<strong>Law 25</strong>). Your
-				health data is sensitive, so we collect it only with your <strong>express consent</strong>,
-				purpose by purpose. You can access and correct your data, withdraw consent, and ask us what
-				we hold about you; optional features such as precise location can be switched off in-product
-				at any time. Proactive and promotional messages follow
+				We handle your data under <strong>PIPEDA</strong>. At launch Auratwin is offered in English
+				and is <strong>not available in Quebec</strong>; if we open Quebec, we will first meet the
+				requirements of its private-sector privacy law (<strong>Law 25</strong>), including service
+				in French, and update this section. Your health data is sensitive, so we collect it only
+				with your <strong>express consent</strong>, purpose by purpose. You can access and correct
+				your data, withdraw consent, and ask us what we hold about you; optional features such as
+				precise location can be switched off at any time. Proactive and promotional messages follow
 				<strong>CASL</strong>: we message you only with your consent, and every promotional message
 				identifies us and includes an unsubscribe. If we ever have a breach creating a real risk of
 				significant harm, we will notify you and report it to the Office of the Privacy Commissioner
 				of Canada. You may complain to the
-				<a href="https://www.priv.gc.ca/" rel="noopener noreferrer" target="_blank">OPC</a> or, in
-				Quebec, the
-				<a href="https://www.cai.gouv.qc.ca/" rel="noopener noreferrer" target="_blank"
-					>Commission d'accès à l'information</a
-				>.
+				<a href="https://www.priv.gc.ca/" rel="noopener noreferrer" target="_blank">OPC</a>.
 			</p>
 
 			<h3 id="australia-privacy">Australia</h3>

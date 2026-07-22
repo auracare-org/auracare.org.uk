@@ -34,7 +34,7 @@
 
 <section class="policy section-y">
 	<div class="container-wide">
-		<article class="prose" use:reveal>
+		<article class="prose">
 			<h2 id="scope">Why this policy exists</h2>
 			<p>
 				The Washington <strong>My Health My Data Act</strong> and Nevada's consumer health data law
