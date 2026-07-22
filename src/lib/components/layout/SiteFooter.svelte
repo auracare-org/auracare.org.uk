@@ -40,6 +40,7 @@
 			<nav class="footer-col" aria-label="Legal">
 				<h4>Legal</h4>
 				<a href="/privacy">Privacy</a>
+				<a href="/privacy/consumer-health-data">Consumer health data</a>
 				<a href="/terms">Terms</a>
 				<a href="/cookies">Cookies</a>
 				<a href="/accessibility">Accessibility</a>

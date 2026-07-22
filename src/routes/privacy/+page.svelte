@@ -1,12 +1,12 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal } from '$lib/actions/motion';
-	import { CONTACT, EMERGENCY_ROUTING, NON_DEVICE_DISCLAIMER, TWIN_NEVER } from '$lib/data/company';
+	import { CONTACT } from '$lib/data/company';
 </script>
 
 <Seo
 	title="Privacy"
-	description="How Auracare handles your data: UK GDPR, special-category health data, per-source revocable consent, and what Auratwin never does."
+	description="How Auracare handles your data across the UK, US, Canada, Ireland and Australia: explicit consent, sensitive health data, and the regional privacy rights that apply to you."
 	path="/privacy"
 	noindex={false}
 />
@@ -27,7 +27,7 @@
 			only the sources you choose, and your consent is explicit, per-source and revocable at any
 			time.
 		</p>
-		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 14 July 2026</p>
+		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 21 July 2026</p>
 	</div>
 </section>
 
@@ -61,6 +61,14 @@
 				designed to help you understand your own patterns. It does not diagnose, treat, dose or
 				clinically interpret your data.
 			</p>
+			<p>
+				Auratwin launches in the <strong
+					>United Kingdom, the United States, Canada, Ireland and Australia</strong
+				>. The whole of this policy applies wherever you are; the
+				<a href="#regional">regional terms</a> section adds the rights and commitments specific to
+				your region, and Washington and Nevada residents also have a dedicated
+				<a href="/privacy/consumer-health-data">Consumer Health Data Privacy Policy</a>.
+			</p>
 
 			<h2 id="data-we-process">The data we process</h2>
 			<h3>Account data</h3>
@@ -77,14 +85,16 @@
 				time.
 			</p>
 			<p>
-				Health data is <strong>special-category personal data</strong> under the UK GDPR. We treat it
-				with the heightened protection that classification requires.
+				Health data is <strong>sensitive personal data</strong>: special-category data under UK and
+				EU law, and sensitive information under US, Canadian and Australian law. We treat it with
+				the heightened protection that classification requires, wherever you are.
 			</p>
 
 			<h2 id="lawful-basis">Our lawful basis</h2>
 			<p>
-				We rely on your <strong>explicit consent</strong> (Article 9(2)(a) UK GDPR) to process your health
-				signals. That consent is:
+				We rely on your <strong>explicit consent</strong> (Article 9(2)(a) UK GDPR, and its regional
+				equivalents such as EU GDPR Article 9, US state opt-in rules, Australian Privacy Principle 3
+				and Canadian express consent) to process your health signals. That consent is:
 			</p>
 			<ul>
 				<li>
@@ -111,7 +121,9 @@
 				</li>
 				<li>operate, secure and improve the service.</li>
 			</ul>
-			<p>We do not use your health data for advertising, and we do not sell it.</p>
+			<p>
+				We do not use your health data for advertising, and we do not sell data that identifies you.
+			</p>
 
 			<h2 id="connectors">Wearable connectors</h2>
 			<p>
@@ -125,17 +137,29 @@
 			<p>
 				We are building Auratwin to process your data within our own UK/EU cloud tenant. This is a
 				direction of travel, not a guarantee of every processing arrangement today; we will update
-				this section as that infrastructure matures. Where data is processed outside the UK, we put
-				appropriate safeguards in place as required by the UK GDPR.
+				this section as that infrastructure matures. Where data is processed outside your country,
+				we put appropriate safeguards in place as required by applicable data protection law.
 			</p>
 
 			<h2 id="sharing">Sharing your data</h2>
 			<p>
-				<strong>We do not sell your data.</strong> We do not share your health data with third parties
-				without your consent. We use a small number of service providers (for example, cloud hosting
-				and message delivery) strictly to operate Auratwin; they act on our instructions under contract
-				and may not use your data for their own purposes. We may disclose data where we are legally required
-				to do so.
+				<strong>We do not sell personal data that identifies you.</strong> We do not share your health
+				data with third parties without your consent. We use a small number of service providers (for
+				example, cloud hosting and message delivery) strictly to operate Auratwin; they act on our instructions
+				under contract and may not use your data for their own purposes. We may disclose data where we
+				are legally required to do so.
+			</p>
+
+			<h2 id="aggregated">Aggregated &amp; de-identified data</h2>
+			<p>
+				We may combine and transform the information we hold into <strong
+					>aggregated or de-identified</strong
+				> form that no longer identifies you, or any individual, and cannot reasonably be linked back
+				to a person. Once information has been de-identified in this way it is no longer personal data
+				about you. We may use and share it, for example to understand health and wellness trends, to
+				carry out research, to develop and improve our products, and for other business purposes. Whenever
+				we do, we commit to keeping it de-identified and to requiring anyone who receives it not to attempt
+				to re-identify anyone from it.
 			</p>
 
 			<h2 id="retention">Retention &amp; deletion</h2>
@@ -147,7 +171,7 @@
 			</p>
 
 			<h2 id="your-rights">Your rights</h2>
-			<p>Under the UK GDPR you have the right to:</p>
+			<p>Wherever you live, you have the right to:</p>
 			<ul>
 				<li><strong>access</strong> the personal data we hold about you;</li>
 				<li><strong>rectify</strong> data that is inaccurate or incomplete;</li>
@@ -159,49 +183,128 @@
 					<strong>withdraw consent</strong> at any time, per source, without affecting past processing;
 				</li>
 				<li>
-					<strong>complain</strong> to the Information Commissioner’s Office (ICO), the UK
-					supervisory authority, at
-					<a href="https://ico.org.uk/" rel="noopener noreferrer" target="_blank">ico.org.uk</a>.
+					<strong>complain</strong> to your data protection regulator. The regulator for your
+					region, and any additional local rights, are set out in
+					<a href="#regional">Regional terms</a>
+					below.
 				</li>
 			</ul>
 			<p>
 				To exercise any of these, email
 				<a href="mailto:{CONTACT.privacy}">{CONTACT.privacy}</a>. We would always welcome the chance
-				to resolve a concern directly before you approach the ICO.
+				to resolve a concern directly before you approach a regulator.
 			</p>
 
-			<h2 id="emergencies">Emergencies &amp; safety routing</h2>
+			<h2 id="regional">Regional terms</h2>
 			<p>
-				Auratwin is not an emergency service and cannot summon help. If Auratwin surfaces safety
-				information, it routes you to the right lines for your region, for example:
-			</p>
-			<div class="routing" role="list">
-				{#each EMERGENCY_ROUTING as region}
-					<div class="routing-card" role="listitem">
-						<h3>{region.region}</h3>
-						<dl>
-							{#each region.lines as line}
-								<div class="routing-row">
-									<dt>{line.label}</dt>
-									<dd>{line.value}</dd>
-								</div>
-							{/each}
-						</dl>
-					</div>
-				{/each}
-			</div>
-			<p class="routing-note">
-				If you think you or someone else is in danger, contact your local emergency services
-				immediately.
+				Everything above applies wherever you are. This section adds the commitments and rights
+				specific to each region we launch in. Whichever region you are in, the way to exercise a
+				right is the same: email <a href="mailto:{CONTACT.privacy}">{CONTACT.privacy}</a>.
 			</p>
 
-			<h2 id="what-twin-never-does">What Auratwin never does</h2>
-			<p>{NON_DEVICE_DISCLAIMER}</p>
-			<ul class="never">
-				{#each TWIN_NEVER as item}
-					<li>{item}</li>
-				{/each}
+			<h3 id="uk-privacy">United Kingdom</h3>
+			<p>
+				The UK is our home market, and the policy above is written to UK law: we are the data
+				controller, established in {CONTACT.jurisdiction}, processing your health data as
+				<strong>special-category data</strong> under the <strong>UK GDPR</strong> on the basis of your
+				explicit consent, with the ICO as our supervisory authority. A few UK-specific points sit alongside
+				that:
+			</p>
+			<ul>
+				<li>
+					Proactive check-ins are part of the service you sign up for. Any purely promotional
+					messaging follows <strong>PECR</strong>: we ask for consent first and include an opt-out
+					in every such message.
+				</li>
+				<li>
+					Before launch we complete a <strong>Data Protection Impact Assessment</strong> covering the
+					large-scale processing of health data and location that Auratwin involves.
+				</li>
+				<li>
+					You can complain to the
+					<a href="https://ico.org.uk/" rel="noopener noreferrer" target="_blank"
+						>Information Commissioner's Office</a
+					>, though we would always welcome the chance to resolve a concern with you first.
+				</li>
 			</ul>
+
+			<h3 id="us-privacy">United States</h3>
+			<p>
+				Auratwin is a consumer wellness product and is <strong>not covered by HIPAA</strong>; your
+				protections come from federal consumer law and state privacy law, and from the promises in
+				this policy. Where your state treats health data or precise location as sensitive data, we
+				ask for your <strong>opt-in consent before processing it</strong>, whatever state you are
+				in. You have the right to access, correct, delete and port your data, to appeal a decision
+				we make about a request, and to withdraw consent at any time.
+			</p>
+			<ul>
+				<li>
+					<strong
+						>We do not sell your personal data, and we do not share it for targeted advertising.</strong
+					>
+					Because we never do this, there is no need to opt out, but we still honour the
+					<strong>Global Privacy Control</strong> signal.
+				</li>
+				<li>
+					As a vendor of personal health records, we follow the FTC
+					<strong>Health Breach Notification Rule</strong>: if your unsecured health data is ever
+					breached or disclosed without your authorisation, we will notify you within 60 days.
+				</li>
+				<li>
+					We never use your location to infer visits to healthcare facilities, and we do not
+					geofence health services.
+				</li>
+				<li>
+					<strong>Washington and Nevada residents:</strong> your consumer health data rights are set
+					out in our separate
+					<a href="/privacy/consumer-health-data">Consumer Health Data Privacy Policy</a>.
+				</li>
+			</ul>
+
+			<h3 id="canada-privacy">Canada</h3>
+			<p>
+				We handle your data under <strong>PIPEDA</strong> and, in Quebec, the Act respecting the
+				protection of personal information in the private sector (<strong>Law 25</strong>). Your
+				health data is sensitive, so we collect it only with your <strong>express consent</strong>,
+				purpose by purpose. You can access and correct your data, withdraw consent, and ask us what
+				we hold about you; optional features such as precise location can be switched off in-product
+				at any time. Proactive and promotional messages follow
+				<strong>CASL</strong>: we message you only with your consent, and every promotional message
+				identifies us and includes an unsubscribe. If we ever have a breach creating a real risk of
+				significant harm, we will notify you and report it to the Office of the Privacy Commissioner
+				of Canada. You may complain to the
+				<a href="https://www.priv.gc.ca/" rel="noopener noreferrer" target="_blank">OPC</a> or, in
+				Quebec, the
+				<a href="https://www.cai.gouv.qc.ca/" rel="noopener noreferrer" target="_blank"
+					>Commission d'accès à l'information</a
+				>.
+			</p>
+
+			<h3 id="australia-privacy">Australia</h3>
+			<p>
+				We handle your data under the <strong>Privacy Act 1988</strong> and the Australian Privacy
+				Principles. Your health data is <strong>sensitive information</strong>, collected only with
+				your consent. Your data is processed outside Australia, in the United Kingdom, the European
+				Union and the United States by us and the service providers described above; we remain
+				accountable for it under APP 8 wherever it is processed. Commercial electronic messages
+				follow the <strong>Spam Act 2003</strong>: consent first, clear identification, and a
+				working unsubscribe in every message. Eligible data breaches are notified to you and to the
+				OAIC under the Notifiable Data Breaches scheme, and you may complain to the
+				<a href="https://www.oaic.gov.au/" rel="noopener noreferrer" target="_blank">OAIC</a>.
+			</p>
+
+			<h3 id="ireland-privacy">Ireland &amp; the EEA</h3>
+			<p>
+				For users in Ireland and the wider EEA, we process your data under the
+				<strong>EU GDPR</strong>, with explicit consent (Article 9(2)(a)) as our basis for health
+				data, and the same rights of access, rectification, erasure, portability and withdrawal
+				described above. Aura will always tell you that you are talking to an AI companion, not a
+				person. As a UK company we will appoint and name an <strong>EU representative</strong>
+				(Article 27) in this policy before launch. You may complain to the Irish
+				<a href="https://www.dataprotection.ie/" rel="noopener noreferrer" target="_blank"
+					>Data Protection Commission</a
+				> or your local supervisory authority.
+			</p>
 
 			<h2 id="contact">Contact</h2>
 			<p>
@@ -295,56 +398,5 @@
 		border-radius: var(--radius-md);
 		padding: 1rem 1.25rem;
 		color: var(--color-neutral-700);
-	}
-
-	.routing {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1rem;
-		margin-block: 1.25rem;
-	}
-	.routing-card {
-		border: 1px solid var(--color-neutral-200);
-		border-radius: var(--radius-md);
-		padding: 1.1rem 1.25rem;
-		background: var(--color-neutral-0);
-	}
-	.routing-card h3 {
-		margin-top: 0;
-	}
-	.routing-card dl {
-		margin: 0;
-	}
-	.routing-row {
-		display: flex;
-		justify-content: space-between;
-		gap: 1rem;
-		padding-block: 0.35rem;
-		border-top: 1px solid var(--color-neutral-100);
-	}
-	.routing-row:first-child {
-		border-top: 0;
-	}
-	.routing-row dt {
-		color: var(--color-neutral-600);
-	}
-	.routing-row dd {
-		margin: 0;
-		font-weight: 600;
-		color: var(--color-neutral-900);
-	}
-	.routing-note {
-		font-size: 0.9rem;
-		color: var(--color-neutral-600);
-	}
-
-	.never :global(li)::marker {
-		color: var(--color-primary-500);
-	}
-
-	@media (min-width: 640px) {
-		.routing {
-			grid-template-columns: 1fr 1fr;
-		}
 	}
 </style>

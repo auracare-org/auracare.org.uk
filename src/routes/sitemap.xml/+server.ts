@@ -16,11 +16,16 @@ const routes: { path: string; priority: number; changefreq: string }[] = [
 	{ path: '/accessibility', priority: 0.3, changefreq: 'yearly' }
 ];
 
+// Generated at build time (routes are prerendered), so this reflects the
+// last deploy — a reasonable lastmod for a marketing site.
+const lastmod = new Date().toISOString().slice(0, 10);
+
 export const GET: RequestHandler = () => {
 	const urls = routes
 		.map(
 			(r) => `	<url>
 		<loc>${BASE}${r.path}</loc>
+		<lastmod>${lastmod}</lastmod>
 		<changefreq>${r.changefreq}</changefreq>
 		<priority>${r.priority.toFixed(1)}</priority>
 	</url>`

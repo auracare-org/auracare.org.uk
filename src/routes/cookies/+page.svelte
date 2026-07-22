@@ -3,11 +3,11 @@
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT } from '$lib/data/company';
 
-	const LAST_UPDATED = '14 July 2026';
+	const LAST_UPDATED = '20 July 2026';
 
 	interface StorageEntry {
 		key: string;
-		type: 'localStorage' | 'Cookie';
+		type: 'localStorage' | 'Cookie' | 'Cookieless';
 		category: string;
 		purpose: string;
 		retention: string;
@@ -22,20 +22,20 @@
 			retention: 'Until you clear your browser storage'
 		},
 		{
-			key: 'cookie-consent',
-			type: 'Cookie',
+			key: 'cookie_consent',
+			type: 'localStorage',
 			category: 'Strictly necessary',
 			purpose:
 				'Records your analytics choice from the consent banner, so we honour it and stop asking.',
-			retention: 'Up to 12 months'
+			retention: 'Until you clear your browser storage'
 		},
 		{
-			key: 'Vercel product analytics',
-			type: 'Cookie',
+			key: 'Vercel Web Analytics',
+			type: 'Cookieless',
 			category: 'Analytics (optional)',
 			purpose:
-				'Privacy-conscious, aggregate usage measurement. Only set once you accept analytics.',
-			retention: 'Session / short-lived'
+				'Privacy-conscious, aggregate usage measurement. Cookieless, and only loaded once you accept analytics.',
+			retention: 'No persistent storage'
 		}
 	];
 </script>
@@ -89,7 +89,7 @@
 				</li>
 				<li use:reveal={{ delay: 120 }}>
 					<strong>Consent choice</strong>: when you accept or decline analytics, we remember that
-					decision (the <code>cookie-consent</code> value) so we can honour it and stop asking.
+					decision (the <code>cookie_consent</code> value) so we can honour it and stop asking.
 				</li>
 			</ul>
 
@@ -101,9 +101,9 @@
 				be light-touch and is not used to advertise to you or to track you around the wider web.
 			</p>
 			<p use:reveal={{ delay: 120 }}>
-				Analytics is <strong>optional</strong>. You can decline it from the consent banner, and if
-				you do, we will not load it. You can change your mind at any time by clearing the
-				<code>cookie-consent</code> value (see below) and choosing again.
+				Analytics is <strong>optional</strong> and off by default. It only loads once you accept
+				from the consent banner; if you decline, we never load it at all. You can change your mind
+				at any time by clearing the <code>cookie_consent</code> value (see below) and choosing again.
 			</p>
 
 			<h2 use:reveal>No advertising or third-party tracking</h2>

@@ -11,9 +11,10 @@
 	>
 		<div class="flex flex-col sm:flex-row sm:items-center gap-3 w-full max-w-5xl mx-auto">
 			<p class="text-sm text-neutral-600 flex-1">
-				We use analytics cookies to understand how visitors use our site. See our
-				<a href="/privacy-policy" class="underline hover:text-primary-600 transition-colors"
-					>privacy policy</a
+				We'd like to use privacy-conscious, cookieless analytics to understand how visitors use our
+				site. Nothing loads until you choose. See our
+				<a href="/cookies" class="underline hover:text-primary-600 transition-colors"
+					>cookie policy</a
 				> for details.
 			</p>
 			<div class="flex items-center gap-3 shrink-0">

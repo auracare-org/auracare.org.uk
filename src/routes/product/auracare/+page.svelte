@@ -107,6 +107,29 @@
 	path="/product/auracare"
 />
 
+<svelte:head>
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			"itemListElement": [
+				{
+					"@type": "ListItem",
+					"position": 1,
+					"name": "Home",
+					"item": "https://auracare.org.uk"
+				},
+				{
+					"@type": "ListItem",
+					"position": 2,
+					"name": "Auracare",
+					"item": "https://auracare.org.uk/product/auracare"
+				}
+			]
+		}
+	</script>
+</svelte:head>
+
 <!-- ================= Hero ================= -->
 <section class="hero aura-space">
 	<div class="hero-grid-bg" aria-hidden="true"></div>
