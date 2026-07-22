@@ -29,6 +29,12 @@ export const reveal: Action<HTMLElement, RevealParams | undefined> = (node, para
 		return {};
 	}
 
+	// An element taller than the viewport can never reach the configured
+	// intersection ratio, so clamp the threshold to what is actually achievable.
+	const viewport = window.innerHeight || document.documentElement.clientHeight || 0;
+	const achievable = node.offsetHeight > 0 && viewport > 0 ? viewport / node.offsetHeight : 1;
+	const threshold = Math.min(opts.threshold, achievable * 0.5);
+
 	const io = new IntersectionObserver(
 		(entries) => {
 			for (const e of entries) {
@@ -40,7 +46,7 @@ export const reveal: Action<HTMLElement, RevealParams | undefined> = (node, para
 				}
 			}
 		},
-		{ threshold: opts.threshold }
+		{ threshold }
 	);
 	io.observe(node);
 	return {
