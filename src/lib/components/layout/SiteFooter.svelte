@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CONTACT, NON_DEVICE_DISCLAIMER } from '$lib/data/company';
+	import { CONTACT, NON_DEVICE_DISCLAIMER, WAITLIST_URL } from '$lib/data/company';
 	const year = new Date().getFullYear();
 </script>
 
@@ -28,7 +28,7 @@
 				<a href="/product">Auratwin</a>
 				<a href="/product/auracare">Auracare</a>
 				<a href={CONTACT.ontologyUrl} target="_blank" rel="noopener">Ontology explorer</a>
-				<a href="/#waitlist">Join the waitlist</a>
+				<a href={WAITLIST_URL}>Join the waitlist</a>
 			</nav>
 
 			<nav class="footer-col" aria-label="Company">

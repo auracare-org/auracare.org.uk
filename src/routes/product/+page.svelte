@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal } from '$lib/actions/motion';
-	import { CONTACT, PLATFORM_NOTE, NON_DEVICE_DISCLAIMER } from '$lib/data/company';
+	import { CONTACT, PLATFORM_NOTE, NON_DEVICE_DISCLAIMER, WAITLIST_URL } from '$lib/data/company';
 
 	/* A single day, held together by proactive check-ins. */
 	const day = [
@@ -135,7 +135,7 @@
 
 <Seo
 	title="Auratwin: the health companion that texts you back"
-	description="Auratwin turns the wearables and apps you already use into a living model of you, then checks in over iMessage: a morning brief, a nudge only when it matters, an evening wrap. Replying is the logging. Our consumer product."
+	description="Auratwin turns the wearables and apps you already use into a living model of you, then checks in over the messaging apps you already use: a morning brief, a nudge only when it matters, an evening wrap. Replying is the logging. Our consumer product."
 	path="/product"
 />
 
@@ -192,7 +192,7 @@
 			genuinely paying attention. No new app to learn, and no forms to fill.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
-			<a class="btn-solid" href="/#waitlist">Join the waitlist</a>
+			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
 			<a class="btn-quiet" href="/product/auracare">Meet the clinical side →</a>
 		</div>
 		<p class="hero-note" use:reveal={{ delay: 260 }}>{PLATFORM_NOTE}</p>
@@ -307,8 +307,8 @@
 
 		<p class="persona-foot" use:reveal>
 			These are just a place to begin. There’s nothing to set up and nothing to lock in: a single
-			message reshapes the voice whenever you want, so the personality follows you, not the other way
-			round.
+			message reshapes the voice whenever you want, so the personality follows you, not the other
+			way round.
 		</p>
 	</div>
 </section>
@@ -374,7 +374,7 @@
 				<li>A personality you can tune, any time</li>
 				<li>Cancel whenever; your data leaves with you</li>
 			</ul>
-			<a class="btn-solid full" href="/#waitlist">Get early access</a>
+			<a class="btn-solid full" href={WAITLIST_URL}>Get early access</a>
 		</div>
 	</div>
 </section>
@@ -404,7 +404,7 @@
 			Join the waitlist and we’ll tell you the moment Auratwin is ready for you.
 		</p>
 		<div class="cta-actions" use:reveal={{ delay: 140 }}>
-			<a class="btn-solid" href="/#waitlist">Join the waitlist</a>
+			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
 			<a
 				class="btn-ghost"
 				href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Investor%20enquiry"

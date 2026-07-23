@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { slide } from 'svelte/transition';
-	import { CONTACT } from '$lib/data/company';
+	import { CONTACT, WAITLIST_URL } from '$lib/data/company';
 
 	let mobileOpen = $state(false);
 
@@ -99,7 +99,7 @@
 				href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Investor%20enquiry"
 				>For investors</a
 			>
-			<a class="nav-waitlist" href="/#waitlist">Join the waitlist</a>
+			<a class="nav-waitlist" href={WAITLIST_URL}>Join the waitlist</a>
 		</div>
 
 		<button
@@ -160,7 +160,7 @@
 					<a class="nav-invest" href="mailto:{CONTACT.seed}" onclick={() => (mobileOpen = false)}
 						>For investors</a
 					>
-					<a class="nav-waitlist" href="/#waitlist" onclick={() => (mobileOpen = false)}
+					<a class="nav-waitlist" href={WAITLIST_URL} onclick={() => (mobileOpen = false)}
 						>Join the waitlist</a
 					>
 				</div>

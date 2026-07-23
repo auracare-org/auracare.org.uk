@@ -54,7 +54,7 @@
 			<p>
 				This policy covers <strong>Auratwin</strong>, our consumer product that builds a personal
 				health “digital twin” from the wearables and apps you connect, and checks in with you over
-				iMessage.
+				the messaging apps you already use, such as iMessage, WhatsApp or RCS.
 			</p>
 			<p>
 				Auratwin is a <strong>general-wellness product, not a medical device</strong>. It is
@@ -134,7 +134,7 @@
 				<li>learn your baselines and notice meaningful changes;</li>
 				<li>
 					send you check-ins: a morning brief, an evening wrap, and nudges when your data warrants
-					one;
+					one — you control how present Aura is, and you can quieten or stop check-ins at any time;
 				</li>
 				<li>operate, secure and improve the service.</li>
 			</ul>
@@ -172,11 +172,13 @@
 				We may combine and transform the information we hold into <strong
 					>aggregated or de-identified</strong
 				> form that no longer identifies you, or any individual, and cannot reasonably be linked back
-				to a person. Once information has been de-identified in this way it is no longer personal data
-				about you. We may use and share it, for example to understand health and wellness trends, to
-				carry out research, to develop and improve our products, and for other business purposes. Whenever
-				we do, we commit to keeping it de-identified and to requiring anyone who receives it not to attempt
-				to re-identify anyone from it.
+				to a person. We take technical and organisational measures to make sure it stays that way, and
+				it never includes your precise location. Once information has been de-identified in this way
+				it is no longer personal data about you. We may use and share it, for example to understand health
+				and wellness trends, to carry out research, to develop and improve our products and models, and
+				for other business purposes. Whenever we do, we publicly commit to maintaining it in de-identified
+				form, we will never attempt to re-identify anyone from it, and we contractually require anyone
+				who receives it to commit to the same.
 			</p>
 
 			<h2 id="retention">Retention &amp; deletion</h2>
@@ -286,11 +288,12 @@
 				in French, and update this section. Your health data is sensitive, so we collect it only
 				with your <strong>express consent</strong>, purpose by purpose. You can access and correct
 				your data, withdraw consent, and ask us what we hold about you; optional features such as
-				precise location can be switched off at any time. Proactive and promotional messages follow
-				<strong>CASL</strong>: we message you only with your consent, and every promotional message
-				identifies us and includes an unsubscribe. If we ever have a breach creating a real risk of
-				significant harm, we will notify you and report it to the Office of the Privacy Commissioner
-				of Canada. You may complain to the
+				precise location can be switched off at any time. Proactive check-ins are part of the
+				service and stay under your control. Promotional messages follow
+				<strong>CASL</strong>: we send them only with your express consent, and every one identifies
+				us and includes an unsubscribe. If we ever have a breach creating a real risk of significant
+				harm, we will notify you and report it to the Office of the Privacy Commissioner of Canada.
+				You may complain to the
 				<a href="https://www.priv.gc.ca/" rel="noopener noreferrer" target="_blank">OPC</a>.
 			</p>
 

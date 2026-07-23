@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
-	import { CONTACT, PLATFORM_NOTE } from '$lib/data/company';
+	import { CONTACT, PLATFORM_NOTE, WAITLIST_URL } from '$lib/data/company';
 	import { onMount } from 'svelte';
-	import WaitlistModal from '$lib/components/shared/WaitlistModal.svelte';
-
-	let showModal = $state(false);
 
 	// Everyday-life signal categories, not brand names: the picture, not the plumbing.
 	// Muted, cohesive palette: one desaturated jewel tone per signal, similar
@@ -128,7 +125,7 @@
 				Auratwin ships in the coming months.
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
-				<button class="cta-primary" onclick={() => (showModal = true)}>Join the waitlist</button>
+				<a class="cta-primary" href={WAITLIST_URL}>Join the waitlist</a>
 				<a
 					class="cta-ghost"
 					href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Seed%20round"
@@ -237,8 +234,6 @@
 		</div>
 	</div>
 </section>
-
-<WaitlistModal bind:open={showModal} />
 
 <style>
 	.hero {
