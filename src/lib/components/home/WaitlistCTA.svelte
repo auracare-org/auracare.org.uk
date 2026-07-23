@@ -1,35 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
-	import { CONTACT, PLATFORM_NOTE, NON_DEVICE_DISCLAIMER } from '$lib/data/company';
-
-	let email = $state('');
-	let consent = $state(false);
-	let submitted = $state(false);
-	let error = $state('');
-
-	const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-	function handleSubmit(event: SubmitEvent) {
-		event.preventDefault();
-		error = '';
-
-		const value = email.trim();
-
-		if (!value || !emailPattern.test(value)) {
-			error = 'Please enter a valid email address.';
-			return;
-		}
-		if (!consent) {
-			error = 'Please agree to be contacted so we can add you to the list.';
-			return;
-		}
-
-		submitted = true;
-
-		const subject = encodeURIComponent('Auratwin waitlist');
-		const body = encodeURIComponent(`Please add me to the Auratwin waitlist.\n\nEmail: ${value}\n`);
-		window.location.href = `mailto:${CONTACT.general}?subject=${subject}&body=${body}`;
-	}
+	import { CONTACT, PLATFORM_NOTE, NON_DEVICE_DISCLAIMER, WAITLIST_URL } from '$lib/data/company';
 </script>
 
 <section id="waitlist" class="waitlist aura-space">
@@ -41,60 +12,23 @@
 			</h2>
 			<p class="lede" use:reveal={{ delay: 140 }}>
 				Auratwin turns the wearables you already wear into a living model of you, and checks in over
-				iMessage. Join the waitlist and we&rsquo;ll tell you the moment it&rsquo;s ready.
+				the messaging apps you already use. Join the waitlist and we&rsquo;ll tell you the moment
+				it&rsquo;s ready.
 			</p>
 
 			<p class="platform-note" use:reveal={{ delay: 200 }}>{PLATFORM_NOTE}</p>
 		</div>
 
 		<div class="waitlist-panel glass-card" use:reveal={{ delay: 120 }}>
-			{#if submitted}
-				<div class="success" role="status" aria-live="polite">
-					<span class="success-mark" aria-hidden="true">✓</span>
-					<p class="success-title">You&rsquo;re on the list. We&rsquo;ll be in touch.</p>
-					<p class="success-sub">
-						Your mail app should have opened with a pre-filled message. If it didn&rsquo;t, email us
-						at
-						<a href="mailto:{CONTACT.general}?subject=Auratwin%20waitlist">{CONTACT.general}</a>.
-					</p>
-				</div>
-			{:else}
-				<form class="waitlist-form" novalidate onsubmit={handleSubmit}>
-					<div class="field">
-						<label for="waitlist-email">Email address</label>
-						<input
-							id="waitlist-email"
-							name="email"
-							type="email"
-							autocomplete="email"
-							placeholder="you@example.com"
-							required
-							bind:value={email}
-							aria-invalid={error ? 'true' : 'false'}
-							aria-describedby={error ? 'waitlist-error' : undefined}
-						/>
-					</div>
+			<div class="panel-copy">
+				<p class="panel-title">Reserve your spot</p>
+				<p class="panel-sub">
+					Signing up takes under a minute. Prefer email? Write to
+					<a href="mailto:{CONTACT.general}?subject=Auratwin%20waitlist">{CONTACT.general}</a>.
+				</p>
+			</div>
 
-					<div class="consent">
-						<input
-							id="waitlist-consent"
-							type="checkbox"
-							bind:checked={consent}
-							aria-describedby={error ? 'waitlist-error' : undefined}
-						/>
-						<label for="waitlist-consent">
-							I agree to be contacted about Auratwin&rsquo;s launch. See our
-							<a href="/privacy">Privacy policy</a>.
-						</label>
-					</div>
-
-					{#if error}
-						<p id="waitlist-error" class="error" role="alert">{error}</p>
-					{/if}
-
-					<button type="submit" class="submit">Join the waitlist</button>
-				</form>
-			{/if}
+			<a class="submit" href={WAITLIST_URL}>Join the waitlist</a>
 
 			<div class="investors">
 				<p class="investors-line">Investors: we&rsquo;re raising our seed round.</p>
@@ -152,80 +86,35 @@
 		padding: clamp(1.5rem, 3vw, 2.25rem);
 		border-radius: var(--radius-4xl);
 	}
-	.waitlist-form {
-		display: flex;
-		flex-direction: column;
-		gap: 1.1rem;
+	.panel-copy {
+		margin-bottom: 1.25rem;
 	}
-	.field {
-		display: flex;
-		flex-direction: column;
-		gap: 0.45rem;
-	}
-	.field label,
-	.consent label {
-		font-size: 0.9rem;
-		font-weight: 500;
-		color: #eaf0ff;
-	}
-	.field input {
-		width: 100%;
-		padding: 0.8rem 1rem;
-		border-radius: var(--radius-sm);
-		border: 1px solid var(--color-border-dark-strong);
-		background: rgba(255, 255, 255, 0.04);
+	.panel-title {
+		font-family: var(--font-family-heading);
+		font-size: 1.25rem;
+		font-weight: 600;
 		color: #fff;
-		font-size: 1rem;
-		transition: border-color 0.15s ease;
+		margin-bottom: 0.4rem;
 	}
-	.field input::placeholder {
-		color: var(--color-ink-faint);
+	.panel-sub {
+		font-size: 0.9rem;
+		line-height: 1.55;
+		color: rgba(234, 240, 255, 0.8) !important;
 	}
-	.field input:focus-visible {
-		outline: none;
-		border-color: var(--color-primary-400);
-	}
-	.field input[aria-invalid='true'] {
-		border-color: var(--color-border-error);
-	}
-
-	.consent {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: 0.65rem;
-		align-items: start;
-	}
-	.consent input {
-		margin-top: 0.2rem;
-		width: 1.05rem;
-		height: 1.05rem;
-		accent-color: #6180ff;
-		flex-shrink: 0;
-	}
-	.consent label {
-		font-weight: 400;
-		line-height: 1.5;
-		color: rgba(234, 240, 255, 0.85);
-	}
-	.consent a,
-	.success-sub a {
+	.panel-sub a {
 		color: #cdd9ff;
 		text-decoration: underline;
 		text-underline-offset: 2px;
 	}
-	.consent a:hover,
-	.success-sub a:hover {
+	.panel-sub a:hover {
 		color: #fff;
 	}
 
-	.error {
-		font-size: 0.85rem;
-		color: #ffd9d9 !important;
-		margin: -0.25rem 0 0;
-	}
-
 	.submit {
-		margin-top: 0.25rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
 		background: #fff;
 		color: var(--color-ink);
 		font-weight: 500;
@@ -241,38 +130,6 @@
 	.submit:focus-visible {
 		outline: 2px solid var(--color-primary-400);
 		outline-offset: 3px;
-	}
-
-	/* Success */
-	.success {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-	.success-mark {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.4rem;
-		height: 2.4rem;
-		border-radius: 999px;
-		background: #0d2e23;
-		border: 1px solid #1a6a4d;
-		color: #34d399;
-		font-size: 1.2rem;
-		font-weight: 700;
-	}
-	.success-title {
-		font-family: var(--font-family-heading);
-		font-size: 1.25rem;
-		font-weight: 600;
-		color: #fff;
-		margin: 0.25rem 0 0;
-	}
-	.success-sub {
-		font-size: 0.9rem;
-		line-height: 1.55;
-		color: rgba(234, 240, 255, 0.8) !important;
 	}
 
 	/* Investors */

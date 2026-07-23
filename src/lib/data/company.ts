@@ -23,6 +23,8 @@ export const CONTACT = {
 	locations: ['London', 'Hong Kong', 'San Francisco']
 } as const;
 
+export const WAITLIST_URL = 'https://app.auratwin.club/waitlist';
+
 /* ------------------------------------------------------------------ */
 /* Two products, one patient model                                    */
 /* ------------------------------------------------------------------ */
