@@ -64,11 +64,20 @@
 					<text class="num" class:num-text-active={active === 1} x="22" y="208" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(1)}>2</text>
 					<text class="num" class:num-text-active={active === 2} x="298" y="208" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(2)}>3</text>
 
-					<!-- Title text next to each number -->
-					<text class="label-svg" class:label-svg-active={active === 0} x="284" y="28" text-anchor="start" dominant-baseline="central" onclick={() => toggle(0)}>{MOAT[0].title}</text>
-					<text class="label-svg" class:label-svg-active={active === 1} x="22" y="230" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(1)}>{MOAT[1].title}</text>
-					<text class="label-svg" class:label-svg-active={active === 2} x="298" y="230" text-anchor="middle" dominant-baseline="central" onclick={() => toggle(2)}>{MOAT[2].title}</text>
 				</svg>
+
+				<div class="venn-legend">
+					{#each MOAT as pillar, i}
+						<button
+							class="legend-item"
+							class:legend-active={active === i}
+							onclick={() => toggle(i)}
+						>
+							<span class="legend-num">{i + 1}</span>
+							<span>{pillar.title}</span>
+						</button>
+					{/each}
+				</div>
 			</div>
 
 			<div class="detail-area">
@@ -184,18 +193,55 @@
 		fill: var(--color-primary-700);
 	}
 
-	/* SVG title labels next to numbers */
-	.label-svg {
-		font-family: var(--font-family-sans);
-		font-size: 10px;
-		font-weight: 500;
-		fill: var(--color-ink-faint);
-		cursor: pointer;
-		transition: fill 0.3s ease;
+	/* Legend below SVG */
+	.venn-legend {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.4rem 1.25rem;
+		margin-top: 1rem;
 	}
-	.label-svg:hover,
-	.label-svg-active {
-		fill: var(--color-primary-600);
+	.legend-item {
+		display: flex;
+		align-items: center;
+		gap: 0.45rem;
+		background: none;
+		border: none;
+		cursor: pointer;
+		font: inherit;
+		font-size: 0.875rem;
+		color: var(--color-ink-soft);
+		padding: 0.2rem 0.4rem;
+		border-radius: var(--radius-sm);
+		transition: color 0.2s ease;
+		text-align: left;
+	}
+	.legend-item:hover {
+		color: var(--color-primary-600);
+	}
+	.legend-active {
+		color: var(--color-primary-700);
+		font-weight: 500;
+	}
+	.legend-num {
+		display: inline-grid;
+		place-items: center;
+		flex-shrink: 0;
+		width: 1.35rem;
+		height: 1.35rem;
+		border-radius: 50%;
+		background: var(--color-primary-50);
+		border: 1px solid var(--color-primary-200);
+		color: var(--color-primary-600);
+		font-family: var(--font-family-mono);
+		font-size: 0.75rem;
+		font-weight: 600;
+		transition: all 0.2s ease;
+	}
+	.legend-active .legend-num {
+		background: var(--color-primary-100);
+		border-color: var(--color-primary-400);
+		color: var(--color-primary-700);
 	}
 
 	/* Detail card */
