@@ -52,20 +52,19 @@
 
 			<h2 id="scope">What this policy covers</h2>
 			<p>
-				This policy covers <strong>Auratwin</strong>, our consumer product that builds a personal
-				health “digital twin” from the wearables and apps you connect, and checks in with you over
-				the messaging apps you already use, such as iMessage, WhatsApp or RCS.
+				This policy covers Auratwin, our consumer product that builds a personal health “digital
+				twin” from the wearables and apps you connect, and checks in with you over the messaging
+				apps you already use, such as iMessage, WhatsApp or RCS.
 			</p>
 			<p>
-				Auratwin is a <strong>general-wellness product, not a medical device</strong>. It is
-				designed to help you understand your own patterns. It does not diagnose, treat, dose or
-				clinically interpret your data. Aura is an AI companion, and will always tell you so: you
-				are never talking to a person.
+				Auratwin is a general-wellness product, not a medical device. It is designed to help you
+				understand your own patterns. It does not diagnose, treat, dose or clinically interpret your
+				data. Aura is an AI companion, and will always tell you so: you are never talking to a
+				person.
 			</p>
 			<p>
-				Auratwin launches in the <strong
-					>United Kingdom, the United States, Canada and Australia</strong
-				>. The whole of this policy applies wherever you are; the
+				Auratwin launches in the United Kingdom, the United States, Canada and Australia. The whole
+				of this policy applies wherever you are; the
 				<a href="#regional">regional terms</a> section adds the rights and commitments specific to
 				your region, and Washington and Nevada residents also have a dedicated
 				<a href="/privacy/consumer-health-data">Consumer Health Data Privacy Policy</a>.
@@ -95,35 +94,33 @@
 			</p>
 			<h3>Precise location, only if you opt in</h3>
 			<p>
-				If you separately opt in, Auratwin processes your <strong>precise location</strong> to give your
-				guidance context, such as time zones, travel and where your routines happen. This is optional:
-				Auratwin works fully without it, and you can turn it off at any time. We never use your location
-				to infer visits to healthcare facilities, and we do not geofence health services.
+				If you separately opt in, Auratwin processes your precise location to give your guidance
+				context, such as time zones, travel and where your routines happen. This is optional:
+				Auratwin works fully without it, and you can turn it off at any time. We never use your
+				location to infer visits to healthcare facilities, and we do not geofence health services.
 			</p>
 			<p>
 				Health data, whether it comes from a source you connect or from something you tell Aura, is
-				<strong>sensitive personal data</strong>: special-category data under UK and EU law, and
-				sensitive information under US, Canadian and Australian law. We treat it with the heightened
+				sensitive personal data: special-category data under UK and EU law, and sensitive
+				information under US, Canadian and Australian law. We treat it with the heightened
 				protection that classification requires, wherever you are.
 			</p>
 
 			<h2 id="lawful-basis">Our lawful basis</h2>
 			<p>
-				We rely on your <strong>explicit consent</strong> (Article 9(2)(a) UK GDPR, and its regional
-				equivalents such as EU GDPR Article 9, US state opt-in rules, Australian Privacy Principle 3
-				and Canadian express consent) to process your health signals. That consent is:
+				We rely on your explicit consent (Article 9(2)(a) UK GDPR, and its regional equivalents such
+				as EU GDPR Article 9, US state opt-in rules, Australian Privacy Principle 3 and Canadian
+				express consent) to process your health signals. That consent is:
 			</p>
 			<ul>
+				<li>Explicit: you actively opt in before any health data is processed.</li>
 				<li>
-					<strong>Explicit</strong>: you actively opt in before any health data is processed.
+					Per-source: you consent to each connector separately, and can connect or disconnect them
+					one at a time.
 				</li>
 				<li>
-					<strong>Per-source</strong>: you consent to each connector separately, and can connect or
-					disconnect them one at a time.
-				</li>
-				<li>
-					<strong>Revocable at any time</strong>: withdrawing consent is as easy as giving it, and
-					stops future processing of that source.
+					Revocable at any time: withdrawing consent is as easy as giving it, and stops future
+					processing of that source.
 				</li>
 			</ul>
 
@@ -146,8 +143,8 @@
 			<p>
 				Auratwin only pulls data from the sources you explicitly connect. Nothing is collected from
 				a source you have not authorised. Connections use each provider’s standard authorisation
-				flow, and the access tokens we hold on your behalf are <strong>encrypted at rest</strong>.
-				When you disconnect a source, we stop pulling new data from it.
+				flow, and the access tokens we hold on your behalf are encrypted at rest. When you
+				disconnect a source, we stop pulling new data from it.
 			</p>
 
 			<h2 id="residency">Where your data is processed</h2>
@@ -160,25 +157,24 @@
 
 			<h2 id="sharing">Sharing your data</h2>
 			<p>
-				<strong>We do not sell personal data that identifies you.</strong> We do not share your health
-				data with third parties without your consent. We use a small number of service providers (for
-				example, cloud hosting and message delivery) strictly to operate Auratwin; they act on our instructions
-				under contract and may not use your data for their own purposes. We may disclose data where we
-				are legally required to do so.
+				We do not sell personal data that identifies you. We do not share your health data with
+				third parties without your consent. We use a small number of service providers (for example,
+				cloud hosting and message delivery) strictly to operate Auratwin; they act on our
+				instructions under contract and may not use your data for their own purposes. We may
+				disclose data where we are legally required to do so.
 			</p>
 
 			<h2 id="aggregated">Aggregated &amp; de-identified data</h2>
 			<p>
-				We may combine and transform the information we hold into <strong
-					>aggregated or de-identified</strong
-				> form that no longer identifies you, or any individual, and cannot reasonably be linked back
-				to a person. We take technical and organisational measures to make sure it stays that way, and
-				it never includes your precise location. Once information has been de-identified in this way
-				it is no longer personal data about you. We may use and share it, for example to understand health
-				and wellness trends, to carry out research, to develop and improve our products and models, and
-				for other business purposes. Whenever we do, we publicly commit to maintaining it in de-identified
-				form, we will never attempt to re-identify anyone from it, and we contractually require anyone
-				who receives it to commit to the same.
+				We may combine and transform the information we hold into aggregated or de-identified form
+				that no longer identifies you, or any individual, and cannot reasonably be linked back to a
+				person. We take technical and organisational measures to make sure it stays that way, and it
+				never includes your precise location. Once information has been de-identified in this way it
+				is no longer personal data about you. We may use and share it, for example to understand
+				health and wellness trends, to carry out research, to develop and improve our products and
+				models, and for other business purposes. Whenever we do, we publicly commit to maintaining
+				it in de-identified form, we will never attempt to re-identify anyone from it, and we
+				contractually require anyone who receives it to commit to the same.
 			</p>
 
 			<h2 id="retention">Retention &amp; deletion</h2>
@@ -192,18 +188,14 @@
 			<h2 id="your-rights">Your rights</h2>
 			<p>Wherever you live, you have the right to:</p>
 			<ul>
-				<li><strong>access</strong> the personal data we hold about you;</li>
-				<li><strong>rectify</strong> data that is inaccurate or incomplete;</li>
-				<li><strong>erase</strong> your data (“the right to be forgotten”);</li>
+				<li>access the personal data we hold about you;</li>
+				<li>rectify data that is inaccurate or incomplete;</li>
+				<li>erase your data (“the right to be forgotten”);</li>
+				<li>port your data: receive it in a portable, machine-readable format;</li>
+				<li>withdraw consent at any time, per source, without affecting past processing;</li>
 				<li>
-					<strong>port</strong> your data: receive it in a portable, machine-readable format;
-				</li>
-				<li>
-					<strong>withdraw consent</strong> at any time, per source, without affecting past processing;
-				</li>
-				<li>
-					<strong>complain</strong> to your data protection regulator. The regulator for your
-					region, and any additional local rights, are set out in
+					complain to your data protection regulator. The regulator for your region, and any
+					additional local rights, are set out in
 					<a href="#regional">Regional terms</a>
 					below.
 				</li>
@@ -225,19 +217,18 @@
 			<p>
 				The UK is our home market, and the policy above is written to UK law: we are the data
 				controller, established in {CONTACT.jurisdiction}, processing your health data as
-				<strong>special-category data</strong> under the <strong>UK GDPR</strong> on the basis of your
-				explicit consent, with the ICO as our supervisory authority. A few UK-specific points sit alongside
-				that:
+				special-category data under the UK GDPR on the basis of your explicit consent, with the ICO
+				as our supervisory authority. A few UK-specific points sit alongside that:
 			</p>
 			<ul>
 				<li>
 					Proactive check-ins are part of the service you sign up for. Any purely promotional
-					messaging follows <strong>PECR</strong>: we ask for consent first and include an opt-out
-					in every such message.
+					messaging follows PECR: we ask for consent first and include an opt-out in every such
+					message.
 				</li>
 				<li>
-					Before launch we complete a <strong>Data Protection Impact Assessment</strong> covering the
-					large-scale processing of health data and location that Auratwin involves.
+					Before launch we complete a Data Protection Impact Assessment covering the large-scale
+					processing of health data and location that Auratwin involves.
 				</li>
 				<li>
 					You can complain to the
@@ -249,48 +240,45 @@
 
 			<h3 id="us-privacy">United States</h3>
 			<p>
-				Auratwin is a consumer wellness product and is <strong>not covered by HIPAA</strong>; your
-				protections come from federal consumer law and state privacy law, and from the promises in
-				this policy. Where your state treats health data or precise location as sensitive data, we
-				ask for your <strong>opt-in consent before processing it</strong>, whatever state you are
-				in. You have the right to access, correct, delete and port your data, to appeal a decision
-				we make about a request, and to withdraw consent at any time.
+				Auratwin is a consumer wellness product and is not covered by HIPAA; your protections come
+				from federal consumer law and state privacy law, and from the promises in this policy. Where
+				your state treats health data or precise location as sensitive data, we ask for your opt-in
+				consent before processing it, whatever state you are in. You have the right to access,
+				correct, delete and port your data, to appeal a decision we make about a request, and to
+				withdraw consent at any time.
 			</p>
 			<ul>
 				<li>
-					<strong
-						>We do not sell your personal data, and we do not share it for targeted advertising.</strong
-					>
-					Because we never do this, there is no need to opt out, but we still honour the
-					<strong>Global Privacy Control</strong> signal.
+					We do not sell your personal data, and we do not share it for targeted advertising.
+					Because we never do this, there is no need to opt out, but we still honour the Global
+					Privacy Control signal.
 				</li>
 				<li>
-					As a vendor of personal health records, we follow the FTC
-					<strong>Health Breach Notification Rule</strong>: if your unsecured health data is ever
-					breached or disclosed without your authorisation, we will notify you within 60 days.
+					As a vendor of personal health records, we follow the FTC Health Breach Notification Rule:
+					if your unsecured health data is ever breached or disclosed without your authorisation, we
+					will notify you within 60 days.
 				</li>
 				<li>
 					We never use your location to infer visits to healthcare facilities, and we do not
 					geofence health services.
 				</li>
 				<li>
-					<strong>Washington and Nevada residents:</strong> your consumer health data rights are set
-					out in our separate
+					Washington and Nevada residents: your consumer health data rights are set out in our
+					separate
 					<a href="/privacy/consumer-health-data">Consumer Health Data Privacy Policy</a>.
 				</li>
 			</ul>
 
 			<h3 id="canada-privacy">Canada</h3>
 			<p>
-				We handle your data under <strong>PIPEDA</strong>. At launch Auratwin is offered in English
-				and is <strong>not available in Quebec</strong>; if we open Quebec, we will first meet the
-				requirements of its private-sector privacy law (<strong>Law 25</strong>), including service
-				in French, and update this section. Your health data is sensitive, so we collect it only
-				with your <strong>express consent</strong>, purpose by purpose. You can access and correct
-				your data, withdraw consent, and ask us what we hold about you; optional features such as
-				precise location can be switched off at any time. Proactive check-ins are part of the
-				service and stay under your control. Promotional messages follow
-				<strong>CASL</strong>: we send them only with your express consent, and every one identifies
+				We handle your data under PIPEDA. At launch Auratwin is offered in English and is not
+				available in Quebec; if we open Quebec, we will first meet the requirements of its
+				private-sector privacy law (Law 25), including service in French, and update this section.
+				Your health data is sensitive, so we collect it only with your express consent, purpose by
+				purpose. You can access and correct your data, withdraw consent, and ask us what we hold
+				about you; optional features such as precise location can be switched off at any time.
+				Proactive check-ins are part of the service and stay under your control. Promotional
+				messages follow CASL: we send them only with your express consent, and every one identifies
 				us and includes an unsubscribe. If we ever have a breach creating a real risk of significant
 				harm, we will notify you and report it to the Office of the Privacy Commissioner of Canada.
 				You may complain to the
@@ -299,24 +287,24 @@
 
 			<h3 id="australia-privacy">Australia</h3>
 			<p>
-				We handle your data under the <strong>Privacy Act 1988</strong> and the Australian Privacy
-				Principles. Your health data is <strong>sensitive information</strong>, collected only with
-				your consent. Your data is processed outside Australia, in the United Kingdom, the European
-				Union and the United States by us and the service providers described above; we remain
-				accountable for it under APP 8 wherever it is processed. Commercial electronic messages
-				follow the <strong>Spam Act 2003</strong>: consent first, clear identification, and a
-				working unsubscribe in every message. Eligible data breaches are notified to you and to the
-				OAIC under the Notifiable Data Breaches scheme, and you may complain to the
+				We handle your data under the Privacy Act 1988 and the Australian Privacy Principles. Your
+				health data is sensitive information, collected only with your consent. Your data is
+				processed outside Australia, in the United Kingdom, the European Union and the United States
+				by us and the service providers described above; we remain accountable for it under APP 8
+				wherever it is processed. Commercial electronic messages follow the Spam Act 2003: consent
+				first, clear identification, and a working unsubscribe in every message. Eligible data
+				breaches are notified to you and to the OAIC under the Notifiable Data Breaches scheme, and
+				you may complain to the
 				<a href="https://www.oaic.gov.au/" rel="noopener noreferrer" target="_blank">OAIC</a>.
 			</p>
 
 			<h3 id="ireland-privacy">Ireland &amp; the EEA</h3>
 			<p>
-				Auratwin is <strong>not currently available in Ireland or the wider EEA</strong>. This
-				release does not launch there, and we do not offer the service to, or collect data from,
-				people in the EEA. When we do open an EEA market, we will appoint and name our
-				<strong>EU representative</strong> (Article 27 EU GDPR) here, set out the EU-specific rights
-				and the relevant supervisory authority (such as the Irish
+				Auratwin is not currently available in Ireland or the wider EEA. This release does not
+				launch there, and we do not offer the service to, or collect data from, people in the EEA.
+				When we do open an EEA market, we will appoint and name our EU representative (Article 27 EU
+				GDPR) here, set out the EU-specific rights and the relevant supervisory authority (such as
+				the Irish
 				<a href="https://www.dataprotection.ie/" rel="noopener noreferrer" target="_blank"
 					>Data Protection Commission</a
 				>), and update this section before any EEA launch.
@@ -394,10 +382,6 @@
 	}
 	.prose :global(li) {
 		margin-block: 0.4rem;
-	}
-	.prose :global(strong) {
-		color: var(--color-neutral-900);
-		font-weight: 600;
 	}
 	.prose :global(a) {
 		color: var(--color-primary-600);

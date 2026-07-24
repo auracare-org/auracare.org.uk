@@ -37,10 +37,10 @@
 		<article class="prose">
 			<h2 id="scope">Why this policy exists</h2>
 			<p>
-				The Washington <strong>My Health My Data Act</strong> and Nevada's consumer health data law
-				(<strong>SB 370</strong>) give you specific rights over "consumer health data", which means
-				personal information that identifies your past, present or future physical or mental health
-				status, including data from wearables and inferences drawn from it.
+				The Washington My Health My Data Act and Nevada's consumer health data law (SB 370) give you
+				specific rights over "consumer health data", which means personal information that
+				identifies your past, present or future physical or mental health status, including data
+				from wearables and inferences drawn from it.
 				{CONTACT.legalName} ("Auracare", "we", "us") is the regulated entity for the purposes of these
 				laws.
 			</p>
@@ -49,21 +49,20 @@
 			<p>With your consent, Auratwin may collect:</p>
 			<ul>
 				<li>
-					<strong>Health and wellness measurements</strong> from sources you connect: sleep, activity,
-					heart rate, recovery, body composition and continuous glucose readings;
+					Health and wellness measurements from sources you connect: sleep, activity, heart rate,
+					recovery, body composition and continuous glucose readings;
 				</li>
 				<li>
-					<strong>Things you tell Aura in conversation</strong> about how you feel, what you ate, and
-					your habits, and the wellness inferences the twin draws from them (for example, your sleep
-					baseline);
+					Things you tell Aura in conversation about how you feel, what you ate, and your habits,
+					and the wellness inferences the twin draws from them (for example, your sleep baseline);
 				</li>
 				<li>
-					<strong>Precise location</strong>, only if you separately opt in, used to give your
-					guidance context such as time zones and travel;
+					Precise location, only if you separately opt in, used to give your guidance context such
+					as time zones and travel;
 				</li>
 				<li>
-					<strong>Account and delivery information</strong> (name, email, the messaging identity you
-					use) needed to run the service.
+					Account and delivery information (name, email, the messaging identity you use) needed to
+					run the service.
 				</li>
 			</ul>
 			<p>
@@ -88,12 +87,12 @@
 
 			<h2 id="sharing">Who we share it with</h2>
 			<p>
-				<strong>We do not sell your consumer health data.</strong> Selling it would require your separate,
-				signed authorisation under Washington law, and we do not seek one. We share it only with service
-				providers (such as cloud hosting and message delivery) that process it on our instructions under
-				contract, and with no one else unless you direct us to or the law requires it. We never use your
-				location to infer visits to healthcare facilities, and we do not use geofencing around health
-				services.
+				We do not sell your consumer health data. Selling it would require your separate, signed
+				authorisation under Washington law, and we do not seek one. We share it only with service
+				providers (such as cloud hosting and message delivery) that process it on our instructions
+				under contract, and with no one else unless you direct us to or the law requires it. We
+				never use your location to infer visits to healthcare facilities, and we do not use
+				geofencing around health services.
 			</p>
 			<p>
 				Information that we have aggregated or de-identified so that it no longer identifies you,
@@ -108,17 +107,14 @@
 			<h2 id="rights">Your rights</h2>
 			<ul>
 				<li>
-					<strong>Know and access</strong> the consumer health data we hold about you, including the
-					third parties and affiliates it has been shared with;
+					Know and access the consumer health data we hold about you, including the third parties
+					and affiliates it has been shared with;
 				</li>
+				<li>Withdraw consent to our collection or sharing of your consumer health data;</li>
 				<li>
-					<strong>Withdraw consent</strong> to our collection or sharing of your consumer health data;
+					Delete your consumer health data, including from our backups and from our processors;
 				</li>
-				<li>
-					<strong>Delete</strong> your consumer health data, including from our backups and from our
-					processors;
-				</li>
-				<li><strong>Appeal</strong> a decision we make about any of these requests.</li>
+				<li>Appeal a decision we make about any of these requests.</li>
 			</ul>
 			<p>
 				To exercise any of these rights, email
@@ -213,10 +209,6 @@
 	}
 	.prose :global(li) {
 		margin-block: 0.4rem;
-	}
-	.prose :global(strong) {
-		color: var(--color-neutral-900);
-		font-weight: 600;
 	}
 	.prose :global(a) {
 		color: var(--color-primary-600);

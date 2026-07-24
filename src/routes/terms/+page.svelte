@@ -28,10 +28,10 @@
 			<h2 id="acceptance">1. These terms, and when they apply</h2>
 			<p>
 				By using this website (the “Site”) or joining the Auratwin waitlist, you agree to these
-				Terms of Service (the “Terms”). Before you first use <strong>Auratwin</strong>, our consumer
-				wellness service, you will be asked to read and accept these Terms during onboarding; by
-				using Auratwin you agree to all of them. If you do not agree with any part of these Terms,
-				please do not use the Site, the waitlist or Auratwin.
+				Terms of Service (the “Terms”). Before you first use Auratwin, our consumer wellness
+				service, you will be asked to read and accept these Terms during onboarding; by using
+				Auratwin you agree to all of them. If you do not agree with any part of these Terms, please
+				do not use the Site, the waitlist or Auratwin.
 			</p>
 
 			<h2 id="who-we-are">2. Who we are</h2>
@@ -56,12 +56,12 @@
 
 			<h2 id="eligibility">4. Who can use Auratwin, and where</h2>
 			<p>
-				<strong>Auratwin is for adults: you must be 18 or older to use it.</strong> You confirm your
-				age during onboarding, and the service is not directed at children. Auratwin is available in
-				the <strong>United Kingdom, the United States, Canada and Australia</strong>, in English. It
-				is not offered in Quebec at launch, and it is not offered in Ireland or the wider EEA.
-				Please be truthful about where you are: parts of the service, such as which emergency number
-				you are pointed to, depend on your region being right.
+				Auratwin is for adults: you must be 18 or older to use it. You confirm your age during
+				onboarding, and the service is not directed at children. Auratwin is available in the United
+				Kingdom, the United States, Canada and Australia, in English. It is not offered in Quebec at
+				launch, and it is not offered in Ireland or the wider EEA. Please be truthful about where
+				you are: parts of the service, such as which emergency number you are pointed to, depend on
+				your region being right.
 			</p>
 
 			<h2 id="what-auratwin-is">5. What Auratwin is, and what it never does</h2>
@@ -81,13 +81,11 @@
 
 			<h2 id="emergencies">6. Auratwin is not for emergencies</h2>
 			<p>
-				Auratwin is not designed for emergencies and must not be relied on in one.
-				<strong
-					>If you think you may be experiencing a medical emergency, call your emergency services
-					now: 999 in the United Kingdom, 911 in the United States and Canada, 000 in Australia.</strong
-				>
-				If you are struggling or in crisis, you can also reach Samaritans on 116 123 (UK), the 988 Suicide
-				&amp; Crisis Lifeline (US and Canada), or Lifeline on 13 11 14 (Australia).
+				Auratwin is not designed for emergencies and must not be relied on in one. If you think you
+				may be experiencing a medical emergency, call your emergency services now: 999 in the United
+				Kingdom, 911 in the United States and Canada, 000 in Australia. If you are struggling or in
+				crisis, you can also reach Samaritans on 116 123 (UK), the 988 Suicide &amp; Crisis Lifeline
+				(US and Canada), or Lifeline on 13 11 14 (Australia).
 			</p>
 
 			<h2 id="messaging-apps">7. Your account, and the messaging apps Auratwin lives in</h2>
@@ -330,9 +328,5 @@
 	}
 	.prose a:hover {
 		color: var(--color-primary-700);
-	}
-	.prose strong {
-		font-weight: 600;
-		color: var(--color-neutral-1000);
 	}
 </style>

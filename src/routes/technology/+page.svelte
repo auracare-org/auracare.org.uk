@@ -325,8 +325,9 @@
 				{/each}
 			</ul>
 			<p class="ehr-note" use:reveal>
-				Health records can be read into the twin but never acted on by it, per the FD&amp;C Act
-				§520(o)(1)(B) exclusion. The twin gives wellness guidance, not diagnosis.
+				Health records can be read into the twin but never acted on by it. Auratwin is a
+				general-wellness product under the FD&amp;C Act §520(o)(1)(B) exclusion, not a medical
+				device: the twin gives wellness guidance, not diagnosis.
 			</p>
 		</div>
 	</div>

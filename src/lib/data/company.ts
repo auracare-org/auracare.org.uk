@@ -103,7 +103,7 @@ export const DATA_MOAT_NOTE =
 	'Every source you connect deepens the twin’s picture of your daily life. That high-context view of you is what makes the guidance yours, not generic.';
 
 export const EHR_NOTE =
-	'Health records can be read into your twin for context, but Auratwin never acts on them clinically, per the FD&C Act §520(o)(1)(B) exclusion.';
+	'Health records can be read into your twin for context, but Auratwin never acts on them clinically. Auratwin is a general-wellness product under the FD&C Act §520(o)(1)(B) exclusion, not a medical device.';
 
 export interface Edge {
 	title: string;
