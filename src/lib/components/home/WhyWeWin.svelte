@@ -4,6 +4,17 @@
 
 	let active = $state<number | null>(null);
 	let scene = $state<HTMLElement>();
+	let pin = $state<HTMLElement>();
+	let pinEnabled = $state(false);
+
+	function canPin() {
+		if (window.matchMedia('(max-width: 700px), (prefers-reduced-motion: reduce)').matches) return false;
+		const content = pin;
+		if (!content) return false;
+		// If the pinned block is taller than the viewport, sticky positioning
+		// chops the lower copy off on scroll. Fall back to normal flow there.
+		return content.scrollHeight <= window.innerHeight - 48;
+	}
 
 	function toggle(i: number) {
 		active = active === i ? null : i;
@@ -13,18 +24,23 @@
 	// each capability before releasing scroll to continue down the page.
 	$effect(() => {
 		const el = scene;
-		if (!el) return;
-		if (
-			window.matchMedia('(max-width: 700px), (max-height: 900px), (prefers-reduced-motion: reduce)')
-				.matches
-		)
-			return;
+		const content = pin;
+		if (!el || !content) return;
 
 		const steps = MOAT.length;
 		let raf = 0;
 
+		function evaluate() {
+			pinEnabled = canPin();
+		}
+
 		function update() {
 			raf = 0;
+			evaluate();
+			if (!pinEnabled) {
+				active = null;
+				return;
+			}
 			const travel = el!.offsetHeight - window.innerHeight;
 			if (travel <= 0) return;
 			const p = Math.min(1, Math.max(0, -el!.getBoundingClientRect().top / travel));
@@ -35,6 +51,7 @@
 			if (!raf) raf = requestAnimationFrame(update);
 		}
 
+		evaluate();
 		update();
 		window.addEventListener('scroll', onScroll, { passive: true });
 		window.addEventListener('resize', onScroll);
@@ -56,80 +73,80 @@
 </script>
 
 <section class="why section-y">
-	<div class="scene" bind:this={scene}>
-		<div class="pin">
-			<div class="container-wide">
-				<header class="head">
-					<h2 use:reveal>
-						Three capabilities. <span class="text-gradient">Most tools hold one.</span>
-					</h2>
-					<p use:reveal={{ delay: 140 }}>
-						The hard part of clinical reasoning isn't any single capability: it's holding all three
-						at once, and keeping every step auditable and safe.
-					</p>
-				</header>
-			</div>
+	<div class="scene" class:scene-pinned={pinEnabled} bind:this={scene}>
+		<div class="pin" class:pin-enabled={pinEnabled} bind:this={pin}>
+	<div class="container-wide">
+		<header class="head">
+			<h2 use:reveal>
+				Three capabilities. <span class="text-gradient">Most tools hold one.</span>
+			</h2>
+			<p use:reveal={{ delay: 140 }}>
+				The hard part of clinical reasoning isn't any single capability: it's holding all three at
+				once, and keeping every step auditable and safe.
+			</p>
+		</header>
+	</div>
 
-			<div class="container-wide">
-				<div class="venn-grid">
-					<!-- Left: three translucent circles, labelled 1 / 2 / 3 -->
-					<div class="venn">
-						<div class="lobes" aria-hidden="true">
-							{#each LOBES as l, i}
-								<span
-									class="fill"
-									class:fill-active={active === i}
-									style="left:{l.left}%;top:{l.top}%;"
-								></span>
-							{/each}
-						</div>
+	<div class="container-wide">
+		<div class="venn-grid">
+			<!-- Left: three translucent circles, labelled 1 / 2 / 3 -->
+			<div class="venn">
+				<div class="lobes" aria-hidden="true">
+					{#each LOBES as l, i}
+						<span
+							class="fill"
+							class:fill-active={active === i}
+							style="left:{l.left}%;top:{l.top}%;"
+						></span>
+					{/each}
+				</div>
 
-						<div class="hits">
-							{#each MOAT as pillar, i}
-								<button
-									class="lobe"
-									class:lobe-active={active === i}
-									style="left:{LOBES[i].left}%;top:{LOBES[i].top}%;--lx:{LOBES[i].lx}%;--ly:{LOBES[
-										i
-									].ly}%;"
-									onclick={() => toggle(i)}
-									aria-pressed={active === i}
-									aria-label={pillar.title}
-								>
-									<span class="num">{i + 1}</span>
-								</button>
-							{/each}
-						</div>
-					</div>
-
-					<!-- Right: numbered capabilities, expanding on click -->
-					<ol class="rows">
-						{#each MOAT as pillar, i}
-							<li>
-								<button
-									class="row"
-									class:row-active={active === i}
-									onclick={() => toggle(i)}
-									aria-expanded={active === i}
-								>
-									<span class="row-num">{i + 1}</span>
-									<span class="row-text">
-										<span class="row-title">{pillar.title}</span>
-										{#if active === i}
-											<span class="row-body">{pillar.body}</span>
-										{/if}
-									</span>
-								</button>
-							</li>
-						{/each}
-					</ol>
+				<div class="hits">
+					{#each MOAT as pillar, i}
+						<button
+							class="lobe"
+							class:lobe-active={active === i}
+							style="left:{LOBES[i].left}%;top:{LOBES[i].top}%;--lx:{LOBES[i].lx}%;--ly:{LOBES[
+								i
+							].ly}%;"
+							onclick={() => toggle(i)}
+							aria-pressed={active === i}
+							aria-label={pillar.title}
+						>
+							<span class="num">{i + 1}</span>
+						</button>
+					{/each}
 				</div>
 			</div>
 
-			<div class="container-wide">
-				<!-- Closing line flows normally beneath the pinned circles. -->
-				<p class="moat-line" use:reveal={{ delay: 160 }}>{MOAT_LINE}</p>
-			</div>
+			<!-- Right: numbered capabilities, expanding on click -->
+			<ol class="rows">
+				{#each MOAT as pillar, i}
+					<li>
+						<button
+							class="row"
+							class:row-active={active === i}
+							onclick={() => toggle(i)}
+							aria-expanded={active === i}
+						>
+							<span class="row-num">{i + 1}</span>
+							<span class="row-text">
+								<span class="row-title">{pillar.title}</span>
+								{#if active === i}
+									<span class="row-body">{pillar.body}</span>
+								{/if}
+							</span>
+						</button>
+					</li>
+				{/each}
+			</ol>
+		</div>
+	</div>
+
+	<div class="container-wide">
+		<!-- Closing line flows normally beneath the pinned circles. -->
+		<p class="moat-line" use:reveal={{ delay: 160 }}>{MOAT_LINE}</p>
+	</div>
 		</div>
 	</div>
 </section>
@@ -143,27 +160,31 @@
 	   number is cycled from scroll progress before scrolling continues. */
 	.scene {
 		position: relative;
+		height: auto;
+	}
+	.scene-pinned {
 		height: 200vh;
 	}
 	.pin {
-		position: sticky;
-		top: var(--header-h, 92px);
-		height: calc(100svh - var(--header-h, 92px));
-		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
+		padding-block: clamp(3rem, 6vw, 5rem);
+	}
+	.pin-enabled {
+		position: sticky;
+		top: 0;
 		justify-content: center;
-		padding-block: clamp(1rem, 3vh, 2rem);
+		min-height: 100vh;
 	}
 	/* No scroll-pin on narrow screens (stacked content can exceed the
 	   viewport) or when reduced motion is requested: fall back to normal flow. */
-	@media (max-width: 700px), (max-height: 900px), (prefers-reduced-motion: reduce) {
+	@media (max-width: 700px), (prefers-reduced-motion: reduce) {
 		.scene {
 			height: auto;
 		}
 		.pin {
 			position: static;
-			height: auto;
+			min-height: 0;
 			padding-block: 0;
 		}
 	}
@@ -204,7 +225,7 @@
 	.venn {
 		position: relative;
 		width: 100%;
-		max-width: min(22rem, 36vh);
+		max-width: 22rem;
 		aspect-ratio: 1 / 1;
 	}
 	.lobes,
