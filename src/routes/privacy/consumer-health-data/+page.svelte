@@ -28,7 +28,7 @@
 			<a href="/privacy">Privacy Policy</a> and explains what consumer health data Auratwin collects,
 			why, and the rights you have over it.
 		</p>
-		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 22 July 2026</p>
+		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 24 July 2026</p>
 	</div>
 </section>
 
@@ -55,6 +55,13 @@
 				<li>
 					Things you tell Aura in conversation about how you feel, what you ate, and your habits,
 					and the wellness inferences the twin draws from them (for example, your sleep baseline);
+				</li>
+				<li>
+					Reproductive health data, only if you choose to tell Aura about your menstrual cycle (such
+					as when a period starts), and the cycle context the twin derives from it to interpret your
+					other measurements. You are never asked for it, and Auratwin works fully without it. Aura
+					does not predict fertile windows or ovulation, does not give contraception or conception
+					guidance, and does not tell you what a change in your cycle might mean medically;
 				</li>
 				<li>
 					Precise location, only if you separately opt in, used to give your guidance context such
@@ -97,11 +104,11 @@
 			<p>
 				Information that we have aggregated or de-identified so that it no longer identifies you,
 				and cannot reasonably be linked back to you, is not consumer health data, and it never
-				includes your precise location. We take reasonable measures to ensure it cannot be
-				associated with you, we publicly commit to using and sharing it only in de-identified form
-				and never attempting to re-identify it, and we contractually require anyone who receives it
-				to commit to the same. Subject to those commitments, this policy does not restrict our use
-				or sharing of that de-identified information.
+				includes your precise location or your reproductive health data. We take reasonable measures
+				to ensure it cannot be associated with you, we publicly commit to using and sharing it only
+				in de-identified form and never attempting to re-identify it, and we contractually require
+				anyone who receives it to commit to the same. Subject to those commitments, this policy does
+				not restrict our use or sharing of that de-identified information.
 			</p>
 
 			<h2 id="rights">Your rights</h2>
