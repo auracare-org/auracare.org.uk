@@ -328,13 +328,15 @@
 		max-width: 30rem;
 	}
 
-	/* Visual */
+	/* Visual. In the stacked layout it leads, above the headline; the wide
+	   layout restores copy left, visual right. */
 	.hero-visual {
 		position: relative;
 		width: 100%;
 		max-width: 28rem;
 		margin-inline: auto;
 		aspect-ratio: 1;
+		order: -1;
 	}
 	.hero-orbits {
 		position: absolute;
@@ -491,6 +493,9 @@
 	@media (min-width: 900px) {
 		.hero-grid {
 			grid-template-columns: 1.05fr 0.95fr;
+		}
+		.hero-visual {
+			order: 0;
 		}
 	}
 </style>
