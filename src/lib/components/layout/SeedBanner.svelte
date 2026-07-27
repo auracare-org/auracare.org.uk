@@ -116,7 +116,7 @@
 	}
 	@media (max-width: 640px) {
 		.seed-close {
-			right: -0.25rem;
+			right: 0.25rem;
 		}
 	}
 </style>

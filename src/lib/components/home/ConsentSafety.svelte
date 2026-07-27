@@ -8,8 +8,12 @@
 		r.lines.map((l) => ({ ...l, region: r.region }))
 	);
 
-	// Positions for helpline nodes scattered to the right (x%, y%)
-	const nodePositions = [
+	// Positions for helpline nodes scattered to the right (x%, y%). The wide
+	// scatter assumes a roomy canvas; on narrow screens the cards are large
+	// relative to the square, so a spread-out variant keeps them from
+	// overlapping each other and the info pill. The SVG arcs derive from the
+	// same values, so they follow the cards.
+	const WIDE_POSITIONS = [
 		{ x: 62, y: 12 },
 		{ x: 82, y: 8 },
 		{ x: 88, y: 35 },
@@ -17,6 +21,18 @@
 		{ x: 68, y: 82 },
 		{ x: 48, y: 88 }
 	];
+	const NARROW_POSITIONS = [
+		{ x: 48, y: 10 },
+		{ x: 78, y: 22 },
+		{ x: 72, y: 44 },
+		{ x: 82, y: 66 },
+		{ x: 60, y: 85 },
+		{ x: 27, y: 88 }
+	];
+
+	// SSR default is the wide scatter; bound to the real width on hydration.
+	let viewportWidth = $state(720);
+	const nodePositions = $derived(viewportWidth < 520 ? NARROW_POSITIONS : WIDE_POSITIONS);
 
 	let activeNode = $state(0);
 
@@ -27,6 +43,8 @@
 		return () => clearInterval(interval);
 	});
 </script>
+
+<svelte:window bind:innerWidth={viewportWidth} />
 
 <section class="safety section-y">
 	<div class="container-wide">
@@ -398,6 +416,28 @@
 		}
 		.never-list {
 			margin-inline: 0;
+		}
+	}
+
+	/* On narrow screens the cards are large relative to the canvas (positions
+	   switch to NARROW_POSITIONS in the script): shrink them a touch and move
+	   the info pill below the canvas so nothing collides. */
+	@media (max-width: 519px) {
+		.help-node {
+			padding: 0.3rem 0.45rem;
+		}
+		.help-node-value {
+			font-size: 0.7rem;
+		}
+		.help-node-label {
+			font-size: 0.55rem;
+		}
+		.routing-canvas {
+			margin-bottom: 2.75rem;
+		}
+		.routing-info {
+			bottom: -2.5rem;
+			max-width: 100%;
 		}
 	}
 </style>

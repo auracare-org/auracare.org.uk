@@ -280,6 +280,15 @@
 		font-size: 0.9rem;
 		min-width: 40rem;
 	}
+	/* The nowrap keys push the table to its min-content width, which would
+	   otherwise squeeze the prose columns into one word per line and produce
+	   very tall rows inside the horizontal scroller. */
+	table tr > :nth-child(4) {
+		min-width: 18rem;
+	}
+	table tr > :nth-child(5) {
+		min-width: 12rem;
+	}
 	thead th {
 		text-align: left;
 		font-family: var(--font-family-heading);
