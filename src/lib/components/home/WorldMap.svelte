@@ -74,15 +74,75 @@
 		activeWave = Math.round(t * maxWave);
 	}
 
+	let stageEl = $state<HTMLElement | null>(null);
+
 	onMount(() => {
 		const mq = window.matchMedia('(min-width: 780px)');
-		const apply = () => {
-			pinned = mq.matches && !prefersReducedMotion();
-			if (!pinned) activeWave = maxWave;
+		let timer: ReturnType<typeof setInterval> | undefined;
+		let io: IntersectionObserver | undefined;
+
+		const clearTimer = () => {
+			if (timer !== undefined) {
+				clearInterval(timer);
+				timer = undefined;
+			}
 		};
+		const teardownIO = () => {
+			io?.disconnect();
+			io = undefined;
+		};
+
+		// Narrow screens don't pin, so the scroll can't drive the sequence.
+		// Instead, play it once, stepping a wave at a time, when the map
+		// first comes into view.
+		const startAutoplay = () => {
+			if (timer !== undefined) return;
+			activeWave = 0;
+			timer = setInterval(() => {
+				if (activeWave >= maxWave) {
+					clearTimer();
+					return;
+				}
+				activeWave += 1;
+			}, 1600);
+		};
+
+		const apply = () => {
+			clearTimer();
+			teardownIO();
+			if (prefersReducedMotion()) {
+				pinned = false;
+				activeWave = maxWave;
+				return;
+			}
+			pinned = mq.matches;
+			if (pinned) return; // scroll-driven via scrollProgress
+			if (typeof IntersectionObserver === 'undefined' || !stageEl) {
+				activeWave = maxWave;
+				return;
+			}
+			activeWave = 0;
+			io = new IntersectionObserver(
+				(entries) => {
+					for (const e of entries) {
+						if (e.isIntersecting) {
+							teardownIO();
+							startAutoplay();
+						}
+					}
+				},
+				{ threshold: 0.5 }
+			);
+			io.observe(stageEl);
+		};
+
 		apply();
 		mq.addEventListener('change', apply);
-		return () => mq.removeEventListener('change', apply);
+		return () => {
+			mq.removeEventListener('change', apply);
+			clearTimer();
+			teardownIO();
+		};
 	});
 
 	const pointsByWave = MARKET_WAVES.map((w) => ({
@@ -106,7 +166,7 @@
 				</div>
 
 				<!-- Map in the middle -->
-				<div class="map-stage">
+				<div class="map-stage" bind:this={stageEl}>
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<svg
 						class="map-svg"
