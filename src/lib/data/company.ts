@@ -17,7 +17,7 @@ export const CONTACT = {
 	general: 'hello@auracare.org.uk',
 	clinical: 'clinical@auracare.org.uk',
 	privacy: 'privacy@auracare.org.uk',
-	legalName: 'Auracare Health LTD',
+	legalName: 'Auracare Health Ltd',
 	jurisdiction: 'England & Wales',
 	ontologyUrl: 'https://ontology.auracare.org.uk',
 	locations: ['London', 'Hong Kong', 'San Francisco']
