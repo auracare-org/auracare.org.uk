@@ -56,21 +56,6 @@ export const INVESTOR_CONTACTS: Record<InvestorContactKey, InvestorContact> = {
 	}
 };
 
-export interface InvestorRegion {
-	value: string;
-	label: string;
-	contact: InvestorContactKey;
-}
-
-/** Options in the investor form's "Where are you based?" select, in display order. */
-export const INVESTOR_REGIONS: InvestorRegion[] = [
-	{ value: 'hk-greater-china', label: 'Hong Kong / Greater China', contact: 'hinlun' },
-	{ value: 'asia-pacific', label: 'Asia-Pacific', contact: 'hinlun' },
-	{ value: 'uk-europe', label: 'United Kingdom / Europe', contact: 'stephen' },
-	{ value: 'north-america', label: 'North America', contact: 'stephen' },
-	{ value: 'elsewhere', label: 'Elsewhere', contact: 'stephen' }
-];
-
 /** Flip `ready` to true once the PDF is in static/ under `url`. */
 export const DECK = {
 	ready: false,

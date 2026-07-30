@@ -1,11 +1,10 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
-	import { reveal, prefersReducedMotion } from '$lib/actions/motion';
+	import { reveal } from '$lib/actions/motion';
 	import {
 		CONTACT,
 		DECK,
 		INVESTOR_CONTACTS,
-		INVESTOR_REGIONS,
 		TRACTION,
 		type InvestorContactKey
 	} from '$lib/data/company';
@@ -23,6 +22,9 @@
 			role: member?.role ?? ''
 		};
 	});
+
+	const mailto = (email: string) =>
+		`mailto:${email}?subject=${encodeURIComponent('Auracare AI — Seed round')}`;
 
 	const quickLinks = [
 		{
@@ -51,7 +53,7 @@
 	const faqs = [
 		{
 			q: 'How much are you raising?',
-			a: 'We share the target and terms directly rather than posting them here. Write to us through the form and we’ll walk you through the deck.'
+			a: 'We share the target and terms directly rather than posting them here. Write to the founder for your region and we’ll walk you through the deck.'
 		},
 		{
 			q: 'What’s live today, and what isn’t?',
@@ -71,59 +73,9 @@
 		},
 		{
 			q: 'Can I get a data room?',
-			a: 'Yes. Ask through the form and the founder for your region will set you up.'
+			a: 'Yes. Email the founder for your region and they’ll set you up.'
 		}
 	];
-
-	let name = $state('');
-	let email = $state('');
-	let firm = $state('');
-	let region = $state('');
-	let message = $state('');
-	let website = $state(''); // honeypot — humans never see this field
-	let status = $state<'idle' | 'sending' | 'sent' | 'error'>('idle');
-	let errorMsg = $state('');
-	let startedAt = 0;
-
-	$effect(() => {
-		startedAt = Date.now();
-	});
-
-	const recipient = $derived.by(() => {
-		const def = INVESTOR_REGIONS.find((r) => r.value === region);
-		return def ? founders.find((f) => f.key === def.contact) : undefined;
-	});
-
-	function writeTo(key: InvestorContactKey) {
-		const def = INVESTOR_REGIONS.find((r) => r.contact === key);
-		if (def) region = def.value;
-		document
-			.getElementById('contact')
-			?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
-	}
-
-	async function submit(event: SubmitEvent) {
-		event.preventDefault();
-		status = 'sending';
-		errorMsg = '';
-		try {
-			const res = await fetch('/api/investor-contact', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ name, email, firm, region, message, website, startedAt })
-			});
-			const data = await res.json();
-			if (data.ok) {
-				status = 'sent';
-			} else {
-				status = 'error';
-				errorMsg = data.error ?? 'Something went wrong on our side.';
-			}
-		} catch {
-			status = 'error';
-			errorMsg = 'Something went wrong on our side.';
-		}
-	}
 </script>
 
 <Seo
@@ -140,10 +92,11 @@
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>
 			Auratwin launches to the public in August 2026, and our first clinical trials with the Chinese
 			Academy of Sciences follow. This round pays for the launch, the trials, and taking our three
-			devices through certification. The form below reaches whichever founder covers your region.
+			devices through certification.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 220 }}>
-			<a class="cta-primary" href="#contact">Write to us</a>
+			<!-- Interim mailto; swap for the Typeform link when it exists. -->
+			<a class="cta-primary" href={mailto(CONTACT.seed)}>Write to us</a>
 			{#if DECK.ready}
 				<a class="cta-deck" href={DECK.url} download>Download the pitch deck</a>
 			{:else}
@@ -154,7 +107,7 @@
 </section>
 
 <!-- ================= Who to talk to ================= -->
-<section class="section-y who">
+<section id="contact" class="section-y who">
 	<div class="container-wide">
 		<h2 use:reveal>Who to talk to</h2>
 		<p class="lede" use:reveal={{ delay: 80 }}>
@@ -172,12 +125,8 @@
 						<p class="founder-coverage">{f.coverage}</p>
 						<p class="founder-base">Based in {f.basedIn}</p>
 						<div class="founder-actions">
-							<button class="founder-write" onclick={() => writeTo(f.key)}>
-								Write to {f.firstName}
-							</button>
-							<a class="founder-mail" href="mailto:{f.email}?subject=Auracare%20seed%20round">
-								{f.email}
-							</a>
+							<a class="founder-write" href={mailto(f.email)}>Write to {f.firstName}</a>
+							<a class="founder-mail" href={mailto(f.email)}>{f.email}</a>
 						</div>
 					</div>
 				</article>
@@ -225,96 +174,6 @@
 				</a>
 			{/each}
 		</div>
-	</div>
-</section>
-
-<!-- ================= Contact form ================= -->
-<section id="contact" class="section-y contact">
-	<div class="container-wide contact-grid">
-		<div class="contact-copy">
-			<span class="eyebrow" use:reveal>Contact</span>
-			<h2 use:reveal={{ delay: 60 }}>Write to us</h2>
-			<p class="lede" use:reveal={{ delay: 120 }}>
-				Say where you're based and it lands in
-				{recipient ? `${recipient.firstName}'s` : "the right founder's"} inbox. Replies within two working
-				days.
-			</p>
-			<p class="contact-alt" use:reveal={{ delay: 180 }}>
-				Prefer email? Write to
-				<a href="mailto:{INVESTOR_CONTACTS.hinlun.email}">{INVESTOR_CONTACTS.hinlun.email}</a>
-				(Hong Kong & Asia-Pacific) or
-				<a href="mailto:{INVESTOR_CONTACTS.stephen.email}">{INVESTOR_CONTACTS.stephen.email}</a>
-				(Europe & North America).
-			</p>
-		</div>
-
-		<form class="contact-form glass-card" onsubmit={submit} use:reveal={{ delay: 140 }}>
-			{#if status === 'sent'}
-				<div class="form-done" role="status">
-					<h3>Sent.</h3>
-					<p>
-						Your message went to {recipient?.firstName ?? 'us'}. You'll hear back within two working
-						days.
-					</p>
-				</div>
-			{:else}
-				<div class="field-row">
-					<label class="field">
-						<span>Name</span>
-						<input type="text" name="name" bind:value={name} required maxlength="200" />
-					</label>
-					<label class="field">
-						<span>Firm <em>(optional)</em></span>
-						<input type="text" name="firm" bind:value={firm} maxlength="200" />
-					</label>
-				</div>
-				<label class="field">
-					<span>Email</span>
-					<input type="email" name="email" bind:value={email} required maxlength="320" />
-				</label>
-				<label class="field">
-					<span>Where are you based?</span>
-					<select name="region" bind:value={region} required>
-						<option value="" disabled hidden>Choose a region</option>
-						{#each INVESTOR_REGIONS as r (r.value)}
-							<option value={r.value}>{r.label}</option>
-						{/each}
-					</select>
-				</label>
-				{#if recipient}
-					<p class="field-hint">Goes to {recipient.name}, {recipient.basedIn}.</p>
-				{/if}
-				<label class="field">
-					<span>Message</span>
-					<textarea name="message" bind:value={message} required rows="5" maxlength="5000"
-					></textarea>
-				</label>
-				<div class="hp" aria-hidden="true">
-					<label>
-						Website
-						<input
-							type="text"
-							name="website"
-							tabindex="-1"
-							autocomplete="off"
-							bind:value={website}
-						/>
-					</label>
-				</div>
-				<button class="cta-primary form-submit" type="submit" disabled={status === 'sending'}>
-					{status === 'sending' ? 'Sending…' : 'Send'}
-				</button>
-				{#if status === 'error'}
-					<p class="form-error" role="alert">
-						{errorMsg} You can also email us directly using the addresses on the left.
-					</p>
-				{/if}
-				<p class="form-note">
-					We use what you send here to reply, and nothing else. Delivery runs through Resend; see
-					our <a href="/privacy">privacy policy</a>.
-				</p>
-			{/if}
-		</form>
 	</div>
 </section>
 
@@ -480,12 +339,11 @@
 		font-size: 0.88rem;
 		padding: 0.55rem 1.05rem;
 		border-radius: 6px;
-		border: none;
-		cursor: pointer;
 		transition: background 0.15s ease;
 	}
 	.founder-write:hover {
 		background: var(--color-primary-700);
+		color: #fff;
 	}
 	.founder-write:focus-visible {
 		outline: 2px solid var(--color-primary-400);
@@ -589,137 +447,6 @@
 	@media (min-width: 720px) {
 		.catchup-grid {
 			grid-template-columns: repeat(2, 1fr);
-		}
-	}
-
-	/* ---------------- Contact ---------------- */
-	.contact {
-		background: var(--color-surface-alt);
-		border-block: 1px solid var(--color-border-default);
-		scroll-margin-top: var(--header-h, 92px);
-	}
-	.contact-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: clamp(2rem, 5vw, 3.5rem);
-		align-items: start;
-	}
-	.contact-alt {
-		margin-top: 1.1rem;
-		font-size: 0.9rem;
-		color: var(--color-ink-soft);
-		max-width: 34rem;
-		line-height: 1.6;
-	}
-	.contact-alt a {
-		color: var(--color-primary-600);
-		font-weight: 600;
-	}
-	.contact-form {
-		padding: clamp(1.5rem, 3vw, 2rem);
-		border-radius: var(--radius-lg);
-		display: flex;
-		flex-direction: column;
-		gap: 1.1rem;
-	}
-	.field-row {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.1rem;
-	}
-	.field {
-		display: flex;
-		flex-direction: column;
-		gap: 0.4rem;
-	}
-	.field > span {
-		font-weight: 600;
-		font-size: 0.85rem;
-		color: var(--color-ink);
-	}
-	.field em {
-		font-style: normal;
-		font-weight: 500;
-		color: var(--color-ink-faint);
-	}
-	.field input,
-	.field select,
-	.field textarea {
-		font: inherit;
-		font-size: 0.95rem;
-		color: var(--color-ink);
-		background: #fff;
-		border: 1px solid var(--color-border-default);
-		border-radius: var(--radius-md);
-		padding: 0.65rem 0.8rem;
-		transition: border-color 0.15s ease;
-	}
-	.field textarea {
-		resize: vertical;
-		min-height: 7rem;
-	}
-	.field input:hover,
-	.field select:hover,
-	.field textarea:hover {
-		border-color: var(--color-border-hover);
-	}
-	.field input:focus-visible,
-	.field select:focus-visible,
-	.field textarea:focus-visible {
-		outline: 2px solid var(--color-border-focus);
-		outline-offset: 1px;
-		border-color: var(--color-border-focus);
-	}
-	.field-hint {
-		font-size: 0.82rem;
-		color: var(--color-ink-faint);
-		margin-top: -0.55rem;
-	}
-	.hp {
-		position: absolute;
-		left: -9999px;
-		top: auto;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-	}
-	.form-submit {
-		align-self: flex-start;
-	}
-	.form-submit:disabled {
-		opacity: 0.6;
-		cursor: wait;
-	}
-	.form-error {
-		color: #b42318;
-		font-size: 0.88rem;
-		line-height: 1.5;
-	}
-	.form-note {
-		font-size: 0.78rem;
-		color: var(--color-ink-faint);
-		line-height: 1.55;
-	}
-	.form-note a {
-		text-decoration: underline;
-		text-underline-offset: 2px;
-	}
-	.form-done h3 {
-		font-size: 1.3rem;
-		margin: 0 0 0.4rem;
-	}
-	.form-done p {
-		color: var(--color-ink-soft);
-		line-height: 1.6;
-	}
-	@media (min-width: 560px) {
-		.field-row {
-			grid-template-columns: 1fr 1fr;
-		}
-	}
-	@media (min-width: 940px) {
-		.contact-grid {
-			grid-template-columns: 5fr 6fr;
 		}
 	}
 
