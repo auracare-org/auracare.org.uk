@@ -26,7 +26,7 @@ export const team: Record<string, TeamMember> = {
 		id: 'hinlun-chen',
 		name: 'Hinlun Chen',
 		img: '/JPG/hinlin-chen.jpg',
-		role: 'Co-founder · COO',
+		role: 'Co-founder · President & COO',
 		bio: 'Co-founder, PPE at LSE, and runs three OEM factories in Hong Kong. Leads operations and partnerships, and business relations in Hong Kong and China.',
 		linkedin: 'https://www.linkedin.com/in/hin-lun-chen/',
 		website: 'https://www.hinlun.com/'
