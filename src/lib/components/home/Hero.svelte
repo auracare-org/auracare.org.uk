@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
-	import { CONTACT, PLATFORM_NOTE, WAITLIST_URL } from '$lib/data/company';
+	import { PLATFORM_NOTE, WAITLIST_URL } from '$lib/data/company';
 	import { onMount } from 'svelte';
 
 	// Everyday-life signal categories, not brand names: the picture, not the plumbing.
@@ -126,10 +126,7 @@
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
 				<a class="cta-primary" href={WAITLIST_URL}>Join the waitlist</a>
-				<a
-					class="cta-ghost"
-					href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Seed%20round"
-				>
+				<a class="cta-ghost" href="/investors">
 					We're raising a seed round <span aria-hidden="true">→</span>
 				</a>
 			</div>

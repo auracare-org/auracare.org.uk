@@ -279,8 +279,8 @@
 				{/each}
 			</ul>
 			<p class="demo-foot">
-				Read it as: when the core leads with viral URTI, clinicians agree 61% of the time, a rate
-				we measure on the live product and keep measuring. The core never reports a probability of
+				Read it as: when the core leads with viral URTI, clinicians agree 61% of the time, a rate we
+				measure on the live product and keep measuring. The core never reports a probability of
 				being right. The clinician selects, and that selection shapes the next steps and the notes.
 			</p>
 		</div>
@@ -325,11 +325,7 @@
 					href="mailto:{CONTACT.clinical}?subject=Auracare%20%E2%80%94%20Clinical%20partnership"
 					>Clinical partnerships</a
 				>
-				<a
-					class="btn-ghost"
-					href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Investor%20enquiry"
-					>For investors</a
-				>
+				<a class="btn-ghost" href="/investors">For investors</a>
 			</div>
 		</div>
 	</div>

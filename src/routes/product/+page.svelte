@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal } from '$lib/actions/motion';
-	import { CONTACT, PLATFORM_NOTE, NON_DEVICE_DISCLAIMER, WAITLIST_URL } from '$lib/data/company';
+	import { PLATFORM_NOTE, NON_DEVICE_DISCLAIMER, WAITLIST_URL } from '$lib/data/company';
 
 	/* A single day, held together by proactive check-ins. */
 	const day = [
@@ -405,11 +405,7 @@
 		</p>
 		<div class="cta-actions" use:reveal={{ delay: 140 }}>
 			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
-			<a
-				class="btn-ghost"
-				href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Investor%20enquiry"
-				>For investors</a
-			>
+			<a class="btn-ghost" href="/investors">For investors</a>
 		</div>
 	</div>
 </section>

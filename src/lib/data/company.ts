@@ -14,6 +14,7 @@
 
 export const CONTACT = {
 	seed: 'stephen@auracare.org.uk',
+	hinlun: 'hinlun@auracare.org.uk',
 	general: 'hello@auracare.org.uk',
 	clinical: 'clinical@auracare.org.uk',
 	privacy: 'privacy@auracare.org.uk',
@@ -24,6 +25,43 @@ export const CONTACT = {
 } as const;
 
 export const WAITLIST_URL = 'https://app.auratwin.club/waitlist';
+
+/* ------------------------------------------------------------------ */
+/* Investors: who covers which region, and the deck                    */
+/* ------------------------------------------------------------------ */
+
+export type InvestorContactKey = 'hinlun' | 'stephen';
+
+export interface InvestorContact {
+	/** id in team.ts, for name/photo/role. */
+	teamId: string;
+	email: string;
+	/** Shown on the founder card. */
+	coverage: string;
+	basedIn: string;
+}
+
+export const INVESTOR_CONTACTS: Record<InvestorContactKey, InvestorContact> = {
+	hinlun: {
+		teamId: 'hinlun-chen',
+		email: CONTACT.hinlun,
+		coverage: 'Hong Kong, China & Asia-Pacific',
+		basedIn: 'Hong Kong'
+	},
+	stephen: {
+		teamId: 'stephen-okita',
+		email: CONTACT.seed,
+		coverage: 'Europe & North America',
+		basedIn: 'San Francisco'
+	}
+};
+
+/** Flip `ready` to true once the PDF is in static/ under `url`. */
+export const DECK = {
+	ready: false,
+	url: '/auracare-seed-deck.pdf',
+	pendingLabel: 'New pitch deck ready Aug 3'
+} as const;
 
 /* ------------------------------------------------------------------ */
 /* Two products, one patient model                                    */
