@@ -10,7 +10,7 @@
 	} from '$lib/data/company';
 	import { getMember } from '$lib/data/team';
 
-	const founders = (['hinlun', 'stephen'] as InvestorContactKey[]).map((key) => {
+	const founders = (['stephen', 'hinlun', 'tanush'] as InvestorContactKey[]).map((key) => {
 		const contact = INVESTOR_CONTACTS[key];
 		const member = getMember(contact.teamId);
 		return {
@@ -66,14 +66,6 @@
 		{
 			q: 'How do you handle regulation?',
 			a: 'Auratwin ships as a general-wellness product under the FD&C Act §520(o)(1)(B) exclusion, so it never diagnoses or treats. Auracare is clinical decision support; its regulatory pathway is under active review, and its first trials run with the Chinese Academy of Sciences.'
-		},
-		{
-			q: 'Why does clinical work start in China?',
-			a: 'Our partnership with the Chinese Academy of Sciences gives us clinical trials and the resources to run them. One deployment can feed several regulatory dossiers at once, so we sequence markets by how far an approval travels.'
-		},
-		{
-			q: 'Can I get a data room?',
-			a: 'Yes. Email the founder for your region and they’ll set you up.'
 		}
 	];
 </script>

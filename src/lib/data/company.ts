@@ -15,6 +15,7 @@
 export const CONTACT = {
 	seed: 'stephen@auracare.org.uk',
 	hinlun: 'hinlun@auracare.org.uk',
+	tanush: 't.pandey@auracare.org.uk',
 	general: 'hello@auracare.org.uk',
 	clinical: 'clinical@auracare.org.uk',
 	privacy: 'privacy@auracare.org.uk',
@@ -30,7 +31,7 @@ export const WAITLIST_URL = 'https://app.auratwin.club/waitlist';
 /* Investors: who covers which region, and the deck                    */
 /* ------------------------------------------------------------------ */
 
-export type InvestorContactKey = 'hinlun' | 'stephen';
+export type InvestorContactKey = 'stephen' | 'hinlun' | 'tanush';
 
 export interface InvestorContact {
 	/** id in team.ts, for name/photo/role. */
@@ -42,17 +43,23 @@ export interface InvestorContact {
 }
 
 export const INVESTOR_CONTACTS: Record<InvestorContactKey, InvestorContact> = {
+	stephen: {
+		teamId: 'stephen-okita',
+		email: CONTACT.seed,
+		coverage: 'Europe & North America',
+		basedIn: 'San Francisco'
+	},
 	hinlun: {
 		teamId: 'hinlun-chen',
 		email: CONTACT.hinlun,
 		coverage: 'Hong Kong, China & Asia-Pacific',
 		basedIn: 'Hong Kong'
 	},
-	stephen: {
-		teamId: 'stephen-okita',
-		email: CONTACT.seed,
-		coverage: 'Europe & North America',
-		basedIn: 'San Francisco'
+	tanush: {
+		teamId: 'tanush-pandey',
+		email: CONTACT.tanush,
+		coverage: 'United Kingdom',
+		basedIn: 'London'
 	}
 };
 
@@ -60,7 +67,7 @@ export const INVESTOR_CONTACTS: Record<InvestorContactKey, InvestorContact> = {
 export const DECK = {
 	ready: false,
 	url: '/auracare-seed-deck.pdf',
-	pendingLabel: 'New pitch deck ready Aug 3'
+	pendingLabel: 'New pitch deck coming soon'
 } as const;
 
 /* ------------------------------------------------------------------ */
