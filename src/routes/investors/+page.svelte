@@ -3,7 +3,6 @@
 	import { reveal } from '$lib/actions/motion';
 	import {
 		CONTACT,
-		DECK,
 		INVESTOR_CONTACTS,
 		TRACTION,
 		type InvestorContactKey
@@ -24,7 +23,7 @@
 	});
 
 	const mailto = (email: string) =>
-		`mailto:${email}?subject=${encodeURIComponent('Auracare AI — Seed round')}`;
+		`mailto:${email}?subject=${encodeURIComponent('Auracare AI Seed round')}`;
 
 	const quickLinks = [
 		{
@@ -82,18 +81,13 @@
 		<span class="eyebrow" use:reveal>Seed round</span>
 		<h1 use:reveal={{ delay: 60 }}>We're raising our seed round.</h1>
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>
-			Auratwin launches to the public in August 2026, and our first clinical trials with the Chinese
-			Academy of Sciences follow. This round pays for the launch, the trials, and taking our three
+			Auratwin launches to the public in August 2026, and our first clinical trials in Asia
+			follow. This round pays for the launch, the trials, and taking our three
 			devices through certification.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 220 }}>
 			<!-- Interim mailto; swap for the Typeform link when it exists. -->
 			<a class="cta-primary" href={mailto(CONTACT.seed)}>Write to us</a>
-			{#if DECK.ready}
-				<a class="cta-deck" href={DECK.url} download>Download the pitch deck</a>
-			{:else}
-				<span class="cta-deck cta-deck--pending">{DECK.pendingLabel}</span>
-			{/if}
 		</div>
 	</div>
 </section>
@@ -237,35 +231,6 @@
 		outline: 2px solid var(--color-primary-400);
 		outline-offset: 3px;
 	}
-	.cta-deck {
-		display: inline-flex;
-		align-items: center;
-		font-weight: 500;
-		font-size: 0.98rem;
-		padding: 0.8rem 1.5rem;
-		border-radius: 6px;
-		border: 1px solid var(--color-border-strong);
-		color: var(--color-primary-700);
-		background: #fff;
-		transition:
-			border-color 0.15s ease,
-			background 0.15s ease;
-	}
-	.cta-deck:hover {
-		border-color: var(--color-primary-600);
-		background: var(--color-primary-50);
-	}
-	.cta-deck--pending {
-		background: var(--color-surface-alt);
-		border: 1px dashed var(--color-border-default);
-		color: var(--color-ink-faint);
-		cursor: default;
-	}
-	.cta-deck--pending:hover {
-		border-color: var(--color-border-default);
-		background: var(--color-surface-alt);
-	}
-
 	/* ---------------- Shared ---------------- */
 	.lede {
 		font-size: clamp(1rem, 1.6vw, 1.15rem);
