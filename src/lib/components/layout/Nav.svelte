@@ -94,11 +94,7 @@
 		</div>
 
 		<div class="nav-cta">
-			<a
-				class="nav-invest"
-				href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Investor%20enquiry"
-				>For investors</a
-			>
+			<a class="nav-invest" href="/investors">For investors</a>
 			<a class="nav-waitlist" href={WAITLIST_URL}>Join the waitlist</a>
 		</div>
 
@@ -157,7 +153,7 @@
 					onclick={() => (mobileOpen = false)}>Explore the ontology ↗</a
 				>
 				<div class="nav-mobile-cta">
-					<a class="nav-invest" href="mailto:{CONTACT.seed}" onclick={() => (mobileOpen = false)}
+					<a class="nav-invest" href="/investors" onclick={() => (mobileOpen = false)}
 						>For investors</a
 					>
 					<a class="nav-waitlist" href={WAITLIST_URL} onclick={() => (mobileOpen = false)}

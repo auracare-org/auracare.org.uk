@@ -93,8 +93,11 @@
 				do process: the email address, and any name or details you choose to add, when you join the
 				waitlist; the contents of your message when you write to
 				<a href="mailto:{CONTACT.general}">{CONTACT.general}</a> or
-				<a href="mailto:{CONTACT.seed}">{CONTACT.seed}</a>; short-lived server logs that keep the
-				site secure; and, only if you accept them from the consent banner, the cookieless analytics
+				<a href="mailto:{CONTACT.seed}">{CONTACT.seed}</a>; the details you submit through the
+				<a href="/investors">investor contact form</a> (name, firm, email address, region and
+				message), which are delivered to the founder for your region as an email through Resend, our
+				email delivery provider, and stored nowhere else; short-lived server logs that keep the site
+				secure; and, only if you accept them from the consent banner, the cookieless analytics
 				described in our <a href="/cookies">cookie policy</a> (Vercel Web Analytics). If you decline,
 				analytics never loads.
 			</p>

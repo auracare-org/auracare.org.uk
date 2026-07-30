@@ -34,7 +34,7 @@
 			<nav class="footer-col" aria-label="Company">
 				<h4>Company</h4>
 				<a href="/careers">Careers</a>
-				<a href="mailto:{CONTACT.seed}">For investors</a>
+				<a href="/investors">For investors</a>
 			</nav>
 
 			<nav class="footer-col" aria-label="Legal">
