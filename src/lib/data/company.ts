@@ -15,7 +15,7 @@
 export const CONTACT = {
 	seed: 'stephen@auracare.org.uk',
 	hinlun: 'hinlun@auracare.org.uk',
-	tanush: 't.pandey@auracare.org.uk',
+	tanush: 'tanush@auracare.org.uk',
 	general: 'hello@auracare.org.uk',
 	clinical: 'clinical@auracare.org.uk',
 	privacy: 'privacy@auracare.org.uk',
@@ -52,7 +52,7 @@ export const INVESTOR_CONTACTS: Record<InvestorContactKey, InvestorContact> = {
 	hinlun: {
 		teamId: 'hinlun-chen',
 		email: CONTACT.hinlun,
-		coverage: 'Hong Kong, China & Asia-Pacific',
+		coverage: 'Asia-Pacific',
 		basedIn: 'Hong Kong'
 	},
 	tanush: {

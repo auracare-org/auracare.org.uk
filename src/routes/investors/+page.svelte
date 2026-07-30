@@ -72,7 +72,7 @@
 
 <Seo
 	title="Investors"
-	description="Auracare is raising its seed round. Stephen Okita covers North America; Hinlun Chen covers Hong Kong & Asia-Pacific; Tanush Pandey covers Europe. Write to the founder for your region."
+	description="Auracare is raising its seed round. Stephen Okita covers North America; Hinlun Chen covers Asia-Pacific; Tanush Pandey covers Europe. Write to the founder for your region."
 	path="/investors"
 />
 
