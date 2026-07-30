@@ -55,7 +55,7 @@
 				We have appointed a Data Protection Officer, Mr Ahnaf Kabir, who you can reach directly at
 				<a href="mailto:ahnaf@auracare.org.uk">ahnaf@auracare.org.uk</a>. For any privacy question,
 				or to exercise your rights, contact
-				<a href="mailto:{CONTACT.privacy}">{CONTACT.privacy}</a> — either route works.
+				<a href="mailto:{CONTACT.privacy}">{CONTACT.privacy}</a>. Either route works.
 			</p>
 
 			<h2 id="scope">What this policy covers</h2>
@@ -153,8 +153,8 @@
 			<p>
 				Alongside that, three quieter bases. We process your account data, and run the service you
 				signed up for, because our contract with you requires it (Article 6(1)(b)). We keep the site
-				and service secure, maintain server logs and improve what we build — where none of that
-				involves your health data — under our legitimate interests (Article 6(1)(f)). And the
+				and service secure, maintain server logs and improve what we build, where none of that
+				involves your health data, under our legitimate interests (Article 6(1)(f)). And the
 				waitlist and website analytics run on your consent, which you can withdraw at any time.
 			</p>
 
@@ -165,7 +165,7 @@
 				<li>learn your baselines and notice meaningful changes;</li>
 				<li>
 					send you check-ins: a morning brief, an evening wrap, and nudges when your data warrants
-					one — you control how present Aura is, and you can quieten or stop check-ins at any time;
+					one. You control how present Aura is, and you can quieten or stop check-ins at any time;
 				</li>
 				<li>operate, secure and improve the service.</li>
 			</ul>
@@ -218,7 +218,7 @@
 			</ul>
 			<p>
 				One honest note on messaging. When you talk to Aura over iMessage, WhatsApp or RCS, delivery
-				necessarily passes through that platform — Apple, Meta, or your mobile carrier — and is
+				necessarily passes through that platform (Apple, Meta, or your mobile carrier) and is
 				subject to that platform’s own security and terms. We do not control those platforms, and
 				you choose the channel.
 			</p>

@@ -17,7 +17,7 @@
 		description,
 		path = '/',
 		image = '/og/auracare-og.png',
-		imageAlt = 'Auracare AI — two products on one patient model',
+		imageAlt = 'Auracare AI: two products on one patient model',
 		type = 'website',
 		noindex = false
 	}: Props = $props();

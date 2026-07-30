@@ -388,7 +388,7 @@ export const MARKET_WAVES: MarketWave[] = [
 		key: 'deferred',
 		tone: 'deferred',
 		title: 'Rest of world',
-		caption: 'Everywhere else — more to come.'
+		caption: 'Everywhere else, more to come.'
 	}
 ];
 
@@ -565,28 +565,28 @@ export const MARKET_POINTS: MarketPoint[] = [
 		coords: [78.9629, 20.5937],
 		tone: 'deferred',
 		wave: 5,
-		label: 'Rest of world — more to come'
+		label: 'Rest of world, more to come'
 	},
 	{
 		name: 'Brazil',
 		coords: [-51.9253, -14.235],
 		tone: 'deferred',
 		wave: 5,
-		label: 'Rest of world — more to come'
+		label: 'Rest of world, more to come'
 	},
 	{
 		name: 'Japan',
 		coords: [138.2529, 36.2048],
 		tone: 'deferred',
 		wave: 5,
-		label: 'Rest of world — more to come'
+		label: 'Rest of world, more to come'
 	},
 	{
 		name: 'Saudi Arabia',
 		coords: [46.6753, 24.7136],
 		tone: 'deferred',
 		wave: 5,
-		label: 'Rest of world — more to come'
+		label: 'Rest of world, more to come'
 	}
 ];
 

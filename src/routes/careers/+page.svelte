@@ -82,7 +82,7 @@
 		<p class="why-lede" use:reveal={{ delay: 120 }}>
 			You'll own real work from day one, talk to the founders because there's no one to route
 			around, and ship without collecting a stack of sign-offs. We're building the hard parts
-			ourselves — not wrapping someone else's model — and we take getting safety right seriously,
+			ourselves, not wrapping someone else's model, and we take getting safety right seriously,
 			because there are actual people on the other end. Everything else, we try not to.
 		</p>
 	</div>
@@ -95,7 +95,7 @@
 		<h2 use:reveal={{ delay: 60 }}>Where we’re hiring.</h2>
 		<p class="roles-note" use:reveal={{ delay: 120 }}>
 			Titles are a rough guide, not a checklist. Close enough? Interestingly different? Email us
-			anyway — we hire people, not job descriptions.
+			anyway. We hire people, not job descriptions.
 		</p>
 		<div class="role-grid">
 			{#each roles as role, i}

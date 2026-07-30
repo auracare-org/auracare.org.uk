@@ -190,7 +190,7 @@
 									data-label={c.market
 										? c.market.label
 										: deferred
-											? 'Rest of world — more to come'
+											? 'Rest of world, more to come'
 											: null}
 									style={c.market
 										? `--tone:${toneColor[c.market.tone]}`
