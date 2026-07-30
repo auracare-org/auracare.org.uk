@@ -46,7 +46,7 @@ export const INVESTOR_CONTACTS: Record<InvestorContactKey, InvestorContact> = {
 	stephen: {
 		teamId: 'stephen-okita',
 		email: CONTACT.seed,
-		coverage: 'Europe & North America',
+		coverage: 'North America',
 		basedIn: 'San Francisco'
 	},
 	hinlun: {
@@ -58,7 +58,7 @@ export const INVESTOR_CONTACTS: Record<InvestorContactKey, InvestorContact> = {
 	tanush: {
 		teamId: 'tanush-pandey',
 		email: CONTACT.tanush,
-		coverage: 'United Kingdom',
+		coverage: 'Europe',
 		basedIn: 'London'
 	}
 };

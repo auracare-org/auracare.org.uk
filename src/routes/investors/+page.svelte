@@ -65,14 +65,14 @@
 		},
 		{
 			q: 'How do you handle regulation?',
-			a: 'Auratwin ships as a general-wellness product under the FD&C Act §520(o)(1)(B) exclusion, so it never diagnoses or treats. Auracare is clinical decision support; its regulatory pathway is under active review, and its first trials run with the Chinese Academy of Sciences.'
+			a: 'Auratwin ships as a general-wellness product under the FD&C Act §520(o)(1)(B) exclusion, so it never diagnoses or treats. Auracare is clinical decision support; its regulatory pathway is under active review.'
 		}
 	];
 </script>
 
 <Seo
 	title="Investors"
-	description="Auracare is raising its seed round. Hinlun Chen covers Hong Kong & Asia-Pacific; Stephen Okita covers Europe & North America. Write to the founder for your region."
+	description="Auracare is raising its seed round. Stephen Okita covers North America; Hinlun Chen covers Hong Kong & Asia-Pacific; Tanush Pandey covers Europe. Write to the founder for your region."
 	path="/investors"
 />
 
