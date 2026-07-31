@@ -25,7 +25,7 @@ export const team: Record<string, TeamMember> = {
 		id: 'stephen-okita',
 		name: 'Stephen Okita',
 		img: '/JPG/stephen-okita.jpg',
-		role: 'Co-founder · CFO',
+		role: 'Co-founder · CTO',
 		bio: 'Co-founder, computer science at UC Berkeley. Sets the technical architecture and product direction, and leads business relations in San Francisco.',
 		linkedin: 'https://www.linkedin.com/in/stephen-okita/',
 		website: 'https://stephenokita.com/'
