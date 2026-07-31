@@ -13,11 +13,19 @@ export interface TeamMember {
  * Former team members, advisors and interns are intentionally not listed.
  */
 export const team: Record<string, TeamMember> = {
+	'tanush-pandey': {
+		id: 'tanush-pandey',
+		name: 'Tanush Pandey',
+		img: '/JPG/tanush-pandey-new.jpg',
+		role: 'Co-founder · CEO & CMO',
+		bio: 'Co-founder and our London presence, reading Medicine at Imperial College London. Leads clinical strategy, safety and the medical evidence behind Auracare.',
+		linkedin: 'https://www.linkedin.com/in/tanush-pandey-767a60260/'
+	},
 	'stephen-okita': {
 		id: 'stephen-okita',
 		name: 'Stephen Okita',
 		img: '/JPG/stephen-okita.jpg',
-		role: 'Co-founder · CEO & CTO',
+		role: 'Co-founder · CTO',
 		bio: 'Co-founder, computer science at UC Berkeley. Sets the technical architecture and product direction, and leads business relations in San Francisco.',
 		linkedin: 'https://www.linkedin.com/in/stephen-okita/',
 		website: 'https://stephenokita.com/'
@@ -26,18 +34,10 @@ export const team: Record<string, TeamMember> = {
 		id: 'hinlun-chen',
 		name: 'Hinlun Chen',
 		img: '/JPG/hinlin-chen.jpg',
-		role: 'Co-founder · CFO',
+		role: 'Co-founder · COO',
 		bio: 'Co-founder, PPE at LSE, and runs three OEM factories in Hong Kong. Leads operations and partnerships, and business relations in Hong Kong and China.',
 		linkedin: 'https://www.linkedin.com/in/hin-lun-chen/',
 		website: 'https://www.hinlun.com/'
-	},
-	'tanush-pandey': {
-		id: 'tanush-pandey',
-		name: 'Tanush Pandey',
-		img: '/JPG/tanush-pandey-new.jpg',
-		role: 'Co-founder · CMO',
-		bio: 'Co-founder and our London presence, reading Medicine at Imperial College London. Leads clinical strategy, safety and the medical evidence behind Auracare.',
-		linkedin: 'https://www.linkedin.com/in/tanush-pandey-767a60260/'
 	},
 	'ahnaf-kabir': {
 		id: 'ahnaf-kabir',

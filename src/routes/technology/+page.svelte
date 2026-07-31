@@ -63,7 +63,7 @@
 		{
 			key: 'outcome',
 			label: 'Medical outcome',
-			body: 'The thesis becomes an action: a referral, a prescription, further testing or a lifestyle plan, each one gated by safety and by what is permitted where the patient actually is.'
+			body: 'The thesis becomes an action: a referral, a prescription, further testing or a lifestyle plan, each one gated by safety and by what is permitted where the patient is.'
 		}
 	];
 
@@ -117,7 +117,7 @@
 		{
 			title: 'Jurisdiction guard',
 			stage: 'Value-of-information',
-			body: 'The loop only ever proposes actions permitted where the patient actually is: prescribing authority and what is possible in primary care versus referral.'
+			body: 'The loop only ever proposes actions permitted where the patient is: prescribing authority and what is possible in primary care versus referral.'
 		},
 		{
 			title: 'Contraindication check',
@@ -172,7 +172,7 @@
 			the language medicine already agrees on. <strong>Auratwin</strong> is a consumer twin that
 			learns your daily life. <strong>Auracare</strong> is clinical decision support that reasons over
 			the whole picture: vitals, history, symptoms and everything the twin captures. This page is how
-			both actually work.
+			both work.
 		</p>
 		<nav class="hero-jump" use:reveal={{ delay: 200 }} aria-label="Jump to a product">
 			<a href="#auratwin">Auratwin <span aria-hidden="true">→</span></a>
@@ -227,7 +227,7 @@
 				>
 					<title id="churn-title">Health-app retention decay over the first 30 days</title>
 					<desc id="churn-desc">
-						Of everyone who installs a health app, 20–30% are still active on day one and only 3–4%
+						Of everyone who installs a health app, 20-30% are still active on day one and only 3-4%
 						on day thirty, with the steepest fall in the first two weeks.
 					</desc>
 					<defs>
@@ -280,8 +280,8 @@
 					<circle class="churn-dot" cx="500" cy="185" r="4.5" />
 
 					<text class="churn-pt" x="52" y="17">100% · install</text>
-					<text class="churn-pt" x="86" y="145">20–30% · day 1</text>
-					<text class="churn-pt churn-pt-end" x="490" y="176">3–4% · day 30</text>
+					<text class="churn-pt" x="86" y="145">20-30% · day 1</text>
+					<text class="churn-pt churn-pt-end" x="490" y="176">3-4% · day 30</text>
 					<text class="churn-note" x="120" y="112">steepest drop: the first two weeks</text>
 
 					<text class="churn-tick" x="40" y="206">day 0</text>
@@ -290,8 +290,8 @@
 			</div>
 
 			<figcaption class="churn-src">
-				Source: Sahha, health-app churn and retention. Day-1 retention averages 20–30% of
-				installers; day-30 averages 3–4%.
+				Source: Sahha, health-app churn and retention. Day-1 retention averages 20-30% of
+				installers; day-30 averages 3-4%.
 			</figcaption>
 		</figure>
 
@@ -349,9 +349,8 @@
 			</p>
 			<p use:reveal={{ delay: 180 }}>
 				Because everything is timestamped, the state is longitudinal, not a flat snapshot. It can
-				answer not just <em>what a reading was</em> but
-				<em>how it has changed, and whether that matters now</em>: iron studies rising, a resting
-				heart rate creeping up.
+				answer <em>what a reading was</em>, <em>how it has changed</em>, and whether that matters
+				now: iron studies rising, a resting heart rate creeping up.
 			</p>
 			<p use:reveal={{ delay: 220 }}>
 				Acute readings arrive the same way. Our own devices (a recording stethoscope, a
@@ -534,8 +533,8 @@
 			<p>
 				And the outermost gate is a person. Auracare is built to be used
 				<strong>in conjunction with a clinician, never to replace one</strong>. It is a tool that
-				informs and supports their judgement &mdash; the clinician stays accountable for every
-				decision, and their opinion always overrides the model.
+				informs and supports their judgement. The clinician stays accountable for every decision,
+				and their opinion always overrides the model.
 			</p>
 		</div>
 

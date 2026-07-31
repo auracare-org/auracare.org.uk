@@ -57,9 +57,9 @@
 					},
 					"foundingDate": "2025",
 					"founder": [
+						{ "@type": "Person", "name": "Tanush Pandey" },
 						{ "@type": "Person", "name": "Stephen Okita" },
-						{ "@type": "Person", "name": "Hinlun Chen" },
-						{ "@type": "Person", "name": "Tanush Pandey" }
+						{ "@type": "Person", "name": "Hinlun Chen" }
 					],
 					"address": { "@type": "PostalAddress", "addressCountry": "GB" },
 					"contactPoint": {

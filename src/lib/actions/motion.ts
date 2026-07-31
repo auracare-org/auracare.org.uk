@@ -7,7 +7,7 @@ export function prefersReducedMotion(): boolean {
 }
 
 interface RevealParams {
-	/** 0–1 intersection ratio before revealing. */
+	/** 0 to 1 intersection ratio before revealing. */
 	threshold?: number;
 	/** Reveal once and stop observing (default true). */
 	once?: boolean;
@@ -57,7 +57,7 @@ export const reveal: Action<HTMLElement, RevealParams | undefined> = (node, para
 };
 
 interface ProgressParams {
-	/** Called with a 0–1 value as the node travels through the viewport. */
+	/** Called with a 0 to 1 value as the node travels through the viewport. */
 	onProgress: (p: number) => void;
 }
 

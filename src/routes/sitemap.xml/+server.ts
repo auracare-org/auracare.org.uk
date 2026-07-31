@@ -18,7 +18,7 @@ const routes: { path: string; priority: number; changefreq: string }[] = [
 ];
 
 // Generated at build time (routes are prerendered), so this reflects the
-// last deploy — a reasonable lastmod for a marketing site.
+// last deploy, a reasonable lastmod for a marketing site.
 const lastmod = new Date().toISOString().slice(0, 10);
 
 export const GET: RequestHandler = () => {
