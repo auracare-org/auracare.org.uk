@@ -103,7 +103,7 @@ export const PRODUCTS: Product[] = [
 		name: 'Auracare',
 		tagline: 'Decision support inside the consultation',
 		blurb:
-			'Clinician-facing clinical decision support that works quietly during the appointment. It reasons over the twin’s summary, live vitals and the conversation itself, so the clinician keeps their eyes on the patient. In development.',
+			'Clinician-facing clinical decision support that works in the background during the appointment. It reasons over the twin’s summary, live vitals and the conversation itself, so the clinician keeps their eyes on the patient. In development.',
 		status: 'in-development',
 		statusLabel: 'Expected May 2027',
 		href: '/product/auracare'
@@ -208,7 +208,7 @@ export const AURACARE_OUTPUTS: AuracareStage[] = [
 	},
 	{
 		title: 'Next steps, tailored',
-		body: 'Guideline-aligned options for each path, aware of what is actually available where the clinician works.'
+		body: 'Guideline-aligned options for each path, aware of what is available where the clinician works.'
 	},
 	{
 		title: 'Documentation, automatic',
@@ -437,7 +437,7 @@ export const MARKET_POINTS: MarketPoint[] = [
 		wave: 1,
 		label: 'Operations base and gateway to the Greater Bay Area'
 	},
-	// Wave 3: product crossover — both products meet in the East Asian hubs
+	// Wave 3: product crossover, where both products meet in the East Asian hubs
 	{
 		name: 'Taiwan',
 		coords: [121.5654, 25.033],
@@ -559,7 +559,7 @@ export const MARKET_POINTS: MarketPoint[] = [
 		wave: 4,
 		label: 'African expansion'
 	},
-	// Wave 6: rest of world — more to come
+	// Wave 6: rest of world, more to come
 	{
 		name: 'India',
 		coords: [78.9629, 20.5937],
@@ -654,7 +654,7 @@ export interface MoatPillar {
 export const MOAT: MoatPillar[] = [
 	{
 		title: 'One timestamped, high-context patient state',
-		body: 'Many have tried; this is the first product that can actually pull it off. Everyday-life signals from the twin, acute vitals streamed straight from our own hardware, and clinical history all map onto one shared clinical vocabulary, each reading timestamped. That builds a longitudinal patient state, not a flat snapshot, so the core reasons over how someone is changing.'
+		body: 'Many have tried; this is the first product that can pull it off. Everyday-life signals from the twin, acute vitals streamed straight from our own hardware, and clinical history all map onto one shared clinical vocabulary, each reading timestamped. That builds a longitudinal patient state, not a flat snapshot, so the core reasons over how someone is changing.'
 	},
 	{
 		title: 'Neuro-symbolic: a glass box, not a black box',
@@ -662,7 +662,7 @@ export const MOAT: MoatPillar[] = [
 	},
 	{
 		title: 'A reasoning loop that asks the next-best question',
-		body: "A value-of-information loop, not a fixed pipeline: the core keeps a live ranked list of what's likely, then asks only the single question, exam or test that resolves the most uncertainty for its cost, and only ones permitted where the patient actually is."
+		body: "A value-of-information loop, not a fixed pipeline: the core keeps a live ranked list of what's likely, then asks only the single question, exam or test that resolves the most uncertainty for its cost, and only ones permitted where the patient is."
 	}
 ];
 

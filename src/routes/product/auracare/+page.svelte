@@ -9,7 +9,7 @@
 			stat: '~80%',
 			label: 'of doctors already reach for AI',
 			title: 'The demand is already there',
-			body: 'Clinicians want the help. What breaks is the moment they turn to a screen mid-consultation: the patient watches their doctor google, and trust quietly erodes.'
+			body: 'Clinicians want the help. What breaks is the moment they turn to a screen mid-consultation: the patient watches their doctor google, and trust erodes.'
 		},
 		{
 			stat: '34%',
@@ -40,7 +40,7 @@
 		{
 			k: '03',
 			title: 'The clinician stays with the patient',
-			body: 'Auracare reasons quietly in the background and surfaces what’s useful. The clinician never appears to search anything, so eye contact, and the relationship, holds.'
+			body: 'Auracare reasons in the background and surfaces what’s useful. The clinician never appears to search anything, so eye contact, and the relationship, holds.'
 		}
 	];
 
@@ -103,7 +103,7 @@
 
 <Seo
 	title="Auracare: decision support inside the consultation"
-	description="Auracare is clinician-facing clinical decision support that works quietly during the appointment. It reasons over the twin's lifestyle summary, live vitals from our own hardware, and the conversation itself, so the clinician keeps their eyes on the patient. In development."
+	description="Auracare is clinician-facing clinical decision support that works in the background during the appointment. It reasons over the twin's lifestyle summary, live vitals from our own hardware, and the conversation itself, so the clinician keeps their eyes on the patient. In development."
 	path="/product/auracare"
 />
 
@@ -186,8 +186,8 @@
 		<span class="eyebrow" use:reveal>Inside the consultation</span>
 		<h2 use:reveal={{ delay: 60 }}>Everything arrives automatically, so nothing interrupts.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Auracare is built around a single rule: the moment a clinician has to break away to search,
-			type or look something up is the moment the consultation suffers. So it removes those moments.
+			Auracare is built around a single rule: every time a clinician has to break away to search,
+			type or look something up, the consultation suffers. So it removes those moments.
 		</p>
 
 		<ol class="room">

@@ -114,7 +114,7 @@
 	/* Typography from Figma design system */
 	--font-family-heading: 'DM Sans', 'Helvetica Neue', system-ui, sans-serif;
 	--font-family-sans: 'Poppins', 'Helvetica Neue', system-ui, sans-serif;
-	/* Was a monospace face used for eyebrows/pills/labels — reads too "AI".
+	/* Was a monospace face used for eyebrows/pills/labels; reads too "AI".
 	   Repointed to the heading sans so those labels feel human. */
 	--font-family-mono: 'DM Sans', 'Helvetica Neue', system-ui, sans-serif;
 

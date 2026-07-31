@@ -68,7 +68,7 @@
 		if (!pinned) return;
 		// The section pins (map fully centered / "reached") around p≈0.22 and unpins
 		// around p≈0.77. Start the wave sequence only once the map is reached, so you
-		// land on Wave 1 and have to scroll again for Wave 2 — instead of the early
+		// land on Wave 1 and have to scroll again for Wave 2, instead of the early
 		// waves being spent while the map is still sliding up into view.
 		const t = Math.min(1, Math.max(0, (p - 0.22) / 0.52));
 		activeWave = Math.round(t * maxWave);
