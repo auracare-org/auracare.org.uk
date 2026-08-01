@@ -4,6 +4,7 @@
 	import { dev } from '$app/environment';
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 	import { cookieConsent } from '$lib/stores/cookieConsent';
+	import { loadPostHog, stopPostHog } from '$lib/analytics/posthog';
 	import SeedBanner from '$lib/components/layout/SeedBanner.svelte';
 	import Nav from '$lib/components/layout/Nav.svelte';
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
@@ -20,6 +21,11 @@
 		if ($cookieConsent === 'accepted' && !analyticsLoaded) {
 			analyticsLoaded = true;
 			injectAnalytics({ mode: dev ? 'development' : 'production' });
+			loadPostHog();
+		} else if ($cookieConsent === 'rejected') {
+			// Only does anything if they accepted earlier in the session and then
+			// changed their mind; a straight decline never loads PostHog at all.
+			stopPostHog();
 		}
 	});
 

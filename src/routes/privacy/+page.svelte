@@ -27,7 +27,7 @@
 			only the sources you choose, and your consent is explicit, per-source and revocable at any
 			time.
 		</p>
-		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 29 July 2026</p>
+		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 1 August 2026</p>
 	</div>
 </section>
 
@@ -94,8 +94,9 @@
 				waitlist; the contents of your message when you write to
 				<a href="mailto:{CONTACT.general}">{CONTACT.general}</a> or
 				<a href="mailto:{CONTACT.seed}">{CONTACT.seed}</a>; short-lived server logs that keep the
-				site secure; and, only if you accept them from the consent banner, the cookieless analytics
-				described in our <a href="/cookies">cookie policy</a> (Vercel Web Analytics). If you decline,
+				site secure; and, only if you accept them from the consent banner, the optional analytics
+				described in our <a href="/cookies">cookie policy</a> (Vercel Web Analytics, and PostHog, which
+				also records a replay of your visit to this website with anything you type masked). If you decline,
 				analytics never loads.
 			</p>
 			<p>
@@ -214,7 +215,10 @@
 					AI model providers, which process your conversations to power Aura and are contractually
 					prohibited from using your data to train their own models;
 				</li>
-				<li>analytics, for this website only, never involving health data.</li>
+				<li>
+					analytics, for this website only, held in the European Union and never involving health
+					data.
+				</li>
 			</ul>
 			<p>
 				One honest note on messaging. When you talk to Aura over iMessage, WhatsApp or RCS, delivery

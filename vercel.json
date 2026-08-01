@@ -1,6 +1,20 @@
 {
 	"buildCommand": "yarn build",
 	"framework": "sveltekit",
+	"rewrites": [
+		{
+			"source": "/relay/static/:path(.*)",
+			"destination": "https://eu-assets.i.posthog.com/static/:path"
+		},
+		{
+			"source": "/relay/array/:path(.*)",
+			"destination": "https://eu-assets.i.posthog.com/array/:path"
+		},
+		{
+			"source": "/relay/:path(.*)",
+			"destination": "https://eu.i.posthog.com/:path"
+		}
+	],
 	"headers": [
 		{
 			"source": "/.well-known/com.apple.remotemanagement",
