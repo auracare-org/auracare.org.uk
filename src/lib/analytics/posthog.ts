@@ -59,6 +59,15 @@ export function loadPostHog(): Promise<void> {
 }
 
 /**
+ * Record a custom event. A no-op until PostHog has been initialised, which only
+ * happens after the visitor accepts analytics — so callers must gate on consent
+ * (and typically `await loadPostHog()`) before relying on this firing.
+ */
+export function capture(event: string, props?: Record<string, unknown>): void {
+	client?.capture(event, props);
+}
+
+/**
  * Stop capturing for a visitor who withdraws consent after having accepted it.
  * Resets first so the stored ids are cleared, then records the opt-out, which
  * lives outside the persistence `reset` wipes.
