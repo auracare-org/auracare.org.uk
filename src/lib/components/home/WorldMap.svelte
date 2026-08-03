@@ -77,7 +77,9 @@
 	let stageEl = $state<HTMLElement | null>(null);
 
 	onMount(() => {
-		const mq = window.matchMedia('(min-width: 780px)');
+		// Only pin when the viewport is both wide and tall enough to show the
+		// complete section beneath the fixed site header.
+		const mq = window.matchMedia('(min-width: 780px) and (min-height: 800px)');
 		let timer: ReturnType<typeof setInterval> | undefined;
 		let io: IntersectionObserver | undefined;
 
@@ -414,7 +416,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		overflow: hidden;
+		overflow: visible;
 	}
 	.wave-slide {
 		display: flex;

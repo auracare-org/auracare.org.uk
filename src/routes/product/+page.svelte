@@ -1004,7 +1004,7 @@
 		}
 		.tune-panel {
 			position: sticky;
-			top: 5rem;
+			top: calc(var(--header-h, 92px) + 1rem);
 		}
 	}
 	@media (max-width: 560px) {
