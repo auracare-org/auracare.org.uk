@@ -17,6 +17,24 @@
 	],
 	"headers": [
 		{
+			"source": "/auracare-deck.pdf",
+			"headers": [
+				{
+					"key": "X-Robots-Tag",
+					"value": "noindex, nofollow"
+				}
+			]
+		},
+		{
+			"source": "/deck",
+			"headers": [
+				{
+					"key": "X-Robots-Tag",
+					"value": "noindex, nofollow"
+				}
+			]
+		},
+		{
 			"source": "/.well-known/com.apple.remotemanagement",
 			"headers": [
 				{
