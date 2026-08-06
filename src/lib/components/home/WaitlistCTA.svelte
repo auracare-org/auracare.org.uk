@@ -32,11 +32,8 @@
 
 			<div class="investors">
 				<p class="investors-line">Investors: we&rsquo;re raising our seed round.</p>
-				<a
-					class="investors-link"
-					href="mailto:{CONTACT.seed}?subject=Auracare%20AI%3A%20Seed%20round"
-				>
-					Talk to Stephen <span aria-hidden="true">&rarr;</span>
+				<a class="investors-link" href="/investors">
+					Meet the founders <span aria-hidden="true">&rarr;</span>
 				</a>
 			</div>
 		</div>

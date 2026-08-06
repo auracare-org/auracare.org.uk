@@ -14,7 +14,11 @@
 	$effect(() => {
 		const el = scene;
 		if (!el) return;
-		if (window.matchMedia('(max-width: 700px), (prefers-reduced-motion: reduce)').matches) return;
+		if (
+			window.matchMedia('(max-width: 700px), (max-height: 900px), (prefers-reduced-motion: reduce)')
+				.matches
+		)
+			return;
 
 		const steps = MOAT.length;
 		let raf = 0;
@@ -143,20 +147,23 @@
 	}
 	.pin {
 		position: sticky;
-		top: 0;
+		top: var(--header-h, 92px);
+		height: calc(100svh - var(--header-h, 92px));
+		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		padding-block: clamp(3rem, 6vw, 5rem);
+		padding-block: clamp(1rem, 3vh, 2rem);
 	}
 	/* No scroll-pin on narrow screens (stacked content can exceed the
 	   viewport) or when reduced motion is requested: fall back to normal flow. */
-	@media (max-width: 700px), (prefers-reduced-motion: reduce) {
+	@media (max-width: 700px), (max-height: 900px), (prefers-reduced-motion: reduce) {
 		.scene {
 			height: auto;
 		}
 		.pin {
 			position: static;
+			height: auto;
 			padding-block: 0;
 		}
 	}
@@ -197,7 +204,7 @@
 	.venn {
 		position: relative;
 		width: 100%;
-		max-width: 22rem;
+		max-width: min(22rem, 36vh);
 		aspect-ratio: 1 / 1;
 	}
 	.lobes,

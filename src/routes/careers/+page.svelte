@@ -95,7 +95,7 @@
 		<h2 use:reveal={{ delay: 60 }}>Where we’re hiring.</h2>
 		<p class="roles-note" use:reveal={{ delay: 120 }}>
 			Titles are a rough guide, not a checklist. Close enough? Interestingly different? Email us
-			anyway: we hire people, not job descriptions.
+			anyway. We hire people, not job descriptions.
 		</p>
 		<div class="role-grid">
 			{#each roles as role, i}

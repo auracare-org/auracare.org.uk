@@ -312,6 +312,7 @@
 									value: t.target,
 									format: t.suffix === 'k' ? formatK : formatM
 								}}
+								aria-label={t.suffix === 'k' ? formatK(t.target) : formatM(t.target)}
 							></dd>
 						{:else}
 							<dd class="stat-value">{t.value}</dd>

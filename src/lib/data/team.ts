@@ -13,11 +13,19 @@ export interface TeamMember {
  * Former team members, advisors and interns are intentionally not listed.
  */
 export const team: Record<string, TeamMember> = {
+	'tanush-pandey': {
+		id: 'tanush-pandey',
+		name: 'Tanush Pandey',
+		img: '/JPG/tanush-pandey-new.jpg',
+		role: 'Co-founder · CEO & CMO',
+		bio: 'Co-founder and our London presence, reading Medicine at Imperial College London. Leads clinical strategy, safety and the medical evidence behind Auracare.',
+		linkedin: 'https://www.linkedin.com/in/tanush-pandey-767a60260/'
+	},
 	'stephen-okita': {
 		id: 'stephen-okita',
 		name: 'Stephen Okita',
 		img: '/JPG/stephen-okita.jpg',
-		role: 'Co-founder · CEO & CTO',
+		role: 'Co-founder · CTO',
 		bio: 'Co-founder, computer science at UC Berkeley. Sets the technical architecture and product direction, and leads business relations in San Francisco.',
 		linkedin: 'https://www.linkedin.com/in/stephen-okita/',
 		website: 'https://stephenokita.com/'
@@ -31,20 +39,12 @@ export const team: Record<string, TeamMember> = {
 		linkedin: 'https://www.linkedin.com/in/hin-lun-chen/',
 		website: 'https://www.hinlun.com/'
 	},
-	'tanush-pandey': {
-		id: 'tanush-pandey',
-		name: 'Tanush Pandey',
-		img: '/JPG/tanush-pandey-new.jpg',
-		role: 'Co-founder · CMO',
-		bio: 'Co-founder and our London presence, reading Medicine at Imperial College London. Leads clinical strategy, safety and the medical evidence behind Auracare.',
-		linkedin: 'https://www.linkedin.com/in/tanush-pandey-767a60260/'
-	},
 	'ahnaf-kabir': {
 		id: 'ahnaf-kabir',
 		name: 'Ahnaf Kabir',
 		img: '/JPG/ahnaf-kabir.jpg',
-		role: 'Head of IT & Compliance',
-		bio: 'Leads security, internal infrastructure and our compliance programme.',
+		role: 'CISO',
+		bio: 'Former software lead at Slate and co-founder of Auracle, a medtech company bringing aural health to the home. Manages security operations, technical infrastructure and backend engineering.',
 		linkedin: 'https://www.linkedin.com/in/akn101',
 		website: 'https://akn.me.uk/'
 	},

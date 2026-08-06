@@ -11,9 +11,6 @@
 					CONTACT.locations[CONTACT.locations.length - 1]
 			: CONTACT.locations[0]
 	);
-
-	const mailto =
-		'mailto:' + CONTACT.seed + '?subject=' + encodeURIComponent('Auracare AI: Investor enquiry');
 </script>
 
 <section class="team section-y">
@@ -77,8 +74,8 @@
 					decision support), we&rsquo;d love to talk.
 				</p>
 			</div>
-			<a class="raise-cta" href={mailto}>
-				Talk to Stephen <span aria-hidden="true">&rarr;</span>
+			<a class="raise-cta" href="/investors">
+				Meet the founders <span aria-hidden="true">&rarr;</span>
 			</a>
 		</div>
 	</div>

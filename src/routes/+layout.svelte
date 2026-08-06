@@ -4,6 +4,7 @@
 	import { dev } from '$app/environment';
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 	import { cookieConsent } from '$lib/stores/cookieConsent';
+	import { loadPostHog, stopPostHog } from '$lib/analytics/posthog';
 	import SeedBanner from '$lib/components/layout/SeedBanner.svelte';
 	import Nav from '$lib/components/layout/Nav.svelte';
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
@@ -20,6 +21,11 @@
 		if ($cookieConsent === 'accepted' && !analyticsLoaded) {
 			analyticsLoaded = true;
 			injectAnalytics({ mode: dev ? 'development' : 'production' });
+			loadPostHog();
+		} else if ($cookieConsent === 'rejected') {
+			// Only does anything if they accepted earlier in the session and then
+			// changed their mind; a straight decline never loads PostHog at all.
+			stopPostHog();
 		}
 	});
 
@@ -45,7 +51,7 @@
 				{
 					"@type": "Organization",
 					"@id": "https://auracare.org.uk/#organization",
-					"name": "Auracare Health LTD",
+					"name": "Auracare Health Ltd",
 					"alternateName": "Auracare AI",
 					"description": "Auracare builds two products on one patient model: Auratwin, a wellness companion that lives in your messages, and Auracare, clinical decision support that works inside the consultation.",
 					"url": "https://auracare.org.uk",
@@ -57,9 +63,9 @@
 					},
 					"foundingDate": "2025",
 					"founder": [
+						{ "@type": "Person", "name": "Tanush Pandey" },
 						{ "@type": "Person", "name": "Stephen Okita" },
-						{ "@type": "Person", "name": "Hinlun Chen" },
-						{ "@type": "Person", "name": "Tanush Pandey" }
+						{ "@type": "Person", "name": "Hinlun Chen" }
 					],
 					"address": { "@type": "PostalAddress", "addressCountry": "GB" },
 					"contactPoint": {

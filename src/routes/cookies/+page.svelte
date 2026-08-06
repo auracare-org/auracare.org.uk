@@ -3,11 +3,11 @@
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT } from '$lib/data/company';
 
-	const LAST_UPDATED = '20 July 2026';
+	const LAST_UPDATED = '1 August 2026';
 
 	interface StorageEntry {
 		key: string;
-		type: 'localStorage' | 'Cookie' | 'Cookieless';
+		type: 'localStorage' | 'sessionStorage' | 'Cookie' | 'Cookie + localStorage' | 'Cookieless';
 		category: string;
 		purpose: string;
 		retention: string;
@@ -36,6 +36,22 @@
 			purpose:
 				'Privacy-conscious, aggregate usage measurement. Cookieless, and only loaded once you accept analytics.',
 			retention: 'No persistent storage'
+		},
+		{
+			key: 'ph_phc_…_posthog',
+			type: 'Cookie + localStorage',
+			category: 'Analytics (optional)',
+			purpose:
+				'PostHog. Holds a random visitor and session identifier so repeat visits and page journeys can be counted, rather than looking like a crowd of strangers. Only set once you accept analytics.',
+			retention: '12 months, or until you clear your browser storage'
+		},
+		{
+			key: 'ph_phc_…_window_id',
+			type: 'sessionStorage',
+			category: 'Analytics (optional)',
+			purpose:
+				'PostHog, along with a couple of sibling ph_ keys. Bookkeeping for the tab you are in: which window a session replay belongs to, and a short-lived copy of the identifiers above, so one visit in two tabs is not counted as two visits.',
+			retention: 'Cleared when you close the tab'
 		}
 	];
 </script>
@@ -49,9 +65,9 @@
 			A short, honest note about <span class="text-gradient-l">cookies</span>.
 		</h1>
 		<p class="lede" use:reveal={{ delay: 140 }}>
-			We keep this site deliberately light. We use a couple of small pieces of storage to make it
-			work properly, plus optional, privacy-conscious analytics you can decline. No advertising, no
-			third-party tracking, no selling your data.
+			We keep this site deliberately light. We use a few small pieces of storage to make it work
+			properly, plus optional, privacy-conscious analytics you can decline. No advertising, no
+			ad-network tracking, no selling your data.
 		</p>
 		<p class="updated" use:reveal={{ delay: 200 }}>Last updated: {LAST_UPDATED}</p>
 	</div>
@@ -95,21 +111,41 @@
 
 			<h2 use:reveal>Analytics (optional)</h2>
 			<p use:reveal={{ delay: 60 }}>
-				To understand which pages people find useful, we use privacy-conscious product analytics
-				provided through Vercel. It measures things in aggregate (page views, rough device and
-				referrer information, broad usage patterns) to help us improve the site. It is designed to
-				be light-touch and is not used to advertise to you or to track you around the wider web.
+				To understand which pages people find useful, we use two analytics tools. <strong
+					>Vercel Web Analytics</strong
+				>
+				gives us cookieless, aggregate traffic numbers. <strong>PostHog</strong> tells us more: page
+				views, rough device and referrer information, which links and buttons get used, click and scroll
+				heatmaps, how long our pages take to load, and any JavaScript errors the site throws at you.
+				Neither is used to advertise to you or to follow you around the wider web. Our PostHog data is
+				held in PostHog&rsquo;s European cloud.
 			</p>
 			<p use:reveal={{ delay: 120 }}>
+				PostHog also records a <strong>session replay</strong>: a reconstruction of your visit to
+				this site, so we can see where a page confuses people, along with anything the site logs to
+				your browser console. Everything you type is masked before it leaves your browser, so the
+				email address you put in the waitlist form is never part of a replay. Replays cover this
+				website only, never the Auratwin service or anything you tell Aura, and they are deleted
+				after 30 days.
+			</p>
+			<p use:reveal={{ delay: 160 }}>
+				Because PostHog needs to recognise a returning visitor, accepting analytics sets the
+				<code>ph_…</code> entries listed below. That is the honest trade: decline, and we lose the detail
+				but you keep an empty browser store.
+			</p>
+			<p use:reveal={{ delay: 200 }}>
 				Analytics is <strong>optional</strong> and off by default. It only loads once you accept
 				from the consent banner; if you decline, we never load it at all. You can change your mind
 				at any time by clearing the <code>cookie_consent</code> value (see below) and choosing again.
 			</p>
 
-			<h2 use:reveal>No advertising or third-party tracking</h2>
+			<h2 use:reveal>No advertising or cross-site tracking</h2>
 			<p use:reveal={{ delay: 60 }}>
 				We do not use advertising cookies, cross-site tracking pixels, social-media trackers, or
-				data brokers. There are no third parties following you from this site to another.
+				data brokers. There are no third parties following you from this site to another. Vercel and
+				PostHog are suppliers acting on our instructions under contract, and analytics requests to
+				PostHog are routed through our own domain, so nothing here is shared with an advertising
+				network.
 			</p>
 
 			<h2 use:reveal>The storage we use</h2>
@@ -279,6 +315,15 @@
 		border-collapse: collapse;
 		font-size: 0.9rem;
 		min-width: 40rem;
+	}
+	/* The nowrap keys push the table to its min-content width, which would
+	   otherwise squeeze the prose columns into one word per line and produce
+	   very tall rows inside the horizontal scroller. */
+	table tr > :nth-child(4) {
+		min-width: 18rem;
+	}
+	table tr > :nth-child(5) {
+		min-width: 12rem;
 	}
 	thead th {
 		text-align: left;

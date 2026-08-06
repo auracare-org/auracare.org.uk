@@ -11,8 +11,9 @@
 	>
 		<div class="flex flex-col sm:flex-row sm:items-center gap-3 w-full max-w-5xl mx-auto">
 			<p class="text-sm text-neutral-600 flex-1">
-				We'd like to use privacy-conscious, cookieless analytics to understand how visitors use our
-				site. Nothing loads until you choose. See our
+				We'd like to use privacy-conscious analytics to understand how visitors use our site. If you
+				accept, we set a couple of analytics cookies and record how the site is used, including a
+				replay of your visit with anything you type hidden. Nothing loads until you choose. See our
 				<a href="/cookies" class="underline hover:text-primary-600 transition-colors"
 					>cookie policy</a
 				> for details.

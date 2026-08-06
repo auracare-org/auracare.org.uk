@@ -1,5 +1,78 @@
-# Auracare AI
+# Auracare AI — https://auracare.org.uk
+# Machine-readable site summary for AI assistants: https://auracare.org.uk/llms.txt
+#
+# Policy: the public site is open to all crawlers, including AI/LLM crawlers
+# (search, assistant retrieval, and training). Only the investor deck is off
+# limits. Named AI groups are listed explicitly below because a matching
+# user-agent group REPLACES the * group — each must restate the disallows.
+
 User-agent: *
 Allow: /
+Disallow: /deck
+Disallow: /auracare-deck.pdf
+
+# --- AI search & assistant retrieval crawlers (welcome) ---
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /deck
+Disallow: /auracare-deck.pdf
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /deck
+Disallow: /auracare-deck.pdf
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /deck
+Disallow: /auracare-deck.pdf
+
+User-agent: Claude-User
+Allow: /
+Disallow: /deck
+Disallow: /auracare-deck.pdf
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /deck
+Disallow: /auracare-deck.pdf
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /deck
+Disallow: /auracare-deck.pdf
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /deck
+Disallow: /auracare-deck.pdf
+
+# --- AI training crawlers (welcome on public pages) ---
+
+User-agent: GPTBot
+Allow: /
+Disallow: /deck
+Disallow: /auracare-deck.pdf
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /deck
+Disallow: /auracare-deck.pdf
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /deck
+Disallow: /auracare-deck.pdf
+
+User-agent: CCBot
+Allow: /
+Disallow: /deck
+Disallow: /auracare-deck.pdf
+
+User-agent: meta-externalagent
+Allow: /
+Disallow: /deck
+Disallow: /auracare-deck.pdf
 
 Sitemap: https://auracare.org.uk/sitemap.xml

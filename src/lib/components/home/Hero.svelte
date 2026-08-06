@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
-	import { CONTACT, PLATFORM_NOTE, WAITLIST_URL } from '$lib/data/company';
+	import { PLATFORM_NOTE, WAITLIST_URL } from '$lib/data/company';
 	import { onMount } from 'svelte';
 
 	// Everyday-life signal categories, not brand names: the picture, not the plumbing.
@@ -125,7 +125,7 @@
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
 				<a class="cta-primary" href={WAITLIST_URL}>Join the waitlist</a>
-				<a class="cta-ghost" href="mailto:{CONTACT.seed}?subject=Auracare%20AI%3A%20Seed%20round">
+				<a class="cta-ghost" href="/investors">
 					We're raising a seed round <span aria-hidden="true">→</span>
 				</a>
 			</div>
@@ -324,13 +324,15 @@
 		max-width: 30rem;
 	}
 
-	/* Visual */
+	/* Visual. In the stacked layout it leads, above the headline; the wide
+	   layout restores copy left, visual right. */
 	.hero-visual {
 		position: relative;
 		width: 100%;
 		max-width: 28rem;
 		margin-inline: auto;
 		aspect-ratio: 1;
+		order: -1;
 	}
 	.hero-orbits {
 		position: absolute;
@@ -487,6 +489,9 @@
 	@media (min-width: 900px) {
 		.hero-grid {
 			grid-template-columns: 1.05fr 0.95fr;
+		}
+		.hero-visual {
+			order: 0;
 		}
 	}
 </style>

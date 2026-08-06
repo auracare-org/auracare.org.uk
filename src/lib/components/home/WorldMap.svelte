@@ -68,21 +68,83 @@
 		if (!pinned) return;
 		// The section pins (map fully centered / "reached") around p≈0.22 and unpins
 		// around p≈0.77. Start the wave sequence only once the map is reached, so you
-		// land on Wave 1 and have to scroll again for Wave 2 — instead of the early
+		// land on Wave 1 and have to scroll again for Wave 2, instead of the early
 		// waves being spent while the map is still sliding up into view.
 		const t = Math.min(1, Math.max(0, (p - 0.22) / 0.52));
 		activeWave = Math.round(t * maxWave);
 	}
 
+	let stageEl = $state<HTMLElement | null>(null);
+
 	onMount(() => {
-		const mq = window.matchMedia('(min-width: 780px)');
-		const apply = () => {
-			pinned = mq.matches && !prefersReducedMotion();
-			if (!pinned) activeWave = maxWave;
+		// Only pin when the viewport is both wide and tall enough to show the
+		// complete section beneath the fixed site header.
+		const mq = window.matchMedia('(min-width: 780px) and (min-height: 800px)');
+		let timer: ReturnType<typeof setInterval> | undefined;
+		let io: IntersectionObserver | undefined;
+
+		const clearTimer = () => {
+			if (timer !== undefined) {
+				clearInterval(timer);
+				timer = undefined;
+			}
 		};
+		const teardownIO = () => {
+			io?.disconnect();
+			io = undefined;
+		};
+
+		// Narrow screens don't pin, so the scroll can't drive the sequence.
+		// Instead, play it once, stepping a wave at a time, when the map
+		// first comes into view.
+		const startAutoplay = () => {
+			if (timer !== undefined) return;
+			activeWave = 0;
+			timer = setInterval(() => {
+				if (activeWave >= maxWave) {
+					clearTimer();
+					return;
+				}
+				activeWave += 1;
+			}, 1600);
+		};
+
+		const apply = () => {
+			clearTimer();
+			teardownIO();
+			if (prefersReducedMotion()) {
+				pinned = false;
+				activeWave = maxWave;
+				return;
+			}
+			pinned = mq.matches;
+			if (pinned) return; // scroll-driven via scrollProgress
+			if (typeof IntersectionObserver === 'undefined' || !stageEl) {
+				activeWave = maxWave;
+				return;
+			}
+			activeWave = 0;
+			io = new IntersectionObserver(
+				(entries) => {
+					for (const e of entries) {
+						if (e.isIntersecting) {
+							teardownIO();
+							startAutoplay();
+						}
+					}
+				},
+				{ threshold: 0.5 }
+			);
+			io.observe(stageEl);
+		};
+
 		apply();
 		mq.addEventListener('change', apply);
-		return () => mq.removeEventListener('change', apply);
+		return () => {
+			mq.removeEventListener('change', apply);
+			clearTimer();
+			teardownIO();
+		};
 	});
 
 	const pointsByWave = MARKET_WAVES.map((w) => ({
@@ -106,7 +168,7 @@
 				</div>
 
 				<!-- Map in the middle -->
-				<div class="map-stage">
+				<div class="map-stage" bind:this={stageEl}>
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<svg
 						class="map-svg"
@@ -354,7 +416,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		overflow: hidden;
+		overflow: visible;
 	}
 	.wave-slide {
 		display: flex;

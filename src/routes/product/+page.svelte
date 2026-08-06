@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal } from '$lib/actions/motion';
-	import { CONTACT, PLATFORM_NOTE, NON_DEVICE_DISCLAIMER, WAITLIST_URL } from '$lib/data/company';
+	import { PLATFORM_NOTE, NON_DEVICE_DISCLAIMER, WAITLIST_URL } from '$lib/data/company';
 
 	/* A single day, held together by proactive check-ins. */
 	const day = [
@@ -189,7 +189,7 @@
 		<p class="hero-sub" use:reveal={{ delay: 130 }}>
 			Auratwin is a wellness companion that lives in the app you already open a hundred times a day.
 			It turns your everyday signals into a personal digital twin, then checks in like someone who’s
-			genuinely paying attention. No new app to learn, and no forms to fill.
+			paying attention. No new app to learn, and no forms to fill.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
 			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
@@ -317,9 +317,7 @@
 <section class="section-y src-sec">
 	<div class="container-wide">
 		<span class="eyebrow" use:reveal>Everything it draws on</span>
-		<h2 use:reveal={{ delay: 60 }}>
-			The more it can see, the more the guidance is actually yours.
-		</h2>
+		<h2 use:reveal={{ delay: 60 }}>The more it can see, the more the guidance is yours.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			Every source you connect deepens the twin’s picture of your daily life. That high-context view
 			of <em>you</em> is what makes a nudge feel personal instead of generic.
@@ -348,8 +346,8 @@
 			<span class="eyebrow" use:reveal>One plan, not a shelf of them</span>
 			<h2 use:reveal={{ delay: 60 }}>One subscription, in place of the pile.</h2>
 			<p class="lede" use:reveal={{ delay: 120 }}>
-				Wellness has quietly become expensive: a separate app, and a separate bill, for every corner
-				of your health. Auratwin folds them into one companion, and starts free.
+				Wellness has become expensive: a separate app, and a separate bill, for every corner of your
+				health. Auratwin folds them into one companion, and starts free.
 			</p>
 
 			<ul class="stack" use:reveal={{ delay: 160 }} aria-label="Apps Auratwin replaces">
@@ -405,10 +403,7 @@
 		</p>
 		<div class="cta-actions" use:reveal={{ delay: 140 }}>
 			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
-			<a
-				class="btn-ghost"
-				href="mailto:{CONTACT.seed}?subject=Auracare%20AI%3A%20Investor%20enquiry">For investors</a
-			>
+			<a class="btn-ghost" href="/investors">For investors</a>
 		</div>
 	</div>
 </section>
@@ -1009,7 +1004,7 @@
 		}
 		.tune-panel {
 			position: sticky;
-			top: 5rem;
+			top: calc(var(--header-h, 92px) + 1rem);
 		}
 	}
 	@media (max-width: 560px) {

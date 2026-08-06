@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { CONTACT } from '$lib/data/company';
 
 	let dismissed = $state(false);
 
@@ -28,9 +27,7 @@
 			<p class="seed-text">
 				<span class="seed-dot" aria-hidden="true"></span>
 				<span>We’re raising our <span class="seed-em">seed round</span>.</span>
-				<a href="mailto:{CONTACT.seed}?subject=Auracare%20AI%3A%20Seed%20round">
-					Get in touch: {CONTACT.seed}
-				</a>
+				<a href="/investors">See the investor page →</a>
 			</p>
 			<button class="seed-close" onclick={dismiss} aria-label="Dismiss announcement">
 				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -116,7 +113,7 @@
 	}
 	@media (max-width: 640px) {
 		.seed-close {
-			right: -0.25rem;
+			right: 0.25rem;
 		}
 	}
 </style>

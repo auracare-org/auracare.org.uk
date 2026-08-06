@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { slide } from 'svelte/transition';
-	import { CONTACT, WAITLIST_URL } from '$lib/data/company';
+	import { WAITLIST_URL } from '$lib/data/company';
 
 	let mobileOpen = $state(false);
 
@@ -79,25 +79,10 @@
 			{#each links as link}
 				<a href={link.href} class="nav-item" class:active={isActive(link.href)}>{link.label}</a>
 			{/each}
-			<a class="nav-item nav-ext" href={CONTACT.ontologyUrl} target="_blank" rel="noopener">
-				Explore the ontology
-				<svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-					<path
-						d="M7 17L17 7M17 7H9M17 7v8"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			</a>
 		</div>
 
 		<div class="nav-cta">
-			<a
-				class="nav-invest"
-				href="mailto:{CONTACT.seed}?subject=Auracare%20AI%3A%20Investor%20enquiry">For investors</a
-			>
+			<a class="nav-invest" href="/investors">For investors</a>
 			<a class="nav-waitlist" href={WAITLIST_URL}>Join the waitlist</a>
 		</div>
 
@@ -148,15 +133,8 @@
 						>{link.label}</a
 					>
 				{/each}
-				<a
-					class="nav-mobile-item"
-					href={CONTACT.ontologyUrl}
-					target="_blank"
-					rel="noopener"
-					onclick={() => (mobileOpen = false)}>Explore the ontology ↗</a
-				>
 				<div class="nav-mobile-cta">
-					<a class="nav-invest" href="mailto:{CONTACT.seed}" onclick={() => (mobileOpen = false)}
+					<a class="nav-invest" href="/investors" onclick={() => (mobileOpen = false)}
 						>For investors</a
 					>
 					<a class="nav-waitlist" href={WAITLIST_URL} onclick={() => (mobileOpen = false)}

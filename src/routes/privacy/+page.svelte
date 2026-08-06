@@ -27,13 +27,14 @@
 			only the sources you choose, and your consent is explicit, per-source and revocable at any
 			time.
 		</p>
-		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 24 July 2026</p>
+		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 6 August 2026</p>
 	</div>
 </section>
 
 <section class="policy section-y">
 	<div class="container-wide">
 		<article class="prose">
+			<!-- TODO: remove this early-draft notice at public launch. -->
 			<p class="evolving">
 				<em
 					>This policy is an early draft and will evolve (with clearer detail and, where relevant,
@@ -45,16 +46,25 @@
 			<h2 id="who-we-are">Who we are</h2>
 			<p>
 				{CONTACT.legalName} (“Auracare”, “we”, “us”) is the data controller for the personal data described
-				in this policy. We are a company registered in {CONTACT.jurisdiction}. For any privacy
-				question, or to exercise your rights, contact
-				<a href="mailto:{CONTACT.privacy}">{CONTACT.privacy}</a>.
+				in this policy. We are a company registered in {CONTACT.jurisdiction}, company number
+				16747281, with our registered office at Apartment 904, Holmby House, 2 Prospect Way, London
+				SW11 8DJ. We are registered with the Information Commissioner’s Office under number
+				ZC126946.
+			</p>
+			<p>
+				We have appointed a Data Protection Officer, Mr Ahnaf Kabir, who you can reach directly at
+				<a href="mailto:ahnaf@auracare.org.uk">ahnaf@auracare.org.uk</a>. For any privacy question,
+				or to exercise your rights, contact
+				<a href="mailto:{CONTACT.privacy}">{CONTACT.privacy}</a>. Either route works.
 			</p>
 
 			<h2 id="scope">What this policy covers</h2>
 			<p>
-				This policy covers Auratwin, our consumer product that builds a personal health “digital
-				twin” from the wearables and apps you connect, and checks in with you over the messaging
-				apps you already use, such as iMessage, WhatsApp or RCS.
+				This policy covers two things. First, Auratwin: our consumer product that builds a personal
+				health “digital twin” from the wearables and apps you connect, and checks in with you over
+				the messaging apps you already use, such as iMessage, WhatsApp or RCS. Second, this website
+				itself: visiting it, joining the waitlist, writing to us with a question or an investor
+				enquiry, and the optional analytics described in our <a href="/cookies">cookie policy</a>.
 			</p>
 			<p>
 				Auratwin is a general-wellness product, not a medical device. It is designed to help you
@@ -76,6 +86,23 @@
 				When you join, we process the details needed to run your account (such as your name, email
 				address and the mobile identity you use to message Auratwin), together with basic app and
 				delivery logs that keep the service reliable and secure.
+			</p>
+			<h3>Website visitors and the waitlist</h3>
+			<p>
+				You don’t need an account to visit this site, and most visits leave nothing behind. What we
+				do process: the email address, and any name or details you choose to add, when you join the
+				waitlist; the contents of your message when you write to
+				<a href="mailto:{CONTACT.general}">{CONTACT.general}</a> or
+				<a href="mailto:{CONTACT.seed}">{CONTACT.seed}</a>; short-lived server logs that keep the
+				site secure; and, only if you accept them from the consent banner, the optional analytics
+				described in our <a href="/cookies">cookie policy</a> (Vercel Web Analytics, and PostHog, which
+				also records a replay of your visit to this website with anything you type masked). If you decline,
+				analytics never loads.
+			</p>
+			<p>
+				We use this data to operate the site, to tell you when Auratwin launches, and to respond to
+				you. Waitlist emails are used only for launch and product updates, every one includes an
+				unsubscribe, and we delete your address on request, or within 6 months after launch.
 			</p>
 			<h3>Health &amp; wellness data you connect</h3>
 			<p>
@@ -117,11 +144,12 @@
 				the heightened protection that classification requires, wherever you are.
 			</p>
 
-			<h2 id="lawful-basis">Our lawful basis</h2>
+			<h2 id="lawful-basis">Our lawful bases</h2>
 			<p>
-				We rely on your explicit consent (Article 9(2)(a) UK GDPR, and its regional equivalents such
-				as EU GDPR Article 9, US state opt-in rules, Australian Privacy Principle 3 and Canadian
-				express consent) to process your health signals. That consent is:
+				For your health data, we rely on your consent (Article 6(1)(a) UK GDPR) together with your
+				explicit consent under the special-category condition (Article 9(2)(a) UK GDPR, and its
+				regional equivalents such as EU GDPR Article 9, US state opt-in rules, Australian Privacy
+				Principle 3 and Canadian express consent). That consent is:
 			</p>
 			<ul>
 				<li>Explicit: you actively opt in before any health data is processed.</li>
@@ -134,6 +162,13 @@
 					processing of that source.
 				</li>
 			</ul>
+			<p>
+				Alongside that, three quieter bases. We process your account data, and run the service you
+				signed up for, because our contract with you requires it (Article 6(1)(b)). We keep the site
+				and service secure, maintain server logs and improve what we build, where none of that
+				involves your health data, under our legitimate interests (Article 6(1)(f)). And the
+				waitlist and website analytics run on your consent, which you can withdraw at any time.
+			</p>
 
 			<h2 id="how-we-use-it">How we use your data</h2>
 			<p>We use your data to:</p>
@@ -142,12 +177,21 @@
 				<li>learn your baselines and notice meaningful changes;</li>
 				<li>
 					send you check-ins: a morning brief, an evening wrap, and nudges when your data warrants
-					one: you control how present Aura is, and you can quieten or stop check-ins at any time;
+					one. You control how present Aura is, and you can quieten or stop check-ins at any time;
 				</li>
 				<li>operate, secure and improve the service.</li>
 			</ul>
 			<p>
 				We do not use your health data for advertising, and we do not sell data that identifies you.
+			</p>
+
+			<h2 id="profiling">Profiling and automated decisions</h2>
+			<p>
+				Building your twin involves profiling: Auratwin analyses the data you share to learn your
+				baselines and spot meaningful changes. That is the product doing its job, and it stays under
+				your control. We do not make solely automated decisions about you that have legal or
+				similarly significant effects. Aura’s nudges are wellness suggestions, nothing more: you can
+				ignore any of them, and you can switch them off.
 			</p>
 
 			<h2 id="connectors">Wearable connectors</h2>
@@ -160,20 +204,40 @@
 
 			<h2 id="residency">Where your data is processed</h2>
 			<p>
-				We are building Auratwin to process your data within our own UK/EU cloud tenant. This is a
-				direction of travel, not a guarantee of every processing arrangement today; we will update
-				this section as that infrastructure matures. Where data is processed outside your country,
-				we put appropriate safeguards in place as required by applicable data protection law.
+				Today, your data is processed in the United Kingdom, the European Union and the United
+				States, including by US-based AI and infrastructure providers. We are building towards
+				processing within our own UK/EU cloud tenant, and we will update this section as that
+				infrastructure matures. Where data leaves the UK, we rely on the ICO’s International Data
+				Transfer Agreement or the UK Addendum to the EU Standard Contractual Clauses, and on
+				equivalent safeguards where the laws of other regions apply.
 			</p>
 
 			<h2 id="sharing">Sharing your data</h2>
 			<p>
 				We do not sell personal data that identifies you. We do not share your health data with
-				third parties without your consent. We use a small number of service providers (for example,
-				cloud hosting and message delivery) strictly to operate Auratwin; they act on our
-				instructions under contract and may not use your data for their own purposes. We may
-				disclose data where we are legally required to do so.
+				third parties without your consent. We use a small number of service providers, strictly to
+				operate Auratwin and this site; they act on our instructions under contract and may not use
+				your data for their own purposes:
 			</p>
+			<ul>
+				<li>cloud hosting, where the service and your twin run;</li>
+				<li>message delivery, so Aura’s check-ins reach you;</li>
+				<li>
+					AI model providers, which process your conversations to power Aura and are contractually
+					prohibited from using your data to train their own models;
+				</li>
+				<li>
+					analytics, for this website only, held in the European Union and never involving health
+					data.
+				</li>
+			</ul>
+			<p>
+				One honest note on messaging. When you talk to Aura over iMessage, WhatsApp or RCS, delivery
+				necessarily passes through that platform (Apple, Meta, or your mobile carrier) and is
+				subject to that platform’s own security and terms. We do not control those platforms, and
+				you choose the channel.
+			</p>
+			<p>We may disclose data where we are legally required to do so.</p>
 
 			<h2 id="aggregated">Aggregated &amp; de-identified data</h2>
 			<p>
@@ -193,8 +257,19 @@
 			<p>
 				We keep your personal data only for as long as we need it to provide the service to you, or
 				as required by law. When you delete your account, or ask us to erase your data, we delete or
-				irreversibly anonymise it within a reasonable period, except where we must retain something
-				to meet a legal obligation.
+				irreversibly anonymise it within 30 days, except where we must retain something to meet a
+				legal obligation. Backups purge on a rolling cycle of up to 90 days.
+			</p>
+			<p>
+				Aggregated or de-identified data we created before your deletion is no longer personal data
+				about you, and it survives account deletion in that form.
+			</p>
+
+			<h2 id="children">Children</h2>
+			<p>
+				Auratwin and the waitlist are for adults: you must be at least 18 to use Auratwin or to join
+				the waitlist. The service is not directed at children, we do not knowingly collect data from
+				anyone under 18, and if we learn that we have, we will delete it.
 			</p>
 
 			<h2 id="your-rights">Your rights</h2>
@@ -268,7 +343,7 @@
 				<li>
 					As a vendor of personal health records, we follow the FTC Health Breach Notification Rule:
 					if your unsecured health data is ever breached or disclosed without your authorisation, we
-					will notify you within 60 days.
+					will notify you without unreasonable delay and no later than 60 days after discovery.
 				</li>
 				<li>
 					We never use your location to infer visits to healthcare facilities, and we do not
