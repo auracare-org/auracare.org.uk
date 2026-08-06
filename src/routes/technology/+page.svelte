@@ -534,8 +534,8 @@
 			<p>
 				And the outermost gate is a person. Auracare is built to be used
 				<strong>in conjunction with a clinician, never to replace one</strong>. It is a tool that
-				informs and supports their judgement &mdash; the clinician stays accountable for every
-				decision, and their opinion always overrides the model.
+				informs and supports their judgement: the clinician stays accountable for every decision,
+				and their opinion always overrides the model.
 			</p>
 		</div>
 

@@ -15,9 +15,10 @@
 			Two products, <span class="text-gradient">one patient model</span>.
 		</h2>
 		<p class="intro" use:reveal={{ delay: 120 }}>
-			Auratwin puts a health digital twin in your messages. Auracare puts clinical decision support
-			inside the consultation. Both draw on one shared model of the patient, and we’re upfront
-			about where each one stands, so you always know what is real now and what is still ahead.
+			Auracare puts clinical decision support inside the consultation: that is the core project.
+			Auratwin, spun out of Auracare, puts the same understanding of a person into their messages.
+			Both draw on one shared model of the patient, and we’re upfront about where each one stands,
+			so you always know what is real now and what is still ahead.
 		</p>
 
 		<div class="grid">
@@ -26,49 +27,69 @@
 					<div class="card-head">
 						<div class="motif" aria-hidden="true">
 							{#if product.key === 'auratwin'}
-							<!-- twin figure -->
-							<svg viewBox="0 0 48 48" fill="none">
-								<circle cx="24" cy="10" r="5" fill="#2f4ec0" />
-								<rect x="20.3" y="16.5" width="7.4" height="15" rx="3.7" fill="#2f4ec0" />
-								<path d="M22.5 21 15 24.5" stroke="#2f4ec0" stroke-width="4.8" stroke-linecap="round" />
-								<path d="M25.5 21 33 24.5" stroke="#2f4ec0" stroke-width="4.8" stroke-linecap="round" />
-								<path d="M22.4 30 21 42" stroke="#2f4ec0" stroke-width="4.8" stroke-linecap="round" />
-								<path d="M25.6 30 27 42" stroke="#2f4ec0" stroke-width="4.8" stroke-linecap="round" />
-							</svg>
-						{:else if product.key === 'auracare'}
-							<!-- care heart + pulse -->
-							<svg viewBox="0 0 48 48" fill="none">
-								<path
-									d="M24 36C24 36 11 27.5 11 19.5C11 15.6 13.9 13 17.2 13C20.1 13 22.6 15 24 17.2C25.4 15 27.9 13 30.8 13C34.1 13 37 15.6 37 19.5C37 27.5 24 36 24 36Z"
-									fill="none"
-									stroke="#2f4ec0"
-									stroke-width="2.4"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M15.5 24h3.5l2.2-4.2 3 8.6 2.2-4.4h4.1"
-									fill="none"
-									stroke="#94abff"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
-						{:else}
-							<!-- graph glyph -->
-							<svg viewBox="0 0 48 48" fill="none">
-								<path
-									d="M14 16 24 24 34 12M24 24 20 36M24 24 36 32"
-									stroke="#c0cdff"
-									stroke-width="1.6"
-									stroke-linecap="round"
-								/>
-								<circle cx="14" cy="16" r="3.4" fill="#94abff" />
-								<circle cx="34" cy="12" r="3.4" fill="#2f4ec0" />
-								<circle cx="24" cy="24" r="4.2" fill="#2f4ec0" />
-								<circle cx="20" cy="36" r="3.2" fill="#94abff" />
-								<circle cx="36" cy="32" r="3.2" fill="#2f4ec0" />
-							</svg>
+								<!-- twin figure -->
+								<svg viewBox="0 0 48 48" fill="none">
+									<circle cx="24" cy="10" r="5" fill="#2f4ec0" />
+									<rect x="20.3" y="16.5" width="7.4" height="15" rx="3.7" fill="#2f4ec0" />
+									<path
+										d="M22.5 21 15 24.5"
+										stroke="#2f4ec0"
+										stroke-width="4.8"
+										stroke-linecap="round"
+									/>
+									<path
+										d="M25.5 21 33 24.5"
+										stroke="#2f4ec0"
+										stroke-width="4.8"
+										stroke-linecap="round"
+									/>
+									<path
+										d="M22.4 30 21 42"
+										stroke="#2f4ec0"
+										stroke-width="4.8"
+										stroke-linecap="round"
+									/>
+									<path
+										d="M25.6 30 27 42"
+										stroke="#2f4ec0"
+										stroke-width="4.8"
+										stroke-linecap="round"
+									/>
+								</svg>
+							{:else if product.key === 'auracare'}
+								<!-- care heart + pulse -->
+								<svg viewBox="0 0 48 48" fill="none">
+									<path
+										d="M24 36C24 36 11 27.5 11 19.5C11 15.6 13.9 13 17.2 13C20.1 13 22.6 15 24 17.2C25.4 15 27.9 13 30.8 13C34.1 13 37 15.6 37 19.5C37 27.5 24 36 24 36Z"
+										fill="none"
+										stroke="#2f4ec0"
+										stroke-width="2.4"
+										stroke-linejoin="round"
+									/>
+									<path
+										d="M15.5 24h3.5l2.2-4.2 3 8.6 2.2-4.4h4.1"
+										fill="none"
+										stroke="#94abff"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+							{:else}
+								<!-- graph glyph -->
+								<svg viewBox="0 0 48 48" fill="none">
+									<path
+										d="M14 16 24 24 34 12M24 24 20 36M24 24 36 32"
+										stroke="#c0cdff"
+										stroke-width="1.6"
+										stroke-linecap="round"
+									/>
+									<circle cx="14" cy="16" r="3.4" fill="#94abff" />
+									<circle cx="34" cy="12" r="3.4" fill="#2f4ec0" />
+									<circle cx="24" cy="24" r="4.2" fill="#2f4ec0" />
+									<circle cx="20" cy="36" r="3.2" fill="#94abff" />
+									<circle cx="36" cy="32" r="3.2" fill="#2f4ec0" />
+								</svg>
 							{/if}
 						</div>
 
