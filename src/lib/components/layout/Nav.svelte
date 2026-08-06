@@ -96,8 +96,7 @@
 		<div class="nav-cta">
 			<a
 				class="nav-invest"
-				href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Investor%20enquiry"
-				>For investors</a
+				href="mailto:{CONTACT.seed}?subject=Auracare%20AI%3A%20Investor%20enquiry">For investors</a
 			>
 			<a class="nav-waitlist" href={WAITLIST_URL}>Join the waitlist</a>
 		</div>

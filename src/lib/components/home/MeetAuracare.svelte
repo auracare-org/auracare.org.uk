@@ -2,6 +2,9 @@
 	import { reveal } from '$lib/actions/motion';
 	import {
 		AURACARE_INTRO,
+		CLINICAL_PROBLEM,
+		CLINICAL_PROBLEM_HEADING,
+		CLINICAL_PROBLEM_LINE,
 		AURACARE_INPUTS,
 		AURACARE_OUTPUTS,
 		AURACARE_HW_USP,
@@ -14,10 +17,25 @@
 
 <section class="auracare aura-space section-y" aria-labelledby="auracare-heading">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>The clinical product</span>
+		<span class="eyebrow" use:reveal>Part one · The clinical side</span>
 		<h2 id="auracare-heading" use:reveal={{ delay: 60 }}>
-			Meet Auracare. The twin <span class="text-gradient-l">comes with you to the appointment</span>.
+			Meet Auracare. Decision support that
+			<span class="text-gradient-l">works inside the consultation</span>.
 		</h2>
+		<div class="problem" use:reveal={{ delay: 120 }}>
+			<h3 class="problem-heading">{CLINICAL_PROBLEM_HEADING}</h3>
+			<ul class="problem-grid">
+				{#each CLINICAL_PROBLEM as p (p.title)}
+					<li class="tile problem-tile">
+						<span class="problem-title">{p.title}</span>
+						<span class="problem-stat">{p.stat}</span>
+						<p>{p.body}</p>
+					</li>
+				{/each}
+			</ul>
+			<p class="problem-line">{CLINICAL_PROBLEM_LINE}</p>
+		</div>
+
 		<p class="lead" use:reveal={{ delay: 120 }}>{AURACARE_INTRO}</p>
 
 		<div class="flow" use:reveal={{ delay: 160 }}>
@@ -108,6 +126,55 @@
 		line-height: 1.65;
 		max-width: 44rem;
 		color: var(--color-white-alpha-80, rgba(226, 232, 255, 0.82));
+	}
+
+	/* The clinical problem, before the solution flow */
+	.problem {
+		margin-top: clamp(2rem, 4vw, 3rem);
+		margin-bottom: clamp(2rem, 4vw, 3rem);
+		padding-bottom: clamp(2rem, 4vw, 2.75rem);
+		border-bottom: 1px solid var(--color-border-dark);
+	}
+	.problem-heading {
+		font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+		letter-spacing: -0.01em;
+		color: #fff;
+		max-width: 34ch;
+	}
+	.problem-grid {
+		list-style: none;
+		margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+	.problem-title {
+		display: block;
+		font-family: var(--font-family-mono);
+		font-size: 0.66rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-primary-300);
+	}
+	.problem-stat {
+		display: block;
+		font-family: var(--font-family-heading);
+		font-weight: 600;
+		font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+		line-height: 1.1;
+		letter-spacing: -0.02em;
+		color: #fff;
+		margin-block: 0.35rem 0.4rem;
+	}
+	.problem-line {
+		margin-top: 1.5rem;
+		font-size: 0.98rem;
+		line-height: 1.6;
+		font-weight: 500;
+		color: var(--color-primary-300);
+		max-width: 46rem;
 	}
 
 	/* Flow: inputs -> core -> outputs */
@@ -245,6 +312,9 @@
 	}
 
 	@media (min-width: 860px) {
+		.problem-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
 		.flow {
 			grid-template-columns: 1fr 0.82fr 1fr;
 			gap: 1.5rem;

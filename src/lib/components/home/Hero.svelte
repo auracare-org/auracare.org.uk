@@ -119,17 +119,13 @@
 				The world's most personalised <em>healthcare</em>.
 			</h1>
 			<p class="hero-sub" use:reveal={{ delay: 140 }}>
-				Auracare builds two products on one model of you.
-				<strong>Auratwin</strong>, a wellness companion that lives in your messages, and
-				<strong>Auracare</strong>, clinical decision support that works inside the consultation.
-				Auratwin ships in the coming months.
+				Two products, one patient model. <strong>Auracare</strong>, clinical decision support that
+				works inside the consultation, and <strong>Auratwin</strong>, its consumer spin-out: a
+				wellness companion that lives in your messages, shipping in the coming months.
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
 				<a class="cta-primary" href={WAITLIST_URL}>Join the waitlist</a>
-				<a
-					class="cta-ghost"
-					href="mailto:{CONTACT.seed}?subject=Auracare%20AI%20%E2%80%94%20Seed%20round"
-				>
+				<a class="cta-ghost" href="mailto:{CONTACT.seed}?subject=Auracare%20AI%3A%20Seed%20round">
 					We're raising a seed round <span aria-hidden="true">→</span>
 				</a>
 			</div>

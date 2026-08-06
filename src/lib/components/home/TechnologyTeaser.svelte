@@ -281,7 +281,8 @@
 			</h2>
 			<p class="tech-lead" use:reveal={{ delay: 140 }}>
 				Our reasoning is grounded in the terminology medicine already agrees on: SNOMED CT, ICD-11,
-				HPO, LOINC, the universal language of medicine. A learned model proposes; an auditable symbolic layer disposes. That
+				HPO, LOINC, the universal language of medicine. A learned model proposes; an auditable
+				symbolic layer disposes. That
 				<strong>neuro-symbolic</strong> design makes it a glass box, not a black box: every answer traces
 				back to a named source.
 			</p>

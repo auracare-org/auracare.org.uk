@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { reveal, prefersReducedMotion } from '$lib/actions/motion';
-	import { AURATWIN_EDGE } from '$lib/data/company';
+	import { AURATWIN_EDGE, TWIN_PROBLEM } from '$lib/data/company';
 
 	type Tier = 'gentle' | 'spicy' | 'nuclear';
 
@@ -73,9 +73,21 @@
 <section class="twin" aria-labelledby="twin-heading">
 	<div class="container-wide twin-grid">
 		<div class="twin-copy">
+			<span class="eyebrow" use:reveal>Part two · The consumer spin-out</span>
 			<h2 id="twin-heading" use:reveal={{ delay: 60 }}>
-				Everything you’d notice about yourself, if you had the time.
+				Meet Auratwin. Everything you’d notice about yourself, if you had the time.
 			</h2>
+			<p class="twin-lead" use:reveal={{ delay: 120 }}>
+				Auracare’s social-history engine, spun out as your wellness hub. It ships first, and every
+				conversation deepens the picture the clinical side runs on.
+			</p>
+
+			<p class="twin-stat" use:reveal={{ delay: 150 }}>
+				<span class="twin-stat-num">{TWIN_PROBLEM.stat}</span>
+				<span class="twin-stat-body">
+					{TWIN_PROBLEM.line} <strong>{TWIN_PROBLEM.answer}</strong>
+				</span>
+			</p>
 
 			<div
 				class="tier"
@@ -199,6 +211,38 @@
 		font-size: clamp(1.7rem, 3.8vw, 2.9rem);
 		line-height: 1.12;
 		margin-block: 0.6rem 1rem;
+	}
+	.twin-lead {
+		color: var(--color-ink-soft);
+		line-height: 1.6;
+	}
+	.twin-stat {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.9rem;
+		margin-top: 1.4rem;
+		padding: 1rem 1.15rem;
+		background: var(--color-neutral-0);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-md);
+		box-shadow: var(--shadow-xs);
+	}
+	.twin-stat-num {
+		font-family: var(--font-family-heading);
+		font-weight: 600;
+		font-size: clamp(1.9rem, 3.5vw, 2.4rem);
+		line-height: 1;
+		letter-spacing: -0.02em;
+		color: var(--color-primary-600);
+	}
+	.twin-stat-body {
+		font-size: 0.88rem;
+		line-height: 1.55;
+		color: var(--color-ink-soft);
+	}
+	.twin-stat-body strong {
+		color: var(--color-ink);
+		font-weight: 600;
 	}
 	.twin-copy p {
 		max-width: 32rem;

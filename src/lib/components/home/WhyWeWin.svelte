@@ -54,78 +54,78 @@
 <section class="why section-y">
 	<div class="scene" bind:this={scene}>
 		<div class="pin">
-	<div class="container-wide">
-		<header class="head">
-			<h2 use:reveal>
-				Three capabilities. <span class="text-gradient">Most tools hold one.</span>
-			</h2>
-			<p use:reveal={{ delay: 140 }}>
-				The hard part of clinical reasoning isn't any single capability: it's holding all three at
-				once, and keeping every step auditable and safe.
-			</p>
-		</header>
-	</div>
+			<div class="container-wide">
+				<header class="head">
+					<h2 use:reveal>
+						Three capabilities. <span class="text-gradient">Most tools hold one.</span>
+					</h2>
+					<p use:reveal={{ delay: 140 }}>
+						The hard part of clinical reasoning isn't any single capability: it's holding all three
+						at once, and keeping every step auditable and safe.
+					</p>
+				</header>
+			</div>
 
-	<div class="container-wide">
-		<div class="venn-grid">
-			<!-- Left: three translucent circles, labelled 1 / 2 / 3 -->
-			<div class="venn">
-				<div class="lobes" aria-hidden="true">
-					{#each LOBES as l, i}
-						<span
-							class="fill"
-							class:fill-active={active === i}
-							style="left:{l.left}%;top:{l.top}%;"
-						></span>
-					{/each}
-				</div>
+			<div class="container-wide">
+				<div class="venn-grid">
+					<!-- Left: three translucent circles, labelled 1 / 2 / 3 -->
+					<div class="venn">
+						<div class="lobes" aria-hidden="true">
+							{#each LOBES as l, i}
+								<span
+									class="fill"
+									class:fill-active={active === i}
+									style="left:{l.left}%;top:{l.top}%;"
+								></span>
+							{/each}
+						</div>
 
-				<div class="hits">
-					{#each MOAT as pillar, i}
-						<button
-							class="lobe"
-							class:lobe-active={active === i}
-							style="left:{LOBES[i].left}%;top:{LOBES[i].top}%;--lx:{LOBES[i].lx}%;--ly:{LOBES[
-								i
-							].ly}%;"
-							onclick={() => toggle(i)}
-							aria-pressed={active === i}
-							aria-label={pillar.title}
-						>
-							<span class="num">{i + 1}</span>
-						</button>
-					{/each}
+						<div class="hits">
+							{#each MOAT as pillar, i}
+								<button
+									class="lobe"
+									class:lobe-active={active === i}
+									style="left:{LOBES[i].left}%;top:{LOBES[i].top}%;--lx:{LOBES[i].lx}%;--ly:{LOBES[
+										i
+									].ly}%;"
+									onclick={() => toggle(i)}
+									aria-pressed={active === i}
+									aria-label={pillar.title}
+								>
+									<span class="num">{i + 1}</span>
+								</button>
+							{/each}
+						</div>
+					</div>
+
+					<!-- Right: numbered capabilities, expanding on click -->
+					<ol class="rows">
+						{#each MOAT as pillar, i}
+							<li>
+								<button
+									class="row"
+									class:row-active={active === i}
+									onclick={() => toggle(i)}
+									aria-expanded={active === i}
+								>
+									<span class="row-num">{i + 1}</span>
+									<span class="row-text">
+										<span class="row-title">{pillar.title}</span>
+										{#if active === i}
+											<span class="row-body">{pillar.body}</span>
+										{/if}
+									</span>
+								</button>
+							</li>
+						{/each}
+					</ol>
 				</div>
 			</div>
 
-			<!-- Right: numbered capabilities, expanding on click -->
-			<ol class="rows">
-				{#each MOAT as pillar, i}
-					<li>
-						<button
-							class="row"
-							class:row-active={active === i}
-							onclick={() => toggle(i)}
-							aria-expanded={active === i}
-						>
-							<span class="row-num">{i + 1}</span>
-							<span class="row-text">
-								<span class="row-title">{pillar.title}</span>
-								{#if active === i}
-									<span class="row-body">{pillar.body}</span>
-								{/if}
-							</span>
-						</button>
-					</li>
-				{/each}
-			</ol>
-		</div>
-	</div>
-
-	<div class="container-wide">
-		<!-- Closing line flows normally beneath the pinned circles. -->
-		<p class="moat-line" use:reveal={{ delay: 160 }}>{MOAT_LINE}</p>
-	</div>
+			<div class="container-wide">
+				<!-- Closing line flows normally beneath the pinned circles. -->
+				<p class="moat-line" use:reveal={{ delay: 160 }}>{MOAT_LINE}</p>
+			</div>
 		</div>
 	</div>
 </section>
