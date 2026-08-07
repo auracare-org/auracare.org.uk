@@ -18,7 +18,7 @@
 
 <Seo
 	title="Auracare: the world's most personalised healthcare"
-	description="Auracare builds clinical decision support that works inside the consultation, and Auratwin, its consumer spin-out: a wellness companion that lives in your messages. Two products, one patient model. Now raising our seed round."
+	description="Auracare builds clinical decision support that works inside the consultation. Auratwin, its consumer spin-out, ships first: subscription revenue that cuts the burn, and a social history robust enough to lift CDSS performance by a minimum of 50%. Now raising our seed round."
 	path="/"
 />
 

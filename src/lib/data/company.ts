@@ -105,7 +105,7 @@ export const PRODUCTS: Product[] = [
 		name: 'Auratwin',
 		tagline: 'The consumer spin-out, in your messages',
 		blurb:
-			'Auracare’s social-history engine, spun out as a wellness hub that lives where you already talk. Auratwin learns your patterns and checks in over your favourite messaging app: guidance before you think you need it. It ships first.',
+			'Auracare’s social-history engine, spun out as a wellness hub that lives where you already talk. It ships first and earns first: subscription revenue that funds the clinical build, while every conversation deepens the social history the core runs on.',
 		status: 'ships-soon',
 		statusLabel: 'Expected August 2026',
 		href: '/product'
@@ -218,6 +218,38 @@ export const TWIN_PROBLEM = {
 } as const;
 
 /* ------------------------------------------------------------------ */
+/* Why the spin-out exists: the three jobs Auratwin does for Auracare  */
+/* (the investor framing of the consumer product)                      */
+/* ------------------------------------------------------------------ */
+
+export interface TwinRole {
+	stat: string;
+	title: string;
+	body: string;
+}
+
+export const TWIN_ROLE_EYEBROW = 'Why the spin-out exists';
+export const TWIN_ROLE_HEADING = 'Auratwin is how the clinical build gets paid for, and fed.';
+
+export const TWIN_ROLE: TwinRole[] = [
+	{
+		stat: 'Revenue first',
+		title: 'It cuts the burn',
+		body: 'Auratwin subscriptions start earning at launch, years before a clinical product can. That revenue funds the trials, the certification and the hardware, so the burn falls as the user base grows instead of waiting on the next round.'
+	},
+	{
+		stat: '50%+',
+		title: 'It lifts the core',
+		body: 'A robust social history is the input no clinician has time to gather. Fed into the reasoning core, it improves CDSS performance by a minimum of 50% over the same core working from the record alone.'
+	},
+	{
+		stat: 'Daily',
+		title: 'It keeps the data flowing',
+		body: 'Every Auratwin feature is designed to keep people talking to it, and every reply deepens the social history. Retention is not a vanity metric here; it is the data pipeline the clinical side runs on.'
+	}
+];
+
+/* ------------------------------------------------------------------ */
 /* Auracare: the twin comes with you to the appointment                */
 /* ------------------------------------------------------------------ */
 
@@ -272,6 +304,9 @@ export interface CareLoopStep {
 
 export const CARE_LOOP_LINE = 'One continuous loop: the picture keeps getting richer.';
 
+/* Step titles and bodies mirror slide 10 of the investor deck, which lays the
+   eight steps out as a snake with arrows: 01 to 04 across the top, down into
+   05, back across the bottom to 08, and a return arrow closing the loop. */
 export const CARE_LOOP: CareLoopStep[] = [
 	{
 		actor: 'auratwin',
@@ -280,22 +315,22 @@ export const CARE_LOOP: CareLoopStep[] = [
 	},
 	{
 		actor: 'auratwin',
-		title: 'The patient shares a summary',
+		title: 'The patient shares a summary at the GP',
 		body: 'A complete history, ready for the clinician before the appointment starts.'
 	},
 	{
 		actor: 'auracare',
 		title: 'The core reasons',
-		body: 'Summary, acute vitals, live transcription and records together; it asks only what’s worth asking.'
+		body: 'Summary, acute vitals, live transcription, labs and records together; it asks only what’s worth asking.'
 	},
 	{
 		actor: 'auracare',
-		title: 'Ranked differentials',
+		title: 'Ranked differential',
 		body: 'Possible diagnoses, ordered by likelihood. The clinician’s judgement makes the call.'
 	},
 	{
 		actor: 'auracare',
-		title: 'Tailored outputs',
+		title: 'Three outputs',
 		body: 'A lifestyle plan, a referral or a guideline-aligned medication package, matched to where the clinician works.'
 	},
 	{

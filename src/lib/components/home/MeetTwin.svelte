@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { reveal, prefersReducedMotion } from '$lib/actions/motion';
-	import { AURATWIN_EDGE, TWIN_PROBLEM } from '$lib/data/company';
+	import { AURATWIN_EDGE, TWIN_PROBLEM, TWIN_ROLE } from '$lib/data/company';
 
 	type Tier = 'gentle' | 'spicy' | 'nuclear';
 
@@ -75,11 +75,12 @@
 		<div class="twin-copy">
 			<span class="eyebrow" use:reveal>Part two · The consumer spin-out</span>
 			<h2 id="twin-heading" use:reveal={{ delay: 60 }}>
-				Meet Auratwin. Everything you’d notice about yourself, if you had the time.
+				Meet Auratwin. The spin-out that pays for the clinic, and feeds it.
 			</h2>
 			<p class="twin-lead" use:reveal={{ delay: 120 }}>
-				Auracare’s social-history engine, spun out as your wellness hub. It ships first, and every
-				conversation deepens the picture the clinical side runs on.
+				Auracare’s social-history engine, spun out as the consumer wellness hub. It ships first and
+				earns first, and every conversation deepens the picture the clinical core runs on: a social
+				history robust enough to lift CDSS performance by a minimum of 50%.
 			</p>
 
 			<p class="twin-stat" use:reveal={{ delay: 150 }}>
@@ -184,14 +185,32 @@
 			</div>
 		</div>
 
-		<ul class="edge-grid" aria-label="What makes Auratwin different">
-			{#each AURATWIN_EDGE as item, i (item.title)}
-				<li class="edge-card glass-card" use:reveal={{ delay: 80 + i * 70 }}>
-					<h3>{item.title}</h3>
-					<p>{item.body}</p>
-				</li>
-			{/each}
-		</ul>
+		<div class="role-block">
+			<ul class="role-grid" aria-label="What Auratwin does for Auracare">
+				{#each TWIN_ROLE as role, i (role.title)}
+					<li class="role-card" use:reveal={{ delay: 80 + i * 90 }}>
+						<span class="role-stat">{role.stat}</span>
+						<h3>{role.title}</h3>
+						<p>{role.body}</p>
+					</li>
+				{/each}
+			</ul>
+		</div>
+
+		<div class="edge-block">
+			<p class="edge-intro" use:reveal>
+				Retention is the whole design brief. In a market where 96% of installers churn inside a
+				month, every Auratwin feature exists to make the next reply effortless:
+			</p>
+			<ul class="edge-grid" aria-label="Features designed to keep users interacting">
+				{#each AURATWIN_EDGE as item, i (item.title)}
+					<li class="edge-card glass-card" use:reveal={{ delay: 80 + i * 70 }}>
+						<h3>{item.title}</h3>
+						<p>{item.body}</p>
+					</li>
+				{/each}
+			</ul>
+		</div>
 	</div>
 </section>
 
@@ -478,10 +497,61 @@
 		}
 	}
 
+	/* Role cards: the three jobs the spin-out does for Auracare */
+	.role-block {
+		margin-top: clamp(2rem, 4vw, 3rem);
+	}
+	.role-grid {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+	.role-card {
+		padding: 1.4rem 1.5rem;
+		border-radius: var(--radius-lg);
+		background: var(--color-neutral-0);
+		border: 1px solid var(--color-border-default);
+		border-top: 3px solid var(--color-primary-500);
+		box-shadow: var(--shadow-xs);
+	}
+	.role-stat {
+		display: block;
+		font-family: var(--font-family-heading);
+		font-weight: 600;
+		font-size: clamp(1.6rem, 3vw, 2.1rem);
+		line-height: 1;
+		letter-spacing: -0.02em;
+		color: var(--color-primary-600);
+		margin-bottom: 0.7rem;
+	}
+	.role-card h3 {
+		font-size: 1.05rem;
+		letter-spacing: -0.01em;
+		margin-bottom: 0.35rem;
+	}
+	.role-card p {
+		font-size: 0.9rem;
+		line-height: 1.55;
+		color: var(--color-ink-soft);
+		max-width: none;
+	}
+
 	/* Edge cards */
+	.edge-block {
+		margin-top: clamp(1.5rem, 3vw, 2rem);
+	}
+	.edge-intro {
+		font-size: 0.95rem;
+		line-height: 1.6;
+		color: var(--color-ink-soft);
+		max-width: 46rem;
+	}
 	.edge-grid {
 		list-style: none;
-		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+		margin: 1.25rem 0 0;
 		padding: 0;
 		display: grid;
 		grid-template-columns: 1fr;
@@ -507,15 +577,21 @@
 		.edge-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
+		.role-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
 	}
 	@media (min-width: 900px) {
 		.twin-grid {
 			grid-template-columns: 1.05fr 0.95fr;
 		}
-		.edge-grid {
-			/* Span both columns so the four cards spread the full width
-			   instead of cramming into the left column under the copy. */
+		/* Span both columns so these rows spread the full width instead of
+		   cramming into the left column under the copy. */
+		.role-block,
+		.edge-block {
 			grid-column: 1 / -1;
+		}
+		.edge-grid {
 			grid-template-columns: repeat(4, 1fr);
 		}
 	}

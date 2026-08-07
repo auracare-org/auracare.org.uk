@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
-	import { PLATFORM_NOTE, WAITLIST_URL } from '$lib/data/company';
+	import { WAITLIST_URL } from '$lib/data/company';
 	import { onMount } from 'svelte';
 
 	// Everyday-life signal categories, not brand names: the picture, not the plumbing.
@@ -119,17 +119,23 @@
 				The world's most personalised <em>healthcare</em>.
 			</h1>
 			<p class="hero-sub" use:reveal={{ delay: 140 }}>
-				Two products, one patient model. <strong>Auracare</strong>, clinical decision support that
-				works inside the consultation, and <strong>Auratwin</strong>, its consumer spin-out: a
-				wellness companion that lives in your messages, shipping in the coming months.
+				Two products, one patient model. <strong>Auracare</strong> is the core: clinical decision
+				support that works inside the consultation. <strong>Auratwin</strong>, its consumer
+				spin-out, ships first, and does two jobs on the way: its revenue cuts our burn, and the
+				social history it builds lifts the core's performance by a minimum of 50%.
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
-				<a class="cta-primary" href={WAITLIST_URL}>Join the waitlist</a>
-				<a class="cta-ghost" href="/investors">
-					We're raising a seed round <span aria-hidden="true">→</span>
+				<a class="cta-primary" href="/investors">We're raising a seed round</a>
+				<a class="cta-ghost" href="/product/auracare">
+					Meet Auracare, the CDSS <span aria-hidden="true">→</span>
 				</a>
 			</div>
-			<p class="hero-note" use:reveal={{ delay: 280 }}>{PLATFORM_NOTE}</p>
+			<p class="hero-note" use:reveal={{ delay: 280 }}>
+				Here as a user, not an investor? Auratwin has a home of its own at
+				<a href="https://auratwin.club" rel="noopener">auratwin.club</a>: v1 launches on iMessage
+				(iOS), plus WhatsApp and RCS for Android, and the
+				<a href={WAITLIST_URL}>waitlist</a> is open.
+			</p>
 		</div>
 
 		<div
@@ -322,6 +328,14 @@
 		font-size: 0.8rem;
 		color: var(--color-ink-faint);
 		max-width: 30rem;
+	}
+	.hero-note a {
+		color: var(--color-primary-600);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+	.hero-note a:hover {
+		color: var(--color-primary-700);
 	}
 
 	/* Visual. In the stacked layout it leads, above the headline; the wide
