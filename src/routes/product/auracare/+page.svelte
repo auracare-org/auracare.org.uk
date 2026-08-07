@@ -86,17 +86,18 @@
 		'The quiet observer'
 	];
 
-	/* Two routes to revenue on the clinical side. */
+	/* Two routes to revenue on the clinical side, mirroring the deck's
+	   business-model slide. */
 	const paths = [
 		{
 			key: 'A',
-			title: 'Free to the clinician',
-			body: 'Funded on the pharmaceutical side and left free for clinicians: the model that has already proven clinicians will adopt tools built for them.'
+			title: 'Direct to digital services',
+			body: 'API access to our CDSS engine for clinical service providers: ambient scribes, telehealth platforms, EMRs, triage tools and more.'
 		},
 		{
 			key: 'B',
-			title: 'Direct to providers',
-			body: 'Sold to healthcare providers on the strength of the clinician time it saves, measured in shorter admin and fewer unnecessary referrals.'
+			title: 'Direct to service providers',
+			body: 'Sold to hospitals, GP practices, pharmacies and other providers, priced on the clinician time our service saves.'
 		}
 	];
 </script>
@@ -293,8 +294,8 @@
 		<span class="eyebrow" use:reveal>How it reaches the clinic</span>
 		<h2 use:reveal={{ delay: 60 }}>Two clean paths, one product.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			We’re deliberately not tying Auracare to a single route to market. Both keep the clinician’s
-			experience the same; they differ only in who pays.
+			We’re deliberately not tying Auracare to a single route to market. Both put the same reasoning
+			core to work; they differ only in who we sell through.
 		</p>
 
 		<div class="paths-grid">

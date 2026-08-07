@@ -232,7 +232,7 @@
 			at <a class="hero-link" href="https://auratwin.club" rel="noopener">auratwin.club</a>.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
-			<a class="btn-solid" href="/deck">Read the deck</a>
+			<a class="btn-solid" href="/investors">For investors</a>
 			<a class="btn-quiet" href="/product/auracare">Meet the clinical side →</a>
 		</div>
 		<p class="hero-note" use:reveal={{ delay: 260 }}>{PLATFORM_NOTE}</p>
@@ -486,12 +486,11 @@
 	<div class="container-wide cta-inner">
 		<h2 use:reveal>See the loop end to end.</h2>
 		<p use:reveal={{ delay: 80 }}>
-			The deck has the numbers; the founders have the rest. And if you want the twin for yourself,
-			the waitlist is open.
+			The founders can walk you through the numbers. And if you want the twin for yourself, the
+			waitlist is open.
 		</p>
 		<div class="cta-actions" use:reveal={{ delay: 140 }}>
-			<a class="btn-solid" href="/deck">Read the deck</a>
-			<a class="btn-ghost" href="/investors">For investors</a>
+			<a class="btn-solid" href="/investors">For investors</a>
 			<a class="btn-ghost" href={WAITLIST_URL}>Join the waitlist</a>
 		</div>
 	</div>

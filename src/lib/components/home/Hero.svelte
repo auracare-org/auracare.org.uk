@@ -126,8 +126,8 @@
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
 				<a class="cta-primary" href="/investors">We're raising a seed round</a>
-				<a class="cta-ghost" href="/deck">
-					Read the deck <span aria-hidden="true">→</span>
+				<a class="cta-ghost" href="/product/auracare">
+					Meet Auracare, the CDSS <span aria-hidden="true">→</span>
 				</a>
 			</div>
 			<p class="hero-note" use:reveal={{ delay: 280 }}>

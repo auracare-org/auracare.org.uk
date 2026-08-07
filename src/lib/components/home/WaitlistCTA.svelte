@@ -23,8 +23,9 @@
 			<div class="panel-copy">
 				<p class="panel-title">Talk to the founders</p>
 				<p class="panel-sub">
-					Read the deck, then write to us: seed conversations start at
-					<a href="mailto:{CONTACT.seed}?subject=Auracare%20seed%20round">{CONTACT.seed}</a>.
+					Seed conversations start at
+					<a href="mailto:{CONTACT.seed}?subject=Auracare%20seed%20round">{CONTACT.seed}</a>, and
+					we&rsquo;ll share the deck directly.
 				</p>
 			</div>
 
