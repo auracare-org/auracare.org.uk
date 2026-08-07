@@ -2,7 +2,7 @@
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal } from '$lib/actions/motion';
 	import {
-		PLATFORM_NOTE,
+		TRY_TWIN_NOTE,
 		NON_DEVICE_DISCLAIMER,
 		WAITLIST_URL,
 		TWIN_ROLE,
@@ -226,16 +226,18 @@
 			The product built to be <span class="hl">texted back</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 130 }}>
-			Auratwin is Auracare’s social-history engine, spun out as a wellness companion that lives in
-			the app people already open a hundred times a day. This page is the investor’s tour: the jobs
-			it does for Auracare, and the features that keep people replying. Consumers get their own home
-			at <a class="hero-link" href="https://auratwin.club" rel="noopener">auratwin.club</a>.
+			Auratwin is our social-history engine, spun out as a wellness companion that lives in the apps
+			people already open a hundred times a day. See how Auratwin supports Auracare, strengthens
+			patient engagement, and creates lasting value immediately.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
 			<a class="btn-solid" href="/investors">For investors</a>
 			<a class="btn-quiet" href="/product/auracare">Meet the clinical side →</a>
 		</div>
-		<p class="hero-note" use:reveal={{ delay: 260 }}>{PLATFORM_NOTE}</p>
+		<p class="hero-note" use:reveal={{ delay: 260 }}>
+			{TRY_TWIN_NOTE.text}
+			<a class="hero-link" href={TRY_TWIN_NOTE.href} rel="noopener">{TRY_TWIN_NOTE.linkLabel}</a>.
+		</p>
 	</div>
 </section>
 
@@ -446,7 +448,7 @@
 		</div>
 
 		<div class="price-card glass-card" use:reveal={{ delay: 140 }}>
-			<span class="price-tag">Early adopters: 6 months free</span>
+			<span class="price-tag">Early adopters: 3 months free</span>
 			<div class="price-then">
 				<span class="price-num">$10</span>
 				<span class="price-per">/ month after</span>

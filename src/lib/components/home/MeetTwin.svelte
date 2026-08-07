@@ -112,11 +112,6 @@
 					{/each}
 				</div>
 			</div>
-
-			<p class="safeword" use:reveal={{ delay: 220 }}>
-				<span class="safeword-chip">“ease up”</span>
-				Say it any time and Twin instantly changes its tone, and keeps it cool.
-			</p>
 		</div>
 
 		<div class="phone-wrap" use:reveal={{ delay: 140 }}>
@@ -302,24 +297,6 @@
 	.tier-btn.active {
 		color: #fff;
 		background: var(--color-primary-600);
-	}
-
-	.safeword {
-		margin-top: 1.4rem;
-		font-size: 0.9rem;
-		color: var(--color-neutral-600);
-		display: flex;
-		align-items: center;
-		gap: 0.6rem;
-		flex-wrap: wrap;
-	}
-	.safeword-chip {
-		background: rgba(52, 211, 153, 0.16);
-		color: #0f9d6b;
-		font-weight: 700;
-		padding: 0.25rem 0.65rem;
-		border-radius: 999px;
-		font-size: 0.82rem;
 	}
 
 	/* Phone */

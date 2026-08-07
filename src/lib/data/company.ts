@@ -29,6 +29,19 @@ export const CONTACT = {
 
 export const WAITLIST_URL = 'https://app.auratwin.club/waitlist';
 
+/** Auratwin's own consumer home, linked from the investor-facing pages. */
+export const AURATWIN_URL = 'https://auratwin.club';
+
+/**
+ * The "want to try it?" aside that sits under the investor CTA on the home and
+ * Auratwin pages. Split so the trailing link can be rendered as an anchor.
+ */
+export const TRY_TWIN_NOTE = {
+	text: 'Want to try Auratwin? Auratwin v1 launches on iMessage, WhatsApp and RCS, and the waitlist is open. See more at',
+	linkLabel: 'auratwin.club',
+	href: AURATWIN_URL
+} as const;
+
 /* ------------------------------------------------------------------ */
 /* Investors: who covers which region, and the deck                    */
 /* ------------------------------------------------------------------ */
@@ -172,7 +185,7 @@ export const AURATWIN_EDGE: Edge[] = [
 	},
 	{
 		title: 'A personality you can tune',
-		body: 'A sharp, well-rested sibling: funny, specific, and on your side. Set how blunt or gentle it is, say “ease up” any time, and it holds that tone.'
+		body: 'A sharp, well-rested sibling: funny, specific, and on your side. Set how blunt or gentle it is, change it any time, and it holds that tone.'
 	}
 ];
 
@@ -239,11 +252,11 @@ export const TWIN_ROLE: TwinRole[] = [
 	},
 	{
 		stat: '50%+',
-		title: 'It lifts the core',
+		title: 'Improvement in CDSS performance',
 		body: 'A robust social history is the input no clinician has time to gather. Fed into the reasoning core, it improves CDSS performance by a minimum of 50% over the same core working from the record alone.'
 	},
 	{
-		stat: 'Daily',
+		stat: 'Continuous Data',
 		title: 'It keeps the data flowing',
 		body: 'Every Auratwin feature is designed to keep people talking to it, and every reply deepens the social history. Retention is not a vanity metric here; it is the data pipeline the clinical side runs on.'
 	}

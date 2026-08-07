@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
-	import { WAITLIST_URL } from '$lib/data/company';
+	import { TRY_TWIN_NOTE } from '$lib/data/company';
 	import { onMount } from 'svelte';
 
 	// Everyday-life signal categories, not brand names: the picture, not the plumbing.
@@ -119,10 +119,11 @@
 				The world's most personalised <em>healthcare</em>.
 			</h1>
 			<p class="hero-sub" use:reveal={{ delay: 140 }}>
-				Two products, one patient model. <strong>Auracare</strong> is the core: clinical decision
-				support that works inside the consultation. <strong>Auratwin</strong>, its consumer
-				spin-out, ships first, and does two jobs on the way: its revenue cuts our burn, and the
-				social history it builds lifts the core's performance by a minimum of 50%.
+				We offer two products following one patient model. <strong>Auracare</strong> is the core: a
+				clinical decision support system that works inside the consultation.
+				<strong>Auratwin</strong>, its consumer spin-out, ships first, collating patients' social
+				history to increase our CDSS performance by more than 50% while also generating revenue that
+				cuts our burn.
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
 				<a class="cta-primary" href="/investors">We're raising a seed round</a>
@@ -131,10 +132,8 @@
 				</a>
 			</div>
 			<p class="hero-note" use:reveal={{ delay: 280 }}>
-				Here as a user, not an investor? Auratwin has a home of its own at
-				<a href="https://auratwin.club" rel="noopener">auratwin.club</a>: v1 launches on iMessage
-				(iOS), plus WhatsApp and RCS for Android, and the
-				<a href={WAITLIST_URL}>waitlist</a> is open.
+				{TRY_TWIN_NOTE.text}
+				<a href={TRY_TWIN_NOTE.href} rel="noopener">{TRY_TWIN_NOTE.linkLabel}</a>.
 			</p>
 		</div>
 

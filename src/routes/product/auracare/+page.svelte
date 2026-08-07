@@ -29,13 +29,13 @@
 	const room = [
 		{
 			k: '01',
-			title: 'Nobody stops to type',
-			body: 'The consultation is transcribed as it happens. No one breaks the conversation to write notes, and no one reads from a keyboard.'
+			title: 'The context is already in the room',
+			body: 'The patient arrives with a complete lifestyle summary from their twin, and acute vitals stream live from our own devices, so nothing has to be dug up on the spot.'
 		},
 		{
 			k: '02',
-			title: 'The context is already in the room',
-			body: 'The patient arrives with a complete lifestyle summary from their twin, and acute vitals stream live from our own devices, so nothing has to be dug up on the spot.'
+			title: 'Nobody stops to type',
+			body: 'The consultation is transcribed as it happens. No one breaks the conversation to write notes, and no one reads from a keyboard.'
 		},
 		{
 			k: '03',
@@ -797,6 +797,8 @@
 		line-height: 1.6;
 		color: rgba(226, 232, 255, 0.55) !important;
 		max-width: 52rem;
+		margin-inline: auto;
+		text-align: center;
 		padding: 1rem 1.25rem;
 		border-radius: var(--radius-md);
 		background: rgba(255, 255, 255, 0.05);
