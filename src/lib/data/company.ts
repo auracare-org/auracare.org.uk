@@ -252,11 +252,11 @@ export const TWIN_ROLE: TwinRole[] = [
 	},
 	{
 		stat: '50%+',
-		title: 'Improvement in CDSS performance',
+		title: 'Minimum improvement in CDSS performance',
 		body: 'A robust social history is the input no clinician has time to gather. Fed into the reasoning core, it improves CDSS performance by a minimum of 50% over the same core working from the record alone.'
 	},
 	{
-		stat: 'Continuous Data',
+		stat: 'Continuous Intake',
 		title: 'It keeps the data flowing',
 		body: 'Every Auratwin feature is designed to keep people talking to it, and every reply deepens the social history. Retention is not a vanity metric here; it is the data pipeline the clinical side runs on.'
 	}

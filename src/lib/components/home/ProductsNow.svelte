@@ -17,8 +17,7 @@
 		<p class="intro" use:reveal={{ delay: 120 }}>
 			Auracare puts clinical decision support inside the consultation: that is the core project.
 			Auratwin, spun out of Auracare, puts the same understanding of a person into their messages.
-			Both draw on one shared model of the patient, and we’re upfront about where each one stands,
-			so you always know what is real now and what is still ahead.
+			Both draw on one shared model of the patient.
 		</p>
 
 		<div class="grid">

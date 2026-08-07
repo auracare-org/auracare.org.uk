@@ -119,8 +119,8 @@
 				The world's most personalised <em>healthcare</em>.
 			</h1>
 			<p class="hero-sub" use:reveal={{ delay: 140 }}>
-				We offer two products following one patient model. <strong>Auracare</strong> is the core: a
-				clinical decision support system that works inside the consultation.
+				Two products, one shared patient model. <strong>Auracare</strong> is the core: a clinical
+				decision support system that works inside the consultation.
 				<strong>Auratwin</strong>, its consumer spin-out, ships first, collating patients' social
 				history to increase our CDSS performance by more than 50% while also generating revenue that
 				cuts our burn.
