@@ -586,13 +586,6 @@ export const MARKET_POINTS: MarketPoint[] = [
 	},
 	// Wave 3: product crossover, where both products meet in the East Asian hubs
 	{
-		name: 'Taiwan',
-		coords: [121.5654, 25.033],
-		tone: 'crossover',
-		wave: 2,
-		label: 'Auracare and Auratwin now both operate here'
-	},
-	{
 		name: 'Singapore',
 		coords: [103.8198, 1.3521],
 		tone: 'crossover',
@@ -600,6 +593,13 @@ export const MARKET_POINTS: MarketPoint[] = [
 		label: 'Auracare and Auratwin now both operate here'
 	},
 	// Wave 4: Southeast Asia
+	{
+		name: 'Taiwan',
+		coords: [121.5654, 25.033],
+		tone: 'sea',
+		wave: 3,
+		label: 'Asia-Pacific expansion'
+	},
 	{
 		name: 'Malaysia',
 		coords: [101.6869, 3.139],
@@ -744,7 +744,7 @@ export const MARKET_ARCS: MarketArc[] = [
 		label: 'Hong Kong → Greater Bay Area',
 		wave: 1
 	},
-	{ from: [114.1694, 22.3193], to: [121.5654, 25.033], label: 'Hong Kong → Taiwan', wave: 2 }
+	{ from: [114.1694, 22.3193], to: [121.5654, 25.033], label: 'Hong Kong → Taiwan', wave: 3 }
 ];
 
 /* ------------------------------------------------------------------ */
