@@ -1,11 +1,13 @@
 /**
  * Single source of truth for Auracare marketing-site content.
  *
- * Positioning: Auracare (the company) builds two products on one shared patient model.
- *   - Auratwin: the consumer digital twin that lives in your messages (B2C).
+ * Positioning (mirrors the investor deck): Auracare is the larger clinical project;
+ * Auratwin is its consumer spin-out. Two products, one patient model.
  *   - Auracare: clinician-facing clinical decision support that works inside the
  *     consultation (B2B), fed by our own medical hardware, ambient transcription and
- *     the twin's lifestyle summary.
+ *     the twin's lifestyle summary. Part one of the story.
+ *   - Auratwin: Auracare's social-history engine, spun out as the consumer wellness
+ *     hub that lives in your messages (B2C). Part two, and it ships first.
  *
  * Nothing here should overclaim: the reasoning core is in development, Auracare's
  * regulatory pathway is not yet confirmed, and Auratwin is a general-wellness product,
@@ -26,6 +28,19 @@ export const CONTACT = {
 } as const;
 
 export const WAITLIST_URL = 'https://app.auratwin.club/waitlist';
+
+/** Auratwin's own consumer home, linked from the investor-facing pages. */
+export const AURATWIN_URL = 'https://auratwin.club';
+
+/**
+ * The "want to try it?" aside that sits under the investor CTA on the home and
+ * Auratwin pages. Split so the trailing link can be rendered as an anchor.
+ */
+export const TRY_TWIN_NOTE = {
+	text: 'Want to try Auratwin? Auratwin v1 launches on iMessage, WhatsApp and RCS, and the waitlist is open. See more at',
+	linkLabel: 'auratwin.club',
+	href: AURATWIN_URL
+} as const;
 
 /* ------------------------------------------------------------------ */
 /* Investors: who covers which region, and the deck                    */
@@ -89,24 +104,24 @@ export interface Product {
 
 export const PRODUCTS: Product[] = [
 	{
-		key: 'auratwin',
-		name: 'Auratwin',
-		tagline: 'Your digital twin, in your messages',
-		blurb:
-			'A personal health digital twin that lives where you already talk. Auratwin learns your patterns and checks in over your favourite messaging app: guidance before you think you need it. Our consumer product.',
-		status: 'ships-soon',
-		statusLabel: 'Expected August 2026',
-		href: '/product'
-	},
-	{
 		key: 'auracare',
 		name: 'Auracare',
-		tagline: 'Decision support inside the consultation',
+		tagline: 'Clinical decision support inside the consultation',
 		blurb:
-			'Clinician-facing clinical decision support that works in the background during the appointment. It reasons over the twin’s summary, live vitals and the conversation itself, so the clinician keeps their eyes on the patient. In development.',
+			'The core project. Clinician-facing decision support that works in the background during the appointment: it reasons over the twin’s summary, live vitals and the conversation itself, so the clinician keeps their eyes on the patient. In development.',
 		status: 'in-development',
 		statusLabel: 'Expected May 2027',
 		href: '/product/auracare'
+	},
+	{
+		key: 'auratwin',
+		name: 'Auratwin',
+		tagline: 'The consumer spin-out, in your messages',
+		blurb:
+			'Auracare’s social-history engine, spun out as a wellness hub that lives where you already talk. It ships first and earns first: subscription revenue that funds the clinical build, while every conversation deepens the social history the core runs on.',
+		status: 'ships-soon',
+		statusLabel: 'Expected August 2026',
+		href: '/product'
 	},
 	{
 		key: 'ontology',
@@ -170,7 +185,80 @@ export const AURATWIN_EDGE: Edge[] = [
 	},
 	{
 		title: 'A personality you can tune',
-		body: 'A sharp, well-rested sibling: funny, specific, and on your side. Set how blunt or gentle it is, say “ease up” any time, and it holds that tone.'
+		body: 'A sharp, well-rested sibling: funny, specific, and on your side. Set how blunt or gentle it is, change it any time, and it holds that tone.'
+	}
+];
+
+/* ------------------------------------------------------------------ */
+/* The problems each product answers (mirrors the deck's two          */
+/* problem slides: clinical before Auracare, consumer before Auratwin) */
+/* ------------------------------------------------------------------ */
+
+export interface ProblemStat {
+	stat: string;
+	title: string;
+	body: string;
+}
+
+export const CLINICAL_PROBLEM_HEADING =
+	"Clinicians already want AI. Today's tools don't use today's technology.";
+
+export const CLINICAL_PROBLEM: ProblemStat[] = [
+	{
+		stat: '80%',
+		title: 'Trust breaks at the screen',
+		body: 'of doctors already use AI in some form. The utility is there, but the screen time erodes the relationship with the patient.'
+	},
+	{
+		stat: '34%',
+		title: 'Generic by architecture',
+		body: 'is the specialty-benchmark score of the generic models clinicians are offered today.'
+	},
+	{
+		stat: 'Daily life',
+		title: 'Disconnected from',
+		body: 'lifestyle and social history are slow to gather and subject to bias. The record is a series of snapshots: long gaps, no signal in between.'
+	}
+];
+
+export const CLINICAL_PROBLEM_LINE =
+	'Clinicians will adopt AI that respects the patient. Nothing on the market today does.';
+
+export const TWIN_PROBLEM = {
+	stat: '4%',
+	line: 'of wellness-app installers are still active a month later. The apps fail the moment they demand effort: a niche app for every habit, a form for every log, a streak to keep alive.',
+	answer: 'Auratwin removes the effort instead.'
+} as const;
+
+/* ------------------------------------------------------------------ */
+/* Why the spin-out exists: the three jobs Auratwin does for Auracare  */
+/* (the investor framing of the consumer product)                      */
+/* ------------------------------------------------------------------ */
+
+export interface TwinRole {
+	stat: string;
+	title: string;
+	body: string;
+}
+
+export const TWIN_ROLE_EYEBROW = 'Why the spin-out exists';
+export const TWIN_ROLE_HEADING = 'Auratwin is how the clinical build gets paid for, and fed.';
+
+export const TWIN_ROLE: TwinRole[] = [
+	{
+		stat: 'Revenue first',
+		title: 'It cuts the burn',
+		body: 'Auratwin subscriptions start earning at launch, years before a clinical product can. That revenue funds the trials, the certification and the hardware, so the burn falls as the user base grows instead of waiting on the next round.'
+	},
+	{
+		stat: '50%+',
+		title: 'Minimum improvement in CDSS performance',
+		body: 'A robust social history is the input no clinician has time to gather. Fed into the reasoning core, it improves CDSS performance by a minimum of 50% over the same core working from the record alone.'
+	},
+	{
+		stat: 'Continuous Intake',
+		title: 'It keeps the data flowing',
+		body: 'Every Auratwin feature is designed to keep people talking to it, and every reply deepens the social history. Retention is not a vanity metric here; it is the data pipeline the clinical side runs on.'
 	}
 ];
 
@@ -189,7 +277,7 @@ export interface AuracareStage {
 export const AURACARE_INPUTS: AuracareStage[] = [
 	{
 		title: 'The lifestyle summary',
-		body: 'The daily-life picture Auratwin has built, shared by the patient as a single, complete lifestyle picture.'
+		body: 'The daily-life picture built by Auratwin, our consumer spin-out (you’ll meet it below), shared by the patient as a single, complete social history.'
 	},
 	{
 		title: 'Acute vitals, live',
@@ -213,6 +301,65 @@ export const AURACARE_OUTPUTS: AuracareStage[] = [
 	{
 		title: 'Documentation, automatic',
 		body: 'Structured notes written by the core, so there is less time on the screen and more with the patient.'
+	}
+];
+
+/* ------------------------------------------------------------------ */
+/* One patient-centred care loop: Auratwin + Auracare                  */
+/* ------------------------------------------------------------------ */
+
+export interface CareLoopStep {
+	title: string;
+	body: string;
+	/** Which side of the loop is doing the work at this step. */
+	actor: 'auratwin' | 'auracare';
+}
+
+export const CARE_LOOP_LINE = 'One continuous loop: the picture keeps getting richer.';
+
+/* Step titles and bodies mirror slide 10 of the investor deck, which lays the
+   eight steps out as a snake with arrows: 01 to 04 across the top, down into
+   05, back across the bottom to 08, and a return arrow closing the loop. */
+export const CARE_LOOP: CareLoopStep[] = [
+	{
+		actor: 'auratwin',
+		title: 'Auratwin builds the lifestyle picture',
+		body: 'Connectors and conversation, day by day, become one living social history.'
+	},
+	{
+		actor: 'auratwin',
+		title: 'The patient shares a summary at the GP',
+		body: 'A complete history, ready for the clinician before the appointment starts.'
+	},
+	{
+		actor: 'auracare',
+		title: 'The core reasons',
+		body: 'Summary, acute vitals, live transcription, labs and records together; it asks only what’s worth asking.'
+	},
+	{
+		actor: 'auracare',
+		title: 'Ranked differential',
+		body: 'Possible diagnoses, ordered by likelihood. The clinician’s judgement makes the call.'
+	},
+	{
+		actor: 'auracare',
+		title: 'Three outputs',
+		body: 'A lifestyle plan, a referral or a guideline-aligned medication package, matched to where the clinician works.'
+	},
+	{
+		actor: 'auracare',
+		title: 'Notes write themselves',
+		body: 'Formatted consultation notes, generated by the core with a reasoning chain for the whole session.'
+	},
+	{
+		actor: 'auratwin',
+		title: 'Advice becomes routine',
+		body: 'The plan flows back into Auratwin as gentle reminders, tuned to how the person actually lives.'
+	},
+	{
+		actor: 'auratwin',
+		title: 'Trends caught early',
+		body: 'The twin watches the follow-through and flags change sooner: sharper timelines, next time.'
 	}
 ];
 

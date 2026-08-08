@@ -15,20 +15,12 @@
 		return cookieConsent.subscribe((consent) => {
 			if (consent !== 'accepted' || fired) return;
 			fired = true;
-			loadPostHog().then(() =>
-				capture('deck_viewed', { referrer: document.referrer || null })
-			);
+			loadPostHog().then(() => capture('deck_viewed', { referrer: document.referrer || null }));
 		});
 	});
 </script>
 
-<Seo
-	title="Deck"
-	description="The Auracare AI pitch deck."
-	path="/deck"
-	type="article"
-	noindex
-/>
+<Seo title="Deck" description="The Auracare AI pitch deck." path="/deck" type="article" noindex />
 
 <section class="deck" aria-label="Auracare AI deck">
 	<object data={pdf} type="application/pdf" title="Auracare AI deck" class="deck__frame">

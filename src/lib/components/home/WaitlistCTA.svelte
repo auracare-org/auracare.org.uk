@@ -8,12 +8,12 @@
 		<div class="waitlist-copy">
 			<span class="eyebrow" use:reveal>Join us</span>
 			<h2 use:reveal={{ delay: 60 }}>
-				Be first to meet <span class="text-gradient-l">Auratwin</span>.
+				Back the <span class="text-gradient-l">loop</span>.
 			</h2>
 			<p class="lede" use:reveal={{ delay: 140 }}>
-				Auratwin turns the wearables you already wear into a living model of you, and checks in over
-				the messaging apps you already use. Join the waitlist and we&rsquo;ll tell you the moment
-				it&rsquo;s ready.
+				We&rsquo;re raising our seed round. Auratwin ships first and earns first, cutting the burn
+				while its social history lifts the clinical core; Auracare carries that core into the
+				consultation. One patient model, two products, one continuous loop.
 			</p>
 
 			<p class="platform-note" use:reveal={{ delay: 200 }}>{PLATFORM_NOTE}</p>
@@ -21,19 +21,20 @@
 
 		<div class="waitlist-panel glass-card" use:reveal={{ delay: 120 }}>
 			<div class="panel-copy">
-				<p class="panel-title">Reserve your spot</p>
+				<p class="panel-title">Talk to the founders</p>
 				<p class="panel-sub">
-					Signing up takes under a minute. Prefer email? Write to
-					<a href="mailto:{CONTACT.general}?subject=Auratwin%20waitlist">{CONTACT.general}</a>.
+					Seed conversations start at
+					<a href="mailto:{CONTACT.seed}?subject=Auracare%20seed%20round">{CONTACT.seed}</a>, and
+					we&rsquo;ll share the deck directly.
 				</p>
 			</div>
 
-			<a class="submit" href={WAITLIST_URL}>Join the waitlist</a>
+			<a class="submit" href="/investors">Meet the founders</a>
 
 			<div class="investors">
-				<p class="investors-line">Investors: we&rsquo;re raising our seed round.</p>
-				<a class="investors-link" href="/investors">
-					Meet the founders <span aria-hidden="true">&rarr;</span>
+				<p class="investors-line">Here for Auratwin itself? The consumer home is auratwin.club.</p>
+				<a class="investors-link" href={WAITLIST_URL}>
+					Join the waitlist <span aria-hidden="true">&rarr;</span>
 				</a>
 			</div>
 		</div>

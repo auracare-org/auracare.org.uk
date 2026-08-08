@@ -27,7 +27,7 @@
 			only the sources you choose, and your consent is explicit, per-source and revocable at any
 			time.
 		</p>
-		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 1 August 2026</p>
+		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 6 August 2026</p>
 	</div>
 </section>
 
@@ -119,6 +119,16 @@
 				notes are transcribed and the audio is then discarded; we do not create voiceprints and we
 				do not use biometric identification.
 			</p>
+			<h3>Reproductive and cycle data, only if you tell Aura</h3>
+			<p>
+				If you choose to tell Aura about your menstrual cycle, such as when a period starts, we
+				process that alongside the rest of your data and your twin uses it as context for the
+				patterns it already tracks, for example knowing that a higher resting heart rate later in
+				your cycle is expected rather than a sign of strain. You are never asked for it and Auratwin
+				works fully without it. Aura does not predict fertile windows or ovulation, does not give
+				contraception or conception guidance, and does not tell you what a change in your cycle
+				might mean medically.
+			</p>
 			<h3>Precise location, only if you opt in</h3>
 			<p>
 				If you separately opt in, Auratwin processes your precise location to give your guidance
@@ -129,8 +139,9 @@
 			<p>
 				Health data, whether it comes from a source you connect or from something you tell Aura, is
 				sensitive personal data: special-category data under UK and EU law, and sensitive
-				information under US, Canadian and Australian law. We treat it with the heightened
-				protection that classification requires, wherever you are.
+				information under US, Canadian and Australian law. This includes reproductive and cycle
+				data, which several of these laws single out for the strictest treatment. We treat it with
+				the heightened protection that classification requires, wherever you are.
 			</p>
 
 			<h2 id="lawful-basis">Our lawful bases</h2>
@@ -233,12 +244,13 @@
 				We may combine and transform the information we hold into aggregated or de-identified form
 				that no longer identifies you, or any individual, and cannot reasonably be linked back to a
 				person. We take technical and organisational measures to make sure it stays that way, and it
-				never includes your precise location. Once information has been de-identified in this way it
-				is no longer personal data about you. We may use and share it, for example to understand
-				health and wellness trends, to carry out research, to develop and improve our products and
-				models, and for other business purposes. Whenever we do, we publicly commit to maintaining
-				it in de-identified form, we will never attempt to re-identify anyone from it, and we
-				contractually require anyone who receives it to commit to the same.
+				never includes your precise location or your reproductive and cycle data. Once information
+				has been de-identified in this way it is no longer personal data about you. We may use and
+				share it, for example to understand health and wellness trends, to carry out research, to
+				develop and improve our products and models, and for other business purposes. Whenever we
+				do, we publicly commit to maintaining it in de-identified form, we will never attempt to
+				re-identify anyone from it, and we contractually require anyone who receives it to commit to
+				the same.
 			</p>
 
 			<h2 id="retention">Retention &amp; deletion</h2>

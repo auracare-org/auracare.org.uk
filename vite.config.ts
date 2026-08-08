@@ -27,7 +27,9 @@ const posthogProxy = {
 
 export default defineConfig({
 	plugins: [sveltekit()],
-	server: { proxy: posthogProxy },
+	// Honour a PORT handed down by tooling (e.g. editor preview launchers that
+	// pick a free port when 5173 is taken); fall back to Vite's default.
+	server: { proxy: posthogProxy, port: Number(process.env.PORT) || undefined },
 	preview: { proxy: posthogProxy },
 	css: {
 		postcss: {

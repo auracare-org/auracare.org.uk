@@ -1,7 +1,15 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal } from '$lib/actions/motion';
-	import { PLATFORM_NOTE, NON_DEVICE_DISCLAIMER, WAITLIST_URL } from '$lib/data/company';
+	import {
+		TRY_TWIN_NOTE,
+		NON_DEVICE_DISCLAIMER,
+		WAITLIST_URL,
+		TWIN_ROLE,
+		TWIN_ROLE_EYEBROW,
+		TWIN_ROLE_HEADING,
+		TWIN_PROBLEM
+	} from '$lib/data/company';
 
 	/* A single day, held together by proactive check-ins. */
 	const day = [
@@ -117,6 +125,37 @@
 		}
 	];
 
+	/* The engagement hooks, drawn from the live consumer site (auratwin.club).
+	   Each one exists to earn the next reply; each reply deepens the social
+	   history the clinical core runs on. */
+	const retention = [
+		{
+			hook: 'The daily open',
+			title: 'Animal states',
+			body: 'Every day gets an animal: sleep, recovery, stress and activity, summed up as a creature you want to check on. People open the chat just to see what they got, and the explanation is the insight.'
+		},
+		{
+			hook: 'The Sunday ritual',
+			title: 'The weekly review',
+			body: 'A dashboard of the week, made legible: sleep, movement, screen time, spending, even what you listened to. The recap people actually share.'
+		},
+		{
+			hook: 'Useful on off-days',
+			title: 'Environmental check-ins',
+			body: 'UV, pollen, weather, even mosquitoes: opt-in nudges tied to where you actually are, so the twin earns its place on days you would never open a health app.'
+		},
+		{
+			hook: 'Never gets muted',
+			title: 'Quiet hours',
+			body: 'Silent by default from 10pm to 8am, and it steps back the moment you ask. A companion that knows when to stop talking is one people keep.'
+		},
+		{
+			hook: 'Trust compounds',
+			title: 'Your data, your rules',
+			body: 'Everything the twin knows can be inspected, edited and exported from the web app; every source is opt-in and revocable. Trust is what keeps a data relationship alive.'
+		}
+	];
+
 	const boundaries = [
 		{
 			title: 'A companion, not a clinician',
@@ -134,8 +173,8 @@
 </script>
 
 <Seo
-	title="Auratwin: the health companion that texts you back"
-	description="Auratwin turns the wearables and apps you already use into a living model of you, then checks in over the messaging apps you already use: a morning brief, a nudge only when it matters, an evening wrap. Replying is the logging. Our consumer product."
+	title="Auratwin: the spin-out that funds and feeds Auracare"
+	description="Auratwin is Auracare's consumer spin-out: a wellness companion that lives in your messages. It earns from day one to cut the burn, and its social history lifts CDSS performance by a minimum of 50%. Here is how it keeps people replying."
 	path="/product"
 />
 
@@ -182,20 +221,45 @@
 		<span class="blob blob-b"></span>
 	</div>
 	<div class="container-wide hero-inner">
-		<span class="pill pill-soon" use:reveal>Auratwin · Expected August 2026</span>
+		<span class="pill pill-soon" use:reveal>Auratwin · The spin-out · Expected August 2026</span>
 		<h1 use:reveal={{ delay: 60 }}>
-			Your wellness, <span class="hl">texting you back</span>.
+			The product built to be <span class="hl">texted back</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 130 }}>
-			Auratwin is a wellness companion that lives in the app you already open a hundred times a day.
-			It turns your everyday signals into a personal digital twin, then checks in like someone who’s
-			paying attention. No new app to learn, and no forms to fill.
+			Auratwin is our social-history engine, spun out as a wellness companion that lives in the apps
+			people already open a hundred times a day. See how Auratwin supports Auracare, strengthens
+			patient engagement, and creates lasting value immediately.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
-			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
+			<a class="btn-solid" href="/investors">For investors</a>
 			<a class="btn-quiet" href="/product/auracare">Meet the clinical side →</a>
 		</div>
-		<p class="hero-note" use:reveal={{ delay: 260 }}>{PLATFORM_NOTE}</p>
+		<p class="hero-note" use:reveal={{ delay: 260 }}>
+			{TRY_TWIN_NOTE.text}
+			<a class="hero-link" href={TRY_TWIN_NOTE.href} rel="noopener">{TRY_TWIN_NOTE.linkLabel}</a>.
+		</p>
+	</div>
+</section>
+
+<!-- ================= Why the spin-out exists ================= -->
+<section class="section-y role-sec">
+	<div class="container-wide">
+		<span class="eyebrow" use:reveal>{TWIN_ROLE_EYEBROW}</span>
+		<h2 use:reveal={{ delay: 60 }}>{TWIN_ROLE_HEADING}</h2>
+		<p class="lede" use:reveal={{ delay: 120 }}>
+			Auratwin is a real consumer business in its own right. Inside the group it does three jobs,
+			and every feature on this page is in service of them.
+		</p>
+
+		<div class="role-grid">
+			{#each TWIN_ROLE as role, i (role.title)}
+				<div class="role-card" use:reveal={{ delay: i * 90 }}>
+					<span class="role-stat">{role.stat}</span>
+					<h3>{role.title}</h3>
+					<p>{role.body}</p>
+				</div>
+			{/each}
+		</div>
 	</div>
 </section>
 
@@ -206,7 +270,8 @@
 		<h2 use:reveal={{ delay: 60 }}>It reaches out first, so remembering isn’t your job.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			Most wellness apps wait for you to show up. Auratwin runs the other way round: it comes to
-			you, a handful of times a day, and only when there’s something worth saying.
+			you, a handful of times a day, and only when there’s something worth saying. Reaching out
+			first is what turns a tool you remember into a conversation you keep.
 		</p>
 
 		<ol class="day">
@@ -313,6 +378,30 @@
 	</div>
 </section>
 
+<!-- ================= Built for retention ================= -->
+<section class="section-y keep-sec">
+	<div class="container-wide">
+		<span class="eyebrow" use:reveal>Designed for the reply</span>
+		<h2 use:reveal={{ delay: 60 }}>The features that keep the conversation alive.</h2>
+		<p class="lede" use:reveal={{ delay: 120 }}>
+			Only {TWIN_PROBLEM.stat} of wellness-app installers are still active a month after install, so
+			retention is the product. These are the hooks, live on
+			<a class="keep-link" href="https://auratwin.club" rel="noopener">auratwin.club</a>, and every
+			reply they earn deepens the social history the clinical core runs on.
+		</p>
+
+		<div class="keep-grid">
+			{#each retention as feature, i (feature.title)}
+				<div class="keep-card" use:reveal={{ delay: i * 70 }}>
+					<span class="keep-hook">{feature.hook}</span>
+					<h3>{feature.title}</h3>
+					<p>{feature.body}</p>
+				</div>
+			{/each}
+		</div>
+	</div>
+</section>
+
 <!-- ================= Everything it draws on ================= -->
 <section class="section-y src-sec">
 	<div class="container-wide">
@@ -359,7 +448,7 @@
 		</div>
 
 		<div class="price-card glass-card" use:reveal={{ delay: 140 }}>
-			<span class="price-tag">Early adopters: 6 months free</span>
+			<span class="price-tag">Early adopters: 3 months free</span>
 			<div class="price-then">
 				<span class="price-num">$10</span>
 				<span class="price-per">/ month after</span>
@@ -397,13 +486,14 @@
 <!-- ================= Closing CTA ================= -->
 <section class="cta-band aura-space">
 	<div class="container-wide cta-inner">
-		<h2 use:reveal>Be first to meet your twin.</h2>
+		<h2 use:reveal>See the loop end to end.</h2>
 		<p use:reveal={{ delay: 80 }}>
-			Join the waitlist and we’ll tell you the moment Auratwin is ready for you.
+			The founders can walk you through the numbers. And if you want the twin for yourself, the
+			waitlist is open.
 		</p>
 		<div class="cta-actions" use:reveal={{ delay: 140 }}>
-			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
-			<a class="btn-ghost" href="/investors">For investors</a>
+			<a class="btn-solid" href="/investors">For investors</a>
+			<a class="btn-ghost" href={WAITLIST_URL}>Join the waitlist</a>
 		</div>
 	</div>
 </section>
@@ -478,6 +568,103 @@
 		line-height: 1.55;
 		color: var(--color-ink-faint);
 		max-width: 30rem;
+	}
+	.hero-link {
+		color: var(--color-primary-700);
+		font-weight: 600;
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+	.hero-link:hover {
+		color: var(--color-primary-600);
+	}
+
+	/* ---------------- Why the spin-out exists ---------------- */
+	.role-grid {
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.1rem;
+	}
+	.role-card {
+		padding: 1.5rem 1.6rem;
+		border-radius: var(--radius-lg);
+		background: var(--color-neutral-0);
+		border: 1px solid var(--color-border-default);
+		border-top: 3px solid var(--color-primary-500);
+		box-shadow: var(--shadow-xs);
+	}
+	.role-stat {
+		display: block;
+		font-family: var(--font-family-heading);
+		font-weight: 700;
+		font-size: clamp(1.7rem, 3.2vw, 2.3rem);
+		line-height: 1;
+		letter-spacing: -0.02em;
+		color: var(--color-primary-600);
+		margin-bottom: 0.75rem;
+	}
+	.role-card h3 {
+		font-size: 1.08rem;
+		letter-spacing: -0.01em;
+		margin-bottom: 0.4rem;
+	}
+	.role-card p {
+		font-size: 0.92rem;
+		line-height: 1.55;
+		color: var(--color-ink-soft);
+	}
+
+	/* ---------------- Built for retention ---------------- */
+	.keep-sec {
+		background: var(--color-surface-alt);
+		border-block: 1px solid var(--color-border-default);
+	}
+	.keep-link {
+		color: var(--color-primary-700);
+		font-weight: 600;
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+	.keep-link:hover {
+		color: var(--color-primary-600);
+	}
+	.keep-grid {
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+	.keep-card {
+		padding: 1.35rem 1.5rem;
+		border-radius: var(--radius-lg);
+		background: var(--color-neutral-0);
+		border: 1px solid var(--color-border-default);
+		box-shadow: var(--shadow-xs);
+	}
+	.keep-hook {
+		display: inline-block;
+		font-family: var(--font-family-mono);
+		font-size: 0.62rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+		background: var(--color-primary-50);
+		border: 1px solid var(--color-primary-100);
+		padding: 0.2rem 0.6rem;
+		border-radius: 999px;
+		margin-bottom: 0.75rem;
+	}
+	.keep-card h3 {
+		font-size: 1.05rem;
+		letter-spacing: -0.01em;
+		margin-bottom: 0.35rem;
+	}
+	.keep-card p {
+		font-size: 0.9rem;
+		line-height: 1.55;
+		color: var(--color-ink-soft);
 	}
 
 	/* ---------------- Shared buttons ---------------- */
@@ -990,6 +1177,24 @@
 		}
 		.persona-grid {
 			grid-template-columns: repeat(2, 1fr);
+		}
+		.role-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+		.keep-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	@media (min-width: 1000px) {
+		/* Five hooks: three across the top, two below. */
+		.keep-grid {
+			grid-template-columns: repeat(6, 1fr);
+		}
+		.keep-card {
+			grid-column: span 2;
+		}
+		.keep-card:nth-child(4) {
+			grid-column: 2 / span 2;
 		}
 	}
 	@media (min-width: 860px) {

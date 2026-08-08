@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
-	import { PLATFORM_NOTE, WAITLIST_URL } from '$lib/data/company';
+	import { TRY_TWIN_NOTE } from '$lib/data/company';
 	import { onMount } from 'svelte';
 
 	// Everyday-life signal categories, not brand names: the picture, not the plumbing.
@@ -119,18 +119,22 @@
 				The world's most personalised <em>healthcare</em>.
 			</h1>
 			<p class="hero-sub" use:reveal={{ delay: 140 }}>
-				Auracare builds two products on one model of you.
-				<strong>Auratwin</strong>, a wellness companion that lives in your messages, and
-				<strong>Auracare</strong>, clinical decision support that works inside the consultation.
-				Auratwin ships in the coming months.
+				Two products, one shared patient model. <strong>Auracare</strong> is the core: a clinical
+				decision support system that works inside the consultation.
+				<strong>Auratwin</strong>, its consumer spin-out, ships first, collating patients' social
+				history to increase our CDSS performance by more than 50% while also generating revenue that
+				cuts our burn.
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
-				<a class="cta-primary" href={WAITLIST_URL}>Join the waitlist</a>
-				<a class="cta-ghost" href="/investors">
-					We're raising a seed round <span aria-hidden="true">→</span>
+				<a class="cta-primary" href="/investors">We're raising a seed round</a>
+				<a class="cta-ghost" href="/product/auracare">
+					Meet Auracare, the CDSS <span aria-hidden="true">→</span>
 				</a>
 			</div>
-			<p class="hero-note" use:reveal={{ delay: 280 }}>{PLATFORM_NOTE}</p>
+			<p class="hero-note" use:reveal={{ delay: 280 }}>
+				{TRY_TWIN_NOTE.text}
+				<a href={TRY_TWIN_NOTE.href} rel="noopener">{TRY_TWIN_NOTE.linkLabel}</a>.
+			</p>
 		</div>
 
 		<div
@@ -323,6 +327,14 @@
 		font-size: 0.8rem;
 		color: var(--color-ink-faint);
 		max-width: 30rem;
+	}
+	.hero-note a {
+		color: var(--color-primary-600);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+	.hero-note a:hover {
+		color: var(--color-primary-700);
 	}
 
 	/* Visual. In the stacked layout it leads, above the headline; the wide

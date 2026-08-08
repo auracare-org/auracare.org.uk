@@ -1,12 +1,7 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal } from '$lib/actions/motion';
-	import {
-		CONTACT,
-		INVESTOR_CONTACTS,
-		TRACTION,
-		type InvestorContactKey
-	} from '$lib/data/company';
+	import { CONTACT, INVESTOR_CONTACTS, TRACTION, type InvestorContactKey } from '$lib/data/company';
 	import { getMember } from '$lib/data/team';
 
 	const founders = (['stephen', 'hinlun', 'tanush'] as InvestorContactKey[]).map((key) => {
@@ -81,9 +76,9 @@
 		<span class="eyebrow" use:reveal>Seed round</span>
 		<h1 use:reveal={{ delay: 60 }}>We're raising our seed round.</h1>
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>
-			Auratwin launches to the public in August 2026, and our first clinical trials in Asia
-			follow. This round pays for the launch, the trials, and taking our three
-			devices through certification.
+			Auratwin launches to the public in August 2026, and our first clinical trials in Asia follow.
+			This round pays for the launch, the trials, and taking our three devices through
+			certification.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 220 }}>
 			<!-- Interim mailto; swap for the Typeform link when it exists. -->

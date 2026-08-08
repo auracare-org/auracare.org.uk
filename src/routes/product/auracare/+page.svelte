@@ -29,13 +29,13 @@
 	const room = [
 		{
 			k: '01',
-			title: 'Nobody stops to type',
-			body: 'The consultation is transcribed as it happens. No one breaks the conversation to write notes, and no one reads from a keyboard.'
+			title: 'The context is already in the room',
+			body: 'The patient arrives with a complete lifestyle summary from their twin, and acute vitals stream live from our own devices, so nothing has to be dug up on the spot.'
 		},
 		{
 			k: '02',
-			title: 'The context is already in the room',
-			body: 'The patient arrives with a complete lifestyle summary from their twin, and acute vitals stream live from our own devices, so nothing has to be dug up on the spot.'
+			title: 'Nobody stops to type',
+			body: 'The consultation is transcribed as it happens. No one breaks the conversation to write notes, and no one reads from a keyboard.'
 		},
 		{
 			k: '03',
@@ -86,17 +86,18 @@
 		'The quiet observer'
 	];
 
-	/* Two routes to revenue on the clinical side. */
+	/* Two routes to revenue on the clinical side, mirroring the deck's
+	   business-model slide. */
 	const paths = [
 		{
 			key: 'A',
-			title: 'Free to the clinician',
-			body: 'Funded on the pharmaceutical side and left free for clinicians: the model that has already proven clinicians will adopt tools built for them.'
+			title: 'Direct to digital services',
+			body: 'API access to our CDSS engine for clinical service providers: ambient scribes, telehealth platforms, EMRs, triage tools and more.'
 		},
 		{
 			key: 'B',
-			title: 'Direct to providers',
-			body: 'Sold to healthcare providers on the strength of the clinician time it saves, measured in shorter admin and fewer unnecessary referrals.'
+			title: 'Direct to service providers',
+			body: 'Sold to hospitals, GP practices, pharmacies and other providers, priced on the clinician time our service saves.'
 		}
 	];
 </script>
@@ -147,7 +148,7 @@
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
 			<a
 				class="btn-solid"
-				href="mailto:{CONTACT.clinical}?subject=Auracare%20%E2%80%94%20Clinical%20partnership"
+				href="mailto:{CONTACT.clinical}?subject=Auracare%3A%20Clinical%20partnership"
 				>Talk to us about clinical partnerships</a
 			>
 			<a class="btn-quiet" href="/technology">See the technology →</a>
@@ -293,8 +294,8 @@
 		<span class="eyebrow" use:reveal>How it reaches the clinic</span>
 		<h2 use:reveal={{ delay: 60 }}>Two clean paths, one product.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			We’re deliberately not tying Auracare to a single route to market. Both keep the clinician’s
-			experience the same; they differ only in who pays.
+			We’re deliberately not tying Auracare to a single route to market. Both put the same reasoning
+			core to work; they differ only in who we sell through.
 		</p>
 
 		<div class="paths-grid">
@@ -322,7 +323,7 @@
 			<div class="cta-actions" use:reveal={{ delay: 140 }}>
 				<a
 					class="btn-solid"
-					href="mailto:{CONTACT.clinical}?subject=Auracare%20%E2%80%94%20Clinical%20partnership"
+					href="mailto:{CONTACT.clinical}?subject=Auracare%3A%20Clinical%20partnership"
 					>Clinical partnerships</a
 				>
 				<a class="btn-ghost" href="/investors">For investors</a>
@@ -796,6 +797,8 @@
 		line-height: 1.6;
 		color: rgba(226, 232, 255, 0.55) !important;
 		max-width: 52rem;
+		margin-inline: auto;
+		text-align: center;
 		padding: 1rem 1.25rem;
 		border-radius: var(--radius-md);
 		background: rgba(255, 255, 255, 0.05);
