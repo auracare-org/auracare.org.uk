@@ -370,12 +370,6 @@
 		line-height: 1.5;
 	}
 
-	.error-msg {
-		color: #f87171;
-		font-size: 0.88rem;
-		margin: 0;
-	}
-
 	.submit-btn {
 		align-self: flex-start;
 	}
@@ -416,45 +410,5 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.4rem;
-	}
-
-	/* Success state */
-	.success-card {
-		text-align: center;
-		padding: 3rem 2rem;
-		background: rgba(255, 255, 255, 0.04);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		border-radius: 1rem;
-	}
-
-	.success-icon {
-		width: 3rem;
-		height: 3rem;
-		border-radius: 50%;
-		background: rgba(52, 211, 153, 0.2);
-		border: 1px solid rgba(52, 211, 153, 0.4);
-		color: #34d399;
-		font-size: 1.4rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin: 0 auto 1.5rem;
-	}
-
-	.success-card h2 {
-		margin-bottom: 1rem;
-	}
-
-	.success-card p {
-		color: rgba(226, 232, 255, 0.8);
-		font-size: 0.95rem;
-		max-width: 30rem;
-		margin-inline: auto;
-	}
-
-	.success-contact {
-		margin-top: 1.5rem !important;
-		font-size: 0.85rem !important;
-		color: rgba(226, 232, 255, 0.5) !important;
 	}
 </style>
