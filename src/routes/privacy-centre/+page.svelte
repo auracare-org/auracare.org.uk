@@ -51,39 +51,19 @@
 	let phoneNumber = '';
 	let email = '';
 	let additionalInfo = '';
-	let status: 'idle' | 'submitting' | 'success' | 'error' = 'idle';
-	let errorMessage = '';
-
 	$: selected = rights.find((r) => r.key === selectedRight)!;
 
-	async function handleSubmit(e: SubmitEvent) {
+	function handleSubmit(e: SubmitEvent) {
 		e.preventDefault();
-		status = 'submitting';
-		errorMessage = '';
-
-		try {
-			const res = await fetch('/privacy-centre/submit', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					type: selectedRight,
-					phone: phoneNumber,
-					email,
-					additionalInfo
-				})
-			});
-
-			if (res.ok) {
-				status = 'success';
-			} else {
-				const body = await res.json().catch(() => ({}));
-				errorMessage = body.message || 'Something went wrong. Please try again or email us directly.';
-				status = 'error';
-			}
-		} catch {
-			errorMessage = 'Network error. Please check your connection and try again.';
-			status = 'error';
-		}
+		const label = selected.label;
+		const body = [
+			`Request type: ${label}`,
+			`Phone number: ${phoneNumber}`,
+			`Email: ${email}`,
+			...(additionalInfo ? [`\nAdditional info:\n${additionalInfo}`] : [])
+		].join('\n');
+		const mailto = `mailto:privacy@auracare.org.uk?subject=${encodeURIComponent('ADR: ' + label)}&body=${encodeURIComponent(body)}`;
+		window.location.href = mailto;
 	}
 </script>
 
@@ -114,22 +94,7 @@
 
 <section class="centre section-y">
 	<div class="container-narrow">
-		{#if status === 'success'}
-			<div class="success-card" use:reveal>
-				<div class="success-icon" aria-hidden="true">✓</div>
-				<h2>Request received</h2>
-				<p>
-					We have received your {rights.find((r) => r.key === selectedRight)?.label.toLowerCase()} request.
-					You will receive a confirmation email and we will action your request within <strong
-						>30 days</strong
-					>.
-				</p>
-				<p class="success-contact">
-					Questions? Contact <a href="mailto:{CONTACT.privacy}">{CONTACT.privacy}</a>
-				</p>
-			</div>
-		{:else}
-			<div class="rights-grid" use:reveal>
+		<div class="rights-grid" use:reveal>
 				{#each rights as right}
 					<button
 						class="right-card {selectedRight === right.key ? 'right-card--active' : ''}"
@@ -201,16 +166,8 @@
 					</div>
 				{/if}
 
-				{#if status === 'error'}
-					<p class="error-msg" role="alert">{errorMessage}</p>
-				{/if}
-
-				<button
-					type="submit"
-					class="btn-primary submit-btn"
-					disabled={status === 'submitting'}
-				>
-					{status === 'submitting' ? 'Submitting…' : 'Submit request'}
+				<button type="submit" class="btn-primary submit-btn">
+					Open email to submit
 				</button>
 			</form>
 
@@ -240,8 +197,7 @@
 					</p>
 				</div>
 			</div>
-		{/if}
-	</div>
+			</div>
 </section>
 
 <style>
