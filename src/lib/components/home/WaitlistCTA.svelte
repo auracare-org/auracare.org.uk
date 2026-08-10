@@ -17,7 +17,7 @@
 				Be first to meet <span class="text-gradient-l">Auratwin</span>.
 			</h2>
 			<p class="lede" use:reveal={{ delay: 140 }}>
-				Auratwin is the first thing we ship. The consumer story in full is at
+				Auratwin launches in August 2026. The consumer site is
 				<a class="lede-link" href={AURATWIN_URL} rel="noopener">auratwin.club</a>.
 			</p>
 
@@ -27,19 +27,16 @@
 		<div class="waitlist-panel glass-card" use:reveal={{ delay: 120 }}>
 			<div class="panel-copy">
 				<p class="panel-title">Join the waitlist</p>
-				<p class="panel-sub">
-					Auratwin v1 opens on iMessage first, with WhatsApp and RCS behind it. We&rsquo;ll write
-					the moment your spot is ready.
-				</p>
+				<p class="panel-sub">Open now. We&rsquo;ll email you when your access is ready.</p>
 			</div>
 
 			<a class="submit" href={WAITLIST_URL}>Get early access</a>
 
 			<div class="investors">
 				<p class="investors-line">
-					Investing? Regional contacts, traction and the deck are with
-					<a href="mailto:{CONTACT.seed}?subject=Auracare%20seed%20round">{CONTACT.seed}</a> and on the
-					investor page.
+					Investor questions:
+					<a href="mailto:{CONTACT.seed}?subject=Auracare%20seed%20round">{CONTACT.seed}</a>, or
+					start with the investor page.
 				</p>
 				<a class="investors-link" href="/investors">
 					For investors <span aria-hidden="true">&rarr;</span>

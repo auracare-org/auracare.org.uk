@@ -129,7 +129,7 @@
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
 				<a class="cta-primary" href={WAITLIST_URL}>Join the waitlist</a>
 				<a class="cta-ghost" href="#products">
-					Meet the products <span aria-hidden="true">→</span>
+					See the products <span aria-hidden="true">→</span>
 				</a>
 			</div>
 			<p class="hero-note" use:reveal={{ delay: 280 }}>

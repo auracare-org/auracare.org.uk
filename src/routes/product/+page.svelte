@@ -174,7 +174,7 @@
 
 <Seo
 	title="Auratwin: a wellness companion in your messages"
-	description="Auratwin lives in the messaging apps you already use. It learns your daily life in conversation, connects the sources you choose, and builds a bio-psycho-social history you can share at an appointment. It is the first Auracare product to ship."
+	description="Auratwin lives in the messaging apps you already use. It learns your daily life in conversation, connects the sources you choose, and builds a bio-psycho-social history you can share at an appointment. It launches in August 2026."
 	path="/product"
 />
 
@@ -221,18 +221,18 @@
 		<span class="blob blob-b"></span>
 	</div>
 	<div class="container-wide hero-inner">
-		<span class="pill pill-soon" use:reveal>Auratwin · Ships first · Expected August 2026</span>
+		<span class="pill pill-soon" use:reveal>Auratwin · Consumer · Expected August 2026</span>
 		<h1 use:reveal={{ delay: 60 }}>
 			The product built to be <span class="hl">texted back</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 130 }}>
 			Auratwin is a wellness companion that lives in the apps people already open a hundred times a
-			day. It learns your daily life in conversation, and the picture it builds is yours: to keep,
-			and to share with a clinician when it counts.
+			day. It learns your daily life in conversation and builds a picture you can keep, and share
+			with a clinician if you choose.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
 			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
-			<a class="btn-quiet" href="/product/auracare">Meet Auracare CDSS →</a>
+			<a class="btn-quiet" href="/product/auracare">See Auracare CDSS →</a>
 		</div>
 		<p class="hero-note" use:reveal={{ delay: 260 }}>
 			{TRY_TWIN_NOTE.text}
@@ -247,8 +247,8 @@
 		<span class="eyebrow" use:reveal>{TWIN_ROLE_EYEBROW}</span>
 		<h2 use:reveal={{ delay: 60 }}>{TWIN_ROLE_HEADING}</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Auratwin stands on its own as a consumer product. Inside Auracare it also does three jobs, and
-			every feature on this page serves them.
+			Auratwin is a consumer product in its own right. Inside Auracare it does three jobs, and every
+			feature on this page is in service of them.
 		</p>
 
 		<div class="role-grid">
@@ -486,10 +486,10 @@
 <!-- ================= Closing CTA ================= -->
 <section class="cta-band aura-space">
 	<div class="container-wide cta-inner">
-		<h2 use:reveal>Meet your twin first.</h2>
+		<h2 use:reveal>The waitlist is open.</h2>
 		<p use:reveal={{ delay: 80 }}>
-			The waitlist is open now, and the consumer story in full is at auratwin.club. Investors can
-			find the detail on the investor page.
+			Auratwin launches on iMessage, WhatsApp and RCS in August 2026. The consumer site is
+			auratwin.club.
 		</p>
 		<div class="cta-actions" use:reveal={{ delay: 140 }}>
 			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>

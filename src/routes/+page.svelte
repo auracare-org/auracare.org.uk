@@ -12,7 +12,7 @@
 
 <Seo
 	title="Auracare: the world's most personalised healthcare"
-	description="Auracare builds one living model of a person and two products on it: Auratwin, a companion in your messages that builds your bio-psycho-social history, and the Auracare CDSS, clinical decision support inside the consultation. Auratwin ships first."
+	description="Auracare builds one living model of a person and two products on it: Auratwin, a companion in your messages that builds your bio-psycho-social history, and the Auracare CDSS, clinical decision support inside the consultation. Auratwin launches in August 2026."
 	path="/"
 />
 

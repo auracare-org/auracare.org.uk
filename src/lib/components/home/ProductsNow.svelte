@@ -14,9 +14,6 @@
 		<h2 use:reveal={{ delay: 60 }}>
 			Two products, <span class="text-gradient">one patient model</span>.
 		</h2>
-		<p class="intro" use:reveal={{ delay: 120 }}>
-			The model is shared; the products meet different people in different places.
-		</p>
 
 		<div class="grid">
 			{#each PRODUCTS as product, i (product.key)}
@@ -130,12 +127,6 @@
 		letter-spacing: -0.02em;
 		margin-block: 0.75rem 0.9rem;
 		max-width: 20ch;
-	}
-	.intro {
-		font-size: clamp(1rem, 1.4vw, 1.12rem);
-		line-height: 1.6;
-		color: var(--color-ink-soft);
-		max-width: 46rem;
 	}
 	.grid {
 		display: grid;

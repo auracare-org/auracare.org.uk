@@ -110,7 +110,7 @@ export const PRODUCTS: Product[] = [
 		name: 'Auratwin',
 		tagline: 'A companion in your messages',
 		blurb:
-			'A wellness companion that lives where you already talk. It learns daily life in conversation, connects the sources you choose, and builds a complete bio-psycho-social history you can share at an appointment. The first thing we ship.',
+			'A wellness companion that lives where you already talk. It learns daily life in conversation, connects the sources you choose, and builds a complete history you can share at an appointment.',
 		status: 'ships-soon',
 		statusLabel: 'Expected August 2026',
 		href: '/product'
@@ -120,7 +120,7 @@ export const PRODUCTS: Product[] = [
 		name: 'Auracare CDSS',
 		tagline: 'Decision support inside the consultation',
 		blurb:
-			'Our clinical decision support system, for clinicians. It works in the background during the appointment, reasoning over the picture Auratwin builds, live vitals from our own devices and the conversation itself, so the clinician keeps their eyes on the patient. In development.',
+			'A clinical decision support system that works in the background during the appointment: it reasons over the picture Auratwin builds, live vitals from our own devices and the conversation itself, so the clinician keeps their eyes on the patient.',
 		status: 'in-development',
 		statusLabel: 'Expected May 2027',
 		href: '/product/auracare'
@@ -158,24 +158,24 @@ export interface TwinRole {
 	body: string;
 }
 
-export const TWIN_ROLE_EYEBROW = 'Why it ships first';
+export const TWIN_ROLE_EYEBROW = 'Inside Auracare';
 export const TWIN_ROLE_HEADING = 'Why Auratwin comes first.';
 
 export const TWIN_ROLE: TwinRole[] = [
 	{
-		stat: 'First to ship',
-		title: 'It reaches people now',
-		body: 'Auratwin launches while the clinical side is still in development, so it is the first Auracare product anyone can actually use, and the company learns from real people from the start.'
+		stat: 'Aug 2026',
+		title: 'It launches first',
+		body: 'Auratwin launches in August 2026; the CDSS is targeted for May 2027. Until the clinical side ships, Auratwin is the Auracare product in people’s hands.'
 	},
 	{
 		stat: 'Social history',
-		title: 'It builds the history no appointment can',
-		body: 'A complete bio-psycho-social history takes months of ordinary days to gather, not the minutes a consultation has. Auratwin builds it in conversation, and the person chooses to share it.'
+		title: 'It takes the social history',
+		body: 'A complete bio-psycho-social history takes months of ordinary days to gather; a consultation has minutes. Auratwin gathers it in conversation, and the person chooses whether to share it.'
 	},
 	{
-		stat: 'Always current',
-		title: 'It keeps the picture fresh',
-		body: 'People keep talking to Auratwin because it is useful day to day, and every reply keeps the history current. That living picture is what the Auracare CDSS will reason over when it arrives.'
+		stat: 'Continuous',
+		title: 'It keeps the history current',
+		body: 'People text Auratwin because it is useful day to day, and every reply updates the history. The CDSS will reason over that picture once it reaches clinicians.'
 	}
 ];
 

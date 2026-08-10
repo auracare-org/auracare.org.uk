@@ -69,7 +69,7 @@
 			<div class="raise-copy">
 				<span class="raise-label">Seed</span>
 				<h3>We&rsquo;re raising our seed round.</h3>
-				<p>The detail lives on the investor page, and the founders answer their own email.</p>
+				<p>One founder replies directly, depending on where you invest from.</p>
 			</div>
 			<a class="raise-cta" href="/investors">
 				For investors <span aria-hidden="true">&rarr;</span>
