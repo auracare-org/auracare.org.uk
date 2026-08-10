@@ -149,7 +149,7 @@ export const TWIN_PROBLEM = {
 } as const;
 
 /* ------------------------------------------------------------------ */
-/* Why Auratwin comes first: rendered on /product                      */
+/* Why the consumer product leads: rendered on /investors              */
 /* ------------------------------------------------------------------ */
 
 export interface TwinRole {
@@ -158,24 +158,24 @@ export interface TwinRole {
 	body: string;
 }
 
-export const TWIN_ROLE_EYEBROW = 'Inside Auracare';
-export const TWIN_ROLE_HEADING = 'Why Auratwin comes first.';
+export const TWIN_ROLE_EYEBROW = 'How the business is sequenced';
+export const TWIN_ROLE_HEADING = 'The consumer product leads.';
 
 export const TWIN_ROLE: TwinRole[] = [
 	{
 		stat: 'Aug 2026',
-		title: 'It launches first',
-		body: 'Auratwin launches in August 2026; the CDSS is targeted for May 2027. Until the clinical side ships, Auratwin is the Auracare product in people’s hands.'
+		title: 'Revenue starts with Auratwin',
+		body: 'Auratwin subscriptions begin earning at consumer launch in August 2026. The CDSS cannot earn before certification, targeted for May 2027, so the consumer product carries revenue first.'
 	},
 	{
-		stat: 'Social history',
-		title: 'It takes the social history',
-		body: 'A complete bio-psycho-social history takes months of ordinary days to gather; a consultation has minutes. Auratwin gathers it in conversation, and the person chooses whether to share it.'
+		stat: 'One model',
+		title: 'The consumer product feeds the clinical one',
+		body: 'Auratwin builds the bio-psycho-social history a consultation cannot gather itself. Shared by the patient, that history is the input the CDSS reasons over.'
 	},
 	{
 		stat: 'Continuous',
-		title: 'It keeps the history current',
-		body: 'People text Auratwin because it is useful day to day, and every reply updates the history. The CDSS will reason over that picture once it reaches clinicians.'
+		title: 'Retention is the data pipeline',
+		body: 'Every reply keeps the history current, so the quality of the CDSS input tracks the quality of the consumer product. Retention is the number to hold us to.'
 	}
 ];
 
@@ -649,6 +649,70 @@ export const ONTOLOGY_STATS: { value: string; label: string }[] = [
 	{ value: '1.3M', label: 'relationships mapped' },
 	{ value: 'ICD-11', label: '31.9k categories' },
 	{ value: 'LOINC', label: '217k lab codes' }
+];
+
+export interface MoatPillar {
+	title: string;
+	body: string;
+}
+
+export const MOAT: MoatPillar[] = [
+	{
+		title: 'One timestamped, high-context patient state',
+		body: 'Many have tried; this is the first product that can pull it off. Everyday-life signals from the twin, acute vitals streamed straight from our own hardware, and clinical history all map onto one shared clinical vocabulary, each reading timestamped. That builds a longitudinal patient state, not a flat snapshot, so the core reasons over how someone is changing.'
+	},
+	{
+		title: 'Neuro-symbolic: a glass box, not a black box',
+		body: 'Neuro-symbolic by design: a learned graph model personalises medical knowledge to this patient and proposes a ranked shortlist, every entry checked against an auditable symbolic layer grounded in SNOMED CT and ICD-11 and traceable to a named source. The clinician makes the final call, choosing one from the list.'
+	},
+	{
+		title: 'A reasoning loop that asks the next-best question',
+		body: "A value-of-information loop, not a fixed pipeline: the core keeps a live ranked list of what's likely, then asks only the single question, exam or test that resolves the most uncertainty for its cost, and only ones permitted where the patient is."
+	}
+];
+
+export const MOAT_LINE = 'The category we are defining sits at the overlap of all three.';
+
+/* ------------------------------------------------------------------ */
+/* Consent & safety                                                    */
+/* ------------------------------------------------------------------ */
+
+export const TWIN_DOES = [
+	'Connects the everyday-life signals you choose to share',
+	'Learns your baselines and spots meaningful changes',
+	'Checks in with a morning brief and an evening wrap',
+	'Nudges you only when your data says something worth saying'
+];
+
+export const TWIN_NEVER = [
+	'Diagnoses, treats or prescribes',
+	'Interprets a reading as a clinical result',
+	'Replaces your doctor, pharmacist or emergency services',
+	'Shares your data without your explicit, per-source consent'
+];
+
+export interface EmergencyRegion {
+	region: string;
+	lines: { label: string; value: string }[];
+}
+
+export const EMERGENCY_ROUTING: EmergencyRegion[] = [
+	{
+		region: 'United Kingdom',
+		lines: [
+			{ label: 'Emergency', value: '999' },
+			{ label: 'Urgent advice', value: 'NHS 111' },
+			{ label: 'Mental health', value: 'Samaritans 116 123' }
+		]
+	},
+	{
+		region: 'United States',
+		lines: [
+			{ label: 'Emergency', value: '911' },
+			{ label: 'Mental health', value: '988' },
+			{ label: 'Poison control', value: '1-800-222-1222' }
+		]
+	}
 ];
 
 export const NON_DEVICE_DISCLAIMER =

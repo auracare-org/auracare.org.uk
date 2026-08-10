@@ -1,15 +1,9 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
+	import SafetyRouting from '$lib/components/SafetyRouting.svelte';
+	import ToneDemo from '$lib/components/ToneDemo.svelte';
 	import { reveal } from '$lib/actions/motion';
-	import {
-		TRY_TWIN_NOTE,
-		NON_DEVICE_DISCLAIMER,
-		WAITLIST_URL,
-		TWIN_ROLE,
-		TWIN_ROLE_EYEBROW,
-		TWIN_ROLE_HEADING,
-		TWIN_PROBLEM
-	} from '$lib/data/company';
+	import { TRY_TWIN_NOTE, WAITLIST_URL, TWIN_PROBLEM } from '$lib/data/company';
 
 	/* A single day, held together by proactive check-ins. */
 	const day = [
@@ -80,27 +74,6 @@
 		'Symptom checker'
 	];
 
-	/* You reshape the voice the same way you log anything: by texting it.
-	   Each pair is a real thing you could send, and how the twin takes it. */
-	const tuning = [
-		{
-			you: 'can you be more blunt with me? less cushioning',
-			twin: 'Done. I’ll say it straight from now on and skip the soft landing.'
-		},
-		{
-			you: 'keep it short, I don’t need the pep talk',
-			twin: 'Got it, short and to the point, no pep talk.'
-		},
-		{
-			you: 'actually you can be funnier, I like the jokes',
-			twin: 'Say less. Expect worse puns. 😏'
-		},
-		{
-			you: 'ease off the nudges this week, I’m swamped',
-			twin: 'Backing right off. I’ll only flag something if it genuinely matters.'
-		}
-	];
-
 	/* Presets are just starting points; every one is a full rewrite of its voice. */
 	const personas = [
 		{
@@ -153,21 +126,6 @@
 			hook: 'Trust compounds',
 			title: 'Your data, your rules',
 			body: 'Everything the twin knows can be inspected, edited and exported from the web app; every source is opt-in and revocable. Trust is what keeps a data relationship alive.'
-		}
-	];
-
-	const boundaries = [
-		{
-			title: 'A companion, not a clinician',
-			body: 'Auratwin never diagnoses, treats or prescribes. It’s general wellness, it helps you notice, not decide.'
-		},
-		{
-			title: 'It knows when to step back',
-			body: 'Anything that reads as urgent, and it routes you to real help for where you are, straight away.'
-		},
-		{
-			title: 'Your data, your call',
-			body: 'Every source is connected only with your say-so, shown back to you in plain language, and revocable any time.'
 		}
 	];
 </script>
@@ -238,28 +196,6 @@
 			{TRY_TWIN_NOTE.text}
 			<a class="hero-link" href={TRY_TWIN_NOTE.href} rel="noopener">{TRY_TWIN_NOTE.linkLabel}</a>.
 		</p>
-	</div>
-</section>
-
-<!-- ================= Why it ships first ================= -->
-<section class="section-y role-sec">
-	<div class="container-wide">
-		<span class="eyebrow" use:reveal>{TWIN_ROLE_EYEBROW}</span>
-		<h2 use:reveal={{ delay: 60 }}>{TWIN_ROLE_HEADING}</h2>
-		<p class="lede" use:reveal={{ delay: 120 }}>
-			Auratwin is a consumer product in its own right. Inside Auracare it does three jobs, and every
-			feature on this page is in service of them.
-		</p>
-
-		<div class="role-grid">
-			{#each TWIN_ROLE as role, i (role.title)}
-				<div class="role-card" use:reveal={{ delay: i * 90 }}>
-					<span class="role-stat">{role.stat}</span>
-					<h3>{role.title}</h3>
-					<p>{role.body}</p>
-				</div>
-			{/each}
-		</div>
 	</div>
 </section>
 
@@ -336,20 +272,15 @@
 		</p>
 
 		<div class="persona-layout">
-			<!-- Just tell it -->
+			<!-- Live tone demo -->
 			<div class="tune-panel glass-card" use:reveal={{ delay: 140 }}>
 				<div class="tune-head">
-					<h3>Just tell it</h3>
-					<p>No settings screen, no sliders. You say what you want in a message, and it shifts.</p>
+					<h3>Try it</h3>
+					<p>
+						The same check-in at three settings. In the app you change it by saying so, any time.
+					</p>
 				</div>
-				<ul class="tune-thread">
-					{#each tuning as t, i}
-						<li class="tune-pair" use:reveal={{ delay: 180 + i * 60 }}>
-							<p class="tune-bubble you">{t.you}</p>
-							<p class="tune-bubble twin">{t.twin}</p>
-						</li>
-					{/each}
-				</ul>
+				<ToneDemo />
 			</div>
 
 			<!-- Preset personas -->
@@ -384,10 +315,9 @@
 		<span class="eyebrow" use:reveal>Designed for the reply</span>
 		<h2 use:reveal={{ delay: 60 }}>The features that keep the conversation alive.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Only {TWIN_PROBLEM.stat} of wellness-app installers are still active a month after install, so
-			retention is the product. These are the hooks, live on
-			<a class="keep-link" href="https://auratwin.club" rel="noopener">auratwin.club</a>, and every
-			reply they earn deepens the social history the clinical core runs on.
+			Only {TWIN_PROBLEM.stat} of wellness-app installers are still active a month after install: the
+			apps fail the moment they demand effort. These are the features that remove it, live on
+			<a class="keep-link" href="https://auratwin.club" rel="noopener">auratwin.club</a>.
 		</p>
 
 		<div class="keep-grid">
@@ -466,22 +396,8 @@
 	</div>
 </section>
 
-<!-- ================= Boundaries ================= -->
-<section class="section-y bound-sec">
-	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Built with boundaries</span>
-		<h2 use:reveal={{ delay: 60 }}>Honest about what it is, and what it isn’t.</h2>
-		<div class="bound-grid">
-			{#each boundaries as b, i}
-				<div class="bound-card" use:reveal={{ delay: i * 80 }}>
-					<h3>{b.title}</h3>
-					<p>{b.body}</p>
-				</div>
-			{/each}
-		</div>
-		<p class="disclaimer" use:reveal>{NON_DEVICE_DISCLAIMER}</p>
-	</div>
-</section>
+<!-- ================= Safety & routing ================= -->
+<SafetyRouting />
 
 <!-- ================= Closing CTA ================= -->
 <section class="cta-band aura-space">
@@ -577,42 +493,6 @@
 	}
 	.hero-link:hover {
 		color: var(--color-primary-600);
-	}
-
-	/* ---------------- Why it ships first ---------------- */
-	.role-grid {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.1rem;
-	}
-	.role-card {
-		padding: 1.5rem 1.6rem;
-		border-radius: var(--radius-lg);
-		background: var(--color-neutral-0);
-		border: 1px solid var(--color-border-default);
-		border-top: 3px solid var(--color-primary-500);
-		box-shadow: var(--shadow-xs);
-	}
-	.role-stat {
-		display: block;
-		font-family: var(--font-family-heading);
-		font-weight: 700;
-		font-size: clamp(1.7rem, 3.2vw, 2.3rem);
-		line-height: 1;
-		letter-spacing: -0.02em;
-		color: var(--color-primary-600);
-		margin-bottom: 0.75rem;
-	}
-	.role-card h3 {
-		font-size: 1.08rem;
-		letter-spacing: -0.01em;
-		margin-bottom: 0.4rem;
-	}
-	.role-card p {
-		font-size: 0.92rem;
-		line-height: 1.55;
-		color: var(--color-ink-soft);
 	}
 
 	/* ---------------- Built for retention ---------------- */
@@ -876,38 +756,6 @@
 		line-height: 1.5;
 		color: rgba(226, 230, 240, 0.55) !important;
 	}
-	.tune-thread {
-		list-style: none;
-		margin: 1.5rem 0 0;
-		padding: 0;
-		display: grid;
-		gap: 1.4rem;
-	}
-	.tune-pair {
-		display: grid;
-		gap: 0.4rem;
-	}
-	.tune-bubble {
-		font-size: 0.9rem;
-		line-height: 1.5;
-		padding: 0.65rem 0.9rem;
-		border-radius: 1.05rem;
-		max-width: 85%;
-		width: fit-content;
-	}
-	.tune-bubble.you {
-		justify-self: end;
-		background: var(--color-primary-600);
-		color: #eef2ff !important;
-		border-bottom-right-radius: 0.35rem;
-	}
-	.tune-bubble.twin {
-		justify-self: start;
-		background: rgba(255, 255, 255, 0.07);
-		color: rgba(226, 230, 240, 0.82) !important;
-		border-bottom-left-radius: 0.35rem;
-	}
-
 	/* Preset personas */
 	.persona-intro {
 		font-size: 0.95rem;
@@ -1096,38 +944,6 @@
 		font-weight: 700;
 	}
 
-	/* ---------------- Boundaries ---------------- */
-	.bound-grid {
-		margin-top: clamp(2rem, 4vw, 3rem);
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1rem;
-	}
-	.bound-card {
-		padding: 1.35rem 1.5rem;
-		border-radius: var(--radius-lg);
-		background: var(--color-neutral-0);
-		border: 1px solid var(--color-border-default);
-		border-left: 3px solid var(--color-primary-400);
-	}
-	.bound-card h3 {
-		font-size: 1.05rem;
-		letter-spacing: -0.01em;
-		margin-bottom: 0.35rem;
-	}
-	.bound-card p {
-		font-size: 0.92rem;
-		line-height: 1.55;
-		color: var(--color-ink-soft);
-	}
-	.disclaimer {
-		margin-top: 1.75rem;
-		font-size: 0.8rem;
-		line-height: 1.6;
-		color: var(--color-ink-faint);
-		max-width: 52rem;
-	}
-
 	/* ---------------- CTA band ---------------- */
 	.cta-band {
 		padding-block: clamp(3.5rem, 7vw, 5.5rem);
@@ -1172,14 +988,8 @@
 		.src-grid {
 			grid-template-columns: repeat(3, 1fr);
 		}
-		.bound-grid {
-			grid-template-columns: repeat(3, 1fr);
-		}
 		.persona-grid {
 			grid-template-columns: repeat(2, 1fr);
-		}
-		.role-grid {
-			grid-template-columns: repeat(3, 1fr);
 		}
 		.keep-grid {
 			grid-template-columns: repeat(2, 1fr);

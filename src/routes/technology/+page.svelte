@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
+	import CapabilityVenn from '$lib/components/CapabilityVenn.svelte';
 	import { reveal, countUp } from '$lib/actions/motion';
 	import { CONTACT, ONTOLOGY_STATS } from '$lib/data/company';
 
@@ -144,7 +145,7 @@
 
 <Seo
 	title="Technology"
-	description="Two products on one patient model: how Auratwin builds a high-context digital twin, and how Auracare's neuro-symbolic reasoning loop turns it into grounded, traceable clinical decision support."
+	description="Two products on one patient model: how Auratwin builds a high-context digital twin, and how the Auracare CDSS turns it into grounded, traceable clinical decision support."
 	path="/technology"
 />
 
@@ -170,13 +171,13 @@
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>
 			Everything we build stands on a single idea: one timestamped picture of a person, grounded in
 			the language medicine already agrees on. <strong>Auratwin</strong> is a consumer twin that
-			learns your daily life. <strong>Auracare</strong> is clinical decision support that reasons over
-			the whole picture: vitals, history, symptoms and everything the twin captures. This page is how
-			both work.
+			learns your daily life. <strong>Auracare CDSS</strong> is clinical decision support that reasons
+			over the whole picture: vitals, history, symptoms and everything the twin captures. This page is
+			how both work.
 		</p>
 		<nav class="hero-jump" use:reveal={{ delay: 200 }} aria-label="Jump to a product">
 			<a href="#auratwin">Auratwin <span aria-hidden="true">→</span></a>
-			<a href="#auracare">Auracare <span aria-hidden="true">→</span></a>
+			<a href="#auracare">Auracare CDSS <span aria-hidden="true">→</span></a>
 		</nav>
 		<div class="hero-status" use:reveal={{ delay: 260 }}>
 			<span class="pill pill-live">Knowledge graph: live today</span>
@@ -371,12 +372,19 @@
 </section>
 
 <!-- ============================================================ -->
-<!-- PART TWO · AURACARE · the reasoning loop                      -->
+<!-- PART TWO · AURACARE CDSS · the reasoning loop                 -->
 <!-- ============================================================ -->
-<section id="auracare" class="section-y loop-section">
+
+<!-- The three capabilities the clinical side rests on, as one figure;
+     the sections after it unpack each in depth. -->
+<div id="auracare">
+	<CapabilityVenn />
+</div>
+
+<section class="section-y loop-section">
 	<div class="container-wide">
 		<span class="part-tag" use:reveal>Part two</span>
-		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracare · clinical reasoning</span>
+		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracare CDSS · clinical reasoning</span>
 		<h2 use:reveal={{ delay: 80 }}>A loop, not a pipeline.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			Most health AI runs a fixed pipeline: data in, answer out. Auracare behaves more like a

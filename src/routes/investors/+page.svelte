@@ -2,8 +2,31 @@
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import WorldMap from '$lib/components/WorldMap.svelte';
 	import { reveal } from '$lib/actions/motion';
-	import { CONTACT, INVESTOR_CONTACTS, TRACTION, type InvestorContactKey } from '$lib/data/company';
+	import {
+		CONTACT,
+		INVESTOR_CONTACTS,
+		TRACTION,
+		TWIN_ROLE,
+		TWIN_ROLE_EYEBROW,
+		TWIN_ROLE_HEADING,
+		type InvestorContactKey
+	} from '$lib/data/company';
 	import { getMember } from '$lib/data/team';
+
+	/* Two routes to clinical revenue, moved here from the Auracare CDSS page:
+	   route-to-market reasoning is investor material, not product material. */
+	const clinicalPaths = [
+		{
+			key: 'A',
+			title: 'Direct to digital services',
+			body: 'API access to our CDSS engine for clinical service providers: ambient scribes, telehealth platforms, EMRs, triage tools and more.'
+		},
+		{
+			key: 'B',
+			title: 'Direct to service providers',
+			body: 'Sold to hospitals, GP practices, pharmacies and other providers, priced on the clinician time our service saves.'
+		}
+	];
 
 	const founders = (['stephen', 'hinlun', 'tanush'] as InvestorContactKey[]).map((key) => {
 		const contact = INVESTOR_CONTACTS[key];
@@ -126,6 +149,34 @@
 				<div class="proof-tile glass-card" use:reveal={{ delay: 80 + i * 60 }}>
 					<span class="proof-stat">{t.stat}</span>
 					<span class="proof-label">{t.label}</span>
+				</div>
+			{/each}
+		</div>
+	</div>
+</section>
+
+<!-- ================= Business model ================= -->
+<section class="section-y model">
+	<div class="container-wide">
+		<span class="model-eyebrow" use:reveal>{TWIN_ROLE_EYEBROW}</span>
+		<h2 use:reveal={{ delay: 60 }}>{TWIN_ROLE_HEADING}</h2>
+		<div class="model-grid">
+			{#each TWIN_ROLE as role, i (role.title)}
+				<div class="model-card glass-card" use:reveal={{ delay: 100 + i * 80 }}>
+					<span class="model-stat">{role.stat}</span>
+					<h3>{role.title}</h3>
+					<p>{role.body}</p>
+				</div>
+			{/each}
+		</div>
+
+		<h3 class="model-sub" use:reveal>Two routes to clinical revenue</h3>
+		<div class="model-paths">
+			{#each clinicalPaths as p, i (p.key)}
+				<div class="model-path glass-card" use:reveal={{ delay: 80 + i * 80 }}>
+					<span class="model-badge">Path {p.key}</span>
+					<h4>{p.title}</h4>
+					<p>{p.body}</p>
 				</div>
 			{/each}
 		</div>
@@ -360,6 +411,90 @@
 	@media (min-width: 900px) {
 		.proof-grid {
 			grid-template-columns: repeat(4, 1fr);
+		}
+	}
+
+	/* ---------------- Business model ---------------- */
+	.model-eyebrow {
+		display: block;
+		font-family: var(--font-family-mono);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+		margin-bottom: 0.6rem;
+	}
+	.model-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+		margin-top: clamp(1.5rem, 3.5vw, 2.25rem);
+	}
+	.model-card {
+		padding: 1.4rem 1.5rem;
+		border-radius: var(--radius-lg);
+		border-top: 3px solid var(--color-primary-500);
+	}
+	.model-stat {
+		display: block;
+		font-family: var(--font-family-heading);
+		font-weight: 600;
+		font-size: clamp(1.5rem, 3vw, 2rem);
+		letter-spacing: -0.02em;
+		color: var(--color-primary-700);
+		margin-bottom: 0.6rem;
+	}
+	.model-card h3 {
+		font-size: 1.05rem;
+		letter-spacing: -0.01em;
+		margin-bottom: 0.35rem;
+	}
+	.model-card p,
+	.model-path p {
+		font-size: 0.9rem;
+		line-height: 1.55;
+		color: var(--color-ink-soft);
+	}
+	.model-sub {
+		margin-top: clamp(2rem, 4vw, 2.75rem);
+		font-size: 1.15rem;
+		letter-spacing: -0.01em;
+	}
+	.model-paths {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+		margin-top: 1.1rem;
+	}
+	.model-path {
+		padding: 1.4rem 1.5rem;
+		border-radius: var(--radius-lg);
+	}
+	.model-badge {
+		display: inline-block;
+		font-family: var(--font-family-mono);
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+		background: var(--color-primary-50);
+		border: 1px solid var(--color-primary-100);
+		padding: 0.25rem 0.65rem;
+		border-radius: 999px;
+	}
+	.model-path h4 {
+		font-size: 1.05rem;
+		letter-spacing: -0.01em;
+		margin: 0.7rem 0 0.35rem;
+	}
+	@media (min-width: 860px) {
+		.model-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+		.model-paths {
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 

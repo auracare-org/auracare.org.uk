@@ -87,21 +87,6 @@
 		'The chatty companion',
 		'The quiet observer'
 	];
-
-	/* Two routes to revenue on the clinical side, mirroring the deck's
-	   business-model slide. */
-	const paths = [
-		{
-			key: 'A',
-			title: 'Direct to digital services',
-			body: 'API access to our CDSS engine for clinical service providers: ambient scribes, telehealth platforms, EMRs, triage tools and more.'
-		},
-		{
-			key: 'B',
-			title: 'Direct to service providers',
-			body: 'Sold to hospitals, GP practices, pharmacies and other providers, priced on the clinician time our service saves.'
-		}
-	];
 </script>
 
 <Seo
@@ -161,7 +146,7 @@
 <!-- ================= The clinical gap ================= -->
 <section class="section-y gap-sec">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Why now</span>
+		<span class="eyebrow" use:reveal>The gap</span>
 		<h2 use:reveal={{ delay: 60 }}>
 			Clinicians already want AI. Today’s tools don’t fit the room.
 		</h2>
@@ -287,28 +272,6 @@
 				toward, ranked and traceable; the clinician selects, and that selection shapes the next
 				steps and the notes.
 			</p>
-		</div>
-	</div>
-</section>
-
-<!-- ================= Two paths ================= -->
-<section class="section-y paths-sec">
-	<div class="container-wide">
-		<span class="eyebrow" use:reveal>How it reaches the clinic</span>
-		<h2 use:reveal={{ delay: 60 }}>Two clean paths, one product.</h2>
-		<p class="lede" use:reveal={{ delay: 120 }}>
-			We’re deliberately not tying the CDSS to a single route to market. Both put the same reasoning
-			core to work; they differ only in who we sell through.
-		</p>
-
-		<div class="paths-grid">
-			{#each paths as p, i}
-				<div class="path-card" use:reveal={{ delay: i * 100 }}>
-					<span class="path-badge">Path {p.key}</span>
-					<h3>{p.title}</h3>
-					<p>{p.body}</p>
-				</div>
-			{/each}
 		</div>
 	</div>
 </section>
@@ -748,48 +711,6 @@
 		color: var(--color-ink-faint);
 	}
 
-	/* ---------------- Two paths ---------------- */
-	.paths-sec {
-		background: var(--color-surface-alt);
-		border-block: 1px solid var(--color-border-default);
-	}
-	.paths-grid {
-		margin-top: clamp(2rem, 4vw, 3rem);
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.1rem;
-	}
-	.path-card {
-		padding: 1.6rem 1.7rem;
-		border-radius: var(--radius-lg);
-		background: var(--color-neutral-0);
-		border: 1px solid var(--color-border-default);
-		box-shadow: var(--shadow-xs);
-	}
-	.path-badge {
-		display: inline-block;
-		font-family: var(--font-family-mono);
-		font-size: 0.68rem;
-		font-weight: 700;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-		color: var(--color-primary-600);
-		background: var(--color-primary-50);
-		border: 1px solid var(--color-primary-100);
-		padding: 0.25rem 0.65rem;
-		border-radius: 999px;
-	}
-	.path-card h3 {
-		font-size: 1.2rem;
-		letter-spacing: -0.01em;
-		margin: 0.9rem 0 0.4rem;
-	}
-	.path-card p {
-		font-size: 0.95rem;
-		line-height: 1.6;
-		color: var(--color-ink-soft);
-	}
-
 	/* ---------------- Regulatory + CTA ---------------- */
 	.cta-band {
 		padding-block: clamp(3rem, 6vw, 5rem);
@@ -835,9 +756,6 @@
 	@media (min-width: 720px) {
 		.gap-grid {
 			grid-template-columns: repeat(3, 1fr);
-		}
-		.paths-grid {
-			grid-template-columns: repeat(2, 1fr);
 		}
 		.hw-grid {
 			grid-template-columns: repeat(3, 1fr);
