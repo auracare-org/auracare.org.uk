@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
+	import ArchitecturePipeline from '$lib/components/ArchitecturePipeline.svelte';
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT, HARDWARE, HARDWARE_MORE, REGULATORY_NOTE } from '$lib/data/company';
 
@@ -220,6 +221,30 @@
 			{/each}
 		</ul>
 		<p class="hw-more" use:reveal>{HARDWARE_MORE}</p>
+	</div>
+</section>
+
+<!-- ================= How it reasons ================= -->
+<section class="section-y arch-sec">
+	<div class="container-wide">
+		<span class="eyebrow" use:reveal>The architecture</span>
+		<h2 use:reveal={{ delay: 60 }}>How it reasons.</h2>
+		<p class="lede" use:reveal={{ delay: 120 }}>
+			Most clinical AI sends a prompt to a general-purpose model and returns its answer; that is the
+			34% in the gap above. Here, every signal is encoded onto the clinical ontology first, a
+			<strong>neuro-symbolic</strong> core reasons over the knowledge graph, and what comes back is ranked,
+			sourced and auditable.
+		</p>
+
+		<ArchitecturePipeline />
+
+		<p class="arch-note" use:reveal>
+			The knowledge graph is live and explorable today; the reasoning engine that acts on it is in
+			active development.
+		</p>
+		<a class="arch-link" href="/technology" use:reveal>
+			See the technology in full <span aria-hidden="true">→</span>
+		</a>
 	</div>
 </section>
 
@@ -709,6 +734,31 @@
 		font-size: 0.85rem;
 		line-height: 1.55;
 		color: var(--color-ink-faint);
+	}
+
+	/* ---------------- How it reasons ---------------- */
+	.arch-sec {
+		background: var(--color-surface-alt);
+		border-block: 1px solid var(--color-border-default);
+	}
+	.arch-note {
+		margin-top: clamp(1.5rem, 3vw, 2rem);
+		font-size: 0.85rem;
+		line-height: 1.6;
+		color: var(--color-ink-faint);
+		max-width: 52rem;
+	}
+	.arch-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		margin-top: 0.9rem;
+		font-weight: 600;
+		font-size: 0.95rem;
+		color: var(--color-primary-600);
+	}
+	.arch-link:hover {
+		color: var(--color-primary-700);
 	}
 
 	/* ---------------- Regulatory + CTA ---------------- */
