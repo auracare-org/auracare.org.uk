@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
-	import { CONTACT, PLATFORM_NOTE, NON_DEVICE_DISCLAIMER, WAITLIST_URL } from '$lib/data/company';
+	import {
+		AURATWIN_URL,
+		CONTACT,
+		PLATFORM_NOTE,
+		NON_DEVICE_DISCLAIMER,
+		WAITLIST_URL
+	} from '$lib/data/company';
 </script>
 
 <section id="waitlist" class="waitlist aura-space">
@@ -8,12 +14,11 @@
 		<div class="waitlist-copy">
 			<span class="eyebrow" use:reveal>Join us</span>
 			<h2 use:reveal={{ delay: 60 }}>
-				Back the <span class="text-gradient-l">loop</span>.
+				Be first to meet <span class="text-gradient-l">Auratwin</span>.
 			</h2>
 			<p class="lede" use:reveal={{ delay: 140 }}>
-				We&rsquo;re raising our seed round. Auratwin ships first and earns first, cutting the burn
-				while its social history lifts the clinical core; Auracare carries that core into the
-				consultation. One patient model, two products, one continuous loop.
+				Auratwin is the first thing we ship. The consumer story in full is at
+				<a class="lede-link" href={AURATWIN_URL} rel="noopener">auratwin.club</a>.
 			</p>
 
 			<p class="platform-note" use:reveal={{ delay: 200 }}>{PLATFORM_NOTE}</p>
@@ -21,20 +26,23 @@
 
 		<div class="waitlist-panel glass-card" use:reveal={{ delay: 120 }}>
 			<div class="panel-copy">
-				<p class="panel-title">Talk to the founders</p>
+				<p class="panel-title">Join the waitlist</p>
 				<p class="panel-sub">
-					Seed conversations start at
-					<a href="mailto:{CONTACT.seed}?subject=Auracare%20seed%20round">{CONTACT.seed}</a>, and
-					we&rsquo;ll share the deck directly.
+					Auratwin v1 opens on iMessage first, with WhatsApp and RCS behind it. We&rsquo;ll write
+					the moment your spot is ready.
 				</p>
 			</div>
 
-			<a class="submit" href="/investors">Meet the founders</a>
+			<a class="submit" href={WAITLIST_URL}>Get early access</a>
 
 			<div class="investors">
-				<p class="investors-line">Here for Auratwin itself? The consumer home is auratwin.club.</p>
-				<a class="investors-link" href={WAITLIST_URL}>
-					Join the waitlist <span aria-hidden="true">&rarr;</span>
+				<p class="investors-line">
+					Investing? Regional contacts, traction and the deck are with
+					<a href="mailto:{CONTACT.seed}?subject=Auracare%20seed%20round">{CONTACT.seed}</a> and on the
+					investor page.
+				</p>
+				<a class="investors-link" href="/investors">
+					For investors <span aria-hidden="true">&rarr;</span>
 				</a>
 			</div>
 		</div>
@@ -72,6 +80,16 @@
 		line-height: 1.6;
 		max-width: 34rem;
 	}
+	.lede-link,
+	.investors-line a {
+		color: #cdd9ff;
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+	.lede-link:hover,
+	.investors-line a:hover {
+		color: #fff;
+	}
 	.platform-note {
 		margin-top: 1.25rem;
 		font-size: 0.82rem;
@@ -98,14 +116,6 @@
 		font-size: 0.9rem;
 		line-height: 1.55;
 		color: rgba(234, 240, 255, 0.8) !important;
-	}
-	.panel-sub a {
-		color: #cdd9ff;
-		text-decoration: underline;
-		text-underline-offset: 2px;
-	}
-	.panel-sub a:hover {
-		color: #fff;
 	}
 
 	.submit {

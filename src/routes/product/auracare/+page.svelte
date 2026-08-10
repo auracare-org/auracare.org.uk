@@ -40,7 +40,7 @@
 		{
 			k: '03',
 			title: 'The clinician stays with the patient',
-			body: 'Auracare reasons in the background and surfaces what’s useful. The clinician never appears to search anything, so eye contact, and the relationship, holds.'
+			body: 'The CDSS reasons in the background and surfaces what’s useful. The clinician never appears to search anything, so eye contact, and the relationship, holds.'
 		}
 	];
 
@@ -60,10 +60,12 @@
 		}
 	];
 
-	/* Illustrative differential, clearly an example, not a real patient.
-	   `pct` is CLINICIAN AGREEMENT measured in live studies on the shipped core:
-	   how often clinicians agreed when the core placed a condition here. It is NOT
-	   the core's confidence or probability of being right. */
+	/* Illustrative differential: an example, not a real patient and not live
+	   model output (the core is in development). `pct` illustrates CLINICIAN
+	   AGREEMENT, the metric we will measure and publish once the core is in
+	   clinicians' hands: how often clinicians agree when the core places a
+	   condition here. It is NOT the core's confidence or probability of being
+	   right. */
 	const differentialExample = [
 		{ name: 'Viral upper-respiratory infection', pct: 61, lead: true },
 		{ name: 'Acute bacterial sinusitis', pct: 22 },
@@ -103,8 +105,8 @@
 </script>
 
 <Seo
-	title="Auracare: decision support inside the consultation"
-	description="Auracare is clinician-facing clinical decision support that works in the background during the appointment. It reasons over the twin's lifestyle summary, live vitals from our own hardware, and the conversation itself, so the clinician keeps their eyes on the patient. In development."
+	title="Auracare CDSS: decision support inside the consultation"
+	description="Auracare CDSS is our clinical decision support system. It works in the background during the appointment, reasoning over the picture Auratwin builds, live vitals from our own hardware, and the conversation itself, so the clinician keeps their eyes on the patient. In development."
 	path="/product/auracare"
 />
 
@@ -123,7 +125,7 @@
 				{
 					"@type": "ListItem",
 					"position": 2,
-					"name": "Auracare",
+					"name": "Auracare CDSS",
 					"item": "https://auracare.org.uk/product/auracare"
 				}
 			]
@@ -136,14 +138,14 @@
 	<div class="hero-grid-bg" aria-hidden="true"></div>
 	<div class="hero-orb" aria-hidden="true"></div>
 	<div class="container-wide hero-inner">
-		<span class="pill pill-dev" use:reveal>Auracare · In development</span>
+		<span class="pill pill-dev" use:reveal>Auracare CDSS · In development</span>
 		<h1 use:reveal={{ delay: 60 }}>
 			The decision support that <span class="hl">stays out of the way</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 130 }}>
-			Auracare is our clinical product: decision support that works during the appointment, not
-			after it. The twin you may already know walks into the clinic with the patient, and the
-			clinician keeps their attention exactly where it belongs.
+			Auracare CDSS is our clinical product: a clinical decision support system that works during
+			the appointment, not after it. The twin you may already know walks into the clinic with the
+			patient, and the clinician keeps their attention exactly where it belongs.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
 			<a
@@ -187,7 +189,7 @@
 		<span class="eyebrow" use:reveal>Inside the consultation</span>
 		<h2 use:reveal={{ delay: 60 }}>Everything arrives automatically, so nothing interrupts.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Auracare is built around a single rule: every time a clinician has to break away to search,
+			The CDSS is built around a single rule: every time a clinician has to break away to search,
 			type or look something up, the consultation suffers. So it removes those moments.
 		</p>
 
@@ -262,7 +264,8 @@
 			<span class="demo-head">Ranked differential</span>
 			<p class="demo-sub">
 				The figure beside each is <strong>clinician agreement</strong>, not model certainty: how
-				often clinicians agreed with that placement in live studies on the shipped core.
+				often clinicians agree with that placement. The figures here are illustrative; the core is
+				in development, and we will measure and publish the real rate from its first studies.
 			</p>
 			<div class="demo-collabel" aria-hidden="true">
 				<span>Differential</span>
@@ -280,9 +283,9 @@
 				{/each}
 			</ul>
 			<p class="demo-foot">
-				Read it as: when the core leads with viral URTI, clinicians agree 61% of the time, a rate we
-				measure on the live product and keep measuring. The core never reports a probability of
-				being right. The clinician selects, and that selection shapes the next steps and the notes.
+				The core never reports a probability of being right. It lays out what it has reasoned
+				toward, ranked and traceable; the clinician selects, and that selection shapes the next
+				steps and the notes.
 			</p>
 		</div>
 	</div>
@@ -294,7 +297,7 @@
 		<span class="eyebrow" use:reveal>How it reaches the clinic</span>
 		<h2 use:reveal={{ delay: 60 }}>Two clean paths, one product.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			We’re deliberately not tying Auracare to a single route to market. Both put the same reasoning
+			We’re deliberately not tying the CDSS to a single route to market. Both put the same reasoning
 			core to work; they differ only in who we sell through.
 		</p>
 
@@ -317,7 +320,7 @@
 		<div class="cta-inner">
 			<h2 use:reveal>Building the clinical side? Let’s talk.</h2>
 			<p use:reveal={{ delay: 80 }}>
-				Clinical partners, health systems and investors: we’d like to hear from you as Auracare
+				Clinical partners, health systems and investors: we’d like to hear from you as the CDSS
 				moves toward its first trials.
 			</p>
 			<div class="cta-actions" use:reveal={{ delay: 140 }}>

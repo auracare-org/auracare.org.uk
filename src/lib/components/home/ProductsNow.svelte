@@ -9,15 +9,13 @@
 	};
 </script>
 
-<section class="products section-y">
+<section id="products" class="products section-y">
 	<div class="container-wide">
 		<h2 use:reveal={{ delay: 60 }}>
 			Two products, <span class="text-gradient">one patient model</span>.
 		</h2>
 		<p class="intro" use:reveal={{ delay: 120 }}>
-			Auracare puts clinical decision support inside the consultation: that is the core project.
-			Auratwin, spun out of Auracare, puts the same understanding of a person into their messages.
-			Both draw on one shared model of the patient.
+			The model is shared; the products meet different people in different places.
 		</p>
 
 		<div class="grid">

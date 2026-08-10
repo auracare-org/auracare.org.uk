@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
+	import WorldMap from '$lib/components/WorldMap.svelte';
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT, INVESTOR_CONTACTS, TRACTION, type InvestorContactKey } from '$lib/data/company';
 	import { getMember } from '$lib/data/team';
@@ -28,7 +29,7 @@
 		},
 		{
 			href: '/product/auracare',
-			title: 'Auracare, the clinical product',
+			title: 'Auracare CDSS, the clinical product',
 			desc: 'Decision support inside the consultation, fed by our own devices. In development.'
 		},
 		{
@@ -51,7 +52,7 @@
 		},
 		{
 			q: 'What’s live today, and what isn’t?',
-			a: 'The ontology is live and explorable: 532,000 clinical concepts. Auratwin launches to the public in August 2026. Auracare, the clinical product, is in development and targeted for May 2027.'
+			a: 'The ontology is live and explorable: 532,000 clinical concepts. Auratwin launches to the public in August 2026. The Auracare CDSS, the clinical product, is in development and targeted for May 2027.'
 		},
 		{
 			q: 'Who’s already backing you?',
@@ -59,7 +60,7 @@
 		},
 		{
 			q: 'How do you handle regulation?',
-			a: 'Auratwin ships as a general-wellness product under the FD&C Act §520(o)(1)(B) exclusion, so it never diagnoses or treats. Auracare is clinical decision support; its regulatory pathway is under active review.'
+			a: 'Auratwin ships as a general-wellness product under the FD&C Act §520(o)(1)(B) exclusion, so it never diagnoses or treats. The Auracare CDSS is clinical decision support; its regulatory pathway is under active review.'
 		}
 	];
 </script>
@@ -130,6 +131,9 @@
 		</div>
 	</div>
 </section>
+
+<!-- ================= Rollout ================= -->
+<WorldMap />
 
 <!-- ================= Quick links ================= -->
 <section class="section-y catchup">

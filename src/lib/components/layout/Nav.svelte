@@ -14,7 +14,7 @@
 		},
 		{
 			href: '/product/auracare',
-			label: 'Auracare',
+			label: 'Auracare CDSS',
 			desc: 'Decision support inside the consultation',
 			tag: 'Clinical'
 		}

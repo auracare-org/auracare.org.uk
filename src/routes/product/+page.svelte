@@ -173,8 +173,8 @@
 </script>
 
 <Seo
-	title="Auratwin: the spin-out that funds and feeds Auracare"
-	description="Auratwin is Auracare's consumer spin-out: a wellness companion that lives in your messages. It earns from day one to cut the burn, and its social history lifts CDSS performance by a minimum of 50%. Here is how it keeps people replying."
+	title="Auratwin: a wellness companion in your messages"
+	description="Auratwin lives in the messaging apps you already use. It learns your daily life in conversation, connects the sources you choose, and builds a bio-psycho-social history you can share at an appointment. It is the first Auracare product to ship."
 	path="/product"
 />
 
@@ -221,18 +221,18 @@
 		<span class="blob blob-b"></span>
 	</div>
 	<div class="container-wide hero-inner">
-		<span class="pill pill-soon" use:reveal>Auratwin · The spin-out · Expected August 2026</span>
+		<span class="pill pill-soon" use:reveal>Auratwin · Ships first · Expected August 2026</span>
 		<h1 use:reveal={{ delay: 60 }}>
 			The product built to be <span class="hl">texted back</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 130 }}>
-			Auratwin is our social-history engine, spun out as a wellness companion that lives in the apps
-			people already open a hundred times a day. See how Auratwin supports Auracare, strengthens
-			patient engagement, and creates lasting value immediately.
+			Auratwin is a wellness companion that lives in the apps people already open a hundred times a
+			day. It learns your daily life in conversation, and the picture it builds is yours: to keep,
+			and to share with a clinician when it counts.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
-			<a class="btn-solid" href="/investors">For investors</a>
-			<a class="btn-quiet" href="/product/auracare">Meet the clinical side →</a>
+			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
+			<a class="btn-quiet" href="/product/auracare">Meet Auracare CDSS →</a>
 		</div>
 		<p class="hero-note" use:reveal={{ delay: 260 }}>
 			{TRY_TWIN_NOTE.text}
@@ -241,14 +241,14 @@
 	</div>
 </section>
 
-<!-- ================= Why the spin-out exists ================= -->
+<!-- ================= Why it ships first ================= -->
 <section class="section-y role-sec">
 	<div class="container-wide">
 		<span class="eyebrow" use:reveal>{TWIN_ROLE_EYEBROW}</span>
 		<h2 use:reveal={{ delay: 60 }}>{TWIN_ROLE_HEADING}</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Auratwin is a real consumer business in its own right. Inside the group it does three jobs,
-			and every feature on this page is in service of them.
+			Auratwin stands on its own as a consumer product. Inside Auracare it also does three jobs, and
+			every feature on this page serves them.
 		</p>
 
 		<div class="role-grid">
@@ -486,14 +486,14 @@
 <!-- ================= Closing CTA ================= -->
 <section class="cta-band aura-space">
 	<div class="container-wide cta-inner">
-		<h2 use:reveal>See the loop end to end.</h2>
+		<h2 use:reveal>Meet your twin first.</h2>
 		<p use:reveal={{ delay: 80 }}>
-			The founders can walk you through the numbers. And if you want the twin for yourself, the
-			waitlist is open.
+			The waitlist is open now, and the consumer story in full is at auratwin.club. Investors can
+			find the detail on the investor page.
 		</p>
 		<div class="cta-actions" use:reveal={{ delay: 140 }}>
-			<a class="btn-solid" href="/investors">For investors</a>
-			<a class="btn-ghost" href={WAITLIST_URL}>Join the waitlist</a>
+			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
+			<a class="btn-ghost" href="/investors">For investors</a>
 		</div>
 	</div>
 </section>
@@ -579,7 +579,7 @@
 		color: var(--color-primary-600);
 	}
 
-	/* ---------------- Why the spin-out exists ---------------- */
+	/* ---------------- Why it ships first ---------------- */
 	.role-grid {
 		margin-top: clamp(2.5rem, 5vw, 3.5rem);
 		display: grid;
