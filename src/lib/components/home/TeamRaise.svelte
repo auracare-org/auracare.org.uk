@@ -69,13 +69,10 @@
 			<div class="raise-copy">
 				<span class="raise-label">Seed</span>
 				<h3>We&rsquo;re raising our seed round.</h3>
-				<p>
-					If you back frontier health (teams turning real, consented data into agentic clinical
-					decision support), we&rsquo;d love to talk.
-				</p>
+				<p>One founder replies directly, depending on where you invest from.</p>
 			</div>
 			<a class="raise-cta" href="/investors">
-				Meet the founders <span aria-hidden="true">&rarr;</span>
+				For investors <span aria-hidden="true">&rarr;</span>
 			</a>
 		</div>
 	</div>

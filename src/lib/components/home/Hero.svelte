@@ -119,16 +119,17 @@
 				The world's most personalised <em>healthcare</em>.
 			</h1>
 			<p class="hero-sub" use:reveal={{ delay: 140 }}>
-				Two products, one shared patient model. <strong>Auracare</strong> is the core: a clinical
-				decision support system that works inside the consultation.
-				<strong>Auratwin</strong>, its consumer spin-out, ships first, collating patients' social
-				history to increase our CDSS performance by more than 50% while also generating revenue that
-				cuts our burn.
+				One living model of a person, and two products built on it.
+				<strong>Auratwin</strong> lives in your messages and builds a complete picture of your
+				bio-psycho-social history: sleep, movement, nutrition, screen time and the rest of daily
+				life. <strong>Auracare CDSS</strong> works beside the clinician, inside the consultation. Shared
+				at an appointment, the picture Auratwin builds becomes the history both the clinician and the
+				CDSS work from.
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
 				<a class="cta-primary" href="/investors">We're raising a seed round</a>
-				<a class="cta-ghost" href="/product/auracare">
-					Meet Auracare, the CDSS <span aria-hidden="true">→</span>
+				<a class="cta-ghost" href="#products">
+					See the products <span aria-hidden="true">→</span>
 				</a>
 			</div>
 			<p class="hero-note" use:reveal={{ delay: 280 }}>

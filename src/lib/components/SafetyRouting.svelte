@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
-	import { TWIN_DOES, TWIN_NEVER, EMERGENCY_ROUTING } from '$lib/data/company';
+	import {
+		TWIN_DOES,
+		TWIN_NEVER,
+		EMERGENCY_ROUTING,
+		NON_DEVICE_DISCLAIMER
+	} from '$lib/data/company';
 	import { onMount } from 'svelte';
 
 	// Flatten all helplines into a single list with region info
@@ -166,6 +171,8 @@
 				</div>
 			</div>
 		</div>
+
+		<p class="disclaimer" use:reveal>{NON_DEVICE_DISCLAIMER}</p>
 	</div>
 </section>
 
@@ -188,6 +195,14 @@
 		font-size: 0.9rem;
 		color: var(--color-ink-soft);
 		margin-top: 0.5rem;
+	}
+
+	.disclaimer {
+		margin-top: clamp(1.75rem, 3vw, 2.5rem);
+		font-size: 0.8rem;
+		line-height: 1.6;
+		color: var(--color-ink-faint);
+		max-width: 52rem;
 	}
 
 	.does {

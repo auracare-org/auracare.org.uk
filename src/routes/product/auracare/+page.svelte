@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
+	import ArchitecturePipeline from '$lib/components/ArchitecturePipeline.svelte';
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT, HARDWARE, HARDWARE_MORE, REGULATORY_NOTE } from '$lib/data/company';
 
@@ -40,7 +41,7 @@
 		{
 			k: '03',
 			title: 'The clinician stays with the patient',
-			body: 'Auracare reasons in the background and surfaces what’s useful. The clinician never appears to search anything, so eye contact, and the relationship, holds.'
+			body: 'The CDSS reasons in the background and surfaces what’s useful. The clinician never appears to search anything, so eye contact, and the relationship, holds.'
 		}
 	];
 
@@ -60,10 +61,12 @@
 		}
 	];
 
-	/* Illustrative differential, clearly an example, not a real patient.
-	   `pct` is CLINICIAN AGREEMENT measured in live studies on the shipped core:
-	   how often clinicians agreed when the core placed a condition here. It is NOT
-	   the core's confidence or probability of being right. */
+	/* Illustrative differential: an example, not a real patient and not live
+	   model output (the core is in development). `pct` illustrates CLINICIAN
+	   AGREEMENT, the metric we will measure and publish once the core is in
+	   clinicians' hands: how often clinicians agree when the core places a
+	   condition here. It is NOT the core's confidence or probability of being
+	   right. */
 	const differentialExample = [
 		{ name: 'Viral upper-respiratory infection', pct: 61, lead: true },
 		{ name: 'Acute bacterial sinusitis', pct: 22 },
@@ -85,26 +88,11 @@
 		'The chatty companion',
 		'The quiet observer'
 	];
-
-	/* Two routes to revenue on the clinical side, mirroring the deck's
-	   business-model slide. */
-	const paths = [
-		{
-			key: 'A',
-			title: 'Direct to digital services',
-			body: 'API access to our CDSS engine for clinical service providers: ambient scribes, telehealth platforms, EMRs, triage tools and more.'
-		},
-		{
-			key: 'B',
-			title: 'Direct to service providers',
-			body: 'Sold to hospitals, GP practices, pharmacies and other providers, priced on the clinician time our service saves.'
-		}
-	];
 </script>
 
 <Seo
-	title="Auracare: decision support inside the consultation"
-	description="Auracare is clinician-facing clinical decision support that works in the background during the appointment. It reasons over the twin's lifestyle summary, live vitals from our own hardware, and the conversation itself, so the clinician keeps their eyes on the patient. In development."
+	title="Auracare CDSS: decision support inside the consultation"
+	description="Auracare CDSS is our clinical decision support system. It works in the background during the appointment, reasoning over the picture Auratwin builds, live vitals from our own hardware, and the conversation itself, so the clinician keeps their eyes on the patient. In development."
 	path="/product/auracare"
 />
 
@@ -123,7 +111,7 @@
 				{
 					"@type": "ListItem",
 					"position": 2,
-					"name": "Auracare",
+					"name": "Auracare CDSS",
 					"item": "https://auracare.org.uk/product/auracare"
 				}
 			]
@@ -136,14 +124,14 @@
 	<div class="hero-grid-bg" aria-hidden="true"></div>
 	<div class="hero-orb" aria-hidden="true"></div>
 	<div class="container-wide hero-inner">
-		<span class="pill pill-dev" use:reveal>Auracare · In development</span>
+		<span class="pill pill-dev" use:reveal>Auracare CDSS · In development</span>
 		<h1 use:reveal={{ delay: 60 }}>
 			The decision support that <span class="hl">stays out of the way</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 130 }}>
-			Auracare is our clinical product: decision support that works during the appointment, not
-			after it. The twin you may already know walks into the clinic with the patient, and the
-			clinician keeps their attention exactly where it belongs.
+			Auracare CDSS is our clinical product: a clinical decision support system that works during
+			the appointment, not after it. The twin you may already know walks into the clinic with the
+			patient, and the clinician keeps their attention exactly where it belongs.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
 			<a
@@ -159,7 +147,7 @@
 <!-- ================= The clinical gap ================= -->
 <section class="section-y gap-sec">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Why now</span>
+		<span class="eyebrow" use:reveal>The gap</span>
 		<h2 use:reveal={{ delay: 60 }}>
 			Clinicians already want AI. Today’s tools don’t fit the room.
 		</h2>
@@ -187,7 +175,7 @@
 		<span class="eyebrow" use:reveal>Inside the consultation</span>
 		<h2 use:reveal={{ delay: 60 }}>Everything arrives automatically, so nothing interrupts.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Auracare is built around a single rule: every time a clinician has to break away to search,
+			The CDSS is built around a single rule: every time a clinician has to break away to search,
 			type or look something up, the consultation suffers. So it removes those moments.
 		</p>
 
@@ -236,6 +224,30 @@
 	</div>
 </section>
 
+<!-- ================= How it reasons ================= -->
+<section class="section-y arch-sec">
+	<div class="container-wide">
+		<span class="eyebrow" use:reveal>The architecture</span>
+		<h2 use:reveal={{ delay: 60 }}>How it reasons.</h2>
+		<p class="lede" use:reveal={{ delay: 120 }}>
+			Most clinical AI sends a prompt to a general-purpose model and returns its answer; that is the
+			34% in the gap above. Here, every signal is encoded onto the clinical ontology first, a
+			<strong>neuro-symbolic</strong> core reasons over the knowledge graph, and what comes back is ranked,
+			sourced and auditable.
+		</p>
+
+		<ArchitecturePipeline />
+
+		<p class="arch-note" use:reveal>
+			The knowledge graph is live and explorable today; the reasoning engine that acts on it is in
+			active development.
+		</p>
+		<a class="arch-link" href="/technology" use:reveal>
+			See the technology in full <span aria-hidden="true">→</span>
+		</a>
+	</div>
+</section>
+
 <!-- ================= What the clinician gets back ================= -->
 <section class="section-y out-sec">
 	<div class="container-wide out-grid">
@@ -262,7 +274,8 @@
 			<span class="demo-head">Ranked differential</span>
 			<p class="demo-sub">
 				The figure beside each is <strong>clinician agreement</strong>, not model certainty: how
-				often clinicians agreed with that placement in live studies on the shipped core.
+				often clinicians agree with that placement. The figures here are illustrative; the core is
+				in development, and we will measure and publish the real rate from its first studies.
 			</p>
 			<div class="demo-collabel" aria-hidden="true">
 				<span>Differential</span>
@@ -280,32 +293,10 @@
 				{/each}
 			</ul>
 			<p class="demo-foot">
-				Read it as: when the core leads with viral URTI, clinicians agree 61% of the time, a rate we
-				measure on the live product and keep measuring. The core never reports a probability of
-				being right. The clinician selects, and that selection shapes the next steps and the notes.
+				The core never reports a probability of being right. It lays out what it has reasoned
+				toward, ranked and traceable; the clinician selects, and that selection shapes the next
+				steps and the notes.
 			</p>
-		</div>
-	</div>
-</section>
-
-<!-- ================= Two paths ================= -->
-<section class="section-y paths-sec">
-	<div class="container-wide">
-		<span class="eyebrow" use:reveal>How it reaches the clinic</span>
-		<h2 use:reveal={{ delay: 60 }}>Two clean paths, one product.</h2>
-		<p class="lede" use:reveal={{ delay: 120 }}>
-			We’re deliberately not tying Auracare to a single route to market. Both put the same reasoning
-			core to work; they differ only in who we sell through.
-		</p>
-
-		<div class="paths-grid">
-			{#each paths as p, i}
-				<div class="path-card" use:reveal={{ delay: i * 100 }}>
-					<span class="path-badge">Path {p.key}</span>
-					<h3>{p.title}</h3>
-					<p>{p.body}</p>
-				</div>
-			{/each}
 		</div>
 	</div>
 </section>
@@ -317,7 +308,7 @@
 		<div class="cta-inner">
 			<h2 use:reveal>Building the clinical side? Let’s talk.</h2>
 			<p use:reveal={{ delay: 80 }}>
-				Clinical partners, health systems and investors: we’d like to hear from you as Auracare
+				Clinical partners, health systems and investors: we’d like to hear from you as the CDSS
 				moves toward its first trials.
 			</p>
 			<div class="cta-actions" use:reveal={{ delay: 140 }}>
@@ -745,46 +736,29 @@
 		color: var(--color-ink-faint);
 	}
 
-	/* ---------------- Two paths ---------------- */
-	.paths-sec {
+	/* ---------------- How it reasons ---------------- */
+	.arch-sec {
 		background: var(--color-surface-alt);
 		border-block: 1px solid var(--color-border-default);
 	}
-	.paths-grid {
-		margin-top: clamp(2rem, 4vw, 3rem);
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.1rem;
-	}
-	.path-card {
-		padding: 1.6rem 1.7rem;
-		border-radius: var(--radius-lg);
-		background: var(--color-neutral-0);
-		border: 1px solid var(--color-border-default);
-		box-shadow: var(--shadow-xs);
-	}
-	.path-badge {
-		display: inline-block;
-		font-family: var(--font-family-mono);
-		font-size: 0.68rem;
-		font-weight: 700;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-		color: var(--color-primary-600);
-		background: var(--color-primary-50);
-		border: 1px solid var(--color-primary-100);
-		padding: 0.25rem 0.65rem;
-		border-radius: 999px;
-	}
-	.path-card h3 {
-		font-size: 1.2rem;
-		letter-spacing: -0.01em;
-		margin: 0.9rem 0 0.4rem;
-	}
-	.path-card p {
-		font-size: 0.95rem;
+	.arch-note {
+		margin-top: clamp(1.5rem, 3vw, 2rem);
+		font-size: 0.85rem;
 		line-height: 1.6;
-		color: var(--color-ink-soft);
+		color: var(--color-ink-faint);
+		max-width: 52rem;
+	}
+	.arch-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		margin-top: 0.9rem;
+		font-weight: 600;
+		font-size: 0.95rem;
+		color: var(--color-primary-600);
+	}
+	.arch-link:hover {
+		color: var(--color-primary-700);
 	}
 
 	/* ---------------- Regulatory + CTA ---------------- */
@@ -832,9 +806,6 @@
 	@media (min-width: 720px) {
 		.gap-grid {
 			grid-template-columns: repeat(3, 1fr);
-		}
-		.paths-grid {
-			grid-template-columns: repeat(2, 1fr);
 		}
 		.hw-grid {
 			grid-template-columns: repeat(3, 1fr);

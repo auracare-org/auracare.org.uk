@@ -1,15 +1,8 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
+	import SafetyRouting from '$lib/components/SafetyRouting.svelte';
 	import { reveal } from '$lib/actions/motion';
-	import {
-		TRY_TWIN_NOTE,
-		NON_DEVICE_DISCLAIMER,
-		WAITLIST_URL,
-		TWIN_ROLE,
-		TWIN_ROLE_EYEBROW,
-		TWIN_ROLE_HEADING,
-		TWIN_PROBLEM
-	} from '$lib/data/company';
+	import { TRY_TWIN_NOTE, WAITLIST_URL, TWIN_PROBLEM } from '$lib/data/company';
 
 	/* A single day, held together by proactive check-ins. */
 	const day = [
@@ -80,51 +73,6 @@
 		'Symptom checker'
 	];
 
-	/* You reshape the voice the same way you log anything: by texting it.
-	   Each pair is a real thing you could send, and how the twin takes it. */
-	const tuning = [
-		{
-			you: 'can you be more blunt with me? less cushioning',
-			twin: 'Done. I’ll say it straight from now on and skip the soft landing.'
-		},
-		{
-			you: 'keep it short, I don’t need the pep talk',
-			twin: 'Got it, short and to the point, no pep talk.'
-		},
-		{
-			you: 'actually you can be funnier, I like the jokes',
-			twin: 'Say less. Expect worse puns. 😏'
-		},
-		{
-			you: 'ease off the nudges this week, I’m swamped',
-			twin: 'Backing right off. I’ll only flag something if it genuinely matters.'
-		}
-	];
-
-	/* Presets are just starting points; every one is a full rewrite of its voice. */
-	const personas = [
-		{
-			name: 'The gentle nudge',
-			blurb: 'Soft, encouraging, never pushy. Celebrates the small wins and lets the rest slide.',
-			line: '“No pressure at all, but a short walk might feel lovely today. Either way, I’ve got you. 💙”'
-		},
-		{
-			name: 'The drill sergeant',
-			blurb: 'Blunt, high-push, zero fluff. Here to hold the line when you asked it to.',
-			line: '“Third skipped lunch this week. That stops today. Eat something real in the next hour.”'
-		},
-		{
-			name: 'The dry wit',
-			blurb: 'Deadpan, a little sarcastic, quietly on your side the whole time.',
-			line: '“4 hours of sleep. Bold strategy. I’ll pencil in a nap you won’t take. ☕”'
-		},
-		{
-			name: 'The quiet analyst',
-			blurb: 'Minimal words, maximum signal. Speaks only when the data says something.',
-			line: '“Readiness down 12% over 3 days. Cause: sleep debt. Suggest an earlier night.”'
-		}
-	];
-
 	/* The engagement hooks, drawn from the live consumer site (auratwin.club).
 	   Each one exists to earn the next reply; each reply deepens the social
 	   history the clinical core runs on. */
@@ -152,29 +100,14 @@
 		{
 			hook: 'Trust compounds',
 			title: 'Your data, your rules',
-			body: 'Everything the twin knows can be inspected, edited and exported from the web app; every source is opt-in and revocable. Trust is what keeps a data relationship alive.'
-		}
-	];
-
-	const boundaries = [
-		{
-			title: 'A companion, not a clinician',
-			body: 'Auratwin never diagnoses, treats or prescribes. It’s general wellness, it helps you notice, not decide.'
-		},
-		{
-			title: 'It knows when to step back',
-			body: 'Anything that reads as urgent, and it routes you to real help for where you are, straight away.'
-		},
-		{
-			title: 'Your data, your call',
-			body: 'Every source is connected only with your say-so, shown back to you in plain language, and revocable any time.'
+			body: 'Everything the twin knows can be inspected, edited and exported from the web app; every source is opt-in and revocable.'
 		}
 	];
 </script>
 
 <Seo
-	title="Auratwin: the spin-out that funds and feeds Auracare"
-	description="Auratwin is Auracare's consumer spin-out: a wellness companion that lives in your messages. It earns from day one to cut the burn, and its social history lifts CDSS performance by a minimum of 50%. Here is how it keeps people replying."
+	title="Auratwin: a wellness companion in your messages"
+	description="Auratwin lives in the messaging apps you already use. It learns your daily life in conversation, connects the sources you choose, and builds a bio-psycho-social history you can share at an appointment. It launches in August 2026."
 	path="/product"
 />
 
@@ -221,45 +154,24 @@
 		<span class="blob blob-b"></span>
 	</div>
 	<div class="container-wide hero-inner">
-		<span class="pill pill-soon" use:reveal>Auratwin · The spin-out · Expected August 2026</span>
+		<span class="pill pill-soon" use:reveal>Auratwin · Consumer · Expected August 2026</span>
 		<h1 use:reveal={{ delay: 60 }}>
 			The product built to be <span class="hl">texted back</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 130 }}>
-			Auratwin is our social-history engine, spun out as a wellness companion that lives in the apps
-			people already open a hundred times a day. See how Auratwin supports Auracare, strengthens
-			patient engagement, and creates lasting value immediately.
+			Auratwin is Auracare's social-history engine, shipped as a wellness companion that lives in
+			the apps people already open a hundred times a day. It learns your daily life in conversation
+			and builds a picture you can keep, export, and share at an appointment, where the Auracare
+			CDSS will reason over it.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
-			<a class="btn-solid" href="/investors">For investors</a>
-			<a class="btn-quiet" href="/product/auracare">Meet the clinical side →</a>
+			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
+			<a class="btn-quiet" href="/product/auracare">See Auracare CDSS →</a>
 		</div>
 		<p class="hero-note" use:reveal={{ delay: 260 }}>
 			{TRY_TWIN_NOTE.text}
 			<a class="hero-link" href={TRY_TWIN_NOTE.href} rel="noopener">{TRY_TWIN_NOTE.linkLabel}</a>.
 		</p>
-	</div>
-</section>
-
-<!-- ================= Why the spin-out exists ================= -->
-<section class="section-y role-sec">
-	<div class="container-wide">
-		<span class="eyebrow" use:reveal>{TWIN_ROLE_EYEBROW}</span>
-		<h2 use:reveal={{ delay: 60 }}>{TWIN_ROLE_HEADING}</h2>
-		<p class="lede" use:reveal={{ delay: 120 }}>
-			Auratwin is a real consumer business in its own right. Inside the group it does three jobs,
-			and every feature on this page is in service of them.
-		</p>
-
-		<div class="role-grid">
-			{#each TWIN_ROLE as role, i (role.title)}
-				<div class="role-card" use:reveal={{ delay: i * 90 }}>
-					<span class="role-stat">{role.stat}</span>
-					<h3>{role.title}</h3>
-					<p>{role.body}</p>
-				</div>
-			{/each}
-		</div>
 	</div>
 </section>
 
@@ -293,7 +205,7 @@
 <section class="section-y log-sec">
 	<div class="container-wide">
 		<span class="eyebrow" use:reveal>Replying is the logging</span>
-		<h2 use:reveal={{ delay: 60 }}>Tell it like you’d tell a friend. That’s the whole system.</h2>
+		<h2 use:reveal={{ delay: 60 }}>Tell it like you’d tell a friend.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			There are no streaks to protect and no fields to fill. You text in your own words; Auratwin
 			does the structuring, the remembering, and the noticing.
@@ -321,73 +233,15 @@
 	</div>
 </section>
 
-<!-- ================= Make it yours (personality) ================= -->
-<section class="section-y persona-sec aura-space">
-	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Make it yours</span>
-		<h2 use:reveal={{ delay: 60 }}>
-			Its personality is <span class="hl-inv">entirely yours to write</span>.
-		</h2>
-		<p class="lede lede-inv" use:reveal={{ delay: 120 }}>
-			There’s no fixed Auratwin voice you have to get used to. You shape how it speaks the same way
-			you tell it everything else: just say so in a text. Warm or blunt, quiet or chatty, deadpan or
-			all heart; ask for a change and it adjusts on the spot. Same twin underneath, whatever
-			personality you want on top.
-		</p>
-
-		<div class="persona-layout">
-			<!-- Just tell it -->
-			<div class="tune-panel glass-card" use:reveal={{ delay: 140 }}>
-				<div class="tune-head">
-					<h3>Just tell it</h3>
-					<p>No settings screen, no sliders. You say what you want in a message, and it shifts.</p>
-				</div>
-				<ul class="tune-thread">
-					{#each tuning as t, i}
-						<li class="tune-pair" use:reveal={{ delay: 180 + i * 60 }}>
-							<p class="tune-bubble you">{t.you}</p>
-							<p class="tune-bubble twin">{t.twin}</p>
-						</li>
-					{/each}
-				</ul>
-			</div>
-
-			<!-- Preset personas -->
-			<div class="persona-side">
-				<p class="persona-intro" use:reveal={{ delay: 160 }}>
-					Not sure where to start? Ask for one of these by name, then keep nudging it from there. A
-					few characters people already text into being:
-				</p>
-				<div class="persona-grid">
-					{#each personas as p, i}
-						<div class="persona-card glass-card" use:reveal={{ delay: 200 + i * 70 }}>
-							<h4>{p.name}</h4>
-							<p class="persona-blurb">{p.blurb}</p>
-							<p class="persona-line">{p.line}</p>
-						</div>
-					{/each}
-				</div>
-			</div>
-		</div>
-
-		<p class="persona-foot" use:reveal>
-			These are just a place to begin. There’s nothing to set up and nothing to lock in: a single
-			message reshapes the voice whenever you want, so the personality follows you, not the other
-			way round.
-		</p>
-	</div>
-</section>
-
 <!-- ================= Built for retention ================= -->
 <section class="section-y keep-sec">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Designed for the reply</span>
-		<h2 use:reveal={{ delay: 60 }}>The features that keep the conversation alive.</h2>
+		<span class="eyebrow" use:reveal>Retention</span>
+		<h2 use:reveal={{ delay: 60 }}>What keeps people replying.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Only {TWIN_PROBLEM.stat} of wellness-app installers are still active a month after install, so
-			retention is the product. These are the hooks, live on
-			<a class="keep-link" href="https://auratwin.club" rel="noopener">auratwin.club</a>, and every
-			reply they earn deepens the social history the clinical core runs on.
+			Only {TWIN_PROBLEM.stat} of wellness-app installers are still active a month after install: the
+			apps fail the moment they demand effort. These are the features that remove it, live on
+			<a class="keep-link" href="https://auratwin.club" rel="noopener">auratwin.club</a>.
 		</p>
 
 		<div class="keep-grid">
@@ -406,10 +260,11 @@
 <section class="section-y src-sec">
 	<div class="container-wide">
 		<span class="eyebrow" use:reveal>Everything it draws on</span>
-		<h2 use:reveal={{ delay: 60 }}>The more it can see, the more the guidance is yours.</h2>
+		<h2 use:reveal={{ delay: 60 }}>Your data already exists. This is where you get it back.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Every source you connect deepens the twin’s picture of your daily life. That high-context view
-			of <em>you</em> is what makes a nudge feel personal instead of generic.
+			The services you use collect this data every day; you just never see it in one place. Auratwin
+			hands it back: one picture of your daily life that you can read, edit, export, and share with
+			a clinician.
 		</p>
 
 		<div class="src-grid">
@@ -432,7 +287,7 @@
 <section class="section-y plan-sec">
 	<div class="container-wide plan-grid">
 		<div class="plan-copy">
-			<span class="eyebrow" use:reveal>One plan, not a shelf of them</span>
+			<span class="eyebrow" use:reveal>One plan</span>
 			<h2 use:reveal={{ delay: 60 }}>One subscription, in place of the pile.</h2>
 			<p class="lede" use:reveal={{ delay: 120 }}>
 				Wellness has become expensive: a separate app, and a separate bill, for every corner of your
@@ -466,34 +321,20 @@
 	</div>
 </section>
 
-<!-- ================= Boundaries ================= -->
-<section class="section-y bound-sec">
-	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Built with boundaries</span>
-		<h2 use:reveal={{ delay: 60 }}>Honest about what it is, and what it isn’t.</h2>
-		<div class="bound-grid">
-			{#each boundaries as b, i}
-				<div class="bound-card" use:reveal={{ delay: i * 80 }}>
-					<h3>{b.title}</h3>
-					<p>{b.body}</p>
-				</div>
-			{/each}
-		</div>
-		<p class="disclaimer" use:reveal>{NON_DEVICE_DISCLAIMER}</p>
-	</div>
-</section>
+<!-- ================= Safety & routing ================= -->
+<SafetyRouting />
 
 <!-- ================= Closing CTA ================= -->
 <section class="cta-band aura-space">
 	<div class="container-wide cta-inner">
-		<h2 use:reveal>See the loop end to end.</h2>
+		<h2 use:reveal>The waitlist is open.</h2>
 		<p use:reveal={{ delay: 80 }}>
-			The founders can walk you through the numbers. And if you want the twin for yourself, the
-			waitlist is open.
+			Auratwin launches on iMessage, WhatsApp and RCS in August 2026. The consumer site is
+			auratwin.club.
 		</p>
 		<div class="cta-actions" use:reveal={{ delay: 140 }}>
-			<a class="btn-solid" href="/investors">For investors</a>
-			<a class="btn-ghost" href={WAITLIST_URL}>Join the waitlist</a>
+			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
+			<a class="btn-ghost" href="/investors">For investors</a>
 		</div>
 	</div>
 </section>
@@ -577,42 +418,6 @@
 	}
 	.hero-link:hover {
 		color: var(--color-primary-600);
-	}
-
-	/* ---------------- Why the spin-out exists ---------------- */
-	.role-grid {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.1rem;
-	}
-	.role-card {
-		padding: 1.5rem 1.6rem;
-		border-radius: var(--radius-lg);
-		background: var(--color-neutral-0);
-		border: 1px solid var(--color-border-default);
-		border-top: 3px solid var(--color-primary-500);
-		box-shadow: var(--shadow-xs);
-	}
-	.role-stat {
-		display: block;
-		font-family: var(--font-family-heading);
-		font-weight: 700;
-		font-size: clamp(1.7rem, 3.2vw, 2.3rem);
-		line-height: 1;
-		letter-spacing: -0.02em;
-		color: var(--color-primary-600);
-		margin-bottom: 0.75rem;
-	}
-	.role-card h3 {
-		font-size: 1.08rem;
-		letter-spacing: -0.01em;
-		margin-bottom: 0.4rem;
-	}
-	.role-card p {
-		font-size: 0.92rem;
-		line-height: 1.55;
-		color: var(--color-ink-soft);
 	}
 
 	/* ---------------- Built for retention ---------------- */
@@ -838,122 +643,6 @@
 		height: 100%;
 	}
 
-	/* ---------------- Make it yours (personality) ---------------- */
-	.persona-sec {
-		border-block: 1px solid var(--color-border-dark);
-		overflow: clip;
-	}
-	.hl-inv {
-		background: linear-gradient(100deg, #8aa0ff, #cdd9ff);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-	.lede-inv {
-		color: rgba(226, 230, 240, 0.62) !important;
-		max-width: 48rem;
-	}
-	.persona-layout {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.25rem;
-		align-items: start;
-	}
-
-	/* "Just tell it" thread */
-	.tune-panel {
-		padding: clamp(1.5rem, 3vw, 2rem);
-		border-radius: var(--radius-lg);
-	}
-	.tune-head h3 {
-		font-size: 1.15rem;
-		letter-spacing: -0.01em;
-		margin-bottom: 0.3rem;
-	}
-	.tune-head p {
-		font-size: 0.88rem;
-		line-height: 1.5;
-		color: rgba(226, 230, 240, 0.55) !important;
-	}
-	.tune-thread {
-		list-style: none;
-		margin: 1.5rem 0 0;
-		padding: 0;
-		display: grid;
-		gap: 1.4rem;
-	}
-	.tune-pair {
-		display: grid;
-		gap: 0.4rem;
-	}
-	.tune-bubble {
-		font-size: 0.9rem;
-		line-height: 1.5;
-		padding: 0.65rem 0.9rem;
-		border-radius: 1.05rem;
-		max-width: 85%;
-		width: fit-content;
-	}
-	.tune-bubble.you {
-		justify-self: end;
-		background: var(--color-primary-600);
-		color: #eef2ff !important;
-		border-bottom-right-radius: 0.35rem;
-	}
-	.tune-bubble.twin {
-		justify-self: start;
-		background: rgba(255, 255, 255, 0.07);
-		color: rgba(226, 230, 240, 0.82) !important;
-		border-bottom-left-radius: 0.35rem;
-	}
-
-	/* Preset personas */
-	.persona-intro {
-		font-size: 0.95rem;
-		line-height: 1.55;
-		color: rgba(226, 230, 240, 0.6) !important;
-		max-width: 34rem;
-	}
-	.persona-grid {
-		margin-top: 1.1rem;
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 0.9rem;
-	}
-	.persona-card {
-		padding: 1.2rem 1.3rem;
-		border-radius: var(--radius-lg);
-	}
-	.persona-card h4 {
-		font-size: 1.02rem;
-		letter-spacing: -0.01em;
-		margin-bottom: 0.35rem;
-	}
-	.persona-blurb {
-		font-size: 0.88rem;
-		line-height: 1.5;
-		color: rgba(226, 230, 240, 0.58) !important;
-	}
-	.persona-line {
-		margin-top: 0.85rem;
-		padding: 0.7rem 0.9rem;
-		font-size: 0.9rem;
-		line-height: 1.5;
-		font-style: italic;
-		color: #dbe4ff !important;
-		background: rgba(97, 128, 255, 0.1);
-		border-left: 2px solid var(--color-primary-400);
-		border-radius: 0 var(--radius-md) var(--radius-md) 0;
-	}
-	.persona-foot {
-		margin-top: clamp(1.75rem, 3vw, 2.25rem);
-		font-size: 0.9rem;
-		line-height: 1.6;
-		color: rgba(226, 230, 240, 0.5) !important;
-		max-width: 50rem;
-	}
-
 	/* ---------------- Sources ---------------- */
 	.src-grid {
 		margin-top: clamp(2.5rem, 5vw, 3.5rem);
@@ -1096,38 +785,6 @@
 		font-weight: 700;
 	}
 
-	/* ---------------- Boundaries ---------------- */
-	.bound-grid {
-		margin-top: clamp(2rem, 4vw, 3rem);
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1rem;
-	}
-	.bound-card {
-		padding: 1.35rem 1.5rem;
-		border-radius: var(--radius-lg);
-		background: var(--color-neutral-0);
-		border: 1px solid var(--color-border-default);
-		border-left: 3px solid var(--color-primary-400);
-	}
-	.bound-card h3 {
-		font-size: 1.05rem;
-		letter-spacing: -0.01em;
-		margin-bottom: 0.35rem;
-	}
-	.bound-card p {
-		font-size: 0.92rem;
-		line-height: 1.55;
-		color: var(--color-ink-soft);
-	}
-	.disclaimer {
-		margin-top: 1.75rem;
-		font-size: 0.8rem;
-		line-height: 1.6;
-		color: var(--color-ink-faint);
-		max-width: 52rem;
-	}
-
 	/* ---------------- CTA band ---------------- */
 	.cta-band {
 		padding-block: clamp(3.5rem, 7vw, 5.5rem);
@@ -1172,15 +829,6 @@
 		.src-grid {
 			grid-template-columns: repeat(3, 1fr);
 		}
-		.bound-grid {
-			grid-template-columns: repeat(3, 1fr);
-		}
-		.persona-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-		.role-grid {
-			grid-template-columns: repeat(3, 1fr);
-		}
 		.keep-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
@@ -1200,16 +848,6 @@
 	@media (min-width: 860px) {
 		.plan-grid {
 			grid-template-columns: 1.1fr 0.9fr;
-		}
-	}
-	@media (min-width: 960px) {
-		.persona-layout {
-			grid-template-columns: 0.85fr 1.15fr;
-			gap: 1.75rem;
-		}
-		.tune-panel {
-			position: sticky;
-			top: calc(var(--header-h, 92px) + 1rem);
 		}
 	}
 	@media (max-width: 560px) {

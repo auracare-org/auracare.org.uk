@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ArchitecturePipeline from '$lib/components/ArchitecturePipeline.svelte';
 	import { reveal, countUp } from '$lib/actions/motion';
 	import { CONTACT, ONTOLOGY_STATS } from '$lib/data/company';
 	import { onMount } from 'svelte';
@@ -276,15 +277,13 @@
 	<div class="container-wide tech-grid">
 		<div class="tech-copy">
 			<h2 use:reveal={{ delay: 60 }}>
-				From the ontology up: <span class="text-gradient-l">532,000 clinical concepts</span> you can
-				see.
+				A learned model proposes. <span class="text-gradient-l">A symbolic layer disposes.</span>
 			</h2>
 			<p class="tech-lead" use:reveal={{ delay: 140 }}>
-				Our reasoning is grounded in the terminology medicine already agrees on: SNOMED CT, ICD-11,
-				HPO, LOINC, the universal language of medicine. A learned model proposes; an auditable
-				symbolic layer disposes. That
-				<strong>neuro-symbolic</strong> design makes it a glass box, not a black box: every answer traces
-				back to a named source.
+				That <strong>neuro-symbolic</strong> architecture is what the Auracare CDSS runs on. Every signal
+				is encoded onto the clinical ontology, the terminology medicine already agrees on (SNOMED CT,
+				ICD-11, HPO, LOINC), and the core reasons over the knowledge graph, so every answer traces back
+				to a named source.
 			</p>
 			<p class="tech-status" use:reveal={{ delay: 200 }}>
 				<span class="pill pill-live">Live today</span>
@@ -321,6 +320,10 @@
 					</div>
 				{/each}
 			</dl>
+		</div>
+
+		<div class="tech-pipeline">
+			<ArchitecturePipeline dark />
 		</div>
 	</div>
 </section>
@@ -372,6 +375,9 @@
 		gap: clamp(2.5rem, 5vw, 4rem);
 		align-items: center;
 		pointer-events: none;
+	}
+	.tech-pipeline {
+		grid-column: 1 / -1;
 	}
 	.tech-grid :global(a),
 	.tech-grid :global(button) {

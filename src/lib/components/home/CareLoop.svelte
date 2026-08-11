@@ -2,7 +2,7 @@
 	import { reveal } from '$lib/actions/motion';
 	import { CARE_LOOP, CARE_LOOP_LINE } from '$lib/data/company';
 
-	const actorLabel = { auratwin: 'Auratwin', auracare: 'Auracare' } as const;
+	const actorLabel = { auratwin: 'Auratwin', auracare: 'Auracare CDSS' } as const;
 </script>
 
 <section class="loop section-y" aria-labelledby="loop-heading">
@@ -12,14 +12,15 @@
 			One patient-centred <span class="text-gradient">care loop</span>.
 		</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Daily life in, sharper decisions out, habits back in. The spin-out feeds the clinic; the
-			clinic feeds the spin-out.
+			Daily life in, sharper decisions out, habits back in. This is where the data your day already
+			produces comes back to you: as a fuller history at the appointment, and better habits after
+			it.
 		</p>
 
-		<!-- Mirrors slide 10 of the deck: steps 01 to 04 across the top, an arrow
-		     down into 05, back across the bottom to 08, and a return arrow up the
-		     left edge closing the loop. On narrow screens the snake unrolls into a
-		     single column with down arrows between the steps. -->
+		<!-- A snake with arrows: steps 01 to 04 across the top, an arrow down
+		     into 05, back across the bottom to 08, and a return arrow up the
+		     left edge closing the loop. On narrow screens the snake unrolls into
+		     a single column with down arrows between the steps. -->
 		<div class="board">
 			<ol class="steps">
 				{#each CARE_LOOP as step, i (step.title)}
@@ -198,7 +199,7 @@
 		padding: 0.15rem 0.5rem;
 		border-radius: 999px;
 	}
-	/* The spin-out's steps carry a soft tint so the handoff between the two
+	/* Auratwin's steps carry a soft tint so the handoff between the two
 	   products reads at a glance. */
 	.step-twin .step-actor {
 		color: var(--color-ink-soft);
@@ -253,7 +254,7 @@
 		}
 	}
 
-	/* Desktop: the deck's snake. Odd columns hold the cards, even columns the
+	/* Desktop: the snake. Odd columns hold the cards, even columns the
 	   arrows; the middle row carries the down/return arrows and the caption. */
 	@media (min-width: 1000px) {
 		.board {
