@@ -74,28 +74,22 @@
 		'Symptom checker'
 	];
 
-	/* Presets are just starting points; every one is a full rewrite of its voice. */
-	const personas = [
-		{
-			name: 'The gentle nudge',
-			blurb: 'Soft, encouraging, never pushy. Celebrates the small wins and lets the rest slide.',
-			line: '“No pressure at all, but a short walk might feel lovely today. Either way, I’ve got you. 💙”'
-		},
-		{
-			name: 'The drill sergeant',
-			blurb: 'Blunt, high-push, zero fluff. Here to hold the line when you asked it to.',
-			line: '“Third skipped lunch this week. That stops today. Eat something real in the next hour.”'
-		},
-		{
-			name: 'The dry wit',
-			blurb: 'Deadpan, a little sarcastic, quietly on your side the whole time.',
-			line: '“4 hours of sleep. Bold strategy. I’ll pencil in a nap you won’t take. ☕”'
-		},
-		{
-			name: 'The quiet analyst',
-			blurb: 'Minimal words, maximum signal. Speaks only when the data says something.',
-			line: '“Readiness down 12% over 3 days. Cause: sleep debt. Suggest an earlier night.”'
-		}
+	/* The twelve daily animal states, mirrored from auratwin.club's catalog:
+	   each day the closest animal is picked from sleep, recovery, stress and
+	   activity, and the twin shows the reasons it picked that one. */
+	const animals = [
+		{ name: 'Capybara', state: 'Recovery needed' },
+		{ name: 'Chimpanzee', state: 'Focused and steady' },
+		{ name: 'Seal', state: 'Playful and connected' },
+		{ name: 'Deer', state: 'Sensitive and overloaded' },
+		{ name: 'Bear', state: 'Deep restoration' },
+		{ name: 'Wolf', state: 'Driven and high output' },
+		{ name: 'Goose', state: 'Balanced and adaptable' },
+		{ name: 'Fox', state: 'Late-night rhythm' },
+		{ name: 'Bee', state: 'Productive but stretched' },
+		{ name: 'Camel', state: 'Slow, sustainable progress' },
+		{ name: 'Cat', state: 'Self-directed and calm' },
+		{ name: 'Elephant', state: 'Resilient under load' }
 	];
 
 	/* The engagement hooks, drawn from the live consumer site (auratwin.club).
@@ -284,18 +278,17 @@
 				<ToneDemo />
 			</div>
 
-			<!-- Preset personas -->
+			<!-- Daily animal states, as on auratwin.club -->
 			<div class="persona-side">
 				<p class="persona-intro" use:reveal={{ delay: 160 }}>
-					Not sure where to start? Ask for one of these by name, then keep nudging it from there. A
-					few characters people already text into being:
+					Each day also gets an animal: the closest of twelve, picked from your sleep, recovery,
+					stress and activity, with the reasons it chose shown. Yesterday a Bear, today a Bee:
 				</p>
-				<div class="persona-grid">
-					{#each personas as p, i}
-						<div class="persona-card glass-card" use:reveal={{ delay: 200 + i * 70 }}>
-							<h4>{p.name}</h4>
-							<p class="persona-blurb">{p.blurb}</p>
-							<p class="persona-line">{p.line}</p>
+				<div class="persona-grid animal-grid">
+					{#each animals as a, i (a.name)}
+						<div class="persona-card glass-card animal-card" use:reveal={{ delay: 180 + i * 40 }}>
+							<h4>{a.name}</h4>
+							<p class="persona-blurb">{a.state}</p>
 						</div>
 					{/each}
 				</div>
@@ -303,8 +296,8 @@
 		</div>
 
 		<p class="persona-foot" use:reveal>
-			These are just a place to begin. There’s nothing to set up and nothing to lock in: a single
-			message reshapes the voice whenever you want.
+			There’s nothing to set up and nothing to lock in: a single message reshapes the voice whenever
+			you want.
 		</p>
 	</div>
 </section>
@@ -784,16 +777,16 @@
 		line-height: 1.5;
 		color: rgba(226, 230, 240, 0.58) !important;
 	}
-	.persona-line {
-		margin-top: 0.85rem;
-		padding: 0.7rem 0.9rem;
-		font-size: 0.9rem;
-		line-height: 1.5;
-		font-style: italic;
-		color: #dbe4ff !important;
-		background: rgba(97, 128, 255, 0.1);
-		border-left: 2px solid var(--color-primary-400);
-		border-radius: 0 var(--radius-md) var(--radius-md) 0;
+	.animal-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 0.7rem;
+	}
+	.animal-card {
+		padding: 0.85rem 1.05rem;
+	}
+	.animal-card h4 {
+		font-size: 0.95rem;
+		margin-bottom: 0.15rem;
 	}
 	.persona-foot {
 		margin-top: clamp(1.75rem, 3vw, 2.25rem);
