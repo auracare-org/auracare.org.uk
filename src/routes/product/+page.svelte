@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import SafetyRouting from '$lib/components/SafetyRouting.svelte';
-	import ToneDemo from '$lib/components/ToneDemo.svelte';
 	import { reveal } from '$lib/actions/motion';
 	import { TRY_TWIN_NOTE, WAITLIST_URL, TWIN_PROBLEM } from '$lib/data/company';
 
@@ -72,24 +71,6 @@
 		'Habit app',
 		'Mindfulness sub',
 		'Symptom checker'
-	];
-
-	/* The twelve daily animal states, mirrored from auratwin.club's catalog:
-	   each day the closest animal is picked from sleep, recovery, stress and
-	   activity, and the twin shows the reasons it picked that one. */
-	const animals = [
-		{ name: 'Capybara', state: 'Recovery needed' },
-		{ name: 'Chimpanzee', state: 'Focused and steady' },
-		{ name: 'Seal', state: 'Playful and connected' },
-		{ name: 'Deer', state: 'Sensitive and overloaded' },
-		{ name: 'Bear', state: 'Deep restoration' },
-		{ name: 'Wolf', state: 'Driven and high output' },
-		{ name: 'Goose', state: 'Balanced and adaptable' },
-		{ name: 'Fox', state: 'Late-night rhythm' },
-		{ name: 'Bee', state: 'Productive but stretched' },
-		{ name: 'Camel', state: 'Slow, sustainable progress' },
-		{ name: 'Cat', state: 'Self-directed and calm' },
-		{ name: 'Elephant', state: 'Resilient under load' }
 	];
 
 	/* The engagement hooks, drawn from the live consumer site (auratwin.club).
@@ -249,56 +230,6 @@
 				</div>
 			{/each}
 		</div>
-	</div>
-</section>
-
-<!-- ================= Make it yours (personality) ================= -->
-<section class="section-y persona-sec aura-space">
-	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Make it yours</span>
-		<h2 use:reveal={{ delay: 60 }}>
-			Its personality is <span class="hl-inv">entirely yours to write</span>.
-		</h2>
-		<p class="lede lede-inv" use:reveal={{ delay: 120 }}>
-			There’s no fixed Auratwin voice you have to get used to. You shape how it speaks the same way
-			you tell it everything else: just say so in a text. Warm or blunt, quiet or chatty, deadpan or
-			all heart; ask for a change and it adjusts on the spot. Same twin underneath, whatever
-			personality you want on top.
-		</p>
-
-		<div class="persona-layout">
-			<!-- Live tone demo -->
-			<div class="tune-panel glass-card" use:reveal={{ delay: 140 }}>
-				<div class="tune-head">
-					<h3>Try it</h3>
-					<p>
-						The same check-in at three settings. In the app you change it by saying so, any time.
-					</p>
-				</div>
-				<ToneDemo />
-			</div>
-
-			<!-- Daily animal states, as on auratwin.club -->
-			<div class="persona-side">
-				<p class="persona-intro" use:reveal={{ delay: 160 }}>
-					Each day also gets an animal: the closest of twelve, picked from your sleep, recovery,
-					stress and activity, with the reasons it chose shown. Yesterday a Bear, today a Bee:
-				</p>
-				<div class="persona-grid animal-grid">
-					{#each animals as a, i (a.name)}
-						<div class="persona-card glass-card animal-card" use:reveal={{ delay: 180 + i * 40 }}>
-							<h4>{a.name}</h4>
-							<p class="persona-blurb">{a.state}</p>
-						</div>
-					{/each}
-				</div>
-			</div>
-		</div>
-
-		<p class="persona-foot" use:reveal>
-			There’s nothing to set up and nothing to lock in: a single message reshapes the voice whenever
-			you want.
-		</p>
 	</div>
 </section>
 
@@ -712,90 +643,6 @@
 		height: 100%;
 	}
 
-	/* ---------------- Make it yours (personality) ---------------- */
-	.persona-sec {
-		border-block: 1px solid var(--color-border-dark);
-		overflow: clip;
-	}
-	.hl-inv {
-		background: linear-gradient(100deg, #8aa0ff, #cdd9ff);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-	.lede-inv {
-		color: rgba(226, 230, 240, 0.62) !important;
-		max-width: 48rem;
-	}
-	.persona-layout {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.25rem;
-		align-items: start;
-	}
-
-	/* "Just tell it" thread */
-	.tune-panel {
-		padding: clamp(1.5rem, 3vw, 2rem);
-		border-radius: var(--radius-lg);
-	}
-	.tune-head h3 {
-		font-size: 1.15rem;
-		letter-spacing: -0.01em;
-		margin-bottom: 0.3rem;
-	}
-	.tune-head p {
-		font-size: 0.88rem;
-		line-height: 1.5;
-		color: rgba(226, 230, 240, 0.55) !important;
-	}
-	/* Preset personas */
-	.persona-intro {
-		font-size: 0.95rem;
-		line-height: 1.55;
-		color: rgba(226, 230, 240, 0.6) !important;
-		max-width: 34rem;
-	}
-	.persona-grid {
-		margin-top: 1.1rem;
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 0.9rem;
-	}
-	.persona-card {
-		padding: 1.2rem 1.3rem;
-		border-radius: var(--radius-lg);
-	}
-	.persona-card h4 {
-		font-size: 1.02rem;
-		letter-spacing: -0.01em;
-		margin-bottom: 0.35rem;
-	}
-	.persona-blurb {
-		font-size: 0.88rem;
-		line-height: 1.5;
-		color: rgba(226, 230, 240, 0.58) !important;
-	}
-	.animal-grid {
-		grid-template-columns: repeat(2, 1fr);
-		gap: 0.7rem;
-	}
-	.animal-card {
-		padding: 0.85rem 1.05rem;
-	}
-	.animal-card h4 {
-		font-size: 0.95rem;
-		margin-bottom: 0.15rem;
-	}
-	.persona-foot {
-		margin-top: clamp(1.75rem, 3vw, 2.25rem);
-		font-size: 0.9rem;
-		line-height: 1.6;
-		color: rgba(226, 230, 240, 0.5) !important;
-		max-width: 50rem;
-	}
-
 	/* ---------------- Sources ---------------- */
 	.src-grid {
 		margin-top: clamp(2.5rem, 5vw, 3.5rem);
@@ -982,9 +829,6 @@
 		.src-grid {
 			grid-template-columns: repeat(3, 1fr);
 		}
-		.persona-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
 		.keep-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
@@ -1004,16 +848,6 @@
 	@media (min-width: 860px) {
 		.plan-grid {
 			grid-template-columns: 1.1fr 0.9fr;
-		}
-	}
-	@media (min-width: 960px) {
-		.persona-layout {
-			grid-template-columns: 0.85fr 1.15fr;
-			gap: 1.75rem;
-		}
-		.tune-panel {
-			position: sticky;
-			top: calc(var(--header-h, 92px) + 1rem);
 		}
 	}
 	@media (max-width: 560px) {
