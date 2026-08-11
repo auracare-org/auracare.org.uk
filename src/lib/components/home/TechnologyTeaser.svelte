@@ -283,7 +283,7 @@
 				That <strong>neuro-symbolic</strong> architecture is what the Auracare CDSS runs on. Every signal
 				is encoded onto the clinical ontology, the terminology medicine already agrees on (SNOMED CT,
 				ICD-11, HPO, LOINC), and the core reasons over the knowledge graph, so every answer traces back
-				to a named source. A glass box, not a black box.
+				to a named source.
 			</p>
 			<p class="tech-status" use:reveal={{ delay: 200 }}>
 				<span class="pill pill-live">Live today</span>

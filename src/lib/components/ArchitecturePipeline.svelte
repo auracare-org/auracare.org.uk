@@ -38,6 +38,12 @@
 	{/each}
 </ol>
 
+<p class="voi" class:dark use:reveal={{ delay: 460 }}>
+	<span class="voi-glyph" aria-hidden="true">↺</span>
+	Value-of-information loop: before it concludes, the core asks the single question, exam or test that
+	resolves the most uncertainty for its cost, then reasons again.
+</p>
+
 <style>
 	.pipeline {
 		list-style: none;
@@ -77,6 +83,28 @@
 		font-size: 0.85rem;
 		line-height: 1.5;
 		color: var(--color-ink-soft);
+	}
+
+	.voi {
+		display: flex;
+		align-items: baseline;
+		gap: 0.55rem;
+		margin-top: 1.4rem;
+		font-size: 0.88rem;
+		line-height: 1.55;
+		color: var(--color-ink-soft);
+		max-width: 52rem;
+	}
+	.voi-glyph {
+		font-size: 1.05rem;
+		line-height: 1;
+		color: var(--color-primary-600);
+	}
+	.voi.dark {
+		color: rgba(226, 230, 240, 0.68) !important;
+	}
+	.voi.dark .voi-glyph {
+		color: var(--color-primary-300);
 	}
 
 	/* Dark variant, for aura-space sections. */

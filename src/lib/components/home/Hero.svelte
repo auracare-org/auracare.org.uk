@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
-	import { TRY_TWIN_NOTE, WAITLIST_URL } from '$lib/data/company';
+	import { TRY_TWIN_NOTE } from '$lib/data/company';
 	import { onMount } from 'svelte';
 
 	// Everyday-life signal categories, not brand names: the picture, not the plumbing.
@@ -127,7 +127,7 @@
 				CDSS work from.
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
-				<a class="cta-primary" href={WAITLIST_URL}>Join the waitlist</a>
+				<a class="cta-primary" href="/investors">We're raising a seed round</a>
 				<a class="cta-ghost" href="#products">
 					See the products <span aria-hidden="true">→</span>
 				</a>

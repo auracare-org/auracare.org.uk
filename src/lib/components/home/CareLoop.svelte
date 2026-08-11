@@ -12,11 +12,13 @@
 			One patient-centred <span class="text-gradient">care loop</span>.
 		</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Daily life in, sharper decisions out, habits back in.
+			Daily life in, sharper decisions out, habits back in. This is where the data your day already
+			produces comes back to you: as a fuller history at the appointment, and better habits after
+			it.
 		</p>
 
-		<!-- A snake with arrows: steps 01 to 03 across the top, an arrow down
-		     into 04, back across the bottom to 06, and a return arrow up the
+		<!-- A snake with arrows: steps 01 to 04 across the top, an arrow down
+		     into 05, back across the bottom to 08, and a return arrow up the
 		     left edge closing the loop. On narrow screens the snake unrolls into
 		     a single column with down arrows between the steps. -->
 		<div class="board">
@@ -60,6 +62,17 @@
 					/>
 				</svg>
 			</span>
+			<span class="arrow h a-top3" aria-hidden="true">
+				<svg viewBox="0 0 40 14" fill="none">
+					<path
+						d="M1 7h32m0 0-6-5.5M33 7l-6 5.5"
+						stroke="currentColor"
+						stroke-width="1.6"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				</svg>
+			</span>
 			<span class="arrow v a-down" aria-hidden="true">
 				<svg viewBox="0 0 14 48" fill="none">
 					<path
@@ -83,6 +96,17 @@
 				</svg>
 			</span>
 			<span class="arrow h a-bot2" aria-hidden="true">
+				<svg viewBox="0 0 40 14" fill="none">
+					<path
+						d="M39 7H7m0 0 6-5.5M7 7l6 5.5"
+						stroke="currentColor"
+						stroke-width="1.6"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				</svg>
+			</span>
+			<span class="arrow h a-bot3" aria-hidden="true">
 				<svg viewBox="0 0 40 14" fill="none">
 					<path
 						d="M39 7H7m0 0 6-5.5M7 7l6 5.5"
@@ -235,7 +259,7 @@
 	@media (min-width: 1000px) {
 		.board {
 			display: grid;
-			grid-template-columns: 1fr 2.75rem 1fr 2.75rem 1fr;
+			grid-template-columns: 1fr 2.75rem 1fr 2.75rem 1fr 2.75rem 1fr;
 			grid-template-rows: auto 4.5rem auto;
 			align-items: stretch;
 		}
@@ -252,12 +276,18 @@
 			grid-area: 1 / 5;
 		}
 		.s4 {
-			grid-area: 3 / 5;
+			grid-area: 1 / 7;
 		}
 		.s5 {
-			grid-area: 3 / 3;
+			grid-area: 3 / 7;
 		}
 		.s6 {
+			grid-area: 3 / 5;
+		}
+		.s7 {
+			grid-area: 3 / 3;
+		}
+		.s8 {
 			grid-area: 3 / 1;
 		}
 
@@ -282,13 +312,19 @@
 		.a-top2 {
 			grid-area: 1 / 4;
 		}
+		.a-top3 {
+			grid-area: 1 / 6;
+		}
 		.a-down {
-			grid-area: 2 / 5;
+			grid-area: 2 / 7;
 		}
 		.a-bot1 {
-			grid-area: 3 / 4;
+			grid-area: 3 / 6;
 		}
 		.a-bot2 {
+			grid-area: 3 / 4;
+		}
+		.a-bot3 {
 			grid-area: 3 / 2;
 		}
 		/* The return arrow closes the loop, so it carries the accent. */
@@ -302,7 +338,7 @@
 			align-items: center;
 			justify-content: center;
 			grid-row: 2;
-			grid-column: 2 / 5;
+			grid-column: 2 / 7;
 			margin: 0;
 			text-align: center;
 			font-size: 0.95rem;

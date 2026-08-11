@@ -100,8 +100,8 @@
 		<span class="eyebrow" use:reveal>Seed round</span>
 		<h1 use:reveal={{ delay: 60 }}>We're raising our seed round.</h1>
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>
-			Auratwin launches to the public in August 2026, and our first clinical trials in Asia follow.
-			This round pays for the launch, the trials, and taking our three devices through
+			Auratwin launches to the public in August 2026, and our first clinical trials in Asia begin in
+			December. This round pays for the launch, the trials, and taking our three devices through
 			certification.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 220 }}>

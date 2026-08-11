@@ -125,7 +125,7 @@
 		{
 			hook: 'Trust compounds',
 			title: 'Your data, your rules',
-			body: 'Everything the twin knows can be inspected, edited and exported from the web app; every source is opt-in and revocable. Trust is what keeps a data relationship alive.'
+			body: 'Everything the twin knows can be inspected, edited and exported from the web app; every source is opt-in and revocable.'
 		}
 	];
 </script>
@@ -184,9 +184,10 @@
 			The product built to be <span class="hl">texted back</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 130 }}>
-			Auratwin is a wellness companion that lives in the apps people already open a hundred times a
-			day. It learns your daily life in conversation and builds a picture you can keep, and share
-			with a clinician if you choose.
+			Auratwin is Auracare's social-history engine, shipped as a wellness companion that lives in
+			the apps people already open a hundred times a day. It learns your daily life in conversation
+			and builds a picture you can keep, export, and share at an appointment, where the Auracare
+			CDSS will reason over it.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
 			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
@@ -229,7 +230,7 @@
 <section class="section-y log-sec">
 	<div class="container-wide">
 		<span class="eyebrow" use:reveal>Replying is the logging</span>
-		<h2 use:reveal={{ delay: 60 }}>Tell it like you’d tell a friend. That’s the whole system.</h2>
+		<h2 use:reveal={{ delay: 60 }}>Tell it like you’d tell a friend.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			There are no streaks to protect and no fields to fill. You text in your own words; Auratwin
 			does the structuring, the remembering, and the noticing.
@@ -303,8 +304,7 @@
 
 		<p class="persona-foot" use:reveal>
 			These are just a place to begin. There’s nothing to set up and nothing to lock in: a single
-			message reshapes the voice whenever you want, so the personality follows you, not the other
-			way round.
+			message reshapes the voice whenever you want.
 		</p>
 	</div>
 </section>
@@ -312,8 +312,8 @@
 <!-- ================= Built for retention ================= -->
 <section class="section-y keep-sec">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Designed for the reply</span>
-		<h2 use:reveal={{ delay: 60 }}>The features that keep the conversation alive.</h2>
+		<span class="eyebrow" use:reveal>Retention</span>
+		<h2 use:reveal={{ delay: 60 }}>What keeps people replying.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			Only {TWIN_PROBLEM.stat} of wellness-app installers are still active a month after install: the
 			apps fail the moment they demand effort. These are the features that remove it, live on
@@ -336,10 +336,11 @@
 <section class="section-y src-sec">
 	<div class="container-wide">
 		<span class="eyebrow" use:reveal>Everything it draws on</span>
-		<h2 use:reveal={{ delay: 60 }}>The more it can see, the more the guidance is yours.</h2>
+		<h2 use:reveal={{ delay: 60 }}>Your data already exists. This is where you get it back.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Every source you connect deepens the twin’s picture of your daily life. That high-context view
-			of <em>you</em> is what makes a nudge feel personal instead of generic.
+			The services you use collect this data every day; you just never see it in one place. Auratwin
+			hands it back: one picture of your daily life that you can read, edit, export, and share with
+			a clinician.
 		</p>
 
 		<div class="src-grid">
@@ -362,7 +363,7 @@
 <section class="section-y plan-sec">
 	<div class="container-wide plan-grid">
 		<div class="plan-copy">
-			<span class="eyebrow" use:reveal>One plan, not a shelf of them</span>
+			<span class="eyebrow" use:reveal>One plan</span>
 			<h2 use:reveal={{ delay: 60 }}>One subscription, in place of the pile.</h2>
 			<p class="lede" use:reveal={{ delay: 120 }}>
 				Wellness has become expensive: a separate app, and a separate bill, for every corner of your

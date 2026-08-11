@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Seo from '$lib/components/seo/Seo.svelte';
-	import CapabilityVenn from '$lib/components/CapabilityVenn.svelte';
 	import { reveal, countUp } from '$lib/actions/motion';
 	import { CONTACT, ONTOLOGY_STATS } from '$lib/data/company';
 
@@ -374,14 +373,7 @@
 <!-- ============================================================ -->
 <!-- PART TWO · AURACARE CDSS · the reasoning loop                 -->
 <!-- ============================================================ -->
-
-<!-- The three capabilities the clinical side rests on, as one figure;
-     the sections after it unpack each in depth. -->
-<div id="auracare">
-	<CapabilityVenn />
-</div>
-
-<section class="section-y loop-section">
+<section id="auracare" class="section-y loop-section">
 	<div class="container-wide">
 		<span class="part-tag" use:reveal>Part two</span>
 		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracare CDSS · clinical reasoning</span>
