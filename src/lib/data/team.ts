@@ -51,6 +51,7 @@ export const team: Record<string, TeamMember> = {
 	'karam-salah': {
 		id: 'karam-salah',
 		name: 'Karam Salah',
+		img: '/JPG/karam-salah.jpg',
 		role: 'Head of ML',
 		bio: 'Leads machine learning: the neuro-symbolic core and graph models behind our reasoning.'
 	}
