@@ -161,7 +161,8 @@
 		<p class="hero-sub" use:reveal={{ delay: 130 }}>
 			Auracle is Auracare's social-history engine, shipped as a wellness companion that lives in
 			the apps people already open a hundred times a day. It learns your daily life in conversation
-			and builds a picture you can keep, export, and share at an appointment, where the Auracare
+			and builds one bio-psycho-social history: your body, your mind, and the life around them, held
+			together over months. You can export and share this data at an appointment, where the Auracare
 			CDSS will reason over it.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
@@ -263,8 +264,8 @@
 		<h2 use:reveal={{ delay: 60 }}>Your data already exists. This is where you get it back.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			The services you use collect this data every day; you just never see it in one place. Auracle
-			hands it back: one picture of your daily life that you can read, edit, export, and share with
-			a clinician.
+			hands it back as one bio-psycho-social history you can read, edit, export, and share with a
+			clinician.
 		</p>
 
 		<div class="src-grid">
