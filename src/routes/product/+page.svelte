@@ -73,7 +73,7 @@
 		'Symptom checker'
 	];
 
-	/* The engagement hooks, drawn from the live consumer site (auratwin.club).
+	/* The engagement hooks, drawn from the live consumer site (auracle.health).
 	   Each one exists to earn the next reply; each reply deepens the social
 	   history the clinical core runs on. */
 	const retention = [
@@ -241,7 +241,7 @@
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			Only {TWIN_PROBLEM.stat} of wellness-app installers are still active a month after install: the
 			apps fail the moment they demand effort. These are the features that remove it, live on
-			<a class="keep-link" href="https://auratwin.club" rel="noopener">auratwin.club</a>.
+			<a class="keep-link" href="https://auracle.health" rel="noopener">auracle.health</a>.
 		</p>
 
 		<div class="keep-grid">
@@ -330,7 +330,7 @@
 		<h2 use:reveal>The waitlist is open.</h2>
 		<p use:reveal={{ delay: 80 }}>
 			Auracle launches on iMessage, WhatsApp and RCS in August 2026. The consumer site is
-			auratwin.club.
+			auracle.health.
 		</p>
 		<div class="cta-actions" use:reveal={{ delay: 140 }}>
 			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>

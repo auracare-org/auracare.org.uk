@@ -35,7 +35,7 @@ export const team: Record<string, TeamMember> = {
 		name: 'Hinlun Chen',
 		img: '/JPG/hinlin-chen.jpg',
 		role: 'Co-founder · COO',
-		bio: 'Co-founder, PPE at LSE, and runs three OEM factories in Hong Kong. Leads operations and partnerships, and business relations in Hong Kong and China.',
+		bio: 'Co-founder, PPE at LSE, and runs an OEM with two factories. Leads operations and partnerships, and business relations in Hong Kong and China.',
 		linkedin: 'https://www.linkedin.com/in/hin-lun-chen/',
 		website: 'https://www.hinlun.com/'
 	},
@@ -44,7 +44,7 @@ export const team: Record<string, TeamMember> = {
 		name: 'Ahnaf Kabir',
 		img: '/JPG/ahnaf-kabir.jpg',
 		role: 'CISO',
-		bio: 'Former software lead at Slate and co-founder of Auracle, a medtech company bringing aural health to the home. Manages security operations, technical infrastructure and backend engineering.',
+		bio: 'Former software lead at Slate and co-founder of Auracle Ltd, a medtech company bringing aural health to the home. Manages security operations, technical infrastructure and backend engineering.',
 		linkedin: 'https://www.linkedin.com/in/akn101',
 		website: 'https://akn.me.uk/'
 	},

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
 	import {
-		AURATWIN_URL,
+		AURACLE_URL,
 		CONTACT,
 		PLATFORM_NOTE,
 		NON_DEVICE_DISCLAIMER,
@@ -18,7 +18,7 @@
 			</h2>
 			<p class="lede" use:reveal={{ delay: 140 }}>
 				Auracle launches in August 2026. The consumer site is
-				<a class="lede-link" href={AURATWIN_URL} rel="noopener">auratwin.club</a>.
+				<a class="lede-link" href={AURACLE_URL} rel="noopener">auracle.health</a>.
 			</p>
 
 			<p class="platform-note" use:reveal={{ delay: 200 }}>{PLATFORM_NOTE}</p>

@@ -8,7 +8,7 @@
  *
  * The homepage is the umbrella: it states the structure once and routes out.
  * Product detail lives on /product and /product/auracare; the raise lives on
- * /investors; the consumer sell lives on auratwin.club.
+ * /investors; the consumer sell lives on auracle.health.
  *
  * Nothing here should overclaim: the reasoning core is in development, the CDSS
  * regulatory pathway is not yet confirmed, and Auracle is a general-wellness
@@ -29,10 +29,10 @@ export const CONTACT = {
 	locations: ['London', 'Hong Kong', 'San Francisco']
 } as const;
 
-export const WAITLIST_URL = 'https://app.auratwin.club/waitlist';
+export const WAITLIST_URL = 'https://app.auracle.health/waitlist';
 
 /** Auracle's own consumer home, linked from the investor-facing pages. */
-export const AURATWIN_URL = 'https://auratwin.club';
+export const AURACLE_URL = 'https://auracle.health';
 
 /**
  * The "want to try it?" aside that sits under the investor CTA on the home and
@@ -40,8 +40,8 @@ export const AURATWIN_URL = 'https://auratwin.club';
  */
 export const TRY_TWIN_NOTE = {
 	text: 'Want to try Auracle? Auracle v1 launches on iMessage, WhatsApp and RCS, and the waitlist is open. See more at',
-	linkLabel: 'auratwin.club',
-	href: AURATWIN_URL
+	linkLabel: 'auracle.health',
+	href: AURACLE_URL
 } as const;
 
 /* ------------------------------------------------------------------ */
