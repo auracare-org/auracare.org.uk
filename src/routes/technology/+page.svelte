@@ -3,7 +3,7 @@
 	import { reveal, countUp } from '$lib/actions/motion';
 	import { CONTACT, ONTOLOGY_STATS } from '$lib/data/company';
 
-	/* --- Auratwin: how the twin gets built ------------------------ */
+	/* --- Auracle: how the twin gets built ------------------------ */
 	const TWIN_STEPS = [
 		{
 			n: '01',
@@ -144,7 +144,7 @@
 
 <Seo
 	title="Technology"
-	description="Two products on one patient model: how Auratwin builds a high-context digital twin, and how the Auracare CDSS turns it into grounded, traceable clinical decision support."
+	description="Two products on one patient model: how Auracle builds a high-context digital twin, and how the Auracare CDSS turns it into grounded, traceable clinical decision support."
 	path="/technology"
 />
 
@@ -169,13 +169,13 @@
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>
 			Everything we build stands on a single idea: one timestamped picture of a person, grounded in
-			the language medicine already agrees on. <strong>Auratwin</strong> is a consumer twin that
+			the language medicine already agrees on. <strong>Auracle</strong> is a consumer twin that
 			learns your daily life. <strong>Auracare CDSS</strong> is clinical decision support that reasons
 			over the whole picture: vitals, history, symptoms and everything the twin captures. This page is
 			how both work.
 		</p>
 		<nav class="hero-jump" use:reveal={{ delay: 200 }} aria-label="Jump to a product">
-			<a href="#auratwin">Auratwin <span aria-hidden="true">→</span></a>
+			<a href="#auratwin">Auracle <span aria-hidden="true">→</span></a>
 			<a href="#auracare">Auracare CDSS <span aria-hidden="true">→</span></a>
 		</nav>
 		<div class="hero-status" use:reveal={{ delay: 260 }}>
@@ -186,15 +186,15 @@
 </section>
 
 <!-- ============================================================ -->
-<!-- PART ONE · AURATWIN                                           -->
+<!-- PART ONE · AURACLE                                           -->
 <!-- ============================================================ -->
 <section id="auratwin" class="section-y twin-product">
 	<div class="container-wide">
 		<span class="part-tag" use:reveal>Part one</span>
-		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auratwin · the digital twin</span>
+		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracle · the digital twin</span>
 		<h2 use:reveal={{ delay: 80 }}>The twin builds the picture no clinic ever sees.</h2>
 		<p class="lede" use:reveal={{ delay: 140 }}>
-			Wellness apps fail the moment they demand effort. Auratwin removes it: the signals you already
+			Wellness apps fail the moment they demand effort. Auracle removes it: the signals you already
 			generate flow in on their own, get normalised into one timestamped model of your body, and the
 			twin reaches you where you already talk. The result is a high-context, continuously updated
 			view of daily life: the part of your health that lives between appointments.
@@ -325,7 +325,7 @@
 				{/each}
 			</ul>
 			<p class="ehr-note" use:reveal>
-				Health records can be read into the twin but never acted on by it. Auratwin is a
+				Health records can be read into the twin but never acted on by it. Auracle is a
 				general-wellness product under the FD&amp;C Act §520(o)(1)(B) exclusion, not a medical
 				device: the twin gives wellness guidance, not diagnosis.
 			</p>
@@ -715,7 +715,7 @@
 		scroll-margin-top: 5rem;
 	}
 
-	/* ---------------- Auratwin ---------------- */
+	/* ---------------- Auracle ---------------- */
 	.twin-product {
 		background: var(--color-surface-alt);
 		border-block: 1px solid var(--color-border-default);

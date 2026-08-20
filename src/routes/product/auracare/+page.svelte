@@ -92,7 +92,7 @@
 
 <Seo
 	title="Auracare CDSS: decision support inside the consultation"
-	description="Auracare CDSS is our clinical decision support system. It works in the background during the appointment, reasoning over the picture Auratwin builds, live vitals from our own hardware, and the conversation itself, so the clinician keeps their eyes on the patient. In development."
+	description="Auracare CDSS is our clinical decision support system. It works in the background during the appointment, reasoning over the picture Auracle builds, live vitals from our own hardware, and the conversation itself, so the clinician keeps their eyes on the patient. In development."
 	path="/product/auracare"
 />
 

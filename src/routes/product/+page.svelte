@@ -19,7 +19,7 @@
 		{
 			time: '18:40',
 			title: 'A nudge, only because it matters',
-			body: 'Three late nights in a row and readiness is sliding. Auratwin flags it once, gently, then leaves it with you.'
+			body: 'Three late nights in a row and readiness is sliding. Auracle flags it once, gently, then leaves it with you.'
 		},
 		{
 			time: '22:00',
@@ -106,8 +106,8 @@
 </script>
 
 <Seo
-	title="Auratwin: a wellness companion in your messages"
-	description="Auratwin lives in the messaging apps you already use. It learns your daily life in conversation, connects the sources you choose, and builds a bio-psycho-social history you can share at an appointment. It launches in August 2026."
+	title="Auracle: a wellness companion in your messages"
+	description="Auracle lives in the messaging apps you already use. It learns your daily life in conversation, connects the sources you choose, and builds a bio-psycho-social history you can share at an appointment. It launches in August 2026."
 	path="/product"
 />
 
@@ -116,11 +116,11 @@
 		{
 			"@context": "https://schema.org",
 			"@type": "SoftwareApplication",
-			"name": "Auratwin",
+			"name": "Auracle",
 			"applicationCategory": "HealthApplication",
 			"operatingSystem": "iOS, Android",
 			"url": "https://auracare.org.uk/product",
-			"description": "A personal health digital twin that lives in your messages. Auratwin learns your patterns from the wearables and apps you already use, then checks in with a morning brief, a nudge only when it matters, and an evening wrap. A general-wellness product, not a medical device.",
+			"description": "A personal health digital twin that lives in your messages. Auracle learns your patterns from the wearables and apps you already use, then checks in with a morning brief, a nudge only when it matters, and an evening wrap. A general-wellness product, not a medical device.",
 			"publisher": { "@id": "https://auracare.org.uk/#organization" },
 			"offers": { "@type": "Offer", "availability": "https://schema.org/PreOrder" }
 		}
@@ -139,7 +139,7 @@
 				{
 					"@type": "ListItem",
 					"position": 2,
-					"name": "Auratwin",
+					"name": "Auracle",
 					"item": "https://auracare.org.uk/product"
 				}
 			]
@@ -154,12 +154,12 @@
 		<span class="blob blob-b"></span>
 	</div>
 	<div class="container-wide hero-inner">
-		<span class="pill pill-soon" use:reveal>Auratwin · Consumer · Expected August 2026</span>
+		<span class="pill pill-soon" use:reveal>Auracle · Consumer · Expected August 2026</span>
 		<h1 use:reveal={{ delay: 60 }}>
 			The product built to be <span class="hl">texted back</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 130 }}>
-			Auratwin is Auracare's social-history engine, shipped as a wellness companion that lives in
+			Auracle is Auracare's social-history engine, shipped as a wellness companion that lives in
 			the apps people already open a hundred times a day. It learns your daily life in conversation
 			and builds a picture you can keep, export, and share at an appointment, where the Auracare
 			CDSS will reason over it.
@@ -175,13 +175,13 @@
 	</div>
 </section>
 
-<!-- ================= A day with Auratwin ================= -->
+<!-- ================= A day with Auracle ================= -->
 <section class="section-y day-sec">
 	<div class="container-wide">
 		<span class="eyebrow" use:reveal>A day, held together</span>
 		<h2 use:reveal={{ delay: 60 }}>It reaches out first, so remembering isn’t your job.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Most wellness apps wait for you to show up. Auratwin runs the other way round: it comes to
+			Most wellness apps wait for you to show up. Auracle runs the other way round: it comes to
 			you, a handful of times a day, and only when there’s something worth saying. Reaching out
 			first is what turns a tool you remember into a conversation you keep.
 		</p>
@@ -207,7 +207,7 @@
 		<span class="eyebrow" use:reveal>Replying is the logging</span>
 		<h2 use:reveal={{ delay: 60 }}>Tell it like you’d tell a friend.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			There are no streaks to protect and no fields to fill. You text in your own words; Auratwin
+			There are no streaks to protect and no fields to fill. You text in your own words; Auracle
 			does the structuring, the remembering, and the noticing.
 		</p>
 
@@ -226,7 +226,7 @@
 							/>
 						</svg>
 					</span>
-					<p class="log-bubble twin"><span class="who">Auratwin</span>{pair.twin}</p>
+					<p class="log-bubble twin"><span class="who">Auracle</span>{pair.twin}</p>
 				</div>
 			{/each}
 		</div>
@@ -262,7 +262,7 @@
 		<span class="eyebrow" use:reveal>Everything it draws on</span>
 		<h2 use:reveal={{ delay: 60 }}>Your data already exists. This is where you get it back.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			The services you use collect this data every day; you just never see it in one place. Auratwin
+			The services you use collect this data every day; you just never see it in one place. Auracle
 			hands it back: one picture of your daily life that you can read, edit, export, and share with
 			a clinician.
 		</p>
@@ -291,10 +291,10 @@
 			<h2 use:reveal={{ delay: 60 }}>One subscription, in place of the pile.</h2>
 			<p class="lede" use:reveal={{ delay: 120 }}>
 				Wellness has become expensive: a separate app, and a separate bill, for every corner of your
-				health. Auratwin folds them into one companion, and starts free.
+				health. Auracle folds them into one companion, and starts free.
 			</p>
 
-			<ul class="stack" use:reveal={{ delay: 160 }} aria-label="Apps Auratwin replaces">
+			<ul class="stack" use:reveal={{ delay: 160 }} aria-label="Apps Auracle replaces">
 				{#each stack as s}
 					<li class="stack-chip">{s}</li>
 				{/each}
@@ -329,7 +329,7 @@
 	<div class="container-wide cta-inner">
 		<h2 use:reveal>The waitlist is open.</h2>
 		<p use:reveal={{ delay: 80 }}>
-			Auratwin launches on iMessage, WhatsApp and RCS in August 2026. The consumer site is
+			Auracle launches on iMessage, WhatsApp and RCS in August 2026. The consumer site is
 			auratwin.club.
 		</p>
 		<div class="cta-actions" use:reveal={{ delay: 140 }}>

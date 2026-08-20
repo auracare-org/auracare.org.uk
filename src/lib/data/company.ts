@@ -1,7 +1,7 @@
 /**
  * Single source of truth for Auracare marketing-site content.
  *
- * Naming: "Auracare" unqualified is the company. The products are "Auratwin"
+ * Naming: "Auracare" unqualified is the company. The products are "Auracle"
  * (consumer, ships first) and "Auracare CDSS" (clinical, in development); expand
  * "clinical decision support system (CDSS)" once per page. One shared patient
  * model underneath both.
@@ -11,7 +11,7 @@
  * /investors; the consumer sell lives on auratwin.club.
  *
  * Nothing here should overclaim: the reasoning core is in development, the CDSS
- * regulatory pathway is not yet confirmed, and Auratwin is a general-wellness
+ * regulatory pathway is not yet confirmed, and Auracle is a general-wellness
  * product, not a medical device. Only the ontology graph is live today. Keep
  * unevidenced deck claims (e.g. CDSS performance percentages) off the site.
  */
@@ -31,15 +31,15 @@ export const CONTACT = {
 
 export const WAITLIST_URL = 'https://app.auratwin.club/waitlist';
 
-/** Auratwin's own consumer home, linked from the investor-facing pages. */
+/** Auracle's own consumer home, linked from the investor-facing pages. */
 export const AURATWIN_URL = 'https://auratwin.club';
 
 /**
  * The "want to try it?" aside that sits under the investor CTA on the home and
- * Auratwin pages. Split so the trailing link can be rendered as an anchor.
+ * Auracle pages. Split so the trailing link can be rendered as an anchor.
  */
 export const TRY_TWIN_NOTE = {
-	text: 'Want to try Auratwin? Auratwin v1 launches on iMessage, WhatsApp and RCS, and the waitlist is open. See more at',
+	text: 'Want to try Auracle? Auracle v1 launches on iMessage, WhatsApp and RCS, and the waitlist is open. See more at',
 	linkLabel: 'auratwin.club',
 	href: AURATWIN_URL
 } as const;
@@ -107,7 +107,7 @@ export interface Product {
 export const PRODUCTS: Product[] = [
 	{
 		key: 'auratwin',
-		name: 'Auratwin',
+		name: 'Auracle',
 		tagline: 'A companion in your messages',
 		blurb:
 			'Auracare’s social-history engine, shipped as a wellness companion that lives where you already talk. It learns daily life in conversation, connects the sources you choose, and builds a complete history you can share at an appointment.',
@@ -120,7 +120,7 @@ export const PRODUCTS: Product[] = [
 		name: 'Auracare CDSS',
 		tagline: 'Decision support inside the consultation',
 		blurb:
-			'A clinical decision support system that works in the background during the appointment: it reasons over the picture Auratwin builds, live vitals from our own devices and the conversation itself, so the clinician keeps their eyes on the patient.',
+			'A clinical decision support system that works in the background during the appointment: it reasons over the picture Auracle builds, live vitals from our own devices and the conversation itself, so the clinician keeps their eyes on the patient.',
 		status: 'in-development',
 		statusLabel: 'Expected May 2027',
 		href: '/product/auracare'
@@ -139,13 +139,13 @@ export const PRODUCTS: Product[] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* The consumer problem Auratwin answers (rendered on /product)        */
+/* The consumer problem Auracle answers (rendered on /product)        */
 /* ------------------------------------------------------------------ */
 
 export const TWIN_PROBLEM = {
 	stat: '4%',
 	line: 'of wellness-app installers are still active a month later. The apps fail the moment they demand effort: a niche app for every habit, a form for every log, a streak to keep alive.',
-	answer: 'Auratwin removes the effort instead.'
+	answer: 'Auracle removes the effort instead.'
 } as const;
 
 /* ------------------------------------------------------------------ */
@@ -164,13 +164,13 @@ export const TWIN_ROLE_HEADING = 'The consumer product leads.';
 export const TWIN_ROLE: TwinRole[] = [
 	{
 		stat: 'Aug 2026',
-		title: 'Revenue starts with Auratwin',
-		body: 'Auratwin subscriptions begin earning at consumer launch in August 2026. The CDSS cannot earn before certification, targeted for May 2027, so the consumer product carries revenue first.'
+		title: 'Revenue starts with Auracle',
+		body: 'Auracle subscriptions begin earning at consumer launch in August 2026. The CDSS cannot earn before certification, targeted for May 2027, so the consumer product carries revenue first.'
 	},
 	{
 		stat: 'One model',
 		title: 'The consumer product feeds the clinical one',
-		body: 'Auratwin builds the bio-psycho-social history a consultation cannot gather itself. Shared by the patient, that history is the input the CDSS reasons over.'
+		body: 'Auracle builds the bio-psycho-social history a consultation cannot gather itself. Shared by the patient, that history is the input the CDSS reasons over.'
 	},
 	{
 		stat: 'Continuous',
@@ -180,7 +180,7 @@ export const TWIN_ROLE: TwinRole[] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* One patient-centred care loop: Auratwin + Auracare                  */
+/* One patient-centred care loop: Auracle + Auracare                  */
 /* ------------------------------------------------------------------ */
 
 export interface CareLoopStep {
@@ -197,7 +197,7 @@ export const CARE_LOOP_LINE = 'One continuous loop: the picture keeps getting ri
 export const CARE_LOOP: CareLoopStep[] = [
 	{
 		actor: 'auratwin',
-		title: 'Auratwin builds the picture',
+		title: 'Auracle builds the picture',
 		body: 'Connectors and conversation, day by day, become one living bio-psycho-social history.'
 	},
 	{
@@ -228,7 +228,7 @@ export const CARE_LOOP: CareLoopStep[] = [
 	{
 		actor: 'auratwin',
 		title: 'Advice becomes routine',
-		body: 'The plan flows back into Auratwin as gentle reminders, tuned to how the person actually lives.'
+		body: 'The plan flows back into Auracle as gentle reminders, tuned to how the person actually lives.'
 	},
 	{
 		actor: 'auratwin',
@@ -301,20 +301,20 @@ export const TIMELINE: Milestone[] = [
 	{
 		date: 'May 2026',
 		title: 'We pivot to Auracare AI',
-		body: 'A new direction: two products on one patient model, Auratwin for people and the Auracare CDSS for clinicians.',
+		body: 'A new direction: two products on one patient model, Auracle for people and the Auracare CDSS for clinicians.',
 		era: 'pivot',
 		fork: true
 	},
 	{
 		date: 'Jul 2026',
-		title: 'Auratwin MVP',
+		title: 'Auracle MVP',
 		body: 'The consumer digital twin reaches its first build: a wellness companion that lives in your messages.',
 		era: 'ai'
 	},
 	{
 		date: 'Aug 2026',
-		title: 'Auratwin public launch',
-		body: 'Auratwin opens to the public on iMessage, WhatsApp and RCS.',
+		title: 'Auracle public launch',
+		body: 'Auracle opens to the public on iMessage, WhatsApp and RCS.',
 		era: 'ai'
 	},
 	{
@@ -373,7 +373,7 @@ export const MARKET_WAVES: MarketWave[] = [
 		key: 'launch',
 		tone: 'launch',
 		title: 'Wellness launch',
-		caption: 'Auratwin goes direct-to-consumer across our first four markets.'
+		caption: 'Auracle goes direct-to-consumer across our first four markets.'
 	},
 	{
 		order: 1,
@@ -388,7 +388,7 @@ export const MARKET_WAVES: MarketWave[] = [
 		tone: 'crossover',
 		title: 'Product crossover',
 		caption:
-			'Auracare follows Auratwin into its wellness markets; Auratwin follows Auracare into the CAS markets.'
+			'Auracare follows Auracle into its wellness markets; Auracle follows Auracare into the CAS markets.'
 	},
 	{
 		order: 3,
@@ -420,7 +420,7 @@ export const MARKET_POINTS: MarketPoint[] = [
 		coords: [-0.1278, 51.5074],
 		tone: 'launch',
 		wave: 0,
-		label: 'Auratwin launches here'
+		label: 'Auracle launches here'
 	},
 	{
 		name: 'United States',
@@ -464,7 +464,7 @@ export const MARKET_POINTS: MarketPoint[] = [
 		coords: [103.8198, 1.3521],
 		tone: 'crossover',
 		wave: 2,
-		label: 'Auracare and Auratwin now both operate here'
+		label: 'Auracare and Auracle now both operate here'
 	},
 	// Wave 4: Southeast Asia
 	{
@@ -628,7 +628,7 @@ export const MARKET_ARCS: MarketArc[] = [
 export const TRACTION: { stat: string; label: string }[] = [
 	{ stat: '28', label: 'UK pharmacy partnerships from our prior venture' },
 	{ stat: '$134k', label: 'UK government funding awarded' },
-	{ stat: '$300k', label: 'angel investment, Hong Kong' },
+	{ stat: '$400k', label: 'angel investment, Hong Kong' },
 	{ stat: '~$400k', label: 'in resources from the Founders Factory Healthcare accelerator' }
 ];
 
@@ -710,7 +710,7 @@ export const EMERGENCY_ROUTING: EmergencyRegion[] = [
 ];
 
 export const NON_DEVICE_DISCLAIMER =
-	'Auratwin is a general-wellness product, not a medical device. It does not diagnose, treat, cure or prevent any disease. Always seek professional medical advice for health concerns.';
+	'Auracle is a general-wellness product, not a medical device. It does not diagnose, treat, cure or prevent any disease. Always seek professional medical advice for health concerns.';
 
 export const PLATFORM_NOTE =
-	'Auratwin v1 launches on iMessage (iOS), plus WhatsApp and RCS for Android. Join the waitlist and we’ll tell you the moment it’s ready for you.';
+	'Auracle v1 launches on iMessage (iOS), plus WhatsApp and RCS for Android. Join the waitlist and we’ll tell you the moment it’s ready for you.';

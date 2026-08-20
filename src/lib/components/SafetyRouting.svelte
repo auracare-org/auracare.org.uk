@@ -63,7 +63,7 @@
 		</div>
 
 		<div class="does glass-card" use:reveal={{ delay: 80 }}>
-			<p class="does-label">What your Auratwin does</p>
+			<p class="does-label">What your Auracle does</p>
 			<ul class="does-grid">
 				{#each TWIN_DOES as item}
 					<li>
@@ -87,7 +87,7 @@
 		<div class="routing" use:reveal={{ delay: 100 }}>
 			<div class="routing-lede">
 				<p class="routing-statement">
-					Auratwin knows its limits. If something is urgent, it routes you to
+					Auracle knows its limits. If something is urgent, it routes you to
 					<span class="red">real help</span>.
 				</p>
 				<p class="never-label">What it <span class="red">never</span> does</p>
@@ -110,7 +110,7 @@
 				</ul>
 			</div>
 
-			<div class="routing-canvas" aria-label="Auratwin routing to emergency helplines">
+			<div class="routing-canvas" aria-label="Auracle routing to emergency helplines">
 				<svg class="routing-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
 					<defs>
 						<linearGradient id="flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -149,7 +149,7 @@
 				</svg>
 
 				<div class="twin-node">
-					<img src="/favicon.svg" alt="Auratwin" class="twin-icon" />
+					<img src="/favicon.svg" alt="Auracle" class="twin-icon" />
 				</div>
 
 				{#each helplines as line, i}

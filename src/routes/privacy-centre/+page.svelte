@@ -16,7 +16,7 @@
 			key: 'delete',
 			label: 'Delete my account & data',
 			description:
-				'Request permanent deletion of your Auratwin account, your health data, and all associated records. We will complete your request within 30 days.'
+				'Request permanent deletion of your Auracle account, your health data, and all associated records. We will complete your request within 30 days.'
 		},
 		{
 			key: 'access',
@@ -116,7 +116,7 @@
 				<div class="field">
 					<label for="phone">Phone number <span class="required">*</span></label>
 					<p class="field-hint">
-						The phone number linked to your Auratwin account (the number you message Auratwin from).
+						The phone number linked to your Auracle account (the number you message Auracle from).
 					</p>
 					<input
 						id="phone"

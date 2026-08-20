@@ -6,7 +6,7 @@
 
 <Seo
 	title="Consumer Health Data Privacy Policy"
-	description="Auratwin's Consumer Health Data Privacy Policy for Washington (My Health My Data Act) and Nevada residents: what we collect, why, your rights, and how to exercise them."
+	description="Auracle's Consumer Health Data Privacy Policy for Washington (My Health My Data Act) and Nevada residents: what we collect, why, your rights, and how to exercise them."
 	path="/privacy/consumer-health-data"
 	noindex={false}
 />
@@ -25,7 +25,7 @@
 		<p class="lede" use:reveal={{ delay: 140 }}>
 			This policy is for residents of Washington and Nevada, and anyone whose consumer health data
 			is collected in those states. It supplements our main
-			<a href="/privacy">Privacy Policy</a> and explains what consumer health data Auratwin collects,
+			<a href="/privacy">Privacy Policy</a> and explains what consumer health data Auracle collects,
 			why, and the rights you have over it.
 		</p>
 		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 24 July 2026</p>
@@ -46,7 +46,7 @@
 			</p>
 
 			<h2 id="what-we-collect">The consumer health data we collect</h2>
-			<p>With your consent, Auratwin may collect:</p>
+			<p>With your consent, Auracle may collect:</p>
 			<ul>
 				<li>
 					Health and wellness measurements from sources you connect: sleep, activity, heart rate,
@@ -59,7 +59,7 @@
 				<li>
 					Reproductive health data, only if you choose to tell Aura about your menstrual cycle (such
 					as when a period starts), and the cycle context the twin derives from it to interpret your
-					other measurements. You are never asked for it, and Auratwin works fully without it. Aura
+					other measurements. You are never asked for it, and Auracle works fully without it. Aura
 					does not predict fertile windows or ovulation, does not give contraception or conception
 					guidance, and does not tell you what a change in your cycle might mean medically;
 				</li>

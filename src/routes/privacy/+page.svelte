@@ -23,7 +23,7 @@
 			Your health data, <span class="text-gradient-l">on your terms</span>.
 		</h1>
 		<p class="lede" use:reveal={{ delay: 140 }}>
-			This policy explains what we collect, why, and the control you keep over it. Auratwin connects
+			This policy explains what we collect, why, and the control you keep over it. Auracle connects
 			only the sources you choose, and your consent is explicit, per-source and revocable at any
 			time.
 		</p>
@@ -38,7 +38,7 @@
 			<p class="evolving">
 				<em
 					>This policy is an early draft and will evolve (with clearer detail and, where relevant,
-					supporting documentation) before Auratwin’s public launch. Material changes will be
+					supporting documentation) before Auracle’s public launch. Material changes will be
 					communicated in-app or by email.</em
 				>
 			</p>
@@ -60,20 +60,20 @@
 
 			<h2 id="scope">What this policy covers</h2>
 			<p>
-				This policy covers two things. First, Auratwin: our consumer product that builds a personal
+				This policy covers two things. First, Auracle: our consumer product that builds a personal
 				health “digital twin” from the wearables and apps you connect, and checks in with you over
 				the messaging apps you already use, such as iMessage, WhatsApp or RCS. Second, this website
 				itself: visiting it, joining the waitlist, writing to us with a question or an investor
 				enquiry, and the optional analytics described in our <a href="/cookies">cookie policy</a>.
 			</p>
 			<p>
-				Auratwin is a general-wellness product, not a medical device. It is designed to help you
+				Auracle is a general-wellness product, not a medical device. It is designed to help you
 				understand your own patterns. It does not diagnose, treat, dose or clinically interpret your
 				data. Aura is an AI companion, and will always tell you so: you are never talking to a
 				person.
 			</p>
 			<p>
-				Auratwin launches in the United Kingdom, the United States, Canada and Australia. The whole
+				Auracle launches in the United Kingdom, the United States, Canada and Australia. The whole
 				of this policy applies wherever you are; the
 				<a href="#regional">regional terms</a> section adds the rights and commitments specific to
 				your region, and Washington and Nevada residents also have a dedicated
@@ -84,7 +84,7 @@
 			<h3>Account data</h3>
 			<p>
 				When you join, we process the details needed to run your account (such as your name, email
-				address and the mobile identity you use to message Auratwin), together with basic app and
+				address and the mobile identity you use to message Auracle), together with basic app and
 				delivery logs that keep the service reliable and secure.
 			</p>
 			<h3>Website visitors and the waitlist</h3>
@@ -100,13 +100,13 @@
 				analytics never loads.
 			</p>
 			<p>
-				We use this data to operate the site, to tell you when Auratwin launches, and to respond to
+				We use this data to operate the site, to tell you when Auracle launches, and to respond to
 				you. Waitlist emails are used only for launch and product updates, every one includes an
 				unsubscribe, and we delete your address on request, or within 6 months after launch.
 			</p>
 			<h3>Health &amp; wellness data you connect</h3>
 			<p>
-				When you connect a source, Auratwin processes the general health and wellness information it
+				When you connect a source, Auracle processes the general health and wellness information it
 				provides, such as sleep, activity and recovery trends from the wearables and apps you choose
 				to link. You decide which sources to connect, and you can disconnect any of them at any
 				time.
@@ -124,16 +124,16 @@
 				If you choose to tell Aura about your menstrual cycle, such as when a period starts, we
 				process that alongside the rest of your data and your twin uses it as context for the
 				patterns it already tracks, for example knowing that a higher resting heart rate later in
-				your cycle is expected rather than a sign of strain. You are never asked for it and Auratwin
+				your cycle is expected rather than a sign of strain. You are never asked for it and Auracle
 				works fully without it. Aura does not predict fertile windows or ovulation, does not give
 				contraception or conception guidance, and does not tell you what a change in your cycle
 				might mean medically.
 			</p>
 			<h3>Precise location, only if you opt in</h3>
 			<p>
-				If you separately opt in, Auratwin processes your precise location to give your guidance
+				If you separately opt in, Auracle processes your precise location to give your guidance
 				context, such as time zones, travel and where your routines happen. This is optional:
-				Auratwin works fully without it, and you can turn it off at any time. We never use your
+				Auracle works fully without it, and you can turn it off at any time. We never use your
 				location to infer visits to healthcare facilities, and we do not geofence health services.
 			</p>
 			<p>
@@ -187,7 +187,7 @@
 
 			<h2 id="profiling">Profiling and automated decisions</h2>
 			<p>
-				Building your twin involves profiling: Auratwin analyses the data you share to learn your
+				Building your twin involves profiling: Auracle analyses the data you share to learn your
 				baselines and spot meaningful changes. That is the product doing its job, and it stays under
 				your control. We do not make solely automated decisions about you that have legal or
 				similarly significant effects. Aura’s nudges are wellness suggestions, nothing more: you can
@@ -196,7 +196,7 @@
 
 			<h2 id="connectors">Wearable connectors</h2>
 			<p>
-				Auratwin only pulls data from the sources you explicitly connect. Nothing is collected from
+				Auracle only pulls data from the sources you explicitly connect. Nothing is collected from
 				a source you have not authorised. Connections use each provider’s standard authorisation
 				flow, and the access tokens we hold on your behalf are encrypted at rest. When you
 				disconnect a source, we stop pulling new data from it.
@@ -216,7 +216,7 @@
 			<p>
 				We do not sell personal data that identifies you. We do not share your health data with
 				third parties without your consent. We use a small number of service providers, strictly to
-				operate Auratwin and this site; they act on our instructions under contract and may not use
+				operate Auracle and this site; they act on our instructions under contract and may not use
 				your data for their own purposes:
 			</p>
 			<ul>
@@ -267,7 +267,7 @@
 
 			<h2 id="children">Children</h2>
 			<p>
-				Auratwin and the waitlist are for adults: you must be at least 18 to use Auratwin or to join
+				Auracle and the waitlist are for adults: you must be at least 18 to use Auracle or to join
 				the waitlist. The service is not directed at children, we do not knowingly collect data from
 				anyone under 18, and if we learn that we have, we will delete it.
 			</p>
@@ -315,7 +315,7 @@
 				</li>
 				<li>
 					Before launch we complete a Data Protection Impact Assessment covering the large-scale
-					processing of health data and location that Auratwin involves.
+					processing of health data and location that Auracle involves.
 				</li>
 				<li>
 					You can complain to the
@@ -327,7 +327,7 @@
 
 			<h3 id="us-privacy">United States</h3>
 			<p>
-				Auratwin is a consumer wellness product and is not covered by HIPAA; your protections come
+				Auracle is a consumer wellness product and is not covered by HIPAA; your protections come
 				from federal consumer law and state privacy law, and from the promises in this policy. Where
 				your state treats health data or precise location as sensitive data, we ask for your opt-in
 				consent before processing it, whatever state you are in. You have the right to access,
@@ -358,7 +358,7 @@
 
 			<h3 id="canada-privacy">Canada</h3>
 			<p>
-				We handle your data under PIPEDA. At launch Auratwin is offered in English and is not
+				We handle your data under PIPEDA. At launch Auracle is offered in English and is not
 				available in Quebec; if we open Quebec, we will first meet the requirements of its
 				private-sector privacy law (Law 25), including service in French, and update this section.
 				Your health data is sensitive, so we collect it only with your express consent, purpose by
@@ -387,7 +387,7 @@
 
 			<h3 id="ireland-privacy">Ireland &amp; the EEA</h3>
 			<p>
-				Auratwin is not currently available in Ireland or the wider EEA. This release does not
+				Auracle is not currently available in Ireland or the wider EEA. This release does not
 				launch there, and we do not offer the service to, or collect data from, people in the EEA.
 				When we do open an EEA market, we will appoint and name our EU representative (Article 27 EU
 				GDPR) here, set out the EU-specific rights and the relevant supervisory authority (such as

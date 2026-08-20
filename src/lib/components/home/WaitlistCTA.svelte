@@ -14,10 +14,10 @@
 		<div class="waitlist-copy">
 			<span class="eyebrow" use:reveal>Join us</span>
 			<h2 use:reveal={{ delay: 60 }}>
-				Be first to meet <span class="text-gradient-l">Auratwin</span>.
+				Be first to meet <span class="text-gradient-l">Auracle</span>.
 			</h2>
 			<p class="lede" use:reveal={{ delay: 140 }}>
-				Auratwin launches in August 2026. The consumer site is
+				Auracle launches in August 2026. The consumer site is
 				<a class="lede-link" href={AURATWIN_URL} rel="noopener">auratwin.club</a>.
 			</p>
 

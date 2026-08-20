@@ -53,7 +53,7 @@
 					"@id": "https://auracare.org.uk/#organization",
 					"name": "Auracare Health Ltd",
 					"alternateName": "Auracare AI",
-					"description": "Auracare builds two products on one patient model: Auratwin, a wellness companion that lives in your messages, and Auracare, clinical decision support that works inside the consultation.",
+					"description": "Auracare builds two products on one patient model: Auracle, a wellness companion that lives in your messages, and Auracare, clinical decision support that works inside the consultation.",
 					"url": "https://auracare.org.uk",
 					"logo": {
 						"@type": "ImageObject",
@@ -79,7 +79,7 @@
 					"@id": "https://auracare.org.uk/#website",
 					"name": "Auracare AI",
 					"url": "https://auracare.org.uk",
-					"description": "Two products on one patient model: Auratwin, a wellness companion in your messages, and Auracare, clinical decision support inside the consultation.",
+					"description": "Two products on one patient model: Auracle, a wellness companion in your messages, and Auracare, clinical decision support inside the consultation.",
 					"publisher": { "@id": "https://auracare.org.uk/#organization" },
 					"inLanguage": "en-GB"
 				}

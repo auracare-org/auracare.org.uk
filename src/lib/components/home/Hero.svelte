@@ -120,10 +120,10 @@
 			</h1>
 			<p class="hero-sub" use:reveal={{ delay: 140 }}>
 				One living model of a person, and two products built on it.
-				<strong>Auratwin</strong> lives in your messages and builds a complete picture of your
+				<strong>Auracle</strong> lives in your messages and builds a complete picture of your
 				bio-psycho-social history: sleep, movement, nutrition, screen time and the rest of daily
 				life. <strong>Auracare CDSS</strong> works beside the clinician, inside the consultation. Shared
-				at an appointment, the picture Auratwin builds becomes the history both the clinician and the
+				at an appointment, the picture Auracle builds becomes the history both the clinician and the
 				CDSS work from.
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>

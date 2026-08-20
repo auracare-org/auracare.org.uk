@@ -8,7 +8,7 @@
 	const productMenu = [
 		{
 			href: '/product',
-			label: 'Auratwin',
+			label: 'Auracle',
 			desc: 'Your digital twin, in your messages',
 			tag: 'Consumer'
 		},

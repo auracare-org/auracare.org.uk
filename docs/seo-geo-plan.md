@@ -40,7 +40,7 @@ alongside classic search SEO.
 ## Phase 2 — structured data depth (this month)
 
 1. **FAQPage JSON-LD.** Write a short FAQ on the pages where questions naturally
-   arise ("Is Auratwin a medical device?", "Which wearables does it support?",
+   arise ("Is Auracle a medical device?", "Which wearables does it support?",
    "Is my health data shared?", "When does it launch?") and mark it up with
    FAQPage schema. Q&A-shaped content is disproportionately quoted by generative
    engines because it maps directly onto user prompts.
@@ -54,7 +54,7 @@ alongside classic search SEO.
 4. **JobPosting schema on /careers** once roles are formalized — gets listings
    into Google Jobs for free.
 5. **MedicalWebPage / claims review.** As clinical claims firm up, keep marketing
-   copy and schema aligned with the regulatory position (Auratwin =
+   copy and schema aligned with the regulatory position (Auracle =
    general-wellness product, not a medical device; Auracare = in development).
    Never let schema claim more than the site does.
 
@@ -70,8 +70,8 @@ answers real questions.
    - "AI triage in primary care: what it can and can't do"
    - "Neuro-symbolic AI in clinical decision support" (technical credibility;
      links from /technology)
-   - "Wearable data is useless without context" (opinion; the Auratwin thesis)
-   - Comparison pages ("Auratwin vs. generic step-count apps") — comparison
+   - "Wearable data is useless without context" (opinion; the Auracle thesis)
+   - Comparison pages ("Auracle vs. generic step-count apps") — comparison
      queries are among the most common assistant prompts.
 2. **Structure every post for extraction**: a one-paragraph direct answer at the
    top, descriptive H2s phrased as questions, short factual sentences, dates on
@@ -111,7 +111,7 @@ LLMs describe Auracare based on what the wider web says, not just auracare.org.u
    PerplexityBot, OAI-SearchBot fetch frequency shows whether the content is
    being retrieved at all.
 3. **Monthly prompt audit.** Ask the major assistants: "What is Auracare?",
-   "What is Auratwin?", "AI triage startups UK". Record what they say and cite;
+   "What is Auracle?", "AI triage startups UK". Record what they say and cite;
    fix wrong facts at the source they cite.
 4. **Search Console / Bing**: track non-brand impressions as Phase 3 content
    ships.

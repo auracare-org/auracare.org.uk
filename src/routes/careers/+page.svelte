@@ -11,7 +11,7 @@
 		},
 		{
 			title: 'Full Stack Engineer',
-			body: 'Own the surfaces Auratwin lives on: a shared Kotlin Multiplatform core and Svelte web, from device connections to the daily check-in.',
+			body: 'Own the surfaces Auracle lives on: a shared Kotlin Multiplatform core and Svelte web, from device connections to the daily check-in.',
 			subject: 'Careers: Full Stack Engineer'
 		},
 		{

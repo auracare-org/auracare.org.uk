@@ -2,7 +2,7 @@
 	import { reveal } from '$lib/actions/motion';
 	import { CARE_LOOP, CARE_LOOP_LINE } from '$lib/data/company';
 
-	const actorLabel = { auratwin: 'Auratwin', auracare: 'Auracare CDSS' } as const;
+	const actorLabel = { auratwin: 'Auracle', auracare: 'Auracare CDSS' } as const;
 </script>
 
 <section class="loop section-y" aria-labelledby="loop-heading">
@@ -199,7 +199,7 @@
 		padding: 0.15rem 0.5rem;
 		border-radius: 999px;
 	}
-	/* Auratwin's steps carry a soft tint so the handoff between the two
+	/* Auracle's steps carry a soft tint so the handoff between the two
 	   products reads at a glance. */
 	.step-twin .step-actor {
 		color: var(--color-ink-soft);

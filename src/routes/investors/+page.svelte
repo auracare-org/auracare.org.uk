@@ -47,7 +47,7 @@
 	const quickLinks = [
 		{
 			href: '/product',
-			title: 'Auratwin',
+			title: 'Auracle',
 			desc: 'The consumer product: a wellness companion in your messages. Launches August 2026.'
 		},
 		{
@@ -75,15 +75,15 @@
 		},
 		{
 			q: 'What’s live today, and what isn’t?',
-			a: 'The ontology is live and explorable: 532,000 clinical concepts. Auratwin launches to the public in August 2026. The Auracare CDSS, the clinical product, is in development and targeted for May 2027.'
+			a: 'The ontology is live and explorable: 532,000 clinical concepts. Auracle launches to the public in August 2026. The Auracare CDSS, the clinical product, is in development and targeted for May 2027.'
 		},
 		{
 			q: 'Who’s already backing you?',
-			a: 'A $300k angel investment from Hong Kong, around $400k in resources from the Founders Factory Healthcare accelerator, and $134k in UK government funding. Our prior venture also built 28 UK pharmacy partnerships.'
+			a: 'A $400k angel investment from Hong Kong, around $400k in resources from the Founders Factory Healthcare accelerator, and $134k in UK government funding. Our prior venture also built 28 UK pharmacy partnerships.'
 		},
 		{
 			q: 'How do you handle regulation?',
-			a: 'Auratwin ships as a general-wellness product under the FD&C Act §520(o)(1)(B) exclusion, so it never diagnoses or treats. The Auracare CDSS is clinical decision support; its regulatory pathway is under active review.'
+			a: 'Auracle ships as a general-wellness product under the FD&C Act §520(o)(1)(B) exclusion, so it never diagnoses or treats. The Auracare CDSS is clinical decision support; its regulatory pathway is under active review.'
 		}
 	];
 </script>
@@ -100,7 +100,7 @@
 		<span class="eyebrow" use:reveal>Seed round</span>
 		<h1 use:reveal={{ delay: 60 }}>We're raising our seed round.</h1>
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>
-			Auratwin launches to the public in August 2026, and our first clinical trials in Asia begin in
+			Auracle launches to the public in August 2026, and our first clinical trials in Asia begin in
 			December. This round pays for the launch, the trials, and taking our three devices through
 			certification.
 		</p>
