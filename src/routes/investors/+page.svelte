@@ -100,9 +100,9 @@
 		<span class="eyebrow" use:reveal>Seed round</span>
 		<h1 use:reveal={{ delay: 60 }}>We're raising our seed round.</h1>
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>
-			Auracle launches to the public in August 2026, and our first clinical trials in Asia begin in
-			December. This round pays for the launch, the trials, and taking our three devices through
-			certification.
+			Auracle launches to the public in August 2026, and our first clinical trials in Asia begin
+			in February 2027. This round pays for the launch, the trials, and taking our three devices
+			through certification.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 220 }}>
 			<!-- Interim mailto; swap for the Typeform link when it exists. -->

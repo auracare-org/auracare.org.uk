@@ -318,9 +318,9 @@ export const TIMELINE: Milestone[] = [
 		era: 'ai'
 	},
 	{
-		date: 'Dec 2026',
+		date: 'Feb 2027',
 		title: 'First clinical trials',
-		body: 'Our partnership with the Chinese Academy of Sciences begins trials with doctors in China.',
+		body: 'Trials begin with hospitals and institutions across Hong Kong and China.',
 		era: 'ai'
 	},
 	{
@@ -379,8 +379,8 @@ export const MARKET_WAVES: MarketWave[] = [
 		order: 1,
 		key: 'clinical',
 		tone: 'clinical',
-		title: 'Clinical trial in CAS',
-		caption: 'Auracare enters clinical trials with the Chinese Academy of Sciences.'
+		title: 'Clinical trials',
+		caption: 'Auracare enters clinical trials with hospitals and institutions in Hong Kong and China.'
 	},
 	{
 		order: 2,
@@ -443,13 +443,13 @@ export const MARKET_POINTS: MarketPoint[] = [
 		wave: 0,
 		label: 'Wellness launch'
 	},
-	// Wave 2: clinical trial in CAS (China / Greater Bay Area)
+	// Wave 2: clinical trials in Hong Kong and China (Greater Bay Area)
 	{
 		name: 'China',
 		coords: [113.2644, 23.1291],
 		tone: 'clinical',
 		wave: 1,
-		label: 'Clinical trials with the Chinese Academy of Sciences, via the Greater Bay Area'
+		label: 'Clinical trials with hospitals and institutions, via the Greater Bay Area'
 	},
 	{
 		name: 'Hong Kong',
