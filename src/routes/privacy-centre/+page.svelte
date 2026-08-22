@@ -215,7 +215,7 @@
 	.lede {
 		max-width: 52rem;
 		font-size: clamp(1rem, 1.2vw, 1.15rem);
-		color: rgba(226, 232, 255, 0.8);
+		color: var(--color-text-body-secondary);
 		margin-top: 1.25rem;
 	}
 
@@ -254,8 +254,8 @@
 	}
 
 	.right-card {
-		background: rgba(255, 255, 255, 0.04);
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: var(--color-surface-alt);
+		border: 1px solid var(--color-neutral-200);
 		border-radius: 0.6rem;
 		padding: 0.75rem 1rem;
 		text-align: left;
@@ -263,21 +263,21 @@
 		transition:
 			background 0.15s,
 			border-color 0.15s;
-		color: rgba(226, 232, 255, 0.75);
+		color: var(--color-text-body-primary);
 		font-size: 0.88rem;
 		font-weight: 500;
 	}
 
 	.right-card:hover {
-		background: rgba(255, 255, 255, 0.07);
-		border-color: rgba(97, 128, 255, 0.4);
-		color: #fff;
+		background: var(--color-primary-50);
+		border-color: var(--color-primary-300);
+		color: var(--color-text-body-primary);
 	}
 
 	.right-card--active {
-		background: rgba(97, 128, 255, 0.15);
-		border-color: rgba(97, 128, 255, 0.7);
-		color: #fff;
+		background: var(--color-primary-100);
+		border-color: var(--color-primary-400);
+		color: var(--color-neutral-1000);
 	}
 
 	.right-label {
@@ -286,13 +286,13 @@
 
 	/* Selected description */
 	.selected-desc {
-		background: rgba(255, 255, 255, 0.04);
-		border-left: 3px solid rgba(97, 128, 255, 0.6);
+		background: var(--color-surface-alt);
+		border-left: 3px solid var(--color-primary-400);
 		border-radius: 0 0.4rem 0.4rem 0;
 		padding: 0.9rem 1.1rem;
 		margin-bottom: 2rem;
 		font-size: 0.92rem;
-		color: rgba(226, 232, 255, 0.8);
+		color: var(--color-text-body-primary);
 	}
 
 	.selected-desc p {
@@ -316,12 +316,12 @@
 	.field label {
 		font-size: 0.88rem;
 		font-weight: 600;
-		color: rgba(226, 232, 255, 0.9);
+		color: var(--color-text-body-primary);
 	}
 
 	.field-hint {
 		font-size: 0.82rem;
-		color: rgba(226, 232, 255, 0.5);
+		color: var(--color-text-body-secondary);
 		margin: 0;
 	}
 
@@ -330,17 +330,17 @@
 	}
 
 	.optional {
-		color: rgba(226, 232, 255, 0.45);
+		color: var(--color-text-body-secondary);
 		font-weight: 400;
 	}
 
 	.field input,
 	.field textarea {
-		background: rgba(255, 255, 255, 0.06);
-		border: 1px solid rgba(255, 255, 255, 0.15);
+		background: var(--color-neutral-0);
+		border: 1px solid var(--color-neutral-300);
 		border-radius: 0.5rem;
 		padding: 0.7rem 0.9rem;
-		color: #e2e8ff;
+		color: var(--color-text-body-primary);
 		font-size: 0.95rem;
 		font-family: inherit;
 		transition: border-color 0.15s;
@@ -351,22 +351,22 @@
 	.field input:focus,
 	.field textarea:focus {
 		outline: none;
-		border-color: rgba(97, 128, 255, 0.7);
-		background: rgba(97, 128, 255, 0.08);
+		border-color: var(--color-primary-400);
+		background: var(--color-primary-50);
 	}
 
 	.field input::placeholder,
 	.field textarea::placeholder {
-		color: rgba(226, 232, 255, 0.3);
+		color: var(--color-neutral-400);
 	}
 
 	.delete-warning {
-		background: rgba(248, 113, 113, 0.1);
-		border: 1px solid rgba(248, 113, 113, 0.3);
+		background: #fff5f5;
+		border: 1px solid #fca5a5;
 		border-radius: 0.5rem;
 		padding: 0.9rem 1rem;
 		font-size: 0.88rem;
-		color: rgba(248, 200, 200, 0.9);
+		color: #b91c1c;
 		line-height: 1.5;
 	}
 
@@ -385,7 +385,7 @@
 		gap: 1.2rem;
 		margin-top: 2.5rem;
 		padding-top: 2.5rem;
-		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		border-top: 1px solid var(--color-neutral-200);
 	}
 
 	.info-panel h3 {
@@ -394,14 +394,14 @@
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
-		color: rgba(226, 232, 255, 0.55);
+		color: var(--color-text-body-secondary);
 		margin-bottom: 0.8rem;
 	}
 
 	.info-panel p,
 	.info-panel li {
 		font-size: 0.88rem;
-		color: rgba(226, 232, 255, 0.7);
+		color: var(--color-text-body-primary);
 		line-height: 1.65;
 	}
 
