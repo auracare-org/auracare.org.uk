@@ -254,9 +254,7 @@
 		font-size: clamp(2.6rem, 5.8vw, 4.4rem);
 		line-height: 1.02;
 		letter-spacing: -0.035em;
-		/* Light at display size: the weight is what made this read as a banner
-		   rather than a headline. */
-		font-weight: 300;
+		font-weight: var(--weight-display);
 		margin-block: 1rem 1.4rem;
 		max-width: 13ch;
 	}

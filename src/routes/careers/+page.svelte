@@ -80,10 +80,9 @@
 		<span class="eyebrow" use:reveal>The honest pitch</span>
 		<h2 use:reveal={{ delay: 60 }}>Small team. Big problem. No org chart to hide in.</h2>
 		<p class="why-lede" use:reveal={{ delay: 120 }}>
-			You'll own real work from day one, talk to the founders because there's no one to route
-			around, and ship without collecting a stack of sign-offs. We're building the hard parts
-			ourselves, not wrapping someone else's model, and we take getting safety right seriously,
-			because there are actual people on the other end. Everything else, we try not to.
+			You will own real work from day one and ship without collecting sign-offs. We build the hard
+			parts ourselves rather than wrapping someone else's model, and we take safety seriously
+			because there are real people on the other end.
 		</p>
 	</div>
 </section>

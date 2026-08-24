@@ -181,9 +181,8 @@
 		<span class="eyebrow" use:reveal>A day, held together</span>
 		<h2 use:reveal={{ delay: 60 }}>It reaches out first, so remembering isn’t your job.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Most wellness apps wait for you to show up. Auracle runs the other way round: it comes to you,
-			a handful of times a day, and only when there’s something worth saying. Reaching out first is
-			what turns a tool you remember into a conversation you keep.
+			Most wellness apps wait for you to show up. Auracle comes to you, a handful of times a day,
+			and only when there is something worth saying.
 		</p>
 
 		<ol class="day">

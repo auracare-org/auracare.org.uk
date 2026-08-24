@@ -185,10 +185,9 @@
 		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracle · the consumer product</span>
 		<h2 use:reveal={{ delay: 80 }}>Auracle builds the picture no clinic ever sees.</h2>
 		<p class="lede" use:reveal={{ delay: 140 }}>
-			Wellness apps fail the moment they demand effort. Auracle removes it: the signals you already
-			generate flow in on their own, get normalised into one timestamped model of your body, and the
-			Auracle reaches you where you already talk. The result is a high-context, continuously updated
-			view of daily life: the part of your health that lives between appointments.
+			Wellness apps fail the moment they demand effort. Auracle removes it. The signals you already
+			generate flow in on their own and become one timestamped model of your body: the part of your
+			health that lives between appointments.
 		</p>
 
 		<!-- The churn curve behind that first sentence: the same figure as the
@@ -301,11 +300,9 @@
 		<div class="signals-block">
 			<h3 class="signals-head" use:reveal>Raw signals in, scores out.</h3>
 			<p class="signals-sub" use:reveal={{ delay: 60 }}>
-				Sleep, movement, meals and mindfulness sessions map to one canonical, timestamped schema.
-				From those inputs Auracle computes the scores you read: a Sleep Score from sleep stages,
-				duration and consistency; recovery from resting heart rate and heart-rate variability, so
-				every number is derived the same way, whatever device it came from. Wearables sync
-				automatically; anything else is a reply away.
+				Sleep, movement, meals and mindfulness map to one timestamped schema, so every score is
+				derived the same way whatever device it came from. Wearables sync automatically; anything
+				else is a reply away.
 			</p>
 			<ul class="signals-grid" use:reveal={{ delay: 100 }} aria-label="Signals Auracle ingests">
 				{#each TWIN_SIGNALS as sig, i}
@@ -333,10 +330,9 @@
 			<span class="eyebrow" use:reveal>The patient state</span>
 			<h2 use:reveal={{ delay: 60 }}>One timestamped model of a person.</h2>
 			<p class="lede" use:reveal={{ delay: 120 }}>
-				A person’s health does not live in one app. It is scattered across devices, labs and memory.
-				The patient state pulls those sources onto a single timeline, each observation encoded into
-				the same clinical vocabulary and stamped with when it was true, so the loop always reasons
-				from one coherent picture, not a dozen partial ones.
+				A person’s health is scattered across devices, labs and memory. The patient state pulls it
+				onto one timeline, each observation encoded into the same clinical vocabulary and stamped
+				with when it was true.
 			</p>
 			<p use:reveal={{ delay: 180 }}>
 				Because everything is timestamped, the state is longitudinal, not a flat snapshot. It can
@@ -370,88 +366,36 @@
 		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracare CDSS · clinical reasoning</span>
 		<h2 use:reveal={{ delay: 80 }}>A loop, not a pipeline.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Most health AI runs a fixed pipeline: data in, answer out. Auracare behaves more like a
-			clinician: it reasons, decides the next-best question, then reasons again, always anchored in
-			established medical evidence. A pipeline ends when it produces an answer; our loop treats
-			every answer as the start of a better question, and only acts once no further question is
-			worth its cost. A safety layer wraps all six stages, end to end.
+			Most health AI runs a fixed pipeline: data in, answer out. Auracare behaves like a clinician
+			instead. It reasons, decides the next-best question, then reasons again. A pipeline ends when
+			it produces an answer; the loop only acts once no further question is worth its cost.
 		</p>
 
-		<!-- Visual diagram (decorative; the list below is the accessible equivalent) -->
-		<div class="loop-diagram" use:reveal={{ delay: 160 }} aria-hidden="true">
-			<div class="safety-band"><span>Safety: an overlay on every stage</span></div>
-			<svg class="loop-svg" viewBox="0 0 1000 260" preserveAspectRatio="xMidYMid meet">
-				<defs>
-					<linearGradient
-						id="loopLine"
-						gradientUnits="userSpaceOnUse"
-						x1="80"
-						y1="90"
-						x2="920"
-						y2="90"
-					>
-						<stop offset="0%" stop-color="#6180ff" />
-						<stop offset="100%" stop-color="#387ff5" />
-					</linearGradient>
-					<marker
-						id="loopArrow"
-						viewBox="0 0 10 10"
-						refX="8"
-						refY="5"
-						markerWidth="7"
-						markerHeight="7"
-						orient="auto-start-reverse"
-					>
-						<path d="M0 0 L10 5 L0 10 z" fill="#6180ff" />
-					</marker>
-				</defs>
+		<!-- The safety overlay is drawn as a frame around the stages rather than a
+		     pill floating above them, because "wraps every stage" is the claim.
+		     The abstract numbered circles that used to sit here duplicated this
+		     list without naming anything, so they are gone. -->
+		<div class="loop-frame" use:reveal={{ delay: 140 }}>
+			<span class="loop-frame-label">Safety overlay · every stage</span>
 
-				<!-- forward connectors: a short, solid arrow floating in the middle
-					 of each pair (1 → 2, 2 → 3, …), so it reads as a chain of steps,
-					 not a single straight pipe -->
-				{#each LOOP.slice(0, -1) as _link, i}
-					<path
-						class="loop-path loop-forward"
-						style="--i:{i}"
-						d="M{90 + i * 164 + 62} 90 H{90 + i * 164 + 102}"
-						fill="none"
-						stroke="url(#loopLine)"
-						stroke-width="3"
-						marker-end="url(#loopArrow)"
-					/>
+			<ol class="loop-list">
+				{#each LOOP as stage, i}
+					<li class="loop-item" use:reveal={{ delay: 60 + i * 60 }}>
+						<span class="loop-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+						<div class="loop-text">
+							<h3>{stage.label}</h3>
+							<p>{stage.body}</p>
+						</div>
+					</li>
 				{/each}
-				<!-- return path: value-of-information → input -->
-				<path
-					class="loop-path loop-return"
-					style="--i:5"
-					d="M746 120 V190 H90 V120"
-					fill="none"
-					stroke="url(#loopLine)"
-					stroke-width="3"
-					stroke-dasharray="8 8"
-					marker-end="url(#loopArrow)"
-				/>
+			</ol>
 
-				{#each LOOP as _stage, i}
-					<g class="loop-node" style="--i:{i}">
-						<circle cx={90 + i * 164} cy="90" r="30" />
-						<text x={90 + i * 164} y="95" text-anchor="middle">{i + 1}</text>
-					</g>
-				{/each}
-			</svg>
+			<p class="loop-return">
+				<span class="loop-return-glyph" aria-hidden="true">↺</span>
+				Stage five returns to stage one until no further question is worth its cost.
+			</p>
 		</div>
 
-		<ol class="loop-list">
-			{#each LOOP as stage, i}
-				<li class="glass-card loop-item" use:reveal={{ delay: 80 * i }}>
-					<span class="loop-num" aria-hidden="true">{i + 1}</span>
-					<div>
-						<h3>{stage.label}</h3>
-						<p>{stage.body}</p>
-					</div>
-				</li>
-			{/each}
-		</ol>
 		<p class="safety-note" use:reveal>
 			<strong>Stage five is the only exit.</strong> Nothing reaches a patient until value-of-information
 			says the next question is not worth its cost, and every action that follows is checked against
@@ -469,9 +413,9 @@
 		<h2 use:reveal={{ delay: 60 }}>Two kinds of intelligence, checking each other.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			Learned models are fluent but can be confidently wrong. Symbolic systems are rigorous but
-			rigid. We pair them and draw a sharp, named line between the two, because Auracare is a
-			medical device: a regulator’s question is not “is it accurate” but “which decisions crossed
-			onto the learned side, and can you reconstruct them.” We keep that line inspectable.
+			rigid. We pair them and keep a named line between the two, because a regulator’s question is
+			not “is it accurate” but “which decisions crossed onto the learned side, and can you
+			reconstruct them.”
 		</p>
 
 		<div class="core-grid">
@@ -513,39 +457,42 @@
 		<span class="eyebrow" use:reveal>Safety by design</span>
 		<h2 use:reveal={{ delay: 60 }}>One gate on every stage.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Safety is an overlay, not a box at the end. Drawing it as a single final filter would imply
-			reasoning can be unsafe as long as the last gate catches it, which is exactly the failure mode
-			a medical device must not have. So the overlay runs through the whole loop, with a different
-			instantiation at each stage.
+			A single gate at the end would imply reasoning can be unsafe as long as the last check catches
+			it. So the overlay runs through the whole loop, in a different form at each stage.
 		</p>
 
 		<div class="clinician-note" use:reveal={{ delay: 160 }}>
 			<span class="clinician-stage" aria-hidden="true">Clinician-in-the-loop</span>
 			<p>
-				And the outermost gate is a person. Auracare is built to be used
-				<strong>in conjunction with a clinician, never to replace one</strong>. It is a tool that
-				informs and supports their judgement. The clinician stays accountable for every decision,
-				and their opinion always overrides the model.
+				The outermost gate is a person. Auracare is built to be used
+				<strong>alongside a clinician, never to replace one</strong>. The clinician stays
+				accountable for every decision, and their judgement always overrides the model.
 			</p>
 		</div>
 
-		<div class="safety-grid">
+		<!-- The gates run down a single continuous rail. Six identical cards in a
+		     grid stated the idea; a spine with a gate pinned at each stage shows
+		     it, which is the whole argument of this section. -->
+		<ol class="safety-rail">
 			{#each SAFEGUARDS as item, i}
-				<div class="glass-card safety-card" use:reveal={{ delay: 60 * i }}>
-					<span class="safety-stage">{item.stage}</span>
-					<h3>{item.title}</h3>
-					<p>{item.body}</p>
-				</div>
+				<li class="safety-gate" use:reveal={{ delay: 60 + i * 60 }}>
+					<span class="gate-marker" aria-hidden="true">
+						<span class="gate-index">{String(i + 1).padStart(2, '0')}</span>
+					</span>
+					<div class="gate-body">
+						<span class="safety-stage">{item.stage}</span>
+						<h3>{item.title}</h3>
+						<p>{item.body}</p>
+					</div>
+				</li>
 			{/each}
-		</div>
+		</ol>
 
 		<p class="residency-note" use:reveal>
-			On data residency: our approach is <strong>jurisdiction-based</strong>. Auracare will comply
-			with the data residency requirements and local health data laws of each market we operate in,
-			with the reasoning core designed to run inside our own cloud tenant in the applicable region
-			so consented health data stays within infrastructure we control. This is an architectural
-			commitment for the agentic engine, which remains in development, and whose regulatory pathway
-			is under active, continuous review.
+			<strong>Data residency is jurisdiction-based.</strong> The reasoning core is designed to run inside
+			our own cloud tenant in each market's region, so consented health data stays within infrastructure
+			we control. An architectural commitment for an engine still in development, whose regulatory pathway
+			is under continuous review.
 		</p>
 	</div>
 </section>
@@ -932,88 +879,91 @@
 	}
 
 	/* ---------------- Loop ---------------- */
-	.loop-diagram {
+	/* The overlay is a frame around the stages, with its label sitting on the
+	   border like a legend, so "wraps every stage" is shown rather than said. */
+	.loop-frame {
 		position: relative;
-		margin-top: clamp(2rem, 5vw, 3.5rem);
-		border-radius: var(--radius-4xl);
-		background: linear-gradient(135deg, #f5f8ff, #eef2ff);
-		border: 1px solid rgba(79, 111, 237, 0.12);
-		padding: clamp(1.5rem, 4vw, 2.5rem);
-		overflow: hidden;
+		margin-top: clamp(2.75rem, 5vw, 3.75rem);
+		border: 1px solid rgba(47, 78, 192, 0.22);
+		border-radius: var(--radius-2xl);
+		background: linear-gradient(180deg, rgba(239, 242, 255, 0.6), rgba(252, 252, 253, 0));
+		padding: clamp(1.75rem, 4vw, 2.5rem) clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 3vw, 1.75rem);
 	}
-	.safety-band {
-		position: relative;
-		border: 1px dashed rgba(47, 78, 192, 0.4);
-		background: rgba(97, 128, 255, 0.08);
-		border-radius: 999px;
-		text-align: center;
-		padding: 0.4rem 1rem;
-		margin-bottom: 1.25rem;
-	}
-	.safety-band span {
-		font-family: var(--font-family-heading);
-		font-size: 0.72rem;
-		font-weight: 700;
+	.loop-frame-label {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background: var(--color-surface-page);
+		padding: 0 0.85rem;
+		font-size: 0.68rem;
+		font-weight: 600;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		color: var(--color-primary-700);
-	}
-	.loop-svg {
-		width: 100%;
-		height: auto;
-		overflow: visible;
-	}
-	.loop-node circle {
-		fill: #fff;
-		stroke: url(#loopLine);
-		stroke-width: 3;
-		filter: drop-shadow(0 6px 16px rgba(47, 78, 192, 0.2));
-	}
-	.loop-node text {
-		font-family: var(--font-family-heading);
-		font-weight: 700;
-		font-size: 1.6rem;
-		fill: var(--color-primary-700);
+		white-space: nowrap;
 	}
 
 	.loop-list {
 		list-style: none;
 		display: grid;
-		gap: 1rem;
-		margin-top: clamp(2rem, 4vw, 3rem);
+		gap: 0.5rem 2rem;
+		margin: 0;
+		padding: 0;
 		grid-template-columns: 1fr;
+		text-align: left;
 	}
 	.loop-item {
-		display: flex;
-		gap: 1rem;
-		align-items: flex-start;
-		padding: 1.25rem 1.5rem;
+		display: grid;
+		grid-template-columns: 2.4rem 1fr;
+		gap: 0.9rem;
+		align-items: start;
+		padding-block: 0.9rem;
+		border-top: 1px solid rgba(47, 78, 192, 0.1);
+	}
+	/* The first item in each column needs no rule above it. */
+	.loop-item:first-child {
+		border-top: 0;
 	}
 	.loop-num {
-		flex: none;
-		display: grid;
-		place-items: center;
-		width: 2.25rem;
-		height: 2.25rem;
-		border-radius: 999px;
-		background: var(--color-primary-alpha-10, rgba(56, 127, 245, 0.1));
+		font-size: 0.75rem;
+		font-weight: 600;
 		color: var(--color-primary-600);
-		font-family: var(--font-family-heading);
-		font-weight: 700;
+		font-variant-numeric: tabular-nums;
+		padding-top: 0.15rem;
 	}
 	.loop-item h3 {
-		font-size: 1.1rem;
-		margin-bottom: 0.25rem;
+		font-size: 1rem;
+		margin-bottom: 0.2rem;
 	}
 	.loop-item p {
-		font-size: 0.95rem;
+		font-size: 0.92rem;
 		line-height: 1.55;
-		color: var(--color-neutral-600, #4b5563);
+		color: var(--color-ink-soft);
+		margin: 0;
+	}
+	.loop-return {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		margin: clamp(1rem, 2vw, 1.5rem) 0 0;
+		padding-top: 1rem;
+		border-top: 1px solid rgba(47, 78, 192, 0.12);
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--color-primary-700);
+		text-align: center;
+	}
+	.loop-return-glyph {
+		font-size: 1.05rem;
+		line-height: 1;
 	}
 	.safety-note {
-		margin-top: 1.5rem;
+		margin: 1.5rem auto 0;
 		font-size: 0.95rem;
 		max-width: 46rem;
+		text-align: center;
 	}
 	.safety-note strong {
 		color: var(--color-primary-700);
@@ -1022,6 +972,10 @@
 	@media (min-width: 800px) {
 		.loop-list {
 			grid-template-columns: repeat(2, 1fr);
+		}
+		/* Two columns: the item starting each column loses its rule too. */
+		.loop-item:nth-child(2) {
+			border-top: 0;
 		}
 	}
 
@@ -1287,38 +1241,85 @@
 	.clinician-note strong {
 		color: #fff;
 	}
-	.safety-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1rem;
-		margin-top: clamp(2rem, 4vw, 3rem);
+	/* The rail: one continuous line with a gate at each stage. */
+	.safety-rail {
+		list-style: none;
+		margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+		padding: 0;
+		max-width: 46rem;
+		position: relative;
+		text-align: left;
 	}
-	.safety-card {
-		padding: clamp(1.25rem, 3vw, 1.75rem);
+	/* The line itself, running the full height behind the markers. */
+	.safety-rail::before {
+		content: '';
+		position: absolute;
+		left: 1.05rem;
+		top: 0.9rem;
+		bottom: 0.9rem;
+		width: 1px;
+		background: linear-gradient(
+			to bottom,
+			transparent,
+			var(--color-primary-400) 12%,
+			var(--color-primary-400) 88%,
+			transparent
+		);
+		opacity: 0.5;
+	}
+	.safety-gate {
+		position: relative;
+		display: grid;
+		grid-template-columns: 2.1rem 1fr;
+		gap: 1.1rem;
+		padding-block: 1.15rem;
+	}
+	.safety-gate + .safety-gate {
+		border-top: 1px solid rgba(255, 255, 255, 0.07);
+	}
+	.gate-marker {
+		position: relative;
+		z-index: 1;
+		width: 2.1rem;
+		height: 2.1rem;
+		border-radius: 999px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--color-surface-blue);
+		border: 1px solid rgba(148, 171, 255, 0.45);
+		margin-top: 0.1rem;
+	}
+	.gate-index {
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		color: var(--color-primary-300);
+		font-variant-numeric: tabular-nums;
 	}
 	.safety-stage {
-		display: inline-block;
-		font-family: var(--font-family-mono);
+		display: block;
 		font-size: 0.66rem;
-		font-weight: 700;
+		font-weight: 600;
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
 		color: var(--color-primary-300);
-		margin-bottom: 0.5rem;
+		margin-bottom: 0.3rem;
 	}
-	.safety-card h3 {
-		font-size: 1.1rem;
-		margin-bottom: 0.4rem;
+	.safety-gate h3 {
+		font-size: 1.05rem;
+		margin-bottom: 0.35rem;
 	}
-	.safety-card p {
+	.safety-gate p {
 		font-size: 0.95rem;
 		line-height: 1.55;
+		margin: 0;
 	}
 	.residency-note {
-		margin-top: clamp(1.75rem, 4vw, 2.5rem);
+		margin: clamp(2rem, 4vw, 2.75rem) auto 0;
 		font-size: 0.95rem;
 		line-height: 1.6;
-		max-width: 48rem;
+		max-width: 46rem;
 		padding: 1.1rem 1.4rem;
 		border-radius: var(--radius-md);
 		background: rgba(255, 255, 255, 0.06);
@@ -1326,15 +1327,5 @@
 	}
 	.residency-note strong {
 		color: #fff;
-	}
-	@media (min-width: 720px) {
-		.safety-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-	}
-	@media (min-width: 1000px) {
-		.safety-grid {
-			grid-template-columns: repeat(3, 1fr);
-		}
 	}
 </style>

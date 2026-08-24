@@ -200,9 +200,8 @@
 		<span class="eyebrow" use:reveal>Our hardware, straight into the core</span>
 		<h2 use:reveal={{ delay: 60 }}>A closed link, with no middleman.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Acute readings don’t get typed in or pulled from someone else’s integration. Our own devices
-			feed the reasoning core directly: one closed hardware-to-software link, so the data the core
-			sees is exactly the data the device captured.
+			Nothing is typed in or pulled from someone else’s integration. Our own devices feed the core
+			directly, so what it sees is exactly what the device captured.
 		</p>
 
 		<div class="path" use:reveal={{ delay: 140 }} aria-hidden="true">
@@ -231,9 +230,9 @@
 		<span class="eyebrow" use:reveal>The architecture</span>
 		<h2 use:reveal={{ delay: 60 }}>How it reasons.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Most clinical AI sends a prompt to a general-purpose model and returns its answer; that is the
-			34% in the gap above. Here, every signal is encoded onto the clinical ontology first, a
-			<strong>neuro-symbolic</strong> core reasons over the knowledge graph, and what comes back is ranked,
+			Most clinical AI sends a prompt to a general-purpose model and returns its answer. That is the
+			34% above. Here, every signal is encoded onto the clinical ontology first and a
+			<strong>neuro-symbolic</strong> core reasons over the knowledge graph, so what comes back is ranked,
 			sourced and auditable.
 		</p>
 

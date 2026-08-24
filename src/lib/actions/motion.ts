@@ -86,12 +86,59 @@ function stopListening() {
  * Reveal-on-scroll. Adds `.reveal` immediately and `.reveal--in` once the node
  * enters the viewport. Respects prefers-reduced-motion (reveals instantly).
  */
+/**
+ * Pages already seen this session, by pathname.
+ *
+ * The reveal is an introduction, not decoration: it earns its keep the first
+ * time someone reads a page and becomes a delay on every visit after that.
+ * Coming back to a page you have already scrolled should feel instant, so each
+ * path animates once per session and renders immediately from then on.
+ */
+const SEEN_KEY = 'auracare:seen-paths';
+
+function seenPaths(): Set<string> {
+	if (typeof sessionStorage === 'undefined') return new Set();
+	try {
+		return new Set(JSON.parse(sessionStorage.getItem(SEEN_KEY) ?? '[]') as string[]);
+	} catch {
+		return new Set();
+	}
+}
+
+/* The decision is made once per navigation, not once per element. Every reveal
+   on a page must share one answer, otherwise the first element to mount would
+   mark the path seen and each element after it would skip its own entrance. */
+let decidedPath: string | null = null;
+let animateCurrentPath = true;
+
+function shouldAnimateHere(): boolean {
+	if (typeof window === 'undefined') return false;
+	const path = window.location.pathname;
+	if (path === decidedPath) return animateCurrentPath;
+
+	decidedPath = path;
+	animateCurrentPath = !seenPaths().has(path);
+
+	if (typeof sessionStorage !== 'undefined') {
+		try {
+			const paths = seenPaths();
+			paths.add(path);
+			sessionStorage.setItem(SEEN_KEY, JSON.stringify([...paths]));
+		} catch {
+			/* Private mode or a full quota: fall back to animating every time. */
+		}
+	}
+	return animateCurrentPath;
+}
+
 export const reveal: Action<HTMLElement, RevealParams | undefined> = (node, params) => {
 	const opts = { threshold: 0.15, once: true, delay: 0, ...(params ?? {}) };
 	node.classList.add('reveal');
 	if (opts.delay) node.style.setProperty('--reveal-delay', `${opts.delay}ms`);
 
-	if (prefersReducedMotion() || typeof window === 'undefined') {
+	// Reduced motion, no DOM, or a page this visitor has already read: show it
+	// immediately rather than replaying the introduction.
+	if (prefersReducedMotion() || typeof window === 'undefined' || !shouldAnimateHere()) {
 		node.classList.add('reveal--in');
 		return {};
 	}

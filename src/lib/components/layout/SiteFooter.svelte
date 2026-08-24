@@ -3,7 +3,7 @@
 	const year = new Date().getFullYear();
 </script>
 
-<footer class="footer aura-space">
+<footer class="footer aura-space aura-space--ink">
 	<div class="container-wide">
 		<div class="footer-grid">
 			<div class="footer-brand">
