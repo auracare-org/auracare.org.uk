@@ -9,7 +9,6 @@
 	import Nav from '$lib/components/layout/Nav.svelte';
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import CookieBanner from '$lib/components/CookieBanner.svelte';
-	import { initSmoothScroll } from '$lib/actions/smoothScroll';
 
 	let { children } = $props();
 	let headerEl = $state<HTMLElement | null>(null);
@@ -29,8 +28,6 @@
 			stopPostHog();
 		}
 	});
-
-	onMount(() => initSmoothScroll());
 
 	onMount(() => {
 		if (!headerEl) return;
