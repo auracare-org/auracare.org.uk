@@ -2,22 +2,14 @@
 	import { reveal } from '$lib/actions/motion';
 	import { CARE_LOOP, CARE_LOOP_LINE } from '$lib/data/company';
 
-	const actorLabel = { auracle: 'Auracle', auracare: 'Auracare CDSS' } as const;
-
-	/* The loop has two halves: what happens between appointments, and what
-	   happens inside one. Grouping by actor shows the handoff, which the old
-	   snake-of-arrows layout only implied. */
-	const halves = [
-		{
-			side: 'Between appointments',
-			owner: 'auracle' as const,
-			steps: CARE_LOOP.map((s, i) => ({ ...s, n: i + 1 })).filter((s) => s.actor === 'auracle')
-		},
-		{
-			side: 'Inside the consultation',
-			owner: 'auracare' as const,
-			steps: CARE_LOOP.map((s, i) => ({ ...s, n: i + 1 })).filter((s) => s.actor === 'auracare')
-		}
+	/* Two lanes, one per product, with the step numbers running 1 to 8 across
+	   them. Auracle holds the start and the end; the CDSS holds the middle. The
+	   column each step occupies is its position in the loop, so the handoffs
+	   are the two places the flow changes lane. */
+	const steps = CARE_LOOP.map((s, i) => ({ ...s, n: i + 1 }));
+	const lanes = [
+		{ key: 'auracle' as const, label: 'Auracle', sub: 'Between appointments' },
+		{ key: 'auracare' as const, label: 'Auracare CDSS', sub: 'Inside the consultation' }
 	];
 </script>
 
@@ -29,26 +21,28 @@
 			can keep.
 		</p>
 
-		<div class="halves">
-			{#each halves as half (half.owner)}
-				<div class="half">
-					<div class="half-head" use:reveal>
-						<span class="half-side">{half.side}</span>
-						<span class="half-owner">{actorLabel[half.owner]}</span>
-					</div>
-					<ol class="steps">
-						{#each half.steps as step (step.title)}
-							<li class="step" use:reveal={{ delay: 40 }}>
-								<span class="step-num">{String(step.n).padStart(2, '0')}</span>
-								<div>
-									<h3>{step.title}</h3>
-									<p>{step.body}</p>
-								</div>
-							</li>
-						{/each}
-					</ol>
+		<!-- CSS grid rather than SVG: the lane is the row, the position in the
+		     loop is the column, so the shape falls out of the data instead of
+		     being drawn with coordinates that have to be kept in sync. -->
+		<div class="lanes" use:reveal={{ delay: 100 }}>
+			{#each lanes as lane (lane.key)}
+				<div class="lane-head" data-lane={lane.key}>
+					<span class="lane-name">{lane.label}</span>
+					<span class="lane-sub">{lane.sub}</span>
 				</div>
+				<ol class="lane-track" data-lane={lane.key}>
+					{#each steps.filter((s) => s.actor === lane.key) as step (step.n)}
+						<li class="step" style="--col:{step.n}">
+							<span class="step-n">{String(step.n).padStart(2, '0')}</span>
+							<h3>{step.title}</h3>
+							<p>{step.body}</p>
+						</li>
+					{/each}
+				</ol>
 			{/each}
+			<p class="lane-return" aria-hidden="true">
+				<span class="return-glyph">&#8630;</span> Step 08 returns to step 01
+			</p>
 		</div>
 
 		<p class="loop-close" use:reveal>{CARE_LOOP_LINE}</p>
@@ -73,64 +67,72 @@
 		margin: 0;
 	}
 
-	.halves {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: clamp(2.5rem, 5vw, 4rem);
+	.lanes {
 		margin-top: clamp(2.5rem, 5vw, 4rem);
 	}
-	.half-head {
+	.lane-head {
 		display: flex;
 		align-items: baseline;
-		justify-content: space-between;
-		gap: 1rem;
-		padding-bottom: 0.9rem;
+		gap: 0.9rem;
+		padding-bottom: 0.75rem;
 		border-bottom: 1px solid var(--color-ink);
 	}
-	.half-side {
-		font-size: 0.72rem;
+	.lane-head[data-lane='auracare'] {
+		margin-top: 2.5rem;
+	}
+	.lane-name {
+		font-size: 0.74rem;
 		font-weight: 600;
 		letter-spacing: 0.16em;
 		text-transform: uppercase;
-		color: var(--color-ink);
-	}
-	.half-owner {
-		font-size: 0.68rem;
-		font-weight: 600;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
 		color: var(--color-primary-600);
 	}
+	.lane-sub {
+		font-size: 0.72rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-ink-faint);
+	}
 
-	.steps {
+	.lane-track {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
 	.step {
-		display: grid;
-		grid-template-columns: 2.25rem minmax(0, 1fr);
-		gap: 1rem;
 		padding-block: 1.15rem;
 		border-bottom: 1px solid var(--color-rule);
 	}
-	.step-num {
-		font-size: 0.72rem;
+	.step-n {
+		display: block;
+		font-size: 0.7rem;
 		font-weight: 600;
 		color: var(--color-ink-faint);
 		font-variant-numeric: tabular-nums;
-		padding-top: 0.2rem;
+		margin-bottom: 0.35rem;
 	}
 	.step h3 {
-		font-size: 1rem;
+		font-size: 0.98rem;
 		letter-spacing: -0.01em;
 		margin: 0 0 0.25rem;
 	}
 	.step p {
-		font-size: 0.92rem;
-		line-height: 1.55;
+		font-size: 0.9rem;
+		line-height: 1.5;
 		color: var(--color-ink-soft);
 		margin: 0;
+	}
+
+	.lane-return {
+		margin: 1.25rem 0 0;
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+	}
+	.return-glyph {
+		font-size: 1rem;
 	}
 
 	.loop-close {
@@ -142,10 +144,59 @@
 		color: var(--color-ink);
 	}
 
-	@media (min-width: 900px) {
-		.halves {
-			grid-template-columns: repeat(2, 1fr);
-			gap: 3.5rem;
+	/* The flow proper. Eight columns, one per step: a step sits in the column
+	   matching its position in the loop, so the two lane changes read as the
+	   handoffs they are, and the empty cells are the other product waiting. */
+	@media (min-width: 1000px) {
+		.lanes {
+			display: grid;
+			grid-template-columns: 11rem repeat(8, minmax(0, 1fr));
+			align-items: start;
+			column-gap: 0.75rem;
+		}
+		.lane-head {
+			grid-column: 1;
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.2rem;
+			border-bottom: 0;
+			padding-right: 1.5rem;
+			padding-bottom: 0;
+			align-self: center;
+		}
+		.lane-head[data-lane='auracle'] {
+			grid-row: 1;
+		}
+		.lane-head[data-lane='auracare'] {
+			grid-row: 2;
+			margin-top: 0;
+		}
+		.lane-track {
+			display: contents;
+		}
+		.lane-track[data-lane='auracle'] .step {
+			grid-row: 1;
+		}
+		.lane-track[data-lane='auracare'] .step {
+			grid-row: 2;
+		}
+		.step {
+			grid-column: calc(var(--col) + 1);
+			padding: 1rem 0.9rem 1.25rem;
+			border-bottom: 0;
+			border-top: 2px solid var(--color-primary-600);
+			background: var(--color-surface-raised);
+		}
+		/* The lane the CDSS occupies is tinted so the two rows read as two
+		   different places rather than as one long list wrapped. */
+		.lane-track[data-lane='auracare'] .step {
+			border-top-color: var(--color-ink);
+		}
+		.lane-return {
+			grid-column: 2 / -1;
+			grid-row: 3;
+			text-align: right;
+			margin-top: 1rem;
 		}
 	}
 </style>

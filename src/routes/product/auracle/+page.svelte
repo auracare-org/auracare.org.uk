@@ -235,20 +235,22 @@
 			<a class="keep-link" href="https://auracle.health" rel="noopener">auracle.health</a>.
 		</p>
 
-		<!-- Five items do not divide into a grid without one row being a
-		     different width from the others, which is what made this look
-		     messy. As ruled rows every entry is the same shape. -->
-		<dl class="keep-list">
-			{#each retention as feature (feature.title)}
-				<div class="keep-row" use:reveal={{ delay: 40 }}>
-					<dt>
+		<!-- Numbered, with the hook as the label and the title carrying the size.
+		     Uniform rows fixed the ragged grid but left five items reading at
+		     one flat weight; the index and the scale give it somewhere to
+		     start. -->
+		<ol class="keep-list">
+			{#each retention as feature, i (feature.title)}
+				<li class="keep-row" use:reveal={{ delay: 40 }}>
+					<span class="keep-n">{String(i + 1).padStart(2, '0')}</span>
+					<div class="keep-head">
 						<span class="keep-hook">{feature.hook}</span>
 						<h3>{feature.title}</h3>
-					</dt>
-					<dd>{feature.body}</dd>
-				</div>
+					</div>
+					<p class="keep-body">{feature.body}</p>
+				</li>
 			{/each}
-		</dl>
+		</ol>
 	</div>
 </section>
 
@@ -262,18 +264,41 @@
 			clinician.
 		</p>
 
-		<div class="src-grid">
-			{#each sources as col (col.group)}
-				<div class="src-col" use:reveal={{ delay: 40 }}>
-					<h3>{col.group}</h3>
-					<ul>
-						{#each col.items as item}
-							<li>{item}</li>
-						{/each}
+		<!-- The section's claim is that this data already exists and is scattered.
+		     So the left side shows it scattered, as loose chips grouped by where
+		     it comes from, and the right side shows the single record it becomes.
+		     Three equal columns of bullet lists could not make that point. -->
+		<div class="gather">
+			<div class="gather-from">
+				<span class="gather-label">Already being collected</span>
+				{#each sources as col (col.group)}
+					<div class="src-group">
+						<h3>{col.group}</h3>
+						<ul>
+							{#each col.items as item}
+								<li>{item}</li>
+							{/each}
+						</ul>
+						<p class="src-note">{col.note}</p>
+					</div>
+				{/each}
+			</div>
+
+			<div class="gather-into">
+				<span class="gather-label">Where it ends up</span>
+				<div class="record">
+					<h3>One record</h3>
+					<p>
+						Every signal above, written in the same clinical vocabulary and stamped with when it was
+						true. Readable by you, exportable at any time, and legible to a clinician in the room.
+					</p>
+					<ul class="record-props">
+						<li>Timestamped</li>
+						<li>Encoded to SNOMED CT</li>
+						<li>Yours to export or delete</li>
 					</ul>
-					<p class="src-note">{col.note}</p>
 				</div>
-			{/each}
+			</div>
 		</div>
 	</div>
 </section>
@@ -408,62 +433,115 @@
 	}
 
 	/* Sources: three ruled columns. */
-	.src-grid {
+	.gather {
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: 2.5rem;
 		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		border-top: 1px solid var(--color-ink);
 	}
-	.src-col {
-		padding-top: 1.5rem;
+	.gather-label {
+		display: block;
+		font-size: 0.66rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-ink-faint);
+		padding-bottom: 0.9rem;
+		border-bottom: 1px solid var(--color-ink);
+		margin-bottom: 1.5rem;
 	}
-	.src-col h3 {
+	.src-group + .src-group {
+		margin-top: 1.5rem;
+	}
+	.src-group h3 {
 		font-size: 0.72rem;
 		font-weight: 600;
-		letter-spacing: 0.16em;
+		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		color: var(--color-primary-600);
-		margin: 0 0 1rem;
+		margin: 0 0 0.75rem;
 	}
-	.src-col ul {
+	/* Loose chips, because scattered is the point. */
+	.src-group ul {
 		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
 		margin: 0;
 		padding: 0;
 	}
-	.src-col li {
-		padding-block: 0.6rem;
-		border-top: 1px solid var(--color-rule);
-		font-size: 0.95rem;
+	.src-group li {
+		font-size: 0.85rem;
 		color: var(--color-ink);
+		background: var(--color-surface-alt);
+		border: 1px solid var(--color-rule);
+		padding: 0.35rem 0.7rem;
 	}
+	/* The single record it all resolves into. */
+	.record {
+		background: var(--color-ink);
+		color: rgba(226, 230, 240, 0.72);
+		padding: clamp(1.5rem, 3vw, 2rem);
+	}
+	.record h3 {
+		font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+		letter-spacing: -0.025em;
+		color: #fff;
+		margin: 0 0 0.9rem;
+	}
+	.record p {
+		font-size: 0.95rem;
+		line-height: 1.6;
+		margin: 0 0 1.5rem;
+	}
+	.record-props {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.16);
+	}
+	.record-props li {
+		padding-block: 0.65rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+		font-size: 0.8rem;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: #fff;
+	}
+	@media (min-width: 900px) {
+		.gather {
+			grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+			gap: 3.5rem;
+		}
+	}
+
 	.src-note {
 		margin: 1rem 0 0;
 		font-size: 0.85rem;
 		line-height: 1.5;
 		color: var(--color-ink-faint);
 	}
-	@media (min-width: 860px) {
-		.src-grid {
-			grid-template-columns: repeat(3, 1fr);
-			gap: 2.5rem;
-		}
-		.src-col + .src-col {
-			border-left: 1px solid var(--color-rule);
-			padding-left: 2.5rem;
-		}
-	}
 
 	.keep-list {
+		list-style: none;
 		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+		padding: 0;
 		border-top: 1px solid var(--color-ink);
 	}
 	.keep-row {
 		display: grid;
-		grid-template-columns: 1fr;
-		gap: 0.5rem;
-		padding-block: 1.5rem;
+		grid-template-columns: 2.5rem minmax(0, 1fr);
+		gap: 0.25rem 1rem;
+		padding-block: 1.6rem;
 		border-bottom: 1px solid var(--color-rule);
+	}
+	.keep-n {
+		font-size: 0.72rem;
+		font-weight: 600;
+		color: var(--color-primary-600);
+		font-variant-numeric: tabular-nums;
+		padding-top: 0.5rem;
 	}
 	.keep-hook {
 		display: block;
@@ -475,22 +553,26 @@
 		margin-bottom: 0.4rem;
 	}
 	.keep-row h3 {
-		font-size: 1.08rem;
-		letter-spacing: -0.01em;
+		font-size: clamp(1.15rem, 2vw, 1.5rem);
+		letter-spacing: -0.02em;
 		margin: 0;
 	}
-	.keep-row dd {
+	.keep-body {
 		margin: 0;
 		font-size: 0.95rem;
 		line-height: 1.55;
 		color: var(--color-ink-soft);
-		max-width: 60ch;
+		max-width: 62ch;
+		grid-column: 2;
 	}
 	@media (min-width: 860px) {
 		.keep-row {
-			grid-template-columns: 18rem minmax(0, 1fr);
-			gap: 2.5rem;
+			grid-template-columns: 2.5rem minmax(0, 20rem) minmax(0, 1fr);
 			align-items: baseline;
+			gap: 2.5rem;
+		}
+		.keep-body {
+			grid-column: 3;
 		}
 	}
 
