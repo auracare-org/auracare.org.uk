@@ -4,57 +4,60 @@
 </script>
 
 <!--
-  Type carries the hero. No photograph, no illustration, no device mock: the
-  claim is the asset. A rule and a set of standing figures sit under it so the
-  first screen states what the company is, what is live, and who to contact,
-  without asking anyone to scroll for it.
+  Centred, and sized to be the loudest thing on the site.
+
+  There is no product photograph or candid worth showing yet, so the claim has
+  to carry the screen on its own. That argues for symmetry and scale rather
+  than a left column with empty space beside it: centred, the headline reads as
+  a statement of position; left-aligned with nothing to its right, it read as a
+  column that lost its image.
 -->
 <section class="hero">
-	<div class="container-wide">
-		<div class="hero-index" use:reveal>
-			<span class="hero-index-num">01</span>
-			<span class="hero-index-label">Clinical decision support infrastructure</span>
-		</div>
+	<div class="container-wide hero-inner">
+		<span class="kicker" use:reveal>Clinical decision support infrastructure</span>
 
-		<h1 use:reveal={{ delay: 60 }}>
+		<h1 use:reveal={{ delay: 80 }}>
 			The consultation is<br />
 			<em>where medicine happens.</em><br />
 			We build for that room.
 		</h1>
 
-		<div class="hero-lower">
-			<p class="hero-sub" use:reveal={{ delay: 140 }}>
-				Encoding, reasoning and documentation that runs inside the appointment, grounded in the
-				terminology medicine already uses.
-			</p>
-			<div class="hero-cta" use:reveal={{ delay: 200 }}>
-				<a class="cta-primary" href="/investors">We are raising a seed round</a>
-				<a
-					class="cta-ghost"
-					href="mailto:{CONTACT.clinical}?subject=Auracare%3A%20clinical%20enquiry"
-				>
-					Clinical enquiries <span aria-hidden="true">&rarr;</span>
-				</a>
-			</div>
+		<p class="hero-sub" use:reveal={{ delay: 160 }}>
+			Encoding, reasoning and documentation that runs inside the appointment, grounded in the
+			terminology medicine already uses.
+		</p>
+
+		<div class="hero-cta" use:reveal={{ delay: 220 }}>
+			<a class="cta-primary" href="/investors#contact">We are raising a seed round</a>
+			<a
+				class="cta-ghost"
+				href="mailto:{CONTACT.clinical}?subject=Auracare%3A%20clinical%20enquiry"
+			>
+				Clinical enquiries <span aria-hidden="true">&rarr;</span>
+			</a>
 		</div>
 	</div>
 
 	<dl class="standings">
-		<div class="standing">
+		<div class="standing" use:reveal={{ delay: 260 }}>
 			<dt>Ontology, live today</dt>
-			<dd>532k concepts</dd>
+			<dd>532k</dd>
+			<span class="standing-note">SNOMED CT concepts</span>
 		</div>
-		<div class="standing">
+		<div class="standing" use:reveal={{ delay: 300 }}>
 			<dt>Pharmacy partnerships</dt>
 			<dd>28</dd>
+			<span class="standing-note">From our prior venture</span>
 		</div>
-		<div class="standing">
+		<div class="standing" use:reveal={{ delay: 340 }}>
 			<dt>Examination devices</dt>
-			<dd>3 built</dd>
+			<dd>3</dd>
+			<span class="standing-note">Built, awaiting certification</span>
 		</div>
-		<div class="standing">
+		<div class="standing" use:reveal={{ delay: 380 }}>
 			<dt>Operating from</dt>
-			<dd>London &middot; Hong Kong &middot; SF</dd>
+			<dd>3</dd>
+			<span class="standing-note">London, Hong Kong, San Francisco</span>
 		</div>
 	</dl>
 </section>
@@ -62,83 +65,66 @@
 <style>
 	.hero {
 		position: relative;
-		padding-block: clamp(3.5rem, 8vw, 7rem) 0;
-		border-bottom: 1px solid var(--color-rule);
+		padding-top: clamp(4rem, 11vw, 9rem);
+	}
+	.hero-inner {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
 	}
 
-	/* A numbered index line, the way a report opens a chapter. Cheap to read,
-	   and it sets the register for every section below. */
-	.hero-index {
-		display: flex;
-		align-items: baseline;
-		gap: 1rem;
-		padding-bottom: clamp(2rem, 5vw, 3.25rem);
-	}
-	.hero-index-num {
+	.kicker {
 		font-size: 0.7rem;
 		font-weight: 600;
-		letter-spacing: 0.18em;
-		color: var(--color-primary-600);
-		font-variant-numeric: tabular-nums;
-	}
-	.hero-index-label {
-		font-size: 0.7rem;
-		font-weight: 600;
-		letter-spacing: 0.18em;
+		letter-spacing: 0.24em;
 		text-transform: uppercase;
 		color: var(--color-ink-faint);
+		padding-bottom: clamp(1.75rem, 4vw, 2.75rem);
 	}
 
+	/* The largest type on the site by a clear margin. Bold, tight and set on
+	   three authored lines so the shape is deliberate at every width. */
 	.hero h1 {
-		/* The line breaks are authored, so the size is tuned to hold three
-		   lines rather than to fill the width. */
-		font-size: clamp(2.1rem, 5.4vw, 4.5rem);
-		line-height: 1;
-		letter-spacing: -0.035em;
-		font-weight: var(--weight-display);
+		font-size: clamp(2.35rem, 6.6vw, 5.6rem);
+		line-height: 0.97;
+		letter-spacing: -0.04em;
+		font-weight: 700;
 		margin: 0;
+		text-wrap: balance;
 	}
-	/* The middle line carries the idea, so it gets the brand's one accent.
-	   Nothing else on this screen is blue. */
+	/* One line in the brand blue. Nothing else on this screen is coloured. */
 	.hero h1 em {
 		font-style: normal;
 		color: var(--color-primary-600);
 	}
 
-	/* Statement above, supporting detail below, separated by a rule that runs
-	   the full measure. The asymmetry keeps it from reading as a centred
-	   startup hero. */
-	.hero-lower {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.75rem;
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		padding-top: clamp(1.5rem, 3vw, 2rem);
-		border-top: 1px solid var(--color-rule);
-	}
 	.hero-sub {
-		font-size: clamp(1rem, 1.35vw, 1.12rem);
+		margin: clamp(1.75rem, 3.5vw, 2.5rem) auto 0;
+		font-size: clamp(1.02rem, 1.4vw, 1.2rem);
 		line-height: 1.6;
 		color: var(--color-ink-soft);
-		max-width: 44ch;
-		margin: 0;
+		max-width: 52ch;
 	}
+
 	.hero-cta {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		gap: 1.5rem;
+		justify-content: center;
+		gap: 1.5rem 2rem;
+		margin-top: clamp(2rem, 4vw, 3rem);
 	}
 	.cta-primary {
 		display: inline-flex;
 		align-items: center;
-		background: var(--color-primary-600);
-		color: #fff;
-		font-size: 0.78rem;
+		background: var(--color-ink);
+		color: var(--color-surface-page);
+		font-size: 0.76rem;
 		font-weight: 600;
-		letter-spacing: 0.14em;
+		letter-spacing: 0.16em;
 		text-transform: uppercase;
-		padding: 1.05rem 2rem;
+		padding: 1.15rem 2.25rem;
 		border-radius: 2px;
 		transition:
 			background var(--duration-hover) ease,
@@ -151,12 +137,12 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
-		font-size: 0.78rem;
+		font-size: 0.76rem;
 		font-weight: 600;
-		letter-spacing: 0.14em;
+		letter-spacing: 0.16em;
 		text-transform: uppercase;
 		color: var(--color-ink);
-		padding-bottom: 0.25rem;
+		padding-bottom: 0.3rem;
 		border-bottom: 1px solid var(--color-ink);
 		transition:
 			color var(--duration-hover) ease,
@@ -168,8 +154,7 @@
 
 	@media (hover: hover) and (pointer: fine) {
 		.cta-primary:hover {
-			background: var(--color-ink);
-			color: #fff;
+			background: var(--color-primary-600);
 		}
 		.cta-ghost:hover {
 			color: var(--color-primary-600);
@@ -180,49 +165,58 @@
 		}
 	}
 
-	/* A standing rail of figures across the full width. Four facts, ruled,
-	   tabular. It replaces the photograph with something a clinician or an
-	   investor can actually use on the first screen. */
+	/* A ruled rail of standing figures. It closes the hero with something
+	   checkable rather than with more claim. */
 	.standings {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		margin: clamp(3rem, 6vw, 5rem) 0 0;
+		margin: clamp(4rem, 9vw, 7rem) 0 0;
 		border-top: 1px solid var(--color-ink);
+		border-bottom: 1px solid var(--color-rule);
 	}
 	.standing {
-		padding: 1.5rem clamp(1.5rem, 4vw, 2.5rem);
-		border-bottom: 1px solid var(--color-rule);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		gap: 0.4rem;
+		padding: clamp(1.5rem, 3vw, 2.25rem) 1rem;
 		border-right: 1px solid var(--color-rule);
+		border-bottom: 1px solid var(--color-rule);
 	}
 	.standing dt {
-		font-size: 0.68rem;
+		font-size: 0.64rem;
 		font-weight: 600;
-		letter-spacing: 0.16em;
+		letter-spacing: 0.18em;
 		text-transform: uppercase;
 		color: var(--color-ink-faint);
 	}
 	.standing dd {
-		margin: 0.6rem 0 0;
-		font-size: clamp(1.15rem, 2vw, 1.6rem);
-		font-weight: var(--weight-display);
-		letter-spacing: -0.02em;
+		margin: 0;
+		font-size: clamp(2rem, 4vw, 3rem);
+		font-weight: 700;
+		letter-spacing: -0.035em;
+		line-height: 1;
 		color: var(--color-ink);
 		font-variant-numeric: tabular-nums;
 	}
+	.standing-note {
+		font-size: 0.78rem;
+		line-height: 1.4;
+		color: var(--color-ink-soft);
+		max-width: 22ch;
+	}
 
-	@media (min-width: 700px) {
+	@media (min-width: 760px) {
 		.standings {
 			grid-template-columns: repeat(4, 1fr);
+			border-bottom: 0;
 		}
-	}
-	@media (min-width: 900px) {
-		.hero-lower {
-			grid-template-columns: minmax(0, 1fr) auto;
-			align-items: start;
-			gap: 3rem;
+		.standing {
+			border-bottom: 0;
 		}
-		.hero-cta {
-			justify-content: flex-end;
+		.standing:last-child {
+			border-right: 0;
 		}
 	}
 </style>

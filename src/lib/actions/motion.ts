@@ -40,6 +40,10 @@ let listening = false;
 
 function show(entry: PendingReveal) {
 	entry.node.classList.add('reveal--in');
+	// Release the GPU layer once the dissolve has actually finished.
+	entry.node.addEventListener('transitionend', () => entry.node.classList.add('reveal--done'), {
+		once: true
+	});
 	if (entry.once) {
 		pending.delete(entry);
 		if (pending.size === 0) stopListening();

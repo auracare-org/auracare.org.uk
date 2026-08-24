@@ -1124,18 +1124,33 @@
 }
 
 /* Reveal-on-scroll (driven by the `reveal` action in $lib/actions/motion) */
+/* A dissolve rather than a slide. Content resolves into focus from a soft,
+   slightly-scaled state instead of sliding up from below: sliding reads as a
+   template, dissolving reads as a page settling. The blur is what sells it,
+   and it stays small because blur is expensive to composite. */
 .reveal {
 	opacity: 0;
-	transform: translateY(12px);
+	filter: blur(6px);
+	transform: scale(0.995);
 	transition:
 		opacity var(--duration-reveal) var(--ease-out),
+		filter var(--duration-reveal) var(--ease-out),
 		transform var(--duration-reveal) var(--ease-out);
 	transition-delay: var(--reveal-delay, 0ms);
-	will-change: opacity, transform;
+	will-change: opacity, filter, transform;
 }
 .reveal--in {
 	opacity: 1;
+	filter: blur(0);
 	transform: none;
+}
+/* Once the dissolve has finished, drop the filter and the compositing hint
+   entirely. `filter: blur(0)` is visually identical to no filter but still
+   pins a GPU layer per element, and there are sixty of them on the homepage. */
+.reveal--done {
+	filter: none;
+	will-change: auto;
+	transition: none;
 }
 
 @keyframes auraFloat {
@@ -1196,6 +1211,7 @@
 	}
 	.reveal {
 		transform: none !important;
+		filter: none !important;
 	}
 	.reveal--in {
 		opacity: 1 !important;
