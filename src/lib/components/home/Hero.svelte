@@ -101,7 +101,7 @@
 	.hero-sub {
 		margin: clamp(1.75rem, 3.5vw, 2.5rem) auto 0;
 		font-size: clamp(1.02rem, 1.4vw, 1.2rem);
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
 		max-width: 52ch;
 	}
@@ -201,7 +201,7 @@
 	}
 	.standing-note {
 		font-size: 0.78rem;
-		line-height: 1.4;
+		line-height: 1.6;
 		color: var(--color-ink-soft);
 		max-width: 22ch;
 	}

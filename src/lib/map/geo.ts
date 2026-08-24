@@ -7,20 +7,43 @@ import worldData from 'world-atlas/countries-50m.json';
  * while projected geometry (country paths + market points) stays consistent.
  */
 export const MAP_W = 1000;
-export const MAP_H = 500;
+/* Tuned to the projected height of the inhabited world at this width, so the
+   viewBox is the map rather than the map plus a letterbox. At 500 the frame
+   was ~13% taller than anything drawn in it. */
+export const MAP_H = 453;
 export const VIEWBOX = `0 0 ${MAP_W} ${MAP_H}`;
+/** The frame's own proportion, for the CSS that sizes it. */
+export const MAP_ASPECT = MAP_W / MAP_H;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const topology = worldData as any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const countriesFc = feature(topology, topology.objects.countries) as any;
 
+/**
+ * Antarctica is excluded, from the fit and from the render both.
+ *
+ * It is a market for nobody and it is enormous in this projection: fitting the
+ * full feature collection spent the bottom fifth of the frame on a landmass
+ * drawn at "rest of world" opacity, which pushed every inhabited country into
+ * the upper part of the box. The map was centred and looked as though it was
+ * not. Dropping it re-centres the world people actually live in.
+ */
+const INHABITED = {
+	...countriesFc,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	features: countriesFc.features.filter(
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		(f: any) => (f.properties && f.properties.name) !== 'Antarctica'
+	)
+};
+
 const projection: GeoProjection = geoNaturalEarth1().fitExtent(
 	[
 		[8, 8],
 		[MAP_W - 8, MAP_H - 8]
 	],
-	countriesFc
+	INHABITED
 );
 
 const pathGen = geoPath(projection);
@@ -32,7 +55,7 @@ export interface CountryPath {
 }
 
 /** All country outlines as SVG path data, precomputed once. */
-export const countryPaths: CountryPath[] = countriesFc.features
+export const countryPaths: CountryPath[] = INHABITED.features
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	// Key by array index, always unique (some 50m features share an ISO id, e.g. 036).
 	.map((f: any, i: number) => ({

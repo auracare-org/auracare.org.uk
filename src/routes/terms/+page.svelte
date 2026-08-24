@@ -280,7 +280,7 @@
 	}
 	.lede {
 		font-size: clamp(1.02rem, 1.4vw, 1.18rem);
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-neutral-700);
 	}
 	.meta {

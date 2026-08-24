@@ -133,7 +133,7 @@
 		border-top: 1px solid rgba(255, 255, 255, 0.12);
 		color: rgba(226, 232, 255, 0.5) !important;
 		font-size: 0.78rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		max-width: 52rem;
 	}
 	.footer-bottom {

@@ -325,15 +325,25 @@
 				hardware-to-software link, with no manual entry and no third-party integration in between.
 			</p>
 		</div>
-		<ul class="twin-sources" use:reveal={{ delay: 140 }}>
-			{#each STATE_SOURCES as source, i}
-				<li class="glass-card" style="--i:{i}">
-					<span class="source-line" aria-hidden="true"></span>
-					{source}
-				</li>
-			{/each}
-			<li class="twin-state glass-card">One timestamped patient state</li>
-		</ul>
+		<!-- The inputs as a ledger rather than as five tiles: an index, the
+		     source, and a heavier rule under the last row where they all
+		     resolve into one state. The tiles previously carried a glowing dot
+		     and a gradient fill, neither of which the rest of the site uses. -->
+		<div class="twin-sources" use:reveal={{ delay: 140 }}>
+			<span class="sources-label">What goes in</span>
+			<ol class="sources-list">
+				{#each STATE_SOURCES as source, i}
+					<li>
+						<span class="source-n">{String(i + 1).padStart(2, '0')}</span>
+						<span class="source-text">{source}</span>
+					</li>
+				{/each}
+			</ol>
+			<p class="twin-state">
+				<span class="state-label">Resolves to</span>
+				One timestamped patient state
+			</p>
+		</div>
 	</div>
 </section>
 
@@ -481,10 +491,13 @@
 			finished, and you can go and look at it now.
 		</p>
 
+		<!-- Figures, not tiles. They carried `.glass-card`, which brought a
+		     border-colour hover with it: a hover state on something that cannot
+		     be clicked reads as a broken link. -->
 		<div class="graph-tiles">
 			{#each ONTOLOGY_STATS as stat, i}
 				{@const parsed = parseStat(stat.value)}
-				<div class="glass-card graph-tile" use:reveal={{ delay: 60 * i }}>
+				<div class="graph-tile" use:reveal={{ delay: 60 * i }}>
 					{#if parsed}
 						<span
 							class="tile-value"
@@ -503,19 +516,21 @@
 			{/each}
 		</div>
 
-		<ul
-			class="standards-strip"
-			use:reveal={{ delay: 120 }}
-			aria-label="Standards our knowledge is traceable to"
-		>
-			{#each STANDARDS as std, i}
-				<li class="standard-chip" style="--i:{i}">
-					<span class="chip-name">{std.name}</span>
-					<span class="chip-note">{std.note}</span>
-				</li>
-			{/each}
-		</ul>
-		<p class="grounding-caption" use:reveal>Every answer traceable to a named source.</p>
+		<!-- The standards the figures are counted in. This was a <ul> with no
+		     rule of its own, so it rendered as a bulleted list of chips sitting
+		     directly under the figures with nothing between them. -->
+		<div class="standards">
+			<span class="standards-label">Traceable to</span>
+			<ul class="standards-strip" aria-label="Standards our knowledge is traceable to">
+				{#each STANDARDS as std, i}
+					<li class="standard-chip" use:reveal={{ delay: 40 * i }}>
+						<span class="chip-name">{std.name}</span>
+						<span class="chip-note">{std.note}</span>
+					</li>
+				{/each}
+			</ul>
+			<p class="grounding-caption" use:reveal>Every answer traceable to a named source.</p>
+		</div>
 
 		<div class="graph-cta" use:reveal={{ delay: 120 }}>
 			<a class="explore-btn" href={CONTACT.ontologyUrl} target="_blank" rel="noopener noreferrer">
@@ -582,7 +597,7 @@
 	}
 	.churn-say {
 		font-size: 0.95rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
 		max-width: 30rem;
 	}
@@ -633,7 +648,7 @@
 		border-top: 1px solid var(--color-border-default);
 		padding-top: 0.9rem;
 		font-size: 0.8rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink-faint);
 	}
 	@keyframes churn-draw {
@@ -675,7 +690,7 @@
 	}
 	.twin-step p {
 		font-size: 0.95rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink-soft);
 	}
 	.signals-block {
@@ -688,7 +703,7 @@
 	.signals-sub {
 		margin-top: 0.5rem;
 		font-size: 0.98rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		max-width: 44rem;
 		color: var(--color-ink-soft);
 	}
@@ -723,7 +738,7 @@
 	.ehr-note {
 		margin-top: 1.5rem;
 		font-size: 0.85rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		max-width: 48rem;
 		color: var(--color-neutral-600, #6b7280);
 	}
@@ -769,7 +784,7 @@
 	}
 	.loop-item p {
 		font-size: 0.92rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink-soft);
 		margin: 0;
 	}
@@ -829,7 +844,7 @@
 		padding-block: 0.85rem;
 		border-top: 1px solid var(--color-rule);
 		font-size: 0.92rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink-soft);
 	}
 	.core-tail {
@@ -837,7 +852,7 @@
 		padding-top: 1.5rem;
 		border-top: 1px solid var(--color-ink);
 		font-size: clamp(1rem, 1.5vw, 1.15rem);
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink);
 		max-width: 60ch;
 	}
@@ -854,72 +869,148 @@
 			padding-right: 3rem;
 		}
 	}
-	.twin-copy p + p {
-		margin-top: 1rem;
-	}
-	.twin-sources {
-		list-style: none;
+	/* The patient state. Two columns with real air between them: the copy on
+	   the left, the ledger of inputs on the right. Both the gap between the
+	   columns and the padding inside the rows were tight enough that the text
+	   read as pressed against its own edges. */
+	.twin-grid {
 		display: grid;
+		grid-template-columns: 1fr;
+		gap: clamp(2.5rem, 5vw, 4rem);
+		align-items: start;
+	}
+	.twin-copy p + p {
+		margin-top: 1.15rem;
+	}
+	.twin-copy p {
+		line-height: 1.7;
+	}
+
+	.twin-sources {
+		border-top: 1px solid var(--color-ink);
+		padding-top: 1.25rem;
+	}
+	.sources-label {
+		display: block;
+		font-size: 0.66rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-ink-faint);
+		margin-bottom: 0.75rem;
+	}
+	.sources-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.sources-list li {
+		display: grid;
+		grid-template-columns: 2.25rem minmax(0, 1fr);
+		align-items: baseline;
 		gap: 0.75rem;
+		padding-block: 1.15rem;
+		border-bottom: 1px solid var(--color-rule);
 	}
-	.twin-sources li {
-		position: relative;
-		padding: 1rem 1.25rem;
-		font-weight: 500;
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
+	.source-n {
+		font-size: 0.7rem;
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+		color: var(--color-ink-faint);
 	}
-	.source-line {
-		flex: none;
-		width: 0.5rem;
-		height: 0.5rem;
-		border-radius: 999px;
-		background: var(--color-primary-500);
-		box-shadow: 0 0 0 4px rgba(56, 127, 245, 0.14);
+	.source-text {
+		font-size: 0.95rem;
+		line-height: 1.65;
+		color: var(--color-ink);
 	}
+	/* Where they all land. Marked by a heavier rule and by the brand blue,
+	   not by a gradient fill: the page has no gradients anywhere else. */
 	.twin-state {
-		justify-content: center;
+		margin: 0;
+		padding: 1.5rem 0 0;
+		border-top: 2px solid var(--color-primary-600);
+		font-size: clamp(1.15rem, 2vw, 1.5rem);
+		font-weight: var(--weight-display);
 		font-family: var(--font-family-heading);
-		font-weight: 700;
-		background: linear-gradient(
-			135deg,
-			var(--color-primary-600),
-			var(--color-primary-500)
-		) !important;
-		color: #fff !important;
-		border: none !important;
+		letter-spacing: -0.025em;
+		line-height: 1.25;
+		color: var(--color-ink);
+	}
+	.state-label {
+		display: block;
+		font-family: var(--font-family-sans);
+		font-size: 0.66rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+		margin-bottom: 0.5rem;
 	}
 	@media (min-width: 860px) {
 		.twin-grid {
-			grid-template-columns: 1.1fr 0.9fr;
+			grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+			gap: clamp(3rem, 6vw, 5rem);
 		}
 	}
+
+	/* Four figures, divided by hairline rules rather than boxed as cards, and
+	   with no hover state: nothing here is clickable. */
 	.graph-tiles {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		gap: 1rem;
-		margin-top: clamp(2rem, 4vw, 3rem);
+		gap: 0;
+		margin: clamp(2rem, 4vw, 3rem) 0 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.22);
 	}
 	.graph-tile {
-		padding: clamp(1.25rem, 3vw, 1.75rem);
+		padding: clamp(1.4rem, 3vw, 1.9rem) 1.25rem;
 		text-align: center;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+	}
+	.graph-tile:nth-child(even) {
+		border-left: 1px solid rgba(255, 255, 255, 0.12);
 	}
 	.tile-value {
 		display: block;
 		font-family: var(--font-family-heading);
 		font-size: clamp(1.8rem, 4vw, 2.6rem);
-		font-weight: 700;
+		font-weight: var(--weight-display);
+		letter-spacing: -0.03em;
 		font-variant-numeric: tabular-nums;
 		line-height: 1;
 		color: #fff;
-		text-shadow: 0 0 24px rgba(97, 128, 255, 0.45);
 	}
 	.tile-label {
 		display: block;
-		margin-top: 0.5rem;
-		font-size: 0.85rem;
+		margin-top: 0.6rem;
+		font-size: 0.8rem;
+		line-height: 1.5;
 		color: rgba(226, 232, 255, 0.72);
+	}
+
+	/* The standards, set well clear of the figures above them. They used to
+	   butt straight up against the last row of numbers. */
+	.standards {
+		margin-top: clamp(2.75rem, 6vw, 4.5rem);
+		padding-top: clamp(1.75rem, 3vw, 2.25rem);
+		border-top: 1px solid rgba(255, 255, 255, 0.22);
+	}
+	.standards-label {
+		display: block;
+		font-size: 0.66rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: rgba(226, 232, 255, 0.55);
+		margin-bottom: 1.25rem;
+	}
+	.standards-strip {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
 	}
 	.graph-cta {
 		display: flex;
@@ -931,50 +1022,60 @@
 	.explore-btn {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.45rem;
+		gap: 0.5rem;
 		background: #fff;
-		color: var(--color-primary-700);
+		color: var(--color-ink);
+		font-size: 0.72rem;
 		font-weight: 600;
-		padding: 0.8rem 1.5rem;
-		border-radius: 999px;
-		box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		padding: 0.9rem 1.6rem;
 		transition:
-			transform 0.2s ease,
-			box-shadow 0.2s ease;
+			background var(--duration-hover) ease,
+			transform var(--duration-press) var(--ease-out);
 	}
-	.explore-btn:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.32);
+	.explore-btn:active {
+		transform: scale(0.97);
+	}
+	@media (hover: hover) and (pointer: fine) {
+		.explore-btn:hover {
+			background: var(--color-primary-300);
+		}
 	}
 	@media (min-width: 720px) {
 		.graph-tiles {
 			grid-template-columns: repeat(4, 1fr);
 		}
+		.graph-tile:not(:first-child) {
+			border-left: 1px solid rgba(255, 255, 255, 0.12);
+		}
 	}
 	.standard-chip {
 		display: flex;
 		flex-direction: column;
-		gap: 0.1rem;
+		gap: 0.2rem;
 		padding: 0.7rem 1.1rem;
-		border-radius: var(--radius-md);
-		background: rgba(255, 255, 255, 0.06);
+		background: rgba(255, 255, 255, 0.05);
 		border: 1px solid rgba(255, 255, 255, 0.14);
 	}
 	.chip-name {
 		font-family: var(--font-family-heading);
-		font-weight: 700;
+		font-weight: var(--weight-display);
+		letter-spacing: -0.01em;
 		color: #fff;
 		font-size: 0.95rem;
 	}
 	.chip-note {
 		font-size: 0.72rem;
+		line-height: 1.4;
 		color: rgba(226, 232, 255, 0.6);
 	}
 	.grounding-caption {
-		margin-top: 1.25rem;
+		margin-top: 1.5rem;
 		font-family: var(--font-family-heading);
 		font-size: clamp(1.05rem, 2vw, 1.35rem);
 		font-weight: 500;
+		line-height: 1.4;
 		color: var(--color-primary-300);
 	}
 	.clinician-stage {
@@ -989,7 +1090,7 @@
 	}
 	.clinician-note p {
 		font-size: 1rem;
-		line-height: 1.6;
+		line-height: 1.7;
 	}
 	.clinician-note strong {
 		color: #fff;
@@ -1039,13 +1140,13 @@
 	}
 	.safety-gate p {
 		font-size: 0.95rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		margin: 0;
 	}
 	.residency-note {
 		margin: clamp(2rem, 4vw, 2.75rem) auto 0;
 		font-size: 0.95rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		max-width: 46rem;
 		padding: 1.1rem 1.4rem;
 		border-radius: var(--radius-md);

@@ -191,7 +191,7 @@
 	}
 	.measure p {
 		font-size: 0.96rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		margin: 0;
 	}
 

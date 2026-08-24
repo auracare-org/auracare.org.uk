@@ -44,10 +44,14 @@
 {/if}
 
 <style>
+	/* Paper, not a black slab. A dark bar pinned above a bone page read as a
+	   system notification bar rather than as part of the site, and it was the
+	   first thing on every page. It now sits on the alternate paper tone with
+	   the brand blue doing the work of getting noticed. */
 	.seed-banner {
-		background: var(--color-surface-dark);
-		border-bottom: 1px solid var(--color-border-dark);
-		color: #fff;
+		background: var(--color-surface-alt);
+		border-bottom: 1px solid var(--color-rule);
+		color: var(--color-ink);
 		position: relative;
 		overflow: hidden;
 	}
@@ -61,37 +65,35 @@
 	}
 	.seed-text {
 		margin: 0;
-		color: rgba(226, 230, 240, 0.85);
-		font-family: var(--font-family-mono);
-		font-size: 0.74rem;
-		font-weight: 700;
-		letter-spacing: 0.02em;
+		color: var(--color-ink-soft);
+		font-size: 0.72rem;
+		font-weight: 500;
+		letter-spacing: 0.06em;
 		text-align: center;
 		display: flex;
 		align-items: center;
-		gap: 0.45rem;
+		gap: 0.5rem;
 		flex-wrap: wrap;
 		justify-content: center;
 	}
 	.seed-dot {
-		width: 0.4rem;
-		height: 0.4rem;
-		border-radius: 999px;
-		background: var(--color-primary-400);
+		width: 0.35rem;
+		height: 0.35rem;
+		background: var(--color-primary-600);
 	}
 	.seed-em {
 		font-weight: 600;
-		color: #fff;
+		color: var(--color-ink);
 	}
 	.seed-text a {
-		color: #fff;
-		text-decoration: underline;
-		text-underline-offset: 3px;
-		text-decoration-color: rgba(255, 255, 255, 0.3);
-		font-weight: 500;
+		color: var(--color-primary-600);
+		font-weight: 600;
+		border-bottom: 1px solid var(--color-primary-600);
+		padding-bottom: 0.05rem;
+		transition: opacity var(--duration-hover) ease;
 	}
 	.seed-text a:hover {
-		text-decoration-color: #fff;
+		opacity: 0.7;
 	}
 	.seed-close {
 		position: absolute;
@@ -101,15 +103,14 @@
 		justify-content: center;
 		width: 1.75rem;
 		height: 1.75rem;
-		border-radius: 6px;
-		color: rgba(255, 255, 255, 0.6);
+		color: var(--color-ink-faint);
 		transition:
-			background 0.15s ease,
-			color 0.15s ease;
+			background var(--duration-hover) ease,
+			color var(--duration-hover) ease;
 	}
 	.seed-close:hover {
-		background: rgba(255, 255, 255, 0.08);
-		color: #fff;
+		background: var(--color-rule);
+		color: var(--color-ink);
 	}
 	@media (max-width: 640px) {
 		.seed-close {

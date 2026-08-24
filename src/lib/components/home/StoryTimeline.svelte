@@ -89,15 +89,22 @@
 	/* The spine stops at the last entry. At `height: 100%` it inherited the
 	   container's trailing space and the last node's bottom margin, so the line
 	   carried on into empty page below June 2027. */
+	/* The spine stops at the last entry, and its last stretch fades out rather
+	   than ending on a hard cut: the story keeps going past June 2027, and a
+	   line that simply stops reads as the end of it. */
 	.tl-track {
 		top: 6px;
 		bottom: 0;
 		height: auto;
 		background: var(--color-border-dark);
+		-webkit-mask-image: linear-gradient(to bottom, #000 0 82%, transparent 100%);
+		mask-image: linear-gradient(to bottom, #000 0 82%, transparent 100%);
 	}
 	.tl-fill {
 		background: var(--color-primary-400);
 		transition: height 0.15s linear;
+		-webkit-mask-image: linear-gradient(to bottom, #000 0 82%, transparent 100%);
+		mask-image: linear-gradient(to bottom, #000 0 82%, transparent 100%);
 	}
 	.tl-track,
 	.tl-fill {

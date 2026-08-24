@@ -59,7 +59,7 @@
 	}
 	.lede {
 		font-size: clamp(1rem, 1.5vw, 1.2rem);
-		line-height: 1.6;
+		line-height: 1.7;
 		max-width: 52ch;
 		margin: 0;
 	}
@@ -82,7 +82,7 @@
 	}
 	.path p {
 		font-size: 0.95rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		margin: 0 0 1.5rem;
 		max-width: 40ch;
 	}
@@ -92,7 +92,7 @@
 		padding-top: 1.5rem;
 		border-top: 1px solid rgba(255, 255, 255, 0.12);
 		font-size: 0.92rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		max-width: 62ch;
 	}
 	.aside a {
@@ -104,7 +104,7 @@
 	.fineprint {
 		margin-top: clamp(2.5rem, 5vw, 3.5rem);
 		font-size: 0.78rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: rgba(226, 230, 240, 0.45);
 		max-width: 72ch;
 	}

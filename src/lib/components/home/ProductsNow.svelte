@@ -115,7 +115,7 @@
 	.panel-blurb {
 		margin: 0 0 1.5rem;
 		font-size: 0.98rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
 	}
 	.panel-facts {
@@ -143,21 +143,24 @@
 		text-align: right;
 	}
 
+	/* Centred: this is the closing statement about both products, not a
+	   left-ruled column of its own, so it sits on the page's centre line. */
 	.engine {
 		margin-top: clamp(2.5rem, 5vw, 3.5rem);
 		padding-top: clamp(1.5rem, 3vw, 2rem);
 		border-top: 1px solid var(--color-ink);
 		display: flex;
 		flex-direction: column;
-		align-items: flex-start;
-		gap: 1.25rem;
+		align-items: center;
+		text-align: center;
+		gap: 1.5rem;
 	}
 	.engine-lead {
 		font-size: clamp(1.05rem, 1.6vw, 1.3rem);
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink);
 		max-width: 62ch;
-		margin: 0;
+		margin: 0 auto;
 	}
 	.engine-lead strong {
 		font-weight: 600;

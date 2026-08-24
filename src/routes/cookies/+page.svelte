@@ -278,7 +278,7 @@
 		gap: 0.6rem;
 	}
 	.prose :global(li) {
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-neutral-700);
 	}
 	.prose :global(strong) {
@@ -343,7 +343,7 @@
 		vertical-align: top;
 		border-bottom: 1px solid var(--color-neutral-100);
 		color: var(--color-neutral-700);
-		line-height: 1.5;
+		line-height: 1.6;
 	}
 	tbody tr:last-child th,
 	tbody tr:last-child td {

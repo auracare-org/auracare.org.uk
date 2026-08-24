@@ -81,7 +81,7 @@
 	.stage-note {
 		display: block;
 		font-size: 0.85rem;
-		line-height: 1.5;
+		line-height: 1.65;
 		color: var(--color-ink-soft);
 	}
 
@@ -91,7 +91,7 @@
 		gap: 0.55rem;
 		margin-top: 1.4rem;
 		font-size: 0.88rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink-soft);
 		max-width: 52rem;
 	}

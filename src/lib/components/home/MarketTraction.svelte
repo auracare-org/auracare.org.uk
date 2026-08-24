@@ -77,7 +77,7 @@
 	}
 	.market-sub {
 		font-size: clamp(1rem, 1.4vw, 1.12rem);
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
 		max-width: 52ch;
 		margin: 0;
@@ -134,7 +134,7 @@
 	}
 	.point p {
 		font-size: 0.92rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink-soft);
 		margin: 0;
 		max-width: 52ch;

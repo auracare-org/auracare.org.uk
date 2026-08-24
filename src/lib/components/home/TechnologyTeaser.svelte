@@ -81,7 +81,7 @@
 	.tech-lead {
 		margin-top: 1.5rem;
 		font-size: 1.02rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
 		max-width: 40ch;
 	}
@@ -139,7 +139,7 @@
 	.spec-note {
 		margin: 1.25rem 0 0;
 		font-size: 0.88rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink-faint);
 	}
 

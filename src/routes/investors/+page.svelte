@@ -1,8 +1,9 @@
 <script lang="ts">
 	import PageHero from '$lib/components/layout/PageHero.svelte';
+	import Roster from '$lib/components/layout/Roster.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import WorldMap from '$lib/components/WorldMap.svelte';
-	import { reveal } from '$lib/actions/motion';
+	import { reveal, countUp } from '$lib/actions/motion';
 	import {
 		CONTACT,
 		INVESTOR_CONTACTS,
@@ -29,21 +30,33 @@
 		}
 	];
 
-	const founders = (['stephen', 'hinlun', 'tanush'] as InvestorContactKey[]).map((key) => {
+	/* The three founders, as team members, so this list renders through the same
+	   roster the homepage uses rather than as a second treatment of the same
+	   faces. What each page says beside a person differs; how a person is
+	   presented does not. */
+	const founders = (['stephen', 'hinlun', 'tanush'] as InvestorContactKey[]).flatMap((key) => {
 		const contact = INVESTOR_CONTACTS[key];
 		const member = getMember(contact.teamId);
-		return {
-			key,
-			...contact,
-			name: member?.name ?? key,
-			firstName: (member?.name ?? key).split(' ')[0],
-			img: member?.img,
-			role: member?.role ?? ''
-		};
+		return member ? [{ member, contact }] : [];
 	});
+	const founderPeople = founders.map((f) => f.member);
+	const contactFor = (id: string) => founders.find((f) => f.member.id === id)?.contact;
 
 	const mailto = (email: string) =>
 		`mailto:${email}?subject=${encodeURIComponent('Auracare AI Seed round')}`;
+
+	/* Traction figures arrive as display strings ("$134k", "~$400k", "28"). Split
+	   off whatever brackets the number so the digits can be counted up and the
+	   prefix and suffix put back around them unchanged. */
+	function splitStat(stat: string): { prefix: string; num: number; suffix: string } | null {
+		const m = stat.match(/^([^\d]*)([\d.,]+)(.*)$/);
+		if (!m) return null;
+		const num = parseFloat(m[2].replace(/,/g, ''));
+		if (Number.isNaN(num)) return null;
+		return { prefix: m[1], num, suffix: m[3] };
+	}
+
+	const traction = TRACTION.map((t) => ({ ...t, parts: splitStat(t.stat) }));
 
 	const quickLinks = [
 		{
@@ -105,29 +118,29 @@
 <!-- ================= Who to talk to ================= -->
 <section id="contact" class="section-y who">
 	<div class="container-wide">
-		<h2 use:reveal>Who to talk to</h2>
+		<h2 use:reveal>Find the founder who covers your region.</h2>
 		<p class="lede" use:reveal={{ delay: 80 }}>
-			One founder replies directly, depending on where you invest from.
+			We split coverage three ways and each founder answers their own mail. Whoever you write to is
+			the person you will be dealing with, in your timezone, with no inbox in between.
 		</p>
-		<div class="founder-grid">
-			{#each founders as f, i (f.key)}
-				<article class="founder-card glass-card" use:reveal={{ delay: 140 + i * 70 }}>
-					{#if f.img}
-						<img class="founder-photo" src={f.img} alt="Portrait of {f.name}" loading="lazy" />
-					{/if}
-					<div class="founder-body">
-						<h3>{f.name}</h3>
-						<p class="founder-role">{f.role}</p>
-						<p class="founder-coverage">{f.coverage}</p>
-						<p class="founder-base">Based in {f.basedIn}</p>
-						<div class="founder-actions">
-							<a class="founder-write" href={mailto(f.email)}>Write to {f.firstName}</a>
-							<a class="founder-mail" href={mailto(f.email)}>{f.email}</a>
-						</div>
-					</div>
-				</article>
-			{/each}
-		</div>
+		<Roster people={founderPeople}>
+			{#snippet detail(member)}
+				{@const contact = contactFor(member.id)}
+				{#if contact}
+					<p class="founder-coverage">
+						<span class="founder-covers">Covers</span>
+						{contact.coverage}
+					</p>
+					<p class="founder-base">Based in {contact.basedIn}</p>
+					<p class="founder-links">
+						<a class="founder-write" href={mailto(contact.email)}>
+							Write to {member.name.split(' ')[0]} <span aria-hidden="true">&rarr;</span>
+						</a>
+						<a class="founder-mail" href={mailto(contact.email)}>{contact.email}</a>
+					</p>
+				{/if}
+			{/snippet}
+		</Roster>
 	</div>
 </section>
 
@@ -135,14 +148,28 @@
 <section class="section-y proof">
 	<div class="container-wide">
 		<h2 use:reveal>What's already behind us</h2>
-		<div class="proof-grid">
-			{#each TRACTION as t, i (t.label)}
-				<div class="proof-tile glass-card" use:reveal={{ delay: 80 + i * 60 }}>
-					<span class="proof-stat">{t.stat}</span>
-					<span class="proof-label">{t.label}</span>
+		<!-- A ruled ledger of four figures. Each figure is seeded with its final
+		     text so it is present above the fold and without JavaScript; the
+		     count-up overwrites it once the row is scrolled to. -->
+		<dl class="proof-grid">
+			{#each traction as t, i (t.label)}
+				<div class="proof-row" use:reveal={{ delay: 80 + i * 60 }}>
+					<dt class="proof-stat">
+						{#if t.parts}
+							<span
+								use:countUp={{
+									value: t.parts.num,
+									format: (n) => `${t.parts?.prefix ?? ''}${Math.round(n)}${t.parts?.suffix ?? ''}`
+								}}>{t.stat}</span
+							>
+						{:else}
+							{t.stat}
+						{/if}
+					</dt>
+					<dd class="proof-label">{t.label}</dd>
 				</div>
 			{/each}
-		</div>
+		</dl>
 	</div>
 </section>
 
@@ -151,9 +178,12 @@
 	<div class="container-wide">
 		<span class="model-eyebrow" use:reveal>{TWIN_ROLE_EYEBROW}</span>
 		<h2 use:reveal={{ delay: 60 }}>{TWIN_ROLE_HEADING}</h2>
+		<!-- Three columns divided by hairline rules, the same treatment the two
+		     products get on the homepage. They were bordered cards, which made
+		     three sequenced arguments read as three unrelated tiles. -->
 		<div class="model-grid">
 			{#each TWIN_ROLE as role, i (role.title)}
-				<div class="model-card glass-card" use:reveal={{ delay: 100 + i * 70 }}>
+				<div class="model-col" use:reveal={{ delay: 100 + i * 70 }}>
 					<span class="model-stat">{role.stat}</span>
 					<h3>{role.title}</h3>
 					<p>{role.body}</p>
@@ -164,7 +194,7 @@
 		<h3 class="model-sub" use:reveal>Two routes to clinical revenue</h3>
 		<div class="model-paths">
 			{#each clinicalPaths as p, i (p.key)}
-				<div class="model-path glass-card" use:reveal={{ delay: 80 + i * 70 }}>
+				<div class="model-path" use:reveal={{ delay: 80 + i * 70 }}>
 					<span class="model-badge">Path {p.key}</span>
 					<h4>{p.title}</h4>
 					<p>{p.body}</p>
@@ -187,7 +217,7 @@
 		<div class="catchup-grid">
 			{#each quickLinks as link, i (link.href)}
 				<a
-					class="catchup-card glass-card"
+					class="catchup-row"
 					href={link.href}
 					target={link.external ? '_blank' : undefined}
 					rel={link.external ? 'noopener' : undefined}
@@ -207,12 +237,12 @@
 <!-- ================= FAQ ================= -->
 <section class="section-y faq-sec">
 	<div class="container-wide">
-		<h2 use:reveal>Questions investors ask us</h2>
+		<h2 use:reveal>FAQ</h2>
 		<div class="faq-list">
 			{#each faqs as f, i (f.q)}
 				<details class="faq-item" use:reveal={{ delay: 60 + i * 50 }}>
 					<summary>{f.q}</summary>
-					<p>{f.a}</p>
+					<div class="faq-body"><p>{f.a}</p></div>
 				</details>
 			{/each}
 		</div>
@@ -220,268 +250,346 @@
 </section>
 
 <style>
-	.founder-card {
-		display: flex;
-		flex-direction: column;
-		gap: 1.1rem;
-		padding: 1.5rem;
-		border-radius: var(--radius-lg);
+	/*
+	  This page was the last one still built out of the old system: bordered
+	  cards with a radius, a mono "Path A" pill, a green price-style chip, and
+	  three different grid ratios. It is now ruled like the rest of the site,
+	  and the people on it render through the same Roster the homepage uses.
+	*/
+	h2 {
+		font-size: clamp(1.9rem, 3.6vw, 3rem);
+		line-height: 1.1;
+		letter-spacing: -0.03em;
+		margin: 0 0 1rem;
 	}
-	.founder-photo {
-		width: 5rem;
-		height: 5rem;
-		border-radius: var(--radius-md);
-		object-fit: cover;
-		flex-shrink: 0;
-	}
-	.founder-body h3 {
-		font-size: 1.2rem;
+	.lede {
+		font-size: clamp(1rem, 1.4vw, 1.12rem);
+		line-height: 1.7;
+		color: var(--color-ink-soft);
 		margin: 0;
+		max-width: 56ch;
 	}
-	.founder-role {
-		color: var(--color-primary-600);
-		font-weight: 600;
-		font-size: 0.85rem;
-		margin-top: 0.15rem;
+	.proof,
+	.model,
+	.catchup,
+	.faq-sec {
+		border-top: 1px solid var(--color-rule);
 	}
+
+	/* Who to talk to: the detail column beside each founder. The region is the
+	   routing information, so it carries the size; the name and role beside it
+	   already say who the person is. */
 	.founder-coverage {
-		font-weight: 600;
+		margin: 0;
+		font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+		font-family: var(--font-family-heading);
+		font-weight: var(--weight-display);
+		letter-spacing: -0.02em;
+		line-height: 1.2;
 		color: var(--color-ink);
-		margin-top: 0.7rem;
+	}
+	.founder-covers {
+		display: block;
+		font-family: var(--font-family-sans);
+		font-size: 0.62rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+		margin-bottom: 0.35rem;
 	}
 	.founder-base {
-		color: var(--color-ink-faint);
+		margin: 0.4rem 0 0;
 		font-size: 0.88rem;
-		margin-top: 0.15rem;
+		line-height: 1.65;
+		color: var(--color-ink-soft);
 	}
-	.founder-actions {
+	.founder-links {
 		display: flex;
 		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.75rem 1.1rem;
-		margin-top: 1rem;
+		align-items: baseline;
+		gap: 0.5rem 1.5rem;
+		margin: 0.9rem 0 0;
 	}
 	.founder-write {
 		display: inline-flex;
 		align-items: center;
-		background: var(--color-primary-600);
-		color: #fff;
-		font-weight: 500;
-		font-size: 0.88rem;
-		padding: 0.55rem 1.05rem;
-		border-radius: 6px;
+		gap: 0.45rem;
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-ink);
+		border-bottom: 1px solid var(--color-ink);
+		padding-bottom: 0.25rem;
 		transition:
-			background var(--duration-hover) ease,
-			transform var(--duration-press) var(--ease-out);
+			color var(--duration-hover) ease,
+			border-color var(--duration-hover) ease;
 	}
-	.founder-write:active {
-		transform: scale(0.97);
-	}
-	@media (hover: hover) and (pointer: fine) {
-		.founder-write:hover {
-			background: var(--color-primary-700);
-			color: #fff;
-		}
-	}
-	.founder-write:focus-visible {
-		outline: 2px solid var(--color-primary-400);
-		outline-offset: 2px;
+	.founder-write span {
+		transition: transform var(--duration-hover) var(--ease-out);
 	}
 	.founder-mail {
-		font-size: 0.85rem;
-		font-weight: 600;
-		color: var(--color-primary-600);
-		border-bottom: 1px solid transparent;
-		transition: border-color 0.2s ease;
+		font-size: 0.82rem;
+		color: var(--color-ink-faint);
+		transition: color var(--duration-hover) ease;
 	}
-	.founder-mail:hover {
-		border-bottom-color: currentColor;
-	}
-	@media (min-width: 640px) {
-		.founder-card {
-			flex-direction: row;
-			align-items: flex-start;
-		}
-	}
-	@media (min-width: 860px) {
-		.founder-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-	}
+
+	/* Traction: a ledger, one figure per row. The figure column used to be a
+	   fixed 12rem while the numbers themselves are barely half that, so each
+	   label sat marooned ~120px to the right of its own number and the whole
+	   block ran hard left under a centred heading. The column is now sized to
+	   the widest figure, and the ledger is a centred measure like the heading
+	   above it. */
 	.proof-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1rem;
-		margin-top: clamp(1.5rem, 3.5vw, 2.25rem);
+		margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+		max-width: 46rem;
+		border-top: 1px solid var(--color-ink);
 	}
-	.proof-tile {
-		padding: 1.4rem 1.5rem;
-		border-radius: var(--radius-lg);
-		display: flex;
-		flex-direction: column;
-		gap: 0.4rem;
+	.proof-row {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.35rem;
+		padding-block: 1.35rem;
+		border-bottom: 1px solid var(--color-rule);
 	}
 	.proof-stat {
+		font-size: clamp(1.7rem, 3vw, 2.3rem);
+		font-weight: var(--weight-display);
 		font-family: var(--font-family-heading);
-		font-weight: 600;
-		font-size: clamp(1.5rem, 3vw, 2rem);
-		letter-spacing: -0.02em;
-		color: var(--color-primary-700);
+		letter-spacing: -0.03em;
+		line-height: 1;
+		color: var(--color-ink);
+		font-variant-numeric: tabular-nums;
 	}
 	.proof-label {
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
-		font-size: 0.88rem;
-		line-height: 1.5;
+		max-width: 52ch;
 	}
-	@media (min-width: 900px) {
-		.proof-grid {
-			grid-template-columns: repeat(4, 1fr);
-		}
+
+	/* The business model: three sequenced arguments, divided by rules. */
+	.model-eyebrow {
+		display: block;
+		font-size: 0.66rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+		margin-bottom: 1rem;
 	}
 	.model-grid {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: 1rem;
-		margin-top: clamp(1.5rem, 3.5vw, 2.25rem);
+		gap: 2.5rem;
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		border-top: 1px solid var(--color-ink);
 	}
-	.model-card {
-		padding: 1.4rem 1.5rem;
-		border-radius: var(--radius-lg);
-		border-top: 3px solid var(--color-primary-500);
+	.model-col {
+		padding-top: 1.75rem;
 	}
 	.model-stat {
 		display: block;
-		font-family: var(--font-family-heading);
+		font-size: 0.7rem;
 		font-weight: 600;
-		font-size: clamp(1.5rem, 3vw, 2rem);
-		letter-spacing: -0.02em;
-		color: var(--color-primary-700);
-		margin-bottom: 0.6rem;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+		margin-bottom: 0.9rem;
 	}
-	.model-card h3 {
-		font-size: 1.05rem;
-		letter-spacing: -0.01em;
-		margin-bottom: 0.35rem;
+	.model-col h3,
+	.model-path h4 {
+		font-size: 1.08rem;
+		letter-spacing: -0.015em;
+		margin: 0 0 0.5rem;
 	}
-	.model-card p,
+	.model-col p,
 	.model-path p {
-		font-size: 0.9rem;
-		line-height: 1.55;
+		font-size: 0.92rem;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
+		margin: 0;
 	}
 	.model-sub {
-		margin-top: clamp(2rem, 4vw, 2.75rem);
-		font-size: 1.15rem;
-		letter-spacing: -0.01em;
+		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+		padding-top: clamp(1.75rem, 3vw, 2.5rem);
+		border-top: 1px solid var(--color-ink);
+		font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+		letter-spacing: -0.025em;
 	}
 	.model-paths {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: 1rem;
-		margin-top: 1.1rem;
-	}
-	.model-path {
-		padding: 1.4rem 1.5rem;
-		border-radius: var(--radius-lg);
+		gap: 2.25rem;
+		margin-top: 2rem;
 	}
 	.model-badge {
-		display: inline-block;
-		font-family: var(--font-family-mono);
-		font-size: 0.68rem;
-		font-weight: 700;
-		letter-spacing: 0.1em;
+		display: block;
+		font-size: 0.66rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
 		text-transform: uppercase;
-		color: var(--color-primary-600);
-		background: var(--color-primary-50);
-		border: 1px solid var(--color-primary-100);
-		padding: 0.25rem 0.65rem;
-		border-radius: 999px;
+		color: var(--color-ink-faint);
+		margin-bottom: 0.75rem;
 	}
-	.model-path h4 {
-		font-size: 1.05rem;
-		letter-spacing: -0.01em;
-		margin: 0.7rem 0 0.35rem;
+
+	/* Quick links: ruled rows, not cards. */
+	.catchup-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		border-top: 1px solid var(--color-ink);
 	}
-	@media (min-width: 860px) {
-		.model-grid {
-			grid-template-columns: repeat(3, 1fr);
-		}
-		.model-paths {
-			grid-template-columns: repeat(2, 1fr);
-		}
-	}
-	.catchup-card {
-		display: flex;
-		flex-direction: column;
-		gap: 0.45rem;
-		padding: 1.4rem 1.5rem;
-		border-radius: var(--radius-lg);
-		transition:
-			border-color 0.15s ease,
-			box-shadow 0.15s ease;
-	}
-	.catchup-card:hover {
-		border-color: var(--color-border-hover);
-		box-shadow: var(--shadow-sm);
+	.catchup-row {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.4rem;
+		padding-block: 1.35rem;
+		border-bottom: 1px solid var(--color-rule);
+		transition: color var(--duration-hover) ease;
 	}
 	.catchup-title {
 		display: flex;
 		align-items: baseline;
-		justify-content: space-between;
 		gap: 0.6rem;
+		font-size: 1.05rem;
 		font-weight: 600;
+		letter-spacing: -0.015em;
 		color: var(--color-ink);
 	}
 	.catchup-title span {
 		color: var(--color-primary-600);
+		transition: transform var(--duration-hover) var(--ease-out);
 	}
 	.catchup-desc {
+		font-size: 0.92rem;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
-		font-size: 0.9rem;
-		line-height: 1.55;
+		max-width: 60ch;
 	}
-	@media (min-width: 720px) {
-		.catchup-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
+
+	/* FAQ: ruled rows with a plus that turns. */
+	.faq-list {
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		border-top: 1px solid var(--color-ink);
 	}
 	.faq-item {
-		padding: 0;
+		border-bottom: 1px solid var(--color-rule);
 	}
 	.faq-item summary {
 		cursor: pointer;
 		list-style: none;
 		display: flex;
-		align-items: center;
+		align-items: baseline;
 		justify-content: space-between;
-		gap: 1rem;
-		padding: 1.15rem 1.5rem;
+		gap: 1.5rem;
+		padding-block: 1.25rem;
+		font-size: 1rem;
 		font-weight: 600;
+		letter-spacing: -0.01em;
 		color: var(--color-ink);
+		transition: color var(--duration-hover) ease;
 	}
 	.faq-item summary::-webkit-details-marker {
 		display: none;
 	}
 	.faq-item summary::after {
 		content: '+';
-		font-weight: 500;
-		font-size: 1.2rem;
+		flex: none;
+		font-weight: 400;
+		font-size: 1.35rem;
 		line-height: 1;
 		color: var(--color-primary-600);
-		transition: transform 0.2s ease;
+		transition: transform var(--duration-hover) var(--ease-out);
 	}
 	.faq-item[open] summary::after {
 		transform: rotate(45deg);
 	}
 	.faq-item summary:focus-visible {
-		outline: 2px solid var(--color-border-focus);
+		outline: 2px solid var(--color-primary-600);
 		outline-offset: 2px;
-		border-radius: var(--radius-lg);
+	}
+	/* The answer opens and closes on a transition rather than snapping. The
+	   `interpolate-size` declaration in app.css is what lets `auto` be
+	   animated; browsers without it fall back to the instant toggle, and the
+	   answer is in the markup either way. */
+	.faq-item::details-content {
+		block-size: 0;
+		overflow: hidden;
+		transition:
+			block-size 320ms var(--ease-out),
+			content-visibility 320ms allow-discrete;
+	}
+	.faq-item[open]::details-content {
+		block-size: auto;
 	}
 	.faq-item p {
-		padding: 0 1.5rem 1.25rem;
+		margin: 0;
+		padding: 0 0 1.5rem;
+		font-size: 0.95rem;
+		line-height: 1.75;
 		color: var(--color-ink-soft);
-		line-height: 1.65;
-		max-width: 46rem;
+		max-width: 62ch;
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.founder-write:hover {
+			color: var(--color-primary-600);
+			border-color: var(--color-primary-600);
+		}
+		.founder-write:hover span {
+			transform: translateX(3px);
+		}
+		.founder-mail:hover {
+			color: var(--color-primary-600);
+		}
+		.catchup-row:hover .catchup-title {
+			color: var(--color-primary-600);
+		}
+		.catchup-row:hover .catchup-title span {
+			transform: translateX(4px);
+		}
+		.faq-item summary:hover {
+			color: var(--color-primary-600);
+		}
+	}
+
+	@media (min-width: 760px) {
+		.proof-row {
+			grid-template-columns: minmax(0, 7.5rem) minmax(0, 1fr);
+			gap: 1.5rem;
+			align-items: baseline;
+		}
+		.catchup-row {
+			grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+			gap: 2rem;
+			align-items: baseline;
+		}
+	}
+	@media (min-width: 880px) {
+		.model-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 0;
+		}
+		.model-col + .model-col {
+			border-left: 1px solid var(--color-rule);
+			padding-left: 2.25rem;
+		}
+		.model-col:not(:last-child) {
+			padding-right: 2.25rem;
+		}
+		.model-paths {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 0;
+		}
+		.model-path + .model-path {
+			border-left: 1px solid var(--color-rule);
+			padding-left: 3rem;
+		}
+		.model-path:first-child {
+			padding-right: 3rem;
+		}
 	}
 </style>

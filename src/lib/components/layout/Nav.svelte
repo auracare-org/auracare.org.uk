@@ -6,6 +6,46 @@
 	let ddOpen = $state(false);
 	let ddEl = $state<HTMLElement | null>(null);
 
+	/* The header answers the scroll instead of sitting there as a white slab.
+	   At the top it is borderless and lets the paper through; past the fold it
+	   takes on the page tone, draws its rule, and carries a brand-blue line
+	   showing how far down the document you are. The bar's height never
+	   changes: the layout measures it into `--header-h` and feeds that to
+	   main's padding, so anything that resized it would shift the whole page
+	   under the reader's cursor. */
+	let scrolled = $state(false);
+	let progress = $state(0);
+
+	$effect(() => {
+		/* The scrollable distance is the only expensive read here, and it only
+		   changes when the document does. Caching it against a ResizeObserver
+		   leaves the scroll handler reading nothing but `scrollY`, which is
+		   cheap enough to run straight through — so this needs no rAF throttle
+		   and keeps working in a tab where rAF is throttled to nothing. */
+		let max = 0;
+		const update = () => {
+			const y = window.scrollY;
+			scrolled = y > 8;
+			progress = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+		};
+		const remeasure = () => {
+			max = document.documentElement.scrollHeight - window.innerHeight;
+			update();
+		};
+
+		const ro = new ResizeObserver(remeasure);
+		ro.observe(document.documentElement);
+		window.addEventListener('scroll', update, { passive: true });
+		window.addEventListener('resize', remeasure);
+		remeasure();
+
+		return () => {
+			ro.disconnect();
+			window.removeEventListener('scroll', update);
+			window.removeEventListener('resize', remeasure);
+		};
+	});
+
 	/* Close on an outside click or Escape. Without this the menu stays open
 	   after you click past it, which reads as a stuck UI. */
 	$effect(() => {
@@ -52,7 +92,7 @@
 	const productActive = () => page.url.pathname.startsWith('/product');
 </script>
 
-<nav class="nav" aria-label="Primary">
+<nav class="nav" class:nav--scrolled={scrolled} aria-label="Primary">
 	<div class="container-wide nav-inner">
 		<a href="/" class="nav-logo" aria-label="Auracare home">
 			<img src="/SVG/Asset 5.svg" alt="Auracare" />
@@ -174,14 +214,48 @@
 			</div>
 		</div>
 	{/if}
+
+	<span class="nav-progress" style="--p:{progress}" aria-hidden="true"></span>
 </nav>
 
 <style>
 	.nav {
-		background: rgba(252, 252, 253, 0.88);
-		backdrop-filter: blur(14px);
-		-webkit-backdrop-filter: blur(14px);
-		border-bottom: 1px solid var(--color-border-default);
+		position: relative;
+		background: transparent;
+		border-bottom: 1px solid transparent;
+		transition:
+			background var(--duration-hover) ease,
+			border-color var(--duration-hover) ease;
+	}
+	/* Opaque paper rather than a blurred translucent pane: glassmorphism is
+	   explicitly out of the system, and an opaque bar costs nothing to
+	   composite while scrolling. */
+	.nav--scrolled {
+		background: var(--color-surface-page);
+		border-bottom-color: var(--color-rule);
+	}
+	/* How far through the document you are, drawn on the header's own rule. */
+	.nav-progress {
+		position: absolute;
+		left: 0;
+		bottom: -1px;
+		height: 2px;
+		width: 100%;
+		transform: scaleX(var(--p, 0));
+		transform-origin: left center;
+		background: var(--color-primary-600);
+		opacity: 0;
+		transition: opacity var(--duration-hover) ease;
+		pointer-events: none;
+	}
+	.nav--scrolled .nav-progress {
+		opacity: 1;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.nav,
+		.nav-progress {
+			transition: none;
+		}
 	}
 	.nav-inner {
 		display: flex;

@@ -29,31 +29,54 @@
 		}
 	];
 
-	/* Replying is the logging: what you text ➝ what Auracle captures. */
+	/* Replying is the logging. Three examples side by side, each headed by what
+	   it demonstrates: a passive signal captured in passing, a pattern nobody
+	   was tracking, and the piece of history everyone forgets in the room.
+	   Each is a real thread rather than a quoted pair, because the claim is
+	   that this happens in the messaging app you already use, and a thread is
+	   the only thing that looks like that. */
 	const logging = [
 		{
-			you: 'slept awful, up around 3 and never really went back',
-			twin: 'Sleep logged as fragmented, ~4h. I’ll keep today light and check the pattern over the week.'
+			label: 'A signal, in passing',
+			summary: 'You mention a bad night. It becomes sleep data.',
+			messages: [
+				{ from: 'you', text: 'slept awful, up around 3 and never really went back' },
+				{
+					from: 'twin',
+					text: 'Logged as fragmented sleep, ~4h. I’ll keep today light.'
+				},
+				{ from: 'you', text: 'yeah don’t book me anything before 10' },
+				{ from: 'twin', text: 'Done. That’s the third short night this week — I’m watching it.' }
+			]
 		},
 		{
-			you: 'did a 5k this morning, legs are toast',
-			twin: 'Run captured, recovery flagged. I’ll hold off suggesting anything hard tomorrow.'
+			label: 'A pattern, not an incident',
+			summary: 'You mention it once. It counts, and it notices.',
+			messages: [
+				{ from: 'you', text: 'been getting headaches most afternoons' },
+				{
+					from: 'twin',
+					text: 'Logged as a recurring symptom rather than a one-off. Four this fortnight, all after 2pm.'
+				},
+				{ from: 'you', text: 'huh. never noticed the timing' },
+				{
+					from: 'twin',
+					text: 'That’s the kind of thing worth saying out loud at your next appointment.'
+				}
+			]
 		},
 		{
-			you: 'skipped lunch, just coffee',
-			twin: 'Noted. Third low-fuel afternoon this week. Want me to nudge you at midday next time?'
-		},
-		{
-			you: 'been getting headaches most afternoons',
-			twin: 'Logged as a recurring symptom rather than a one-off. Four this fortnight, all after 2pm.'
-		},
-		{
-			you: 'started sertraline last week, 50mg',
-			twin: 'Recorded with a start date, so the change shows against your sleep and energy from here. I don’t advise on medication; your prescriber owns that.'
-		},
-		{
-			you: 'mum was diagnosed with type 2',
-			twin: 'Added to family history. That is the kind of thing a clinician asks for and most people forget in the room.'
+			label: 'The thing you forget in the room',
+			summary: 'A passing remark becomes family history.',
+			messages: [
+				{ from: 'you', text: 'mum was diagnosed with type 2' },
+				{ from: 'twin', text: 'Added to family history, with the date you told me.' },
+				{ from: 'you', text: 'does that actually matter?' },
+				{
+					from: 'twin',
+					text: 'A clinician will ask. Most people forget it in the room — now you won’t have to remember.'
+				}
+			]
 		}
 	];
 
@@ -163,8 +186,8 @@
 <!-- ================= Hero ================= -->
 <PageHero
 	meta="Consumer · Expected August 2026"
-	title="Six months of texting becomes"
-	accent="a history your doctor can read."
+	title={'Your health,\nbefore it becomes'}
+	accent="healthcare."
 	accentOwnLine
 	sub="Auracle is a wellness companion in the apps you already use. What you tell it is encoded into clinical terminology as you go, so conversation ends up as a social history you can hand to a clinician."
 />
@@ -208,20 +231,35 @@
 			does the structuring, the remembering, and the noticing.
 		</p>
 
-		<!-- One thread, not three side-by-side pairs. The exchange only reads as
-		     texting if it is stacked the way a thread is: your message right,
-		     the reply left, in sequence down a single column. -->
-		<div class="thread">
-			{#each logging as pair, i (pair.you)}
-				<!-- Each message dissolves in on its own beat, so the thread arrives
-				     the way a conversation does rather than all at once. -->
-				<p class="msg msg--you" use:reveal={{ delay: i * 110 }}>{pair.you}</p>
-				<p class="msg msg--them" use:reveal={{ delay: i * 110 + 55 }}>{pair.twin}</p>
+		<!-- Three threads side by side, each headed by what it demonstrates, so
+		     the range is visible at a glance. Every bubble arrives on its own
+		     beat as the column scrolls in, so a thread lands the way a
+		     conversation does rather than all at once. -->
+		<div class="examples">
+			{#each logging as ex, col (ex.label)}
+				<article class="example">
+					<span class="example-label" use:reveal={{ delay: col * 90 }}>{ex.label}</span>
+					<h3 use:reveal={{ delay: col * 90 + 60 }}>{ex.summary}</h3>
+					<div class="thread">
+						{#each ex.messages as msg, i (msg.text)}
+							<p
+								class="msg msg--{msg.from}"
+								class:msg--last={ex.messages[i + 1]?.from !== msg.from}
+								use:reveal={{ delay: col * 90 + 160 + i * 140 }}
+							>
+								{msg.text}
+							</p>
+						{/each}
+					</div>
+				</article>
 			{/each}
-			<p class="thread-note" use:reveal>
-				Replying is the logging. There is nothing else to fill in.
-			</p>
 		</div>
+
+		<p class="log-note" use:reveal>
+			Replying is the logging. There is nothing else to fill in — and where a reply touches
+			medication or a diagnosis, Auracle records it and points you at your prescriber rather than
+			advising.
+		</p>
 	</div>
 </section>
 
@@ -368,9 +406,6 @@
 	.keep-link:hover {
 		color: var(--color-primary-600);
 	}
-	/* A message thread. Bubbles alternate sides and the tails are asymmetric,
-	   which is what makes it read as a conversation rather than as two
-	   columns of quoted text. */
 	/* The day. One vertical rule with the four moments pinned to it; the space
 	   between them is the point, so the rows are spaced by time, not evenly. */
 	.day {
@@ -419,7 +454,7 @@
 	}
 	.day-row p {
 		font-size: 0.95rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink-soft);
 		margin: 0;
 		max-width: 56ch;
@@ -477,49 +512,53 @@
 		border: 1px solid var(--color-rule);
 		padding: 0.35rem 0.7rem;
 	}
-	/* The single record it all resolves into. */
+	/* The single record it all resolves into. It used to be a black box, which
+	   put dark ink in the middle of a paper page where dark is reserved for the
+	   closing bands, and dropped its own body text to a grey that could not be
+	   read. It is now a ruled panel like every other panel on the site: the
+	   weight it needs comes from the rule above it, not from a fill. */
 	.record {
-		background: var(--color-ink);
-		color: rgba(226, 230, 240, 0.72);
+		background: var(--color-surface-raised);
+		border: 1px solid var(--color-rule);
+		border-top: 2px solid var(--color-ink);
+		color: var(--color-ink-soft);
 		padding: clamp(1.5rem, 3vw, 2rem);
 	}
 	.record h3 {
 		font-size: clamp(1.3rem, 2.4vw, 1.8rem);
 		letter-spacing: -0.025em;
-		color: #fff;
+		color: var(--color-ink);
 		margin: 0 0 0.9rem;
 	}
 	.record p {
 		font-size: 0.95rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		margin: 0 0 1.5rem;
 	}
 	.record-props {
 		list-style: none;
 		margin: 0;
 		padding: 0;
-		border-top: 1px solid rgba(255, 255, 255, 0.16);
+		border-top: 1px solid var(--color-rule-strong);
 	}
 	.record-props li {
-		padding-block: 0.65rem;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-		font-size: 0.8rem;
+		padding-block: 0.7rem;
+		border-bottom: 1px solid var(--color-rule);
+		font-size: 0.72rem;
 		font-weight: 600;
-		letter-spacing: 0.12em;
+		letter-spacing: 0.14em;
 		text-transform: uppercase;
-		color: #fff;
+		color: var(--color-ink);
 	}
-	@media (min-width: 900px) {
-		.gather {
-			grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-			gap: 3.5rem;
-		}
+	.record-props li:last-child {
+		border-bottom: 0;
+		padding-bottom: 0;
 	}
 
 	.src-note {
 		margin: 1rem 0 0;
 		font-size: 0.85rem;
-		line-height: 1.5;
+		line-height: 1.65;
 		color: var(--color-ink-faint);
 	}
 
@@ -560,7 +599,7 @@
 	.keep-body {
 		margin: 0;
 		font-size: 0.95rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink-soft);
 		max-width: 62ch;
 		grid-column: 2;
@@ -576,18 +615,54 @@
 		}
 	}
 
-	.thread {
-		max-width: 34rem;
-		margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+	/* Three threads, divided by hairline rules the way the product panels on
+	   the homepage are. */
+	.examples {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		border-top: 1px solid var(--color-ink);
+	}
+	.example {
+		padding-top: 1.75rem;
 		display: flex;
 		flex-direction: column;
-		gap: 0.55rem;
+	}
+	.example-label {
+		display: block;
+		font-size: 0.66rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+		margin-bottom: 0.9rem;
+	}
+	.example h3 {
+		font-size: 1.05rem;
+		line-height: 1.45;
+		letter-spacing: -0.015em;
+		margin: 0 0 1.75rem;
+		max-width: 26ch;
+	}
+
+	/* The thread. This is the one place on the site that keeps a radius: the
+	   claim of the whole section is that it happens inside the messaging app
+	   you already use, and a squared-off bubble does not read as that. Tails
+	   are asymmetric on the last bubble of each run, which is what makes a
+	   stack of blocks read as a conversation. */
+	.thread {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+		margin-top: auto;
 	}
 	.msg {
+		position: relative;
 		margin: 0;
-		max-width: 78%;
-		padding: 0.75rem 1.05rem;
-		font-size: 0.95rem;
+		max-width: 88%;
+		padding: 0.65rem 0.95rem;
+		font-size: 0.9rem;
 		line-height: 1.45;
 		border-radius: 18px;
 	}
@@ -595,26 +670,46 @@
 		align-self: flex-end;
 		background: var(--color-primary-600);
 		color: #fff;
-		border-bottom-right-radius: 5px;
 	}
-	.msg--them {
+	.msg--twin {
 		align-self: flex-start;
 		background: var(--color-surface-alt);
+		border: 1px solid var(--color-rule);
 		color: var(--color-ink);
+	}
+	/* The last bubble of a run gets the tail, and a little more air after it
+	   before the other side answers. */
+	.msg--you.msg--last {
+		border-bottom-right-radius: 5px;
+	}
+	.msg--twin.msg--last {
 		border-bottom-left-radius: 5px;
-		margin-bottom: 0.9rem;
 	}
-	.msg--them:last-of-type {
-		margin-bottom: 0;
+	.msg--last:not(:last-child) {
+		margin-bottom: 0.55rem;
 	}
-	.thread-note {
-		margin: 1.5rem 0 0;
-		text-align: center;
-		font-size: 0.78rem;
-		font-weight: 600;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: var(--color-ink-faint);
+
+	.log-note {
+		margin: clamp(2rem, 4vw, 3rem) 0 0;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--color-ink);
+		font-size: 0.92rem;
+		line-height: 1.7;
+		color: var(--color-ink-soft);
+		max-width: 62ch;
+	}
+	@media (min-width: 900px) {
+		.examples {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 0;
+		}
+		.example + .example {
+			border-left: 1px solid var(--color-rule);
+			padding-left: 2.25rem;
+		}
+		.example:not(:last-child) {
+			padding-right: 2.25rem;
+		}
 	}
 
 	.btn-solid:active {
@@ -639,7 +734,7 @@
 	.lede {
 		margin-top: 1rem;
 		font-size: clamp(1rem, 1.4vw, 1.12rem);
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
 		max-width: 44rem;
 	}
@@ -660,33 +755,30 @@
 	.stack-chip {
 		font-size: 0.82rem;
 		color: var(--color-ink-faint);
-		background: var(--color-neutral-0);
-		border: 1px dashed var(--color-border-strong);
-		border-radius: 999px;
+		background: var(--color-surface-alt);
+		border: 1px dashed var(--color-rule-strong);
 		padding: 0.4rem 0.85rem;
 		text-decoration: line-through;
-		text-decoration-color: rgba(120, 130, 150, 0.5);
+		text-decoration-color: var(--color-rule-strong);
 	}
 	.stack-plus {
 		text-decoration: none;
 		font-style: italic;
 	}
+	/* The plan. Same panel treatment and the same column split as the record
+	   above it, so the two right-hand blocks share an edge down the page
+	   instead of each finding their own. */
 	.price-card {
 		padding: clamp(1.75rem, 3vw, 2.25rem);
-		border-radius: var(--radius-4xl);
+		border-top: 2px solid var(--color-primary-600);
 	}
 	.price-tag {
-		display: inline-block;
-		font-family: var(--font-family-mono);
-		font-size: 0.7rem;
-		font-weight: 700;
-		letter-spacing: 0.1em;
+		display: block;
+		font-size: 0.68rem;
+		font-weight: 600;
+		letter-spacing: 0.18em;
 		text-transform: uppercase;
-		color: #0f9d6b;
-		background: rgba(52, 211, 153, 0.14);
-		border: 1px solid rgba(52, 211, 153, 0.35);
-		padding: 0.3rem 0.75rem;
-		border-radius: 999px;
+		color: var(--color-primary-600);
 	}
 	.price-then {
 		display: flex;
@@ -697,7 +789,8 @@
 	.price-num {
 		font-family: var(--font-family-heading);
 		font-size: clamp(2.6rem, 6vw, 3.4rem);
-		font-weight: 700;
+		font-weight: var(--weight-display);
+		letter-spacing: -0.03em;
 		font-variant-numeric: tabular-nums;
 		line-height: 1;
 		color: var(--color-ink);
@@ -709,7 +802,7 @@
 	.price-line {
 		margin-top: 0.8rem;
 		font-size: 0.92rem;
-		line-height: 1.55;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
 	}
 	.price-list {
@@ -754,16 +847,15 @@
 		gap: 0.8rem 1rem;
 		margin-top: 1.9rem;
 	}
-	@media (min-width: 1000px) {
-		/* Five hooks over two rows. The last two widen to span half the grid
-		   each rather than sitting centred under the row above: a centred
-		   orphan row reads as a misalignment, a filled row reads as a choice. */
-	}
 	@media (min-width: 860px) {
+		/* One split, shared. The sources grid and the plan grid used to run
+		   1.15/0.85 and 1.1/0.9 at two different breakpoints, so the record
+		   panel and the price card sat on two different vertical edges. */
+		.gather,
 		.plan-grid {
-			grid-template-columns: 1.1fr 0.9fr;
+			grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+			gap: 3.5rem;
+			align-items: start;
 		}
-	}
-	@media (max-width: 560px) {
 	}
 </style>

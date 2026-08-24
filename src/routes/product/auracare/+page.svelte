@@ -176,21 +176,33 @@
 			directly, so what it sees is exactly what the device captured.
 		</p>
 
-		<!-- The two ends of the link and what is absent between them. The pills
-		     here were absolutely positioned against a dashed line and collapsed
-		     on top of each other; this is a three-column grid instead. -->
+		<!-- What the link is, and what the usual path costs. A "From / dashed
+		     line / Into" diagram said only that two things are connected, which
+		     is true of every integration ever built and so argued nothing. The
+		     claim is about what is *not* in the middle, so the two paths are
+		     set against each other and the removed steps are struck through. -->
 		<div class="link" use:reveal={{ delay: 100 }}>
-			<div class="link-end">
-				<span class="link-label">From</span>
-				<p>Our devices</p>
+			<div class="link-path link-path--them">
+				<span class="link-label">The usual path</span>
+				<ol class="link-steps">
+					<li>Device</li>
+					<li class="cut">Vendor cloud</li>
+					<li class="cut">Third-party API</li>
+					<li class="cut">Manual re-entry</li>
+					<li>Record</li>
+				</ol>
+				<p class="link-cost">Four places for a reading to be reshaped, delayed or lost.</p>
 			</div>
-			<div class="link-mid" aria-hidden="true">
-				<span class="link-rule"></span>
-				<span class="link-note">No manual entry · no third party</span>
-			</div>
-			<div class="link-end link-end--to">
-				<span class="link-label">Into</span>
-				<p>The reasoning core</p>
+			<div class="link-path link-path--us">
+				<span class="link-label">Ours</span>
+				<ol class="link-steps">
+					<li>Our device</li>
+					<li>The reasoning core</li>
+				</ol>
+				<p class="link-cost">
+					One hop. What the core sees is exactly what the device captured, with the timestamp it was
+					captured at.
+				</p>
 			</div>
 		</div>
 
@@ -326,7 +338,7 @@
 	}
 	.closing .lede {
 		font-size: clamp(1rem, 1.5vw, 1.2rem);
-		line-height: 1.6;
+		line-height: 1.7;
 		max-width: 52ch;
 		margin: 0;
 	}
@@ -348,7 +360,7 @@
 	}
 	.path p {
 		font-size: 0.95rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		margin: 0 0 1.5rem;
 		max-width: 40ch;
 	}
@@ -357,7 +369,7 @@
 		padding-top: 1.5rem;
 		border-top: 1px solid rgba(255, 255, 255, 0.12);
 		font-size: 0.8rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: rgba(226, 230, 240, 0.5);
 		max-width: 72ch;
 	}
@@ -399,7 +411,7 @@
 	.gap-figure p {
 		margin: 0.75rem 0 0;
 		font-size: 0.93rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink-soft);
 	}
 	.answers {
@@ -473,17 +485,17 @@
 	}
 	.room-step p {
 		font-size: 0.95rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
 		max-width: 52ch;
 	}
+	/* Two paths, one above the other, so the length of each is the argument. */
 	.link {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: 1.25rem;
-		align-items: center;
+		gap: 2rem;
 		margin-top: clamp(2rem, 4vw, 3rem);
-		padding-block: clamp(1.5rem, 3vw, 2rem);
+		padding-block: clamp(1.75rem, 3vw, 2.25rem);
 		border-block: 1px solid rgba(255, 255, 255, 0.16);
 	}
 	.link-label {
@@ -492,46 +504,70 @@
 		font-weight: 600;
 		letter-spacing: 0.2em;
 		text-transform: uppercase;
+		color: rgba(226, 230, 240, 0.55);
+		margin-bottom: 1rem;
+	}
+	.link-path--us .link-label {
 		color: var(--color-primary-300);
-		margin-bottom: 0.4rem;
 	}
-	.link-end p {
-		margin: 0;
-		font-size: clamp(1.1rem, 2vw, 1.5rem);
-		font-weight: 600;
-		letter-spacing: -0.02em;
-		color: #fff;
-	}
-	.link-mid {
+	/* The steps as a chain: each one a block, joined by a rule, so the count is
+	   visible before a word is read. */
+	.link-steps {
+		list-style: none;
 		display: flex;
-		flex-direction: column;
+		flex-wrap: wrap;
 		align-items: center;
-		gap: 0.6rem;
+		gap: 0.5rem;
+		margin: 0;
+		padding: 0;
 	}
-	.link-rule {
-		width: 100%;
+	.link-steps li {
+		position: relative;
+		padding: 0.5rem 0.85rem;
+		font-size: 0.85rem;
+		font-weight: 500;
+		color: #fff;
+		border: 1px solid rgba(255, 255, 255, 0.24);
+	}
+	.link-steps li + li::before {
+		content: '';
+		position: absolute;
+		left: -0.5rem;
+		top: 50%;
+		width: 0.5rem;
 		height: 1px;
-		background: repeating-linear-gradient(
-			to right,
-			rgba(255, 255, 255, 0.3) 0 6px,
-			transparent 6px 12px
-		);
+		background: rgba(255, 255, 255, 0.28);
 	}
-	.link-note {
-		font-size: 0.64rem;
-		font-weight: 600;
-		letter-spacing: 0.16em;
-		text-transform: uppercase;
-		color: rgba(226, 230, 240, 0.6);
-		text-align: center;
+	/* The steps our path removes, struck through rather than deleted: the point
+	   is what is gone, and you cannot see the absence of something invisible. */
+	.link-steps li.cut {
+		color: rgba(226, 230, 240, 0.4);
+		border-style: dashed;
+		border-color: rgba(255, 255, 255, 0.16);
+		text-decoration: line-through;
+		text-decoration-color: rgba(255, 255, 255, 0.35);
 	}
-	@media (min-width: 760px) {
+	.link-path--us .link-steps li {
+		border-color: var(--color-primary-300);
+	}
+	.link-cost {
+		margin: 1rem 0 0;
+		font-size: 0.88rem;
+		line-height: 1.7;
+		color: rgba(226, 230, 240, 0.72);
+		max-width: 46ch;
+	}
+	@media (min-width: 860px) {
 		.link {
-			grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr);
-			gap: 2rem;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 0;
 		}
-		.link-end--to {
-			text-align: right;
+		.link-path--us {
+			border-left: 1px solid rgba(255, 255, 255, 0.16);
+			padding-left: 3rem;
+		}
+		.link-path--them {
+			padding-right: 3rem;
 		}
 	}
 	.hw-grid {
@@ -555,13 +591,13 @@
 	}
 	.hw-card p {
 		font-size: 0.9rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: rgba(226, 232, 255, 0.72);
 	}
 	.hw-more {
 		margin-top: 1.5rem;
 		font-size: 0.95rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		font-weight: 500;
 		color: var(--color-primary-300) !important;
 		max-width: 52rem;
@@ -624,7 +660,7 @@
 	}
 	.out-list p {
 		font-size: 0.93rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink-soft);
 	}
 
@@ -701,13 +737,13 @@
 		padding-top: 1rem;
 		border-top: 1px solid var(--color-border-default);
 		font-size: 0.85rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink-faint);
 	}
 	.arch-note {
 		margin-top: clamp(1.5rem, 3vw, 2rem);
 		font-size: 0.85rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-ink-faint);
 		max-width: 52rem;
 	}

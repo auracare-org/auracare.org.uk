@@ -200,7 +200,7 @@
 	.disclaimer {
 		margin-top: clamp(1.75rem, 3vw, 2.5rem);
 		font-size: 0.8rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-ink-faint);
 		max-width: 52rem;
 	}
@@ -229,7 +229,7 @@
 		display: flex;
 		align-items: flex-start;
 		gap: 0.6rem;
-		line-height: 1.45;
+		line-height: 1.6;
 		color: var(--color-ink);
 		font-size: 0.95rem;
 	}
@@ -267,7 +267,7 @@
 	}
 	.routing-statement {
 		font-size: clamp(1.1rem, 2vw, 1.4rem);
-		line-height: 1.5;
+		line-height: 1.55;
 		color: var(--color-ink);
 		font-weight: 500;
 		max-width: 32rem;
@@ -294,7 +294,7 @@
 		display: flex;
 		align-items: flex-start;
 		gap: 0.6rem;
-		line-height: 1.4;
+		line-height: 1.6;
 		color: var(--color-ink-soft);
 		font-size: 0.9rem;
 	}

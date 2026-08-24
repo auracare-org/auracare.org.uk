@@ -183,59 +183,61 @@ export const TWIN_ROLE: TwinRole[] = [
 /* One patient-centred care loop: Auracle + Auracare                  */
 /* ------------------------------------------------------------------ */
 
-export interface CareLoopStep {
+export interface CareLoopStage {
+	/** Uppercase one-word name for the stage, used as the ring label. */
+	name: string;
 	title: string;
 	body: string;
-	/** Which side of the loop is doing the work at this step. */
+	/** Which product is doing the work at this stage. */
 	actor: 'auracle' | 'auracare';
+	/** The two original steps this stage folds together. */
+	steps: string[];
 }
 
 export const CARE_LOOP_LINE = 'One continuous loop: the picture keeps getting richer.';
 
-/* Eight steps, laid out as a snake with arrows: 01 to 04 across the top, down
-   into 05, back across the bottom to 08, and a return arrow closing the loop. */
-export const CARE_LOOP: CareLoopStep[] = [
+/* Four stages on a closed ring, clockwise from the top. The eight original
+   steps survive as the two sub-steps under each stage; folding them into four
+   is what lets the shape be a loop rather than a list, and it splits the ring
+   diagonally: Auracle owns the top and left, the CDSS owns the right and
+   bottom. The two lane changes are the two labelled handoffs between them. */
+export const CARE_LOOP: CareLoopStage[] = [
 	{
+		name: 'Live',
 		actor: 'auracle',
 		title: 'Auracle builds the picture',
-		body: 'Connectors and conversation become one living bio-psycho-social history.'
+		body: 'Connectors and conversation become one living bio-psycho-social history, ready before the appointment starts.',
+		steps: ['Sources and conversation encoded as you go', 'A complete history, ready to share']
 	},
 	{
+		name: 'Reason',
+		actor: 'auracare',
+		title: 'The CDSS works the case',
+		body: 'Shared history, acute vitals, transcription, labs and records reasoned over together. It asks only what is worth asking.',
+		steps: ['Reasons over everything at once', 'A differential, ordered by likelihood']
+	},
+	{
+		name: 'Decide',
+		actor: 'auracare',
+		title: 'The clinician decides',
+		body: 'A lifestyle plan, a referral or a guideline-aligned medication package, matched to the clinician\u2019s jurisdiction. Their judgement makes the call.',
+		steps: ['Three outputs, jurisdiction-matched', 'Notes and reasoning chain written for you']
+	},
+	{
+		name: 'Return',
 		actor: 'auracle',
-		title: 'You share it at the appointment',
-		body: 'A complete history, ready for the clinician before the appointment starts.'
-	},
-	{
-		actor: 'auracare',
-		title: 'The CDSS reasons over everything',
-		body: 'Shared history, acute vitals, transcription, labs and records together. It asks only what is worth asking.'
-	},
-	{
-		actor: 'auracare',
-		title: 'Ranked differential',
-		body: 'Possible diagnoses, ordered by likelihood. The clinician’s judgement makes the call.'
-	},
-	{
-		actor: 'auracare',
-		title: 'Three outputs',
-		body: 'A lifestyle plan, a referral or a guideline-aligned medication package, matched to the clinician’s jurisdiction.'
-	},
-	{
-		actor: 'auracare',
-		title: 'Notes write themselves',
-		body: 'Formatted consultation notes with a reasoning chain for the whole session.'
-	},
-	{
-		actor: 'auracle',
-		title: 'Advice becomes routine',
-		body: 'The plan returns to Auracle as reminders, tuned to how the person actually lives.'
-	},
-	{
-		actor: 'auracle',
-		title: 'Trends get caught early',
-		body: 'Auracle watches the follow-through and flags change sooner, so the next appointment starts further ahead.'
+		title: 'The plan becomes routine',
+		body: 'Advice returns to Auracle as reminders tuned to how the person actually lives, and Auracle watches the follow-through.',
+		steps: ['Advice tuned to how you live', 'Change flagged before the next appointment']
 	}
 ];
+
+/* The two places the loop changes hands. They sit on the ring itself, because
+   the handoff is the connector, not another stage. */
+export const CARE_LOOP_HANDOFFS = {
+	toClinic: 'Shared at the appointment',
+	toLife: 'Back into daily life'
+} as const;
 
 export const REGULATORY_NOTE =
 	'The Auracare CDSS is in development. Its regulatory pathway is not yet confirmed and is under continuous review.';

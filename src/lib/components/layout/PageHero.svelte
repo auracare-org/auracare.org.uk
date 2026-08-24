@@ -22,7 +22,7 @@
 		accentOwnLine = false,
 		meta = ''
 	}: {
-		/** The statement. Keep it to a line or two. */
+		/** The statement. Keep it to a line or two. A newline forces a break. */
 		title: string;
 		/** One supporting sentence. Optional. */
 		sub?: string;
@@ -33,6 +33,10 @@
 		/** Small status line, rendered BELOW the statement. Optional. */
 		meta?: string;
 	} = $props();
+
+	/* A title may set its own line breaks with newlines, for the few headlines
+	   whose rhythm is the point and cannot be left to the wrap. */
+	const titleLines = $derived(title.split('\n'));
 </script>
 
 <section class="page-hero">
@@ -40,7 +44,9 @@
 		<h1 use:reveal>
 			<!-- The space before the accent lives outside the <em> on purpose: inside
 			     it, the renderer collapsed it and the words ran together. -->
-			{title}{#if accent}{#if accentOwnLine}<br />{:else}{' '}{/if}<em>{accent}</em>{/if}
+			{#each titleLines as line, i (i)}{#if i > 0}<br
+					/>{/if}{line}{/each}{#if accent}{#if accentOwnLine}<br />{:else}{' '}{/if}<em>{accent}</em
+				>{/if}
 		</h1>
 		{#if sub}
 			<p class="sub" use:reveal={{ delay: 80 }}>{sub}</p>
@@ -76,7 +82,7 @@
 		letter-spacing: -0.035em;
 		font-weight: 600;
 		margin: 0;
-		max-width: 20ch;
+		max-width: 22ch;
 		text-wrap: balance;
 	}
 	h1 em {
@@ -86,7 +92,7 @@
 	.sub {
 		margin: clamp(1.25rem, 3vw, 1.75rem) auto 0;
 		font-size: clamp(1rem, 1.35vw, 1.14rem);
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
 		max-width: 56ch;
 	}

@@ -179,7 +179,7 @@
 	}
 	.lede {
 		font-size: clamp(1rem, 1.6vw, 1.18rem);
-		line-height: 1.6;
+		line-height: 1.7;
 		max-width: 40rem;
 	}
 	.lede a {

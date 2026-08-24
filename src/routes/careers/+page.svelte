@@ -130,7 +130,7 @@
 		margin-bottom: 0.5rem;
 	}
 	.role-card p {
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-neutral-700);
 	}
 	.role-apply {
