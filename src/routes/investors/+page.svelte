@@ -62,7 +62,7 @@
 		{
 			href: '/product/auracle',
 			title: 'Auracle',
-			desc: 'The consumer product: a wellness companion in your messages. Launches August 2026.'
+			desc: 'The consumer product: a wellness companion in your messages. Launches September 2026.'
 		},
 		{
 			href: '/product/auracare',
@@ -89,7 +89,7 @@
 		},
 		{
 			q: 'What’s live today, and what isn’t?',
-			a: 'The ontology is live and explorable: 532,000 clinical concepts. Auracle launches to the public in August 2026. The Auracare CDSS, the clinical product, is in development and targeted for May 2027.'
+			a: 'The ontology is live and explorable: 532,000 clinical concepts. Auracle launches to the public in September 2026. The Auracare CDSS, the clinical product, is in development and targeted for May 2027.'
 		},
 		{
 			q: 'Who’s already backing you?',
@@ -112,7 +112,7 @@
 <PageHero
 	title="We are raising our"
 	accent="seed round."
-	sub="Auracle launches to the public in August 2026, and our first clinical trials in Asia begin in February 2027. This round pays for the launch, the trials, and device certification."
+	sub="Auracle launches to the public in September 2026, and our first clinical trials in Asia begin in February 2027. This round pays for the launch, the trials, and device certification."
 />
 
 <!-- ================= Who to talk to ================= -->
@@ -178,18 +178,23 @@
 	<div class="container-wide">
 		<span class="model-eyebrow" use:reveal>{TWIN_ROLE_EYEBROW}</span>
 		<h2 use:reveal={{ delay: 60 }}>{TWIN_ROLE_HEADING}</h2>
-		<!-- Three columns divided by hairline rules, the same treatment the two
-		     products get on the homepage. They were bordered cards, which made
-		     three sequenced arguments read as three unrelated tiles. -->
-		<div class="model-grid">
+		<!-- A numbered argument, not three columns. These are three steps of one
+		     case — revenue starts here, it feeds that, and this is the number to
+		     hold us to — and side-by-side columns of equal weight flattened the
+		     sequence out of it. Rows carry the order; the stat sits on the right
+		     as the fact each step turns on. -->
+		<ol class="model-grid">
 			{#each TWIN_ROLE as role, i (role.title)}
-				<div class="model-col" use:reveal={{ delay: 100 + i * 70 }}>
+				<li class="model-row" use:reveal={{ delay: 100 + i * 70 }}>
+					<span class="model-n">{String(i + 1).padStart(2, '0')}</span>
+					<div class="model-text">
+						<h3>{role.title}</h3>
+						<p>{role.body}</p>
+					</div>
 					<span class="model-stat">{role.stat}</span>
-					<h3>{role.title}</h3>
-					<p>{role.body}</p>
-				</div>
+				</li>
 			{/each}
-		</div>
+		</ol>
 
 		<h3 class="model-sub" use:reveal>Two routes to clinical revenue</h3>
 		<div class="model-paths">
@@ -381,36 +386,46 @@
 		margin-bottom: 1rem;
 	}
 	.model-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 2.5rem;
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		list-style: none;
+		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+		padding: 0;
 		border-top: 1px solid var(--color-ink);
 	}
-	.model-col {
-		padding-top: 1.75rem;
+	.model-row {
+		display: grid;
+		grid-template-columns: 2.5rem minmax(0, 1fr);
+		gap: 0.35rem 1rem;
+		padding-block: 1.5rem;
+		border-bottom: 1px solid var(--color-rule);
+	}
+	.model-n {
+		font-size: 0.7rem;
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+		color: var(--color-ink-faint);
+		padding-top: 0.25rem;
 	}
 	.model-stat {
-		display: block;
+		grid-column: 2;
 		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.18em;
 		text-transform: uppercase;
 		color: var(--color-primary-600);
-		margin-bottom: 0.9rem;
 	}
-	.model-col h3,
+	.model-row h3,
 	.model-path h4 {
 		font-size: 1.08rem;
 		letter-spacing: -0.015em;
-		margin: 0 0 0.5rem;
+		margin: 0 0 0.4rem;
 	}
-	.model-col p,
+	.model-row p,
 	.model-path p {
 		font-size: 0.92rem;
 		line-height: 1.7;
 		color: var(--color-ink-soft);
 		margin: 0;
+		max-width: 68ch;
 	}
 	.model-sub {
 		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
@@ -569,16 +584,16 @@
 		}
 	}
 	@media (min-width: 880px) {
-		.model-grid {
-			grid-template-columns: repeat(3, minmax(0, 1fr));
-			gap: 0;
+		/* The stat moves out to its own right-hand column, where it lines up
+		   down the list and reads as the fact each row turns on. */
+		.model-row {
+			grid-template-columns: 2.5rem minmax(0, 1fr) 9rem;
+			align-items: baseline;
+			gap: 1.5rem;
 		}
-		.model-col + .model-col {
-			border-left: 1px solid var(--color-rule);
-			padding-left: 2.25rem;
-		}
-		.model-col:not(:last-child) {
-			padding-right: 2.25rem;
+		.model-stat {
+			grid-column: 3;
+			text-align: right;
 		}
 		.model-paths {
 			grid-template-columns: repeat(2, minmax(0, 1fr));

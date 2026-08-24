@@ -2,30 +2,16 @@
 	import { reveal } from '$lib/actions/motion';
 	import { CARE_LOOP, CARE_LOOP_LINE, CARE_LOOP_HANDOFFS } from '$lib/data/company';
 
-	/* Four stages on a real ellipse.
+	/* Four stages left to right, with a return path running back underneath.
 	 *
-	 * The previous attempts all failed the same way: they drew the connective
-	 * tissue by hand, either as SVG arcs with computed coordinates or as elbows
-	 * built from borders on grid cells, and then had to fight the type for
-	 * space. Here one ellipse is stroked across the whole block and the four
-	 * nodes are placed on its cardinal points by a 3x3 grid. Because the nodes
-	 * carry the page background, the ellipse passes behind them and the ring
-	 * reads as continuous without a single coordinate being written down.
+	 * Four earlier versions tried to draw this as a shape — two SVG circles, a
+	 * two-lane grid, a stroked ellipse with the stages on its cardinal points.
+	 * All of them were geometrically correct and none of them read. The problem
+	 * was never the maths, it was that a ring forces the eye to work out where
+	 * to start. A row reads in the direction you already read, and one line
+	 * turning back under it is enough to say "and then it goes round again".
 	 */
-	const stages = CARE_LOOP.map((s, i) => ({
-		...s,
-		n: String(i + 1).padStart(2, '0'),
-		pos: (['top', 'right', 'bottom', 'left'] as const)[i]
-	}));
-
-	/* The diagonals, where the ellipse is travelling fastest and where the two
-	   handoffs between the products happen. */
-	const corners = [
-		{ key: 'tr', label: CARE_LOOP_HANDOFFS.toClinic, rot: 90 },
-		{ key: 'br', label: '', rot: 180 },
-		{ key: 'bl', label: CARE_LOOP_HANDOFFS.toLife, rot: 270 },
-		{ key: 'tl', label: '', rot: 0 }
-	];
+	const stages = CARE_LOOP.map((s, i) => ({ ...s, n: String(i + 1).padStart(2, '0') }));
 </script>
 
 <section class="loop section-y" aria-labelledby="loop-heading">
@@ -36,46 +22,38 @@
 			can keep.
 		</p>
 
-		<div class="ring" use:reveal={{ delay: 100 }}>
-			<!-- The ring itself. preserveAspectRatio="none" stretches the circle
-			     to the block, so it passes exactly through the mid-point of each
-			     edge, which is where the four nodes sit. -->
-			<svg class="ring-path" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-				<circle cx="50" cy="50" r="50" vector-effect="non-scaling-stroke" />
-			</svg>
+		<div class="flow">
+			<ol class="stages">
+				{#each stages as stage, i (stage.n)}
+					<li
+						class="stage"
+						data-actor={stage.actor}
+						class:handoff-after={i === 0 || i === 2}
+						use:reveal={{ delay: 120 + i * 90 }}
+					>
+						<span class="stage-n">{stage.n}</span>
+						<h3>{stage.name}</h3>
+						<p class="stage-title">{stage.title}</p>
+						<p class="stage-body">{stage.body}</p>
+						<span class="stage-actor"
+							>{stage.actor === 'auracle' ? 'Auracle' : 'Auracare CDSS'}</span
+						>
+						{#if i === 0}
+							<span class="handoff">{CARE_LOOP_HANDOFFS.toClinic}</span>
+						{:else if i === 2}
+							<span class="handoff">{CARE_LOOP_HANDOFFS.toLife}</span>
+						{/if}
+					</li>
+				{/each}
+			</ol>
 
-			{#each stages as stage (stage.n)}
-				<article class="node" data-pos={stage.pos} data-actor={stage.actor}>
-					<span class="node-n">{stage.n}</span>
-					<h3>{stage.name}</h3>
-					<p>{stage.title}</p>
-					<span class="node-actor">{stage.actor === 'auracle' ? 'Auracle' : 'Auracare CDSS'}</span>
-				</article>
-			{/each}
-
-			{#each corners as corner (corner.key)}
-				<div class="corner" data-corner={corner.key} aria-hidden="true">
-					<span class="arrow" style="--rot:{corner.rot}deg"></span>
-					{#if corner.label}<span class="handoff">{corner.label}</span>{/if}
-				</div>
-			{/each}
-
-			<p class="hub">{CARE_LOOP_LINE}</p>
+			<!-- The line that makes it a loop: out of stage four, back under the
+			     row, and up into stage one. -->
+			<div class="return" use:reveal={{ delay: 420 }}>
+				<span class="return-line" aria-hidden="true"></span>
+				<span class="return-label">{CARE_LOOP_LINE}</span>
+			</div>
 		</div>
-
-		<!-- The detail the nodes deliberately no longer carry. Eight steps in
-		     four boxes made the ring unreadable; they belong under it. -->
-		<ol class="detail" use:reveal>
-			{#each stages as stage (stage.n)}
-				<li>
-					<span class="detail-n">{stage.n}</span>
-					<div>
-						<h4>{stage.title}</h4>
-						<p>{stage.body}</p>
-					</div>
-				</li>
-			{/each}
-		</ol>
 	</div>
 </section>
 
@@ -97,245 +75,191 @@
 		margin: 0;
 	}
 
-	/* ---------------------------------------------------------------- */
-	/* Stacked first: four numbered nodes in sequence. This is what the  */
-	/* ring degrades to below 1000px and without any layout at all.      */
-	/* ---------------------------------------------------------------- */
-	.ring {
-		position: relative;
+	.flow {
 		margin-top: clamp(2.5rem, 5vw, 4rem);
+	}
+
+	/* Stacked first: a ruled sequence, which is what the row becomes on a
+	   narrow screen and what it is without any layout at all. */
+	.stages {
+		list-style: none;
+		margin: 0;
+		padding: 0;
 		border-top: 1px solid var(--color-ink);
 	}
-	.ring-path,
-	.corner {
-		display: none;
-	}
-	.node {
-		padding-block: 1.25rem;
+	.stage {
+		position: relative;
+		padding-block: 1.4rem;
 		border-bottom: 1px solid var(--color-rule);
 	}
-	.node-n {
+	.stage-n {
 		font-size: 0.7rem;
 		font-weight: 600;
 		font-variant-numeric: tabular-nums;
 		color: var(--color-ink-faint);
 	}
-	.node h3 {
-		font-size: 1.35rem;
+	.stage h3 {
+		font-size: 1.3rem;
 		letter-spacing: 0.02em;
 		text-transform: uppercase;
-		margin: 0.2rem 0 0.3rem;
+		margin: 0.2rem 0 0.35rem;
 	}
-	.node p {
-		font-size: 0.92rem;
-		line-height: 1.65;
+	.stage-title {
+		font-size: 0.95rem;
+		line-height: 1.55;
+		color: var(--color-ink);
+		margin: 0 0 0.5rem;
+		font-weight: 500;
+	}
+	.stage-body {
+		font-size: 0.88rem;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
 		margin: 0;
 	}
-	.node-actor {
+	.stage-actor {
 		display: block;
-		margin-top: 0.5rem;
-		font-size: 0.66rem;
+		margin-top: 0.7rem;
+		font-size: 0.64rem;
 		font-weight: 600;
 		letter-spacing: 0.16em;
 		text-transform: uppercase;
 		color: var(--color-primary-600);
 	}
-	.node[data-actor='auracare'] .node-actor {
+	.stage[data-actor='auracare'] .stage-actor {
 		color: var(--color-ink-faint);
 	}
-
-	.hub {
-		margin: 1.5rem 0 0;
-		font-size: clamp(1rem, 1.5vw, 1.15rem);
-		font-weight: 500;
-		line-height: 1.6;
-		color: var(--color-ink);
-	}
-
-	/* The eight original steps, as a plain ruled list under the diagram. */
-	.detail {
-		list-style: none;
-		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
-		padding: 0;
-		border-top: 1px solid var(--color-ink);
-	}
-	.detail li {
-		display: grid;
-		grid-template-columns: 2.5rem minmax(0, 1fr);
-		gap: 1rem;
-		padding-block: 1.1rem;
-		border-bottom: 1px solid var(--color-rule);
-	}
-	.detail-n {
-		font-size: 0.7rem;
+	/* The two places the loop changes hands. */
+	.handoff {
+		display: block;
+		margin-top: 0.9rem;
+		font-size: 0.62rem;
 		font-weight: 600;
-		font-variant-numeric: tabular-nums;
-		color: var(--color-ink-faint);
-		padding-top: 0.2rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
 	}
-	.detail h4 {
-		font-size: 0.98rem;
-		letter-spacing: -0.01em;
-		margin: 0 0 0.2rem;
+	.handoff::before {
+		content: '↓ ';
 	}
-	.detail p {
-		font-size: 0.9rem;
+
+	.return {
+		margin-top: 1.5rem;
+	}
+	.return-line {
+		display: none;
+	}
+	.return-label {
+		display: block;
+		font-size: 0.88rem;
 		line-height: 1.7;
 		color: var(--color-ink-soft);
-		margin: 0;
-		max-width: 68ch;
+	}
+	.return-label::before {
+		content: '↻ ';
+		color: var(--color-primary-600);
 	}
 
 	/* ---------------------------------------------------------------- */
-	/* The ring.                                                         */
+	/* The row, and the line that turns it into a loop.                  */
 	/* ---------------------------------------------------------------- */
-	@media (min-width: 1000px) {
-		/* The ellipse box. Everything on the ring is placed against it as a
-		   percentage, so nothing is a magic pixel: the four nodes sit on the
-		   cardinal points (0/50/100%), the four arrows on the diagonals at
-		   50% ± 35.36% (that is cos45 of the semi-axis), and the ellipse itself
-		   spans the box exactly. The width leaves one node-width of room so a
-		   node hanging half outside never leaves the container. */
-		.ring {
-			--node-w: 17rem;
-			--diag: 35.36%;
-			position: relative;
-			width: min(56rem, calc(100% - var(--node-w)));
-			aspect-ratio: 1.75;
-			/* Half a node hangs above the top edge and below the bottom one, so
-			   both margins clear it before the list underneath starts. */
-			margin: calc(4.5rem + clamp(2rem, 4vw, 3rem)) auto calc(4.5rem + clamp(2rem, 4vw, 3rem));
+	@media (min-width: 900px) {
+		.stages {
+			display: grid;
+			grid-template-columns: repeat(4, minmax(0, 1fr));
 			border-top: 0;
+			gap: 0;
+		}
+		.stage {
+			padding: 1.4rem 1.5rem 1.6rem;
+			border-bottom: 0;
+			border-top: 2px solid var(--color-primary-600);
+		}
+		.stage[data-actor='auracare'] {
+			border-top-color: var(--color-ink);
+		}
+		.stage + .stage {
+			border-left: 1px solid var(--color-rule);
+		}
+		/* The step from one stage to the next, sat on the rule between them. */
+		.stage + .stage::before {
+			content: '';
+			position: absolute;
+			left: -0.3rem;
+			top: 3.1rem;
+			width: 0.5rem;
+			height: 0.5rem;
+			border-top: 2px solid var(--color-rule-strong);
+			border-right: 2px solid var(--color-rule-strong);
+			transform: rotate(45deg);
+			background: var(--color-surface-page);
+		}
+		/* A handoff is a lane change, so its arrow is the brand blue and it
+		   names itself underneath rather than inside the column. */
+		.stage.handoff-after + .stage::before {
+			border-color: var(--color-primary-600);
+		}
+		.handoff {
+			position: absolute;
+			right: 0;
+			bottom: -2.4rem;
+			transform: translateX(50%);
+			margin: 0;
+			width: max-content;
+			max-width: 9rem;
+			text-align: center;
+			line-height: 1.4;
+			background: var(--color-surface-page);
+			padding: 0 0.5rem;
+		}
+		.handoff::before {
+			content: none;
 		}
 
-		.ring-path {
+		/* Out of stage four, back under the row, and up into stage one. Three
+		   borders on one box: no arrows to place, no coordinates to keep in
+		   sync with the columns above. */
+		.return {
+			position: relative;
+			height: 5.5rem;
+			/* An eighth of the row on each side puts the two uprights under the
+			   centre of the first and last columns. */
+			margin: 3.75rem 12.5% 0;
+		}
+		.return-line {
 			display: block;
 			position: absolute;
 			inset: 0;
-			width: 100%;
-			height: 100%;
-			overflow: visible;
+			border: 1px solid var(--color-rule-strong);
+			border-top: 0;
 		}
-		.ring-path circle {
-			fill: none;
-			stroke: var(--color-rule-strong);
-			stroke-width: 1;
-		}
-
-		.node {
+		/* The arrowhead, pointing back up into stage one. */
+		.return-line::before {
+			content: '';
 			position: absolute;
-			z-index: 1;
-			width: var(--node-w);
-			padding: 0.9rem 1.1rem 1rem;
-			border-bottom: 0;
+			left: -0.3rem;
+			top: -0.05rem;
+			width: 0.5rem;
+			height: 0.5rem;
 			border-top: 2px solid var(--color-primary-600);
-			/* Opaque, so the ellipse passes behind it rather than through it. */
-			background: var(--color-surface-page);
-			text-align: center;
-			transform: translate(-50%, -50%);
+			border-left: 2px solid var(--color-primary-600);
+			transform: rotate(45deg);
 		}
-		.node[data-actor='auracare'] {
-			border-top-color: var(--color-ink);
-		}
-		.node[data-pos='top'] {
+		.return-label {
+			position: absolute;
 			left: 50%;
-			top: 0;
-		}
-		.node[data-pos='right'] {
-			left: 100%;
-			top: 50%;
-		}
-		.node[data-pos='bottom'] {
-			left: 50%;
-			top: 100%;
-		}
-		.node[data-pos='left'] {
-			left: 0;
-			top: 50%;
-		}
-		.node h3 {
-			font-size: 1.15rem;
-		}
-		.node p {
-			font-size: 0.85rem;
-			line-height: 1.55;
-		}
-
-		/* Direction of travel, sat on the ellipse at each diagonal. */
-		.corner {
-			display: block;
-			position: absolute;
-			z-index: 1;
-		}
-		.corner[data-corner='tl'] {
-			left: calc(50% - var(--diag));
-			top: calc(50% - var(--diag));
-		}
-		.corner[data-corner='tr'] {
-			left: calc(50% + var(--diag));
-			top: calc(50% - var(--diag));
-		}
-		.corner[data-corner='br'] {
-			left: calc(50% + var(--diag));
-			top: calc(50% + var(--diag));
-		}
-		.corner[data-corner='bl'] {
-			left: calc(50% - var(--diag));
-			top: calc(50% + var(--diag));
-		}
-		/* A chevron on the tangent, drawn from two borders so it needs no glyph
-		   and no icon file. 0deg points up-right, and each quarter turn follows
-		   the ring clockwise from there. */
-		.arrow {
-			display: block;
-			position: absolute;
-			left: 0;
-			top: 0;
-			width: 0.55rem;
-			height: 0.55rem;
-			border-top: 2px solid var(--color-primary-600);
-			border-right: 2px solid var(--color-primary-600);
-			transform: translate(-50%, -50%) rotate(var(--rot));
-		}
-		.handoff {
-			display: block;
-			position: absolute;
+			bottom: 0;
+			transform: translate(-50%, 50%);
 			width: max-content;
-			max-width: 8rem;
-			font-size: 0.62rem;
-			font-weight: 600;
-			letter-spacing: 0.14em;
-			text-transform: uppercase;
-			line-height: 1.5;
-			color: var(--color-primary-600);
-			background: var(--color-surface-page);
-			padding: 0.2rem 0.4rem;
-		}
-		/* Pushed clear of the curve, outward along the diagonal it names. */
-		.corner[data-corner='tr'] .handoff {
-			left: 0.9rem;
-			bottom: 0.9rem;
-			text-align: left;
-		}
-		.corner[data-corner='bl'] .handoff {
-			right: 0.9rem;
-			top: 0.9rem;
-			text-align: right;
-		}
-
-		.hub {
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			z-index: 1;
-			transform: translate(-50%, -50%);
-			margin: 0;
-			padding: 0 1.25rem;
-			width: 20rem;
+			max-width: 32ch;
 			text-align: center;
-			font-size: clamp(1rem, 1.4vw, 1.15rem);
+			font-weight: 500;
+			color: var(--color-ink);
 			background: var(--color-surface-page);
+			padding: 0 1rem;
+		}
+		.return-label::before {
+			content: none;
 		}
 	}
 </style>

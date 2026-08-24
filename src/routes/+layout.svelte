@@ -1,7 +1,9 @@
 <script lang="ts">
 	import '../app.css';
 	import { onMount } from 'svelte';
+	import { onNavigate } from '$app/navigation';
 	import { dev } from '$app/environment';
+	import { prefersReducedMotion } from '$lib/actions/motion';
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 	import { cookieConsent } from '$lib/stores/cookieConsent';
 	import { loadPostHog, stopPostHog } from '$lib/analytics/posthog';
@@ -27,6 +29,24 @@
 			// changed their mind; a straight decline never loads PostHog at all.
 			stopPostHog();
 		}
+	});
+
+	/* Cross-fade between pages.
+	 *
+	 * A client-side navigation used to swap the document instantly, which is
+	 * the one moment on the site that reads as a hard cut. The View Transitions
+	 * API hands the browser both frames and lets CSS dissolve between them; the
+	 * `startViewTransition` guard means a browser without it simply navigates
+	 * the way it always did. Resolving the promise is what tells the browser
+	 * the new page is ready to be captured. */
+	onNavigate((navigation) => {
+		if (!document.startViewTransition || prefersReducedMotion()) return;
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
 	});
 
 	onMount(() => {
