@@ -8,17 +8,17 @@
 		{
 			n: '01',
 			label: 'Connect',
-			body: 'Link the wearables and health apps you already use. Cloud services sync server-side: the vendor pings us the moment a new record lands and we pull just that record. Phone-native sources push straight from the device, since they expose no server to poll. Either path runs in the background. Nothing to open, nothing to remember.'
+			body: 'Link the wearables and health apps you already use. Cloud services sync server-side: the vendor tells us the moment a record lands and we pull only that record. Phone-native sources push straight from the device. Either path runs in the background.'
 		},
 		{
 			n: '02',
 			label: 'Normalise',
-			body: 'Every source records data its own way. Auracle translates each record into one shared format (resting heart rate is the same field whether it came from a ring or a watch), removes duplicates across devices, and timestamps each reading in your local time, so last night’s sleep is counted on the right day. The result is one clean, consistent stream instead of a dozen feeds that don’t line up.'
+			body: 'Every source records data its own way. Auracle translates each record into one shared format, removes duplicates across devices, and timestamps every reading in your local time. One consistent stream instead of a dozen feeds that do not line up.'
 		},
 		{
 			n: '03',
 			label: 'Converse',
-			body: 'Auracle keeps an eye on the normalised stream and messages you first when something shifts (a run of poor recovery, a sedentary streak) and answers when you text back. Just reply in plain language; that is the logging. It all happens in your messages: no new app, no forms, no streaks to keep alive.'
+			body: 'Auracle watches the normalised stream and messages you first when something shifts, then answers when you text back. Reply in plain language; that is the logging. No new app, no forms, no streaks.'
 		}
 	];
 
@@ -38,7 +38,7 @@
 		{
 			key: 'input',
 			label: 'Input',
-			body: 'The prior and the acute, on one timeline: everyday-life signals from Auracle, clinical history, and vitals captured live in the room, all as points on a single timestamped record.'
+			body: 'One timeline: everyday-life signals from Auracle, clinical history, and vitals captured live in the room, all on a single timestamped record.'
 		},
 		{
 			key: 'encoding',
@@ -53,7 +53,7 @@
 		{
 			key: 'thesis',
 			label: 'Thesis',
-			body: 'Calibrate, score, diagnose. The distribution is grounded against population data, turned into quantified risk, and stated as a ranked differential with its sources attached: a working thesis, held only as long as the evidence supports it.'
+			body: 'The distribution is grounded against population data, turned into quantified risk, and stated as a ranked differential with its sources attached. A working thesis, held only as long as the evidence supports it.'
 		},
 		{
 			key: 'voi',
@@ -144,7 +144,7 @@
 
 <Seo
 	title="Technology"
-	description="Two products on one patient model: how Auracle builds a high-context digital twin, and how the Auracare CDSS turns it into grounded, traceable clinical decision support."
+	description="Two products on one patient model: how Auracle builds a high-context patient history, and how the Auracare CDSS turns it into grounded, traceable clinical decision support."
 	path="/technology"
 />
 
@@ -152,27 +152,18 @@
 <!-- Hero                                                          -->
 <!-- ============================================================ -->
 <section class="tech-hero aura-space">
-	<div class="hero-orbs" aria-hidden="true">
-		<span
-			class="bubble"
-			style="--bubble-size:380px;--bubble-color:rgba(97,128,255,.32);--bubble-blur:18px; top:-10%; right:-4%"
-		></span>
-		<span
-			class="bubble"
-			style="--bubble-size:280px;--bubble-color:rgba(56,127,245,.24);--bubble-blur:14px; bottom:-12%; left:-6%"
-		></span>
-	</div>
+	<!-- The .bubble decorations here were retired to a no-op in a previous
+	     cleanup, so this hero had been rendering flat. The wash replaces them. -->
+	<div class="wash-dark" aria-hidden="true"></div>
 	<div class="container-wide hero-inner">
 		<span class="eyebrow" use:reveal>Technology</span>
 		<h1 use:reveal={{ delay: 60 }}>
 			Two products. <span class="text-gradient-l">One patient model.</span>
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>
-			Everything we build stands on a single idea: one timestamped picture of a person, grounded in
-			the language medicine already agrees on. <strong>Auracle</strong> is a consumer twin that
-			learns your daily life. <strong>Auracare CDSS</strong> is clinical decision support that reasons
-			over the whole picture: vitals, history, symptoms and everything Auracle captures. This page is
-			how both work.
+			One timestamped picture of a person, grounded in the language medicine already agrees on.
+			<strong>Auracle</strong> learns your daily life. <strong>Auracare CDSS</strong> reasons over the
+			whole picture: vitals, history, symptoms and everything Auracle captures.
 		</p>
 		<nav class="hero-jump" use:reveal={{ delay: 200 }} aria-label="Jump to a product">
 			<a href="#auracle">Auracle <span aria-hidden="true">→</span></a>
@@ -567,7 +558,7 @@
 		<span class="eyebrow" use:reveal>What both products stand on</span>
 		<h2 use:reveal={{ delay: 60 }}>Grounded in what medicine already knows.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			The twin and the reasoning core both bind to the same live graph of clinical concepts and the
+			Auracle and the reasoning core both bind to the same live graph of clinical concepts and the
 			relationships between them. It is not scraped from the open web; it is mapped to the standards
 			clinicians, regulators and health systems already trust, and it is the one part of the system
 			you can explore for yourself today.
@@ -622,11 +613,6 @@
 	/* ---------------- Hero ---------------- */
 	.tech-hero {
 		padding-block: clamp(4rem, 10vw, 8rem);
-	}
-	.hero-orbs {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
 	}
 	.hero-inner {
 		position: relative;
@@ -747,6 +733,7 @@
 		font-family: var(--font-family-heading);
 		font-size: clamp(3.2rem, 8vw, 4.5rem);
 		font-weight: 700;
+		font-variant-numeric: tabular-nums;
 		line-height: 1;
 		letter-spacing: -0.03em;
 		color: var(--color-primary-600);
@@ -1196,6 +1183,7 @@
 		font-family: var(--font-family-heading);
 		font-size: clamp(1.8rem, 4vw, 2.6rem);
 		font-weight: 700;
+		font-variant-numeric: tabular-nums;
 		line-height: 1;
 		color: #fff;
 		text-shadow: 0 0 24px rgba(97, 128, 255, 0.45);

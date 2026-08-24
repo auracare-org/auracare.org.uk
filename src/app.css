@@ -110,6 +110,7 @@
 	--radius-2xl: 24px;
 	--radius-3xl: 32px;
 	--radius-4xl: 40px;
+	--radius-pill: 9999px;
 
 	/* Typography. Avenir is the brand face and is present on macOS/iOS, which
 	   covers most of the audience. Nunito Sans is the closest freely-hostable
@@ -140,14 +141,29 @@
 	--duration-popover: 200ms;
 	--duration-reveal: 480ms;
 
-	/* Shadows: quiet, layered; no glow */
-	--shadow-xs: 0 1px 2px rgba(20, 22, 29, 0.05);
-	--shadow-sm: 0 1px 2px rgba(20, 22, 29, 0.05), 0 4px 12px -4px rgba(20, 22, 29, 0.08);
-	--shadow-md: 0 1px 2px rgba(20, 22, 29, 0.05), 0 12px 32px -16px rgba(20, 22, 29, 0.16);
+	/* Shadows. Tinted toward the brand navy rather than neutral grey: a
+	   blue-cast shadow on a blue-cast page reads as depth, a grey one reads
+	   as dirt. Kept shallow; the gradient wash carries most of the lift. */
+	--shadow-xs: 0 1px 3px rgba(0, 55, 112, 0.08);
+	--shadow-sm: 0 1px 3px rgba(0, 55, 112, 0.08), 0 2px 6px rgba(0, 55, 112, 0.04);
+	--shadow-md: 0 2px 6px rgba(0, 55, 112, 0.04), 0 8px 24px rgba(0, 55, 112, 0.08);
+	--shadow-lg: 0 2px 6px rgba(0, 55, 112, 0.05), 0 20px 48px rgba(0, 55, 112, 0.12);
 	/* Legacy names kept so old references degrade gracefully */
-	--shadow-glass-glow: 0 1px 2px rgba(20, 22, 29, 0.05), 0 12px 32px -16px rgba(20, 22, 29, 0.16);
-	--shadow-glass-glow-strong:
-		0 1px 2px rgba(20, 22, 29, 0.06), 0 20px 48px -20px rgba(20, 22, 29, 0.2);
+	--shadow-glass-glow: 0 1px 3px rgba(0, 55, 112, 0.08), 0 8px 24px rgba(0, 55, 112, 0.08);
+	--shadow-glass-glow-strong: 0 2px 6px rgba(0, 55, 112, 0.05), 0 20px 48px rgba(0, 55, 112, 0.12);
+
+	/* ============================================================= */
+	/* Display type scale.                                           */
+	/* Weight 300 across every display tier with negative tracking    */
+	/* that scales with size. Thin-at-large is what separates an      */
+	/* editorial page from a blocky one; bumping these to 600 is what */
+	/* made the old headings feel heavy. Body stays at 400.           */
+	/* ============================================================= */
+	--display-xxl: 300 clamp(2.5rem, 5.2vw, 3.5rem) / 1.03 var(--font-family-heading);
+	--tracking-xxl: -0.025em;
+	--tracking-xl: -0.02em;
+	--tracking-lg: -0.02em;
+	--tracking-md: -0.01em;
 }
 
 /* Base Styles */
@@ -176,6 +192,8 @@
 		color: var(--color-primary-900);
 	}
 
+	/* Display tiers run light. The negative tracking tightens as the size
+	   grows, which is what stops a large light headline reading as loose. */
 	h1,
 	h2,
 	h3,
@@ -183,30 +201,38 @@
 	h5,
 	h6 {
 		font-family: var(--font-family-heading);
-		@apply font-semibold leading-tight;
+		@apply leading-tight;
+		font-weight: 300;
 		color: var(--color-ink);
-		letter-spacing: -0.02em;
+		letter-spacing: var(--tracking-lg);
 	}
 
 	h1 {
-		font-size: clamp(2rem, 4vw, 3rem);
-		line-height: 1.1;
-		letter-spacing: -0.02em;
+		font-size: clamp(2.25rem, 5vw, 3.5rem);
+		line-height: 1.04;
+		letter-spacing: var(--tracking-xxl);
 	}
 
 	h2 {
-		font-size: clamp(1.6rem, 3vw, 2.4rem);
-		line-height: 1.12;
+		font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+		line-height: 1.1;
+		letter-spacing: var(--tracking-xl);
 	}
 
 	h3 {
-		font-size: clamp(1.1rem, 1.8vw, 1.4rem);
-		line-height: 1.25;
+		font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+		line-height: 1.3;
+		letter-spacing: var(--tracking-md);
+		/* Card titles sit next to body copy, so they hold a little more weight
+		   than the display tiers to stay distinguishable at small sizes. */
+		font-weight: 500;
 	}
 
 	h4 {
 		font-size: 1rem;
-		line-height: 1.35;
+		line-height: 1.4;
+		letter-spacing: var(--tracking-md);
+		font-weight: 500;
 	}
 
 	p {
@@ -237,8 +263,8 @@
 	align-items: center;
 	justify-content: center;
 	gap: 0.45rem;
-	padding: 0.7rem 1.35rem;
-	border-radius: 6px;
+	padding: 0.7rem 1.4rem;
+	border-radius: var(--radius-pill);
 	font-weight: 500;
 	font-size: 0.95rem;
 	/* Named properties only. `all` transitions layout properties by accident
@@ -267,7 +293,7 @@
 		inset 0 1px 0 rgba(255, 255, 255, 0.12),
 		var(--shadow-xs);
 	font-weight: 500;
-	border-radius: 6px;
+	border-radius: var(--radius-pill);
 	&:hover {
 		background: var(--color-bg-button-primary-hover);
 		color: var(--color-text-button-primary-hover);
@@ -288,7 +314,7 @@
 	color: var(--color-text-button-secondary-default);
 	border: none;
 	font-weight: 500;
-	border-radius: 6px;
+	border-radius: var(--radius-pill);
 	box-shadow: none;
 	&:hover {
 		background: var(--color-bg-button-secondary-hover);
@@ -924,14 +950,75 @@
 /* =================================================================== */
 
 @utility container-wide {
-	max-width: 78rem;
+	max-width: 75rem;
 	margin: 0 auto;
 	padding: 0 1.5rem;
 }
 
+/* Section rhythm. Marketing surfaces breathe at 64-96px; the old 48px floor
+   is what made sections run together into a wall. */
 @utility section-y {
-	padding-block: clamp(3rem, 6vw, 5rem);
+	padding-block: clamp(4rem, 7vw, 6rem);
 	position: relative;
+}
+
+/* ------------------------------------------------------------------- */
+/* The gradient wash.                                                   */
+/* Depth here is atmospheric colour, not a drop shadow: a soft mesh in   */
+/* the upper third of a hero, mixed only from brand blues so it reads as */
+/* Auracare rather than as generic SaaS. Put it on a hero's decorative   */
+/* child, never on the content wrapper.                                 */
+/* ------------------------------------------------------------------- */
+@utility wash {
+	position: absolute;
+	inset: 0 0 auto 0;
+	height: clamp(22rem, 46vw, 38rem);
+	pointer-events: none;
+	z-index: 0;
+	background:
+		radial-gradient(60% 55% at 12% 8%, rgba(148, 171, 255, 0.4) 0%, rgba(148, 171, 255, 0) 62%),
+		radial-gradient(48% 48% at 78% 2%, rgba(47, 78, 192, 0.22) 0%, rgba(47, 78, 192, 0) 60%),
+		radial-gradient(70% 60% at 50% 0%, rgba(220, 226, 255, 0.75) 0%, rgba(220, 226, 255, 0) 70%);
+	/* Fades out before it reaches the content below, so no hard seam. */
+	mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%);
+	-webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%);
+}
+
+/* Dark surfaces get the same idea in reverse: light pooling at the top. */
+@utility wash-dark {
+	position: absolute;
+	inset: 0 0 auto 0;
+	height: clamp(20rem, 40vw, 32rem);
+	pointer-events: none;
+	z-index: 0;
+	background:
+		radial-gradient(55% 55% at 20% 0%, rgba(97, 128, 255, 0.28) 0%, rgba(97, 128, 255, 0) 65%),
+		radial-gradient(50% 50% at 80% 4%, rgba(47, 78, 192, 0.3) 0%, rgba(47, 78, 192, 0) 62%);
+	mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 100%);
+	-webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 100%);
+}
+
+/* Any content sitting on a washed surface needs to be lifted above it. */
+@utility above-wash {
+	position: relative;
+	z-index: 1;
+}
+
+/* ------------------------------------------------------------------- */
+/* Grid helper: an auto-fit grid orphans its last row, leaving two cards */
+/* centred under three. These keep the final row aligned to the columns  */
+/* above by fixing the column count per breakpoint instead.              */
+/* ------------------------------------------------------------------- */
+@utility grid-cards {
+	display: grid;
+	gap: 1.25rem;
+	grid-template-columns: 1fr;
+	@media (min-width: 700px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	@media (min-width: 1040px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
 }
 
 /* Small mono kicker above headings: the system's fingerprint. */

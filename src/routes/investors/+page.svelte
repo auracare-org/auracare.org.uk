@@ -96,7 +96,8 @@
 
 <!-- ================= Hero ================= -->
 <section class="hero">
-	<div class="container-wide hero-inner">
+	<div class="wash" aria-hidden="true"></div>
+	<div class="container-wide hero-inner above-wash">
 		<span class="eyebrow" use:reveal>Seed round</span>
 		<h1 use:reveal={{ delay: 60 }}>We're raising our seed round.</h1>
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>

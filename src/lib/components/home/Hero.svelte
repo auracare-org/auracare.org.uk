@@ -113,7 +113,8 @@
 </script>
 
 <section class="hero">
-	<div class="container-wide hero-grid">
+	<div class="wash" aria-hidden="true"></div>
+	<div class="container-wide hero-grid above-wash">
 		<div class="hero-copy">
 			<h1 use:reveal={{ delay: 60 }}>
 				The world's most personalised <em>healthcare</em>.
@@ -228,7 +229,7 @@
 						class="avatar"
 					/>
 				{/key}
-				<span class="twin-label">your twin</span>
+				<span class="twin-label">Auracle</span>
 			</div>
 		</div>
 	</div>
@@ -253,7 +254,9 @@
 		font-size: clamp(2.6rem, 5.8vw, 4.4rem);
 		line-height: 1.02;
 		letter-spacing: -0.035em;
-		font-weight: 600;
+		/* Light at display size: the weight is what made this read as a banner
+		   rather than a headline. */
+		font-weight: 300;
 		margin-block: 1rem 1.4rem;
 		max-width: 13ch;
 	}

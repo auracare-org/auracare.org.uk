@@ -10,19 +10,19 @@
 			stat: '~80%',
 			label: 'of doctors already reach for AI',
 			title: 'The demand is already there',
-			body: 'Clinicians want the help. What breaks is the moment they turn to a screen mid-consultation: the patient watches their doctor google, and trust erodes.'
+			body: 'Clinicians want the help. Trust breaks the moment they turn to a screen mid-consultation.'
 		},
 		{
 			stat: '34%',
 			label: 'specialty-benchmark score',
 			title: 'Generic by architecture',
-			body: 'The general-purpose models these tools run on score around a third on specialty-level clinical benchmarks, with no personalisation to the patient actually in the room.'
+			body: 'The general-purpose models behind these tools score around a third on specialty benchmarks, and know nothing about the patient in the room.'
 		},
 		{
 			stat: 'gaps',
 			label: 'between every record',
 			title: 'Disconnected from daily life',
-			body: 'The record is a series of snapshots with long silences in between. Lifestyle and social history are slow to gather and easy to misremember, so the picture is always partial.'
+			body: 'The record is a series of snapshots with long silences between them. Lifestyle and social history are slow to gather and easy to misremember.'
 		}
 	];
 
@@ -31,17 +31,17 @@
 		{
 			k: '01',
 			title: 'The context is already in the room',
-			body: 'The patient arrives with a complete lifestyle summary from their twin, and acute vitals stream live from our own devices, so nothing has to be dug up on the spot.'
+			body: 'The patient arrives with a complete lifestyle summary from Auracle, and acute vitals stream live from our own devices, so nothing is dug up on the spot.'
 		},
 		{
 			k: '02',
 			title: 'Nobody stops to type',
-			body: 'The consultation is transcribed as it happens. No one breaks the conversation to write notes, and no one reads from a keyboard.'
+			body: 'The consultation is transcribed as it happens. No one breaks the conversation to write notes.'
 		},
 		{
 			k: '03',
 			title: 'The clinician stays with the patient',
-			body: 'The CDSS reasons in the background and surfaces what’s useful. The clinician never appears to search anything, so eye contact, and the relationship, holds.'
+			body: 'The CDSS reasons in the background and surfaces what is useful, so the clinician never appears to search anything.'
 		}
 	];
 
@@ -53,11 +53,11 @@
 		},
 		{
 			title: 'Next steps, tailored',
-			body: 'Guideline-aligned options that respect what’s available where the clinician works, including that practice’s own referral rules.'
+			body: 'Guideline-aligned options that respect what is available where the clinician works, including the practice’s own referral rules.'
 		},
 		{
 			title: 'Documentation, automatic',
-			body: 'Structured, formatted consultation notes written by the core, so admin shrinks and screen time turns back into patient time.'
+			body: 'Structured consultation notes written by the core, so screen time turns back into patient time.'
 		}
 	];
 
@@ -73,7 +73,7 @@
 		{ name: 'Allergic rhinitis', pct: 11 }
 	];
 
-	/* The twin's personality is yours to shape: spectrums, not fixed settings. */
+	/* Auracle's personality is yours to shape: spectrums, not fixed settings. */
 	const personaTraits = [
 		{ label: 'Warmth', left: 'Clinical', right: 'Warm', pos: 74 },
 		{ label: 'Detail', left: 'Concise', right: 'Thorough', pos: 42 },
@@ -121,6 +121,7 @@
 
 <!-- ================= Hero ================= -->
 <section class="hero aura-space">
+	<div class="wash-dark" aria-hidden="true"></div>
 	<div class="hero-grid-bg" aria-hidden="true"></div>
 	<div class="hero-orb" aria-hidden="true"></div>
 	<div class="container-wide hero-inner">
@@ -129,9 +130,9 @@
 			The decision support that <span class="hl">stays out of the way</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 130 }}>
-			Auracare CDSS is our clinical product: a clinical decision support system that works during
-			the appointment, not after it. The twin you may already know walks into the clinic with the
-			patient, and the clinician keeps their attention exactly where it belongs.
+			A clinical decision support system that works during the appointment, not after it. The
+			history Auracle has built walks into the clinic with the patient, and the clinician keeps
+			their attention on them.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
 			<a
@@ -459,6 +460,7 @@
 		font-family: var(--font-family-heading);
 		font-size: clamp(2rem, 4vw, 2.7rem);
 		font-weight: 700;
+		font-variant-numeric: tabular-nums;
 		line-height: 1;
 		color: var(--color-primary-600);
 	}

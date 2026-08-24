@@ -24,7 +24,7 @@
 		{
 			time: '22:00',
 			title: 'Evening wrap, then quiet',
-			body: 'A calm close on the day and a wind-down reminder. After this it goes silent until morning: quiet hours are on by default.'
+			body: 'A close on the day and a wind-down reminder, then silence until morning. Quiet hours are on by default.'
 		}
 	];
 
@@ -80,7 +80,7 @@
 		{
 			hook: 'The daily open',
 			title: 'Animal states',
-			body: 'Every day gets an animal: sleep, recovery, stress and activity, summed up as a creature you want to check on. People open the chat just to see what they got, and the explanation is the insight.'
+			body: 'Sleep, recovery, stress and activity, summed up each day as a creature you want to check on. People open the chat to see what they got, and the explanation is the insight.'
 		},
 		{
 			hook: 'The Sunday ritual',
@@ -90,12 +90,12 @@
 		{
 			hook: 'Useful on off-days',
 			title: 'Environmental check-ins',
-			body: 'UV, pollen, weather, even mosquitoes: opt-in nudges tied to where you actually are, so Auracle earns its place on days you would never open a health app.'
+			body: 'UV, pollen and weather, tied to where you actually are, so Auracle earns its place on days you would never open a health app.'
 		},
 		{
 			hook: 'Never gets muted',
 			title: 'Quiet hours',
-			body: 'Silent by default from 10pm to 8am, and it steps back the moment you ask. A companion that knows when to stop talking is one people keep.'
+			body: 'Silent by default from 10pm to 8am, and it steps back the moment you ask. Knowing when to stop talking is why people keep it.'
 		},
 		{
 			hook: 'Trust compounds',
@@ -120,7 +120,7 @@
 			"applicationCategory": "HealthApplication",
 			"operatingSystem": "iOS, Android",
 			"url": "https://auracare.org.uk/product",
-			"description": "A personal health digital twin that lives in your messages. Auracle learns your patterns from the wearables and apps you already use, then checks in with a morning brief, a nudge only when it matters, and an evening wrap. A general-wellness product, not a medical device.",
+			"description": "A personal health companion that lives in your messages. Auracle learns your patterns from the wearables and apps you already use, then checks in with a morning brief, a nudge only when it matters, and an evening wrap. A general-wellness product, not a medical device.",
 			"publisher": { "@id": "https://auracare.org.uk/#organization" },
 			"offers": { "@type": "Offer", "availability": "https://schema.org/PreOrder" }
 		}
@@ -159,11 +159,10 @@
 			The product built to be <span class="hl">texted back</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 130 }}>
-			Auracle is Auracare's social-history engine, shipped as a wellness companion that lives in the
-			apps people already open a hundred times a day. It learns your daily life in conversation and
-			builds one bio-psycho-social history: your body, your mind, and the life around them, held
-			together over months. You can export and share this data at an appointment, where the Auracare
-			CDSS will reason over it.
+			A wellness companion that lives in the apps you already open a hundred times a day. It learns
+			your daily life in conversation and builds one bio-psycho-social history: your body, your
+			mind, and the life around them. Share it at an appointment and the Auracare CDSS reasons over
+			it.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 200 }}>
 			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
@@ -310,7 +309,7 @@
 				<span class="price-per">/ month after</span>
 			</div>
 			<p class="price-line">
-				The free months compound: more context, a smarter twin, more reasons it earns its place.
+				The free months compound: more context, sharper guidance, more reasons it earns its place.
 			</p>
 			<ul class="price-list">
 				<li>Every connector and check-in</li>
@@ -367,12 +366,14 @@
 		right: -8rem;
 		background: radial-gradient(circle, rgba(97, 128, 255, 0.5), transparent 70%);
 	}
+	/* Was a green wash, which is the success colour and reads as a different
+	   brand. Kept as a second blue so the hero stays on palette. */
 	.blob-b {
 		width: 22rem;
 		height: 22rem;
 		bottom: -10rem;
 		left: -6rem;
-		background: radial-gradient(circle, rgba(52, 211, 153, 0.28), transparent 70%);
+		background: radial-gradient(circle, rgba(148, 171, 255, 0.45), transparent 70%);
 	}
 	.hero-inner {
 		position: relative;
@@ -759,6 +760,7 @@
 		font-family: var(--font-family-heading);
 		font-size: clamp(2.6rem, 6vw, 3.4rem);
 		font-weight: 700;
+		font-variant-numeric: tabular-nums;
 		line-height: 1;
 		color: var(--color-ink);
 	}
@@ -844,15 +846,18 @@
 		}
 	}
 	@media (min-width: 1000px) {
-		/* Five hooks: three across the top, two below. */
+		/* Five hooks over two rows. The last two widen to span half the grid
+		   each rather than sitting centred under the row above: a centred
+		   orphan row reads as a misalignment, a filled row reads as a choice. */
 		.keep-grid {
 			grid-template-columns: repeat(6, 1fr);
 		}
 		.keep-card {
 			grid-column: span 2;
 		}
-		.keep-card:nth-child(4) {
-			grid-column: 2 / span 2;
+		.keep-card:nth-child(4),
+		.keep-card:nth-child(5) {
+			grid-column: span 3;
 		}
 	}
 	@media (min-width: 860px) {

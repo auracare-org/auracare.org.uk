@@ -167,6 +167,7 @@
 		font-family: var(--font-family-heading);
 		font-size: clamp(1.7rem, 3.2vw, 2.4rem);
 		font-weight: 600;
+		font-variant-numeric: tabular-nums;
 		letter-spacing: -0.03em;
 		line-height: 1;
 		color: var(--color-ink);

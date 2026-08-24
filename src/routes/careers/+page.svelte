@@ -16,7 +16,7 @@
 		},
 		{
 			title: 'Data / Connectors Engineer',
-			body: 'Turn wearables, apps, health platforms and our own devices into clean, comparable signals for Auracle and the clinical core. A big part of this is automating personal data requests and streamlining user sign-on, so consent and privacy are built in from the start.',
+			body: 'Turn wearables, apps, health platforms and our own devices into clean, comparable signals for Auracle and the clinical core. Consent and privacy are built in from the start, which means automating data requests and sign-on.',
 			subject: 'Careers: Data / Connectors Engineer'
 		},
 		{
@@ -44,6 +44,7 @@
 
 <!-- 1) Hero -->
 <section class="hero aura-space">
+	<div class="wash-dark" aria-hidden="true"></div>
 	<div class="hero-orbs" aria-hidden="true">
 		<span
 			class="bubble"
@@ -61,9 +62,8 @@
 			Come build the health system that <span class="text-gradient-l">should exist</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>
-			We're <strong>Auracare</strong>: a small team teaching machines to reason about health, for
-			people at home and clinicians in the room. It's early, it's hard, and we won't pretend
-			otherwise. If that sounds like a good time rather than a red flag, keep reading.
+			<strong>Auracare</strong> is a small team teaching machines to reason about health, for people
+			at home and clinicians in the room. It is early and it is hard, and we will not pretend otherwise.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 220 }}>
 			<a class="cta-primary" href="#roles">See open roles</a>

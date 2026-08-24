@@ -492,6 +492,7 @@
 	.stat-value {
 		font-family: var(--font-family-heading);
 		font-weight: 600;
+		font-variant-numeric: tabular-nums;
 		font-size: clamp(1.8rem, 4vw, 2.6rem);
 		line-height: 1;
 		letter-spacing: -0.03em;
