@@ -42,6 +42,18 @@
 		{
 			you: 'skipped lunch, just coffee',
 			twin: 'Noted. Third low-fuel afternoon this week. Want me to nudge you at midday next time?'
+		},
+		{
+			you: 'been getting headaches most afternoons',
+			twin: 'Logged as a recurring symptom rather than a one-off. Four this fortnight, all after 2pm.'
+		},
+		{
+			you: 'started sertraline last week, 50mg',
+			twin: 'Recorded with a start date, so the change shows against your sleep and energy from here. I don’t advise on medication; your prescriber owns that.'
+		},
+		{
+			you: 'mum was diagnosed with type 2',
+			twin: 'Added to family history. That is the kind of thing a clinician asks for and most people forget in the room.'
 		}
 	];
 
@@ -151,9 +163,10 @@
 <!-- ================= Hero ================= -->
 <PageHero
 	meta="Consumer · Expected August 2026"
-	title="The product built to be"
-	accent="texted back."
-	sub="A wellness companion that lives in the apps you already open a hundred times a day. It learns your daily life in conversation and builds one bio-psycho-social history you can share at an appointment."
+	title="Six months of texting becomes"
+	accent="a history your doctor can read."
+	accentOwnLine
+	sub="Auracle is a wellness companion in the apps you already use. What you tell it is encoded into clinical terminology as you go, so conversation ends up as a social history you can hand to a clinician."
 />
 
 <!-- ================= A day with Auracle ================= -->
@@ -198,12 +211,16 @@
 		<!-- One thread, not three side-by-side pairs. The exchange only reads as
 		     texting if it is stacked the way a thread is: your message right,
 		     the reply left, in sequence down a single column. -->
-		<div class="thread" use:reveal={{ delay: 100 }}>
-			{#each logging as pair (pair.you)}
-				<p class="msg msg--you">{pair.you}</p>
-				<p class="msg msg--them">{pair.twin}</p>
+		<div class="thread">
+			{#each logging as pair, i (pair.you)}
+				<!-- Each message dissolves in on its own beat, so the thread arrives
+				     the way a conversation does rather than all at once. -->
+				<p class="msg msg--you" use:reveal={{ delay: i * 110 }}>{pair.you}</p>
+				<p class="msg msg--them" use:reveal={{ delay: i * 110 + 55 }}>{pair.twin}</p>
 			{/each}
-			<p class="thread-note">Replying is the logging. There is nothing else to fill in.</p>
+			<p class="thread-note" use:reveal>
+				Replying is the logging. There is nothing else to fill in.
+			</p>
 		</div>
 	</div>
 </section>

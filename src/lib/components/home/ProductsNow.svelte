@@ -20,23 +20,33 @@
 	<div class="container-wide">
 		<h2 use:reveal>Two products, one patient model.</h2>
 
-		<ol class="index">
-			{#each products as product (product.key)}
-				<li class="entry" use:reveal={{ delay: 60 }}>
-					<div class="entry-body">
-						<h3>
-							<a href={product.href}>
-								{product.name}
-								<span aria-hidden="true">&rarr;</span>
-							</a>
-						</h3>
-						<p class="entry-tagline">{product.tagline}</p>
-						<p class="entry-blurb">{product.blurb}</p>
-						<p class="entry-status">{product.statusLabel}</p>
-					</div>
-				</li>
+		<!-- Side by side, so the division of labour is the layout. Each panel
+		     states who it is for, what it does, and when it lands; the rule
+		     between them is the handoff. -->
+		<div class="panels">
+			{#each products as product, i (product.key)}
+				<article class="panel" use:reveal={{ delay: i * 80 }}>
+					<span class="panel-for"
+						>{product.key === 'auracle' ? 'For people' : 'For clinicians'}</span
+					>
+					<h3>
+						<a href={product.href}>{product.name} <span aria-hidden="true">&rarr;</span></a>
+					</h3>
+					<p class="panel-tagline">{product.tagline}</p>
+					<p class="panel-blurb">{product.blurb}</p>
+					<dl class="panel-facts">
+						<div>
+							<dt>Status</dt>
+							<dd>{product.statusLabel}</dd>
+						</div>
+						<div>
+							<dt>Runs</dt>
+							<dd>{product.key === 'auracle' ? 'In your messages' : 'In the consultation'}</dd>
+						</div>
+					</dl>
+				</article>
 			{/each}
-		</ol>
+		</div>
 
 		<div class="engine" use:reveal>
 			<p class="engine-lead">
@@ -59,62 +69,84 @@
 		line-height: 1.06;
 		letter-spacing: -0.03em;
 		margin: 0 0 clamp(2.5rem, 5vw, 4rem);
-		max-width: none;
 		text-align: left;
 	}
 
-	.index {
-		list-style: none;
-		margin: 0;
-		padding: 0;
+	.panels {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
 		border-top: 1px solid var(--color-ink);
 	}
-	.entry {
-		padding-block: clamp(2rem, 4vw, 3rem);
-		border-bottom: 1px solid var(--color-rule);
+	.panel {
+		padding-top: 1.75rem;
 	}
-	.entry-status {
-		margin: 1.25rem 0 0;
+	.panel-for {
+		display: block;
 		font-size: 0.66rem;
 		font-weight: 600;
-		letter-spacing: 0.16em;
+		letter-spacing: 0.2em;
 		text-transform: uppercase;
-		color: var(--color-ink-faint);
+		color: var(--color-primary-600);
+		margin-bottom: 0.9rem;
 	}
-	.entry h3 {
-		font-size: clamp(1.6rem, 3vw, 2.4rem);
-		letter-spacing: -0.02em;
-		margin: 0 0 0.4rem;
+	.panel h3 {
+		font-size: clamp(1.7rem, 3.2vw, 2.5rem);
+		letter-spacing: -0.03em;
+		margin: 0;
 	}
-	.entry h3 a {
+	.panel h3 a {
 		display: inline-flex;
 		align-items: baseline;
 		gap: 0.5rem;
 		color: var(--color-ink);
 		transition: color var(--duration-hover) ease;
 	}
-	.entry h3 a span {
-		font-size: 0.8em;
+	.panel h3 a span {
+		font-size: 0.7em;
 		color: var(--color-primary-600);
 		transition: transform var(--duration-hover) var(--ease-out);
 	}
-	.entry-tagline {
-		font-size: 0.95rem;
+	.panel-tagline {
+		margin: 0.4rem 0 1rem;
+		font-size: 0.98rem;
 		color: var(--color-primary-600);
-		margin: 0 0 0.75rem;
 	}
-	.entry-blurb {
+	.panel-blurb {
+		margin: 0 0 1.5rem;
 		font-size: 0.98rem;
 		line-height: 1.6;
 		color: var(--color-ink-soft);
+	}
+	.panel-facts {
 		margin: 0;
-		max-width: 62ch;
+		border-top: 1px solid var(--color-rule);
+	}
+	.panel-facts > div {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		padding-block: 0.7rem;
+		border-bottom: 1px solid var(--color-rule);
+	}
+	.panel-facts dt {
+		font-size: 0.66rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--color-ink-faint);
+	}
+	.panel-facts dd {
+		margin: 0;
+		font-size: 0.88rem;
+		color: var(--color-ink);
+		text-align: right;
 	}
 
-	/* The engine statement: wider measure, no rule above it, so it reads as a
-	   conclusion rather than as a third row of the list. */
 	.engine {
 		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		padding-top: clamp(1.5rem, 3vw, 2rem);
+		border-top: 1px solid var(--color-ink);
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -124,7 +156,7 @@
 		font-size: clamp(1.05rem, 1.6vw, 1.3rem);
 		line-height: 1.55;
 		color: var(--color-ink);
-		max-width: 60ch;
+		max-width: 62ch;
 		margin: 0;
 	}
 	.engine-lead strong {
@@ -148,15 +180,28 @@
 	}
 
 	@media (hover: hover) and (pointer: fine) {
+		.panel h3 a:hover {
+			color: var(--color-primary-600);
+		}
+		.panel h3 a:hover span {
+			transform: translateX(4px);
+		}
 		.engine-link:hover {
 			color: var(--color-primary-600);
 			border-color: var(--color-primary-600);
 		}
-		.entry h3 a:hover {
-			color: var(--color-primary-600);
+	}
+	@media (min-width: 880px) {
+		.panels {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 0;
 		}
-		.entry h3 a:hover span {
-			transform: translateX(4px);
+		.panel + .panel {
+			border-left: 1px solid var(--color-rule);
+			padding-left: 3rem;
+		}
+		.panel:first-child {
+			padding-right: 3rem;
 		}
 	}
 </style>

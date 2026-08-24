@@ -34,15 +34,6 @@
 		{ name: 'Context', note: 'Screen time, location and daily rhythm' }
 	];
 
-	/* Loop diagram geometry. The five stages run from the top clockwise down
-	   the right side to the bottom, which leaves the whole left half free for
-	   the return leg so it never crosses a node. */
-	const R = 160;
-	const NODE_R = 44;
-	const ANGLES = [-Math.PI / 2, -Math.PI / 4, 0, Math.PI / 4, Math.PI / 2];
-	const cx = (a: number) => 280 + R * Math.cos(a);
-	const cy = (a: number) => 330 + R * Math.sin(a);
-
 	/* --- Auracare: the reasoning loop ----------------------------- */
 	const LOOP = [
 		{
@@ -359,97 +350,11 @@
 			and keeps going round until asking again would not be worth the delay.
 		</p>
 
-		<!--
-		  The loop, drawn as a loop.
-
-		  A framed list said "cycle" and showed a column, and its overlay label was
-		  absolutely positioned against the frame, which put it on top of the lede
-		  above it. Five stages now sit on a real circle with the direction of
-		  travel marked, stage five exits outward to the outcome, and the safety
-		  overlay is the ring the whole thing sits inside. The ordered list below
-		  carries the same content for screen readers and narrow screens.
-		-->
-		<!--
-		  Geometry notes, because the previous version bled.
-
-		  The five cycling stages sit on an arc from the top down the right side
-		  to the bottom, so the return leg owns the empty left half and never
-		  crosses a node. Stage five sits at the bottom and its exit drops
-		  straight down into the outcome, which stays inside the safety ring
-		  because it is still gated by it. The ring label sits clear above the
-		  ring rather than on top of the dashed stroke.
-		-->
-		<figure class="loop-fig" use:reveal={{ delay: 120 }}>
-			<svg viewBox="0 0 560 680" role="img" aria-labelledby="loop-fig-title">
-				<title id="loop-fig-title">
-					The reasoning loop: input, encoding, thinking, thesis and value-of-information run as a
-					cycle inside a safety overlay; stage five either repeats the cycle or exits to a medical
-					outcome.
-				</title>
-				<defs>
-					<marker
-						id="loopHead"
-						viewBox="0 0 10 10"
-						refX="8"
-						refY="5"
-						markerWidth="5"
-						markerHeight="5"
-						orient="auto-start-reverse"
-					>
-						<path d="M0 0 L10 5 L0 10 z" fill="currentColor" />
-					</marker>
-				</defs>
-
-				<circle class="ring" cx="280" cy="330" r="300" />
-				<text class="ring-label" x="280" y="22" text-anchor="middle"
-					>SAFETY OVERLAY · EVERY STAGE</text
-				>
-
-				{#each ANGLES as a, i}
-					{#if ANGLES[i + 1] !== undefined}
-						<path
-							class="arc"
-							marker-end="url(#loopHead)"
-							d="M {cx(a + 0.28)} {cy(a + 0.28)} A {R} {R} 0 0 1 {cx(ANGLES[i + 1] - 0.28)} {cy(
-								ANGLES[i + 1] - 0.28
-							)}"
-						/>
-					{/if}
-				{/each}
-
-				<!-- The return leg, up the empty left side -->
-				<path
-					class="arc"
-					marker-end="url(#loopHead)"
-					d="M {cx(Math.PI / 2 + 0.3)} {cy(Math.PI / 2 + 0.3)} A {R} {R} 0 0 1 {cx(
-						-Math.PI / 2 - 0.3
-					)} {cy(-Math.PI / 2 - 0.3)}"
-				/>
-
-				{#each LOOP.slice(0, 5) as stage, i}
-					<g class="node" class:exit={i === 4}>
-						<circle cx={cx(ANGLES[i])} cy={cy(ANGLES[i])} r={NODE_R} />
-						<text class="node-num" x={cx(ANGLES[i])} y={cy(ANGLES[i]) - 5} text-anchor="middle">
-							0{i + 1}
-						</text>
-						<text class="node-label" x={cx(ANGLES[i])} y={cy(ANGLES[i]) + 13} text-anchor="middle">
-							{stage.label.length > 12 ? 'Value of info.' : stage.label}
-						</text>
-					</g>
-				{/each}
-
-				<path class="exit-line" marker-end="url(#loopHead)" d="M 280 534 L 280 560" />
-				<g class="node outcome">
-					<rect x="180" y="566" width="200" height="54" />
-					<text class="node-num" x="280" y="589" text-anchor="middle">06</text>
-					<text class="node-label" x="280" y="607" text-anchor="middle">Medical outcome</text>
-				</g>
-			</svg>
-			<figcaption>
-				Stages one to five cycle. Stage five is the only exit, and everything leaving it passes the
-				safety overlay.
-			</figcaption>
-		</figure>
+		<!-- Deliberately a list, not a diagram. Two attempts at drawing this as a
+		     circle produced arcs that bled through the nodes and labels that
+		     collided with the ring, and the shape added nothing the numbered
+		     sequence does not already say. The safety overlay is stated once
+		     underneath instead of drawn around it. -->
 
 		<ol class="loop-list">
 			{#each LOOP as stage, i}
@@ -832,77 +737,6 @@
 		.signals-grid {
 			grid-template-columns: repeat(3, 1fr);
 		}
-	}
-	.loop-fig {
-		margin: clamp(2.5rem, 5vw, 4rem) 0 0;
-	}
-	.loop-fig svg {
-		display: block;
-		width: 100%;
-		max-width: 46rem;
-		height: auto;
-		margin-inline: auto;
-		color: var(--color-primary-600);
-	}
-	.ring {
-		fill: none;
-		stroke: var(--color-rule-strong);
-		stroke-width: 1;
-		stroke-dasharray: 5 7;
-	}
-	.ring-label {
-		font-size: 11px;
-		font-weight: 600;
-		letter-spacing: 0.18em;
-		fill: var(--color-ink-faint);
-	}
-	.arc {
-		fill: none;
-		stroke: currentColor;
-		stroke-width: 1.5;
-		opacity: 0.55;
-	}
-	.node circle,
-	.node rect {
-		fill: var(--color-surface-page);
-		stroke: var(--color-ink);
-		stroke-width: 1.5;
-	}
-	.node.exit circle {
-		stroke: var(--color-primary-600);
-		stroke-width: 2.5;
-	}
-	.node.outcome rect {
-		fill: var(--color-ink);
-		stroke: var(--color-ink);
-	}
-	.node.outcome .node-num,
-	.node.outcome .node-label {
-		fill: var(--color-surface-page);
-	}
-	.node-num {
-		font-size: 11px;
-		font-weight: 600;
-		letter-spacing: 0.1em;
-		fill: var(--color-primary-600);
-	}
-	.node-label {
-		font-size: 12px;
-		font-weight: 600;
-		fill: var(--color-ink);
-	}
-	.exit-line {
-		fill: none;
-		stroke: var(--color-primary-600);
-		stroke-width: 2;
-	}
-	figcaption {
-		margin: 1.25rem auto 0;
-		text-align: center;
-		font-size: 0.85rem;
-		line-height: 1.5;
-		color: var(--color-ink-faint);
-		max-width: 46ch;
 	}
 	.loop-list {
 		list-style: none;

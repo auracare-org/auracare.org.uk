@@ -128,50 +128,42 @@
 	sub="A clinical decision support system that works during the appointment, not after it. The clinician keeps their attention on the patient."
 />
 
-<!-- ================= The clinical gap ================= -->
+<!-- ================= The gap, and how it closes ================= -->
+<!-- These were two consecutive sections, each a heading over a list: the
+     problem, then the answer, in the same shape. Pairing them puts each
+     failure next to the thing that removes it, which is the argument. -->
 <section class="section-y gap-sec">
 	<div class="container-wide">
-		<h2 use:reveal={{ delay: 60 }}>
-			Clinicians already want AI. Today’s tools don’t fit the room.
-		</h2>
-		<p class="lede" use:reveal={{ delay: 120 }}>
-			The appetite is settled; the fit isn’t. The tools on offer weren’t designed for the
-			consultation, and it shows in three ways.
+		<h2 use:reveal>Clinicians already want AI. Today's tools don't fit the room.</h2>
+		<p class="lede" use:reveal={{ delay: 60 }}>
+			The appetite is settled; the fit is not. Three things break in the consultation, and the CDSS
+			is built to remove each one.
 		</p>
 
-		<div class="gap-grid">
-			{#each gap as g, i}
-				<div class="glass-card gap-card" use:reveal={{ delay: i * 70 }}>
+		<div class="gap-figures">
+			{#each gap as g (g.title)}
+				<div class="gap-figure" use:reveal={{ delay: 40 }}>
 					<span class="gap-stat">{g.stat}</span>
 					<span class="gap-label">{g.label}</span>
-					<h3>{g.title}</h3>
 					<p>{g.body}</p>
 				</div>
 			{/each}
 		</div>
-	</div>
-</section>
 
-<!-- ================= In the room ================= -->
-<section class="section-y room-sec">
-	<div class="container-wide">
-		<h2 use:reveal={{ delay: 60 }}>Everything arrives automatically, so nothing interrupts.</h2>
-		<p class="lede" use:reveal={{ delay: 120 }}>
-			The CDSS is built around a single rule: every time a clinician has to break away to search,
-			type or look something up, the consultation suffers. So it removes those moments.
-		</p>
-
-		<ol class="room">
-			{#each room as step, i}
-				<li class="room-step" use:reveal={{ delay: i * 70 }}>
-					<span class="room-k" aria-hidden="true">{step.k}</span>
-					<div>
-						<h3>{step.title}</h3>
-						<p>{step.body}</p>
-					</div>
-				</li>
-			{/each}
-		</ol>
+		<div class="answers">
+			<h3 class="answers-head" use:reveal>What replaces each one</h3>
+			<ol class="room">
+				{#each room as step (step.title)}
+					<li class="room-step" use:reveal={{ delay: 40 }}>
+						<span class="room-k" aria-hidden="true">{step.k}</span>
+						<div>
+							<h4>{step.title}</h4>
+							<p>{step.body}</p>
+						</div>
+					</li>
+				{/each}
+			</ol>
+		</div>
 	</div>
 </section>
 
@@ -238,53 +230,52 @@
 </section>
 
 <!-- ================= What the clinician gets back ================= -->
+<!-- The demo panel carried three separate explanatory paragraphs around one
+     small chart, which buried the chart. One caption above, one line below,
+     and the three outputs listed plainly beside it. -->
 <section class="section-y out-sec">
-	<div class="container-wide out-grid">
-		<div class="out-copy">
-			<h2 use:reveal={{ delay: 60 }}>Three outputs. One decision, and it’s the clinician’s.</h2>
-			<p class="lede" use:reveal={{ delay: 120 }}>
-				The core doesn’t hand down an answer. It lays out what it has reasoned toward, ranked and
-				traceable, and leaves the judgement where it has to stay: with the person in the room.
-			</p>
+	<div class="container-wide">
+		<h2 use:reveal>Three outputs. The decision stays with the clinician.</h2>
+		<p class="lede" use:reveal={{ delay: 60 }}>
+			The core does not hand down an answer. It sets out what it reasoned toward, ranked and
+			traceable, and leaves the judgement with the person in the room.
+		</p>
 
-			<ul class="out-list">
-				{#each outputs as o, i}
-					<li use:reveal={{ delay: 140 + i * 70 }}>
+		<div class="out-grid">
+			<ol class="out-list">
+				{#each outputs as o (o.title)}
+					<li use:reveal={{ delay: 40 }}>
 						<h3>{o.title}</h3>
 						<p>{o.body}</p>
 					</li>
 				{/each}
-			</ul>
-		</div>
+			</ol>
 
-		<div class="out-demo glass-card" use:reveal={{ delay: 160 }}>
-			<span class="demo-tag">Illustrative, not a real patient</span>
-			<span class="demo-head">Ranked differential</span>
-			<p class="demo-sub">
-				The figure beside each is <strong>clinician agreement</strong>, not model certainty: how
-				often clinicians agree with that placement. The figures here are illustrative; the core is
-				in development, and we will measure and publish the real rate from its first studies.
-			</p>
-			<div class="demo-collabel" aria-hidden="true">
-				<span>Differential</span>
-				<span>Clinician agreement</span>
-			</div>
-			<ul class="demo-list">
-				{#each differentialExample as d}
-					<li class="demo-row" class:lead={d.lead}>
-						<span class="demo-name">{d.name}</span>
-						<span class="demo-bar" aria-hidden="true">
-							<span class="demo-fill" style="width:{d.pct}%"></span>
-						</span>
-						<span class="demo-pct">{d.pct}%</span>
-					</li>
-				{/each}
-			</ul>
-			<p class="demo-foot">
-				The core never reports a probability of being right. It lays out what it has reasoned
-				toward, ranked and traceable; the clinician selects, and that selection shapes the next
-				steps and the notes.
-			</p>
+			<figure class="out-demo" use:reveal={{ delay: 80 }}>
+				<figcaption>
+					<span class="demo-head">Ranked differential</span>
+					<span class="demo-tag">Illustrative, not a real patient</span>
+				</figcaption>
+				<div class="demo-collabel" aria-hidden="true">
+					<span>Differential</span>
+					<span>Clinician agreement</span>
+				</div>
+				<ul class="demo-list">
+					{#each differentialExample as d (d.name)}
+						<li class="demo-row" class:lead={d.lead}>
+							<span class="demo-name">{d.name}</span>
+							<span class="demo-bar" aria-hidden="true">
+								<span class="demo-fill" style="width:{d.pct}%"></span>
+							</span>
+							<span class="demo-pct">{d.pct}%</span>
+						</li>
+					{/each}
+				</ul>
+				<p class="demo-foot">
+					The figure is how often clinicians agree with that placement, not the model's confidence
+					in itself. These numbers are illustrative until the first studies report.
+				</p>
+			</figure>
 		</div>
 	</div>
 </section>
@@ -397,11 +388,48 @@
 		color: var(--color-ink-soft);
 		max-width: 46rem;
 	}
-	.gap-card {
-		padding: 1.6rem 1.7rem;
-		display: flex;
-		flex-direction: column;
+	.gap-figures {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2rem;
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		padding-top: 1.75rem;
+		border-top: 1px solid var(--color-ink);
 	}
+	.gap-figure p {
+		margin: 0.75rem 0 0;
+		font-size: 0.93rem;
+		line-height: 1.55;
+		color: var(--color-ink-soft);
+	}
+	.answers {
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		padding-top: clamp(1.5rem, 3vw, 2rem);
+		border-top: 1px solid var(--color-ink);
+	}
+	.answers-head {
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--color-ink-faint);
+		margin: 0 0 1.5rem;
+	}
+	.room-step h4 {
+		font-size: 1.02rem;
+		margin: 0 0 0.25rem;
+	}
+	@media (min-width: 860px) {
+		.gap-figures {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 2.5rem;
+		}
+		.gap-figure + .gap-figure {
+			border-left: 1px solid var(--color-rule);
+			padding-left: 2.5rem;
+		}
+	}
+
 	.gap-stat {
 		font-family: var(--font-family-heading);
 		font-size: clamp(2rem, 4vw, 2.7rem);
@@ -417,16 +445,6 @@
 		letter-spacing: 0.06em;
 		color: var(--color-ink-faint);
 		margin-top: 0.4rem;
-	}
-	.gap-card h3 {
-		font-size: 1.12rem;
-		letter-spacing: -0.01em;
-		margin: 1.1rem 0 0.4rem;
-	}
-	.gap-card p {
-		font-size: 0.93rem;
-		line-height: 1.55;
-		color: var(--color-ink-soft);
 	}
 	.room {
 		list-style: none;
@@ -452,11 +470,6 @@
 		font-weight: 700;
 		color: var(--color-primary-500);
 		padding-top: 0.15rem;
-	}
-	.room-step h3 {
-		font-size: 1.12rem;
-		letter-spacing: -0.01em;
-		margin-bottom: 0.35rem;
 	}
 	.room-step p {
 		font-size: 0.95rem;
@@ -553,6 +566,46 @@
 		color: var(--color-primary-300) !important;
 		max-width: 52rem;
 	}
+	.out-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: clamp(2rem, 4vw, 3rem);
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		align-items: start;
+	}
+	.out-demo {
+		margin: 0;
+		padding: 1.5rem;
+		border: 1px solid var(--color-rule);
+		background: var(--color-surface-raised);
+	}
+	.out-demo figcaption {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.75rem;
+		margin-bottom: 1.25rem;
+	}
+	.demo-head {
+		font-size: 1rem;
+		font-weight: 600;
+		color: var(--color-ink);
+	}
+	.demo-tag {
+		font-size: 0.6rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--color-ink-faint);
+	}
+	@media (min-width: 900px) {
+		.out-grid {
+			grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+			gap: 3.5rem;
+		}
+	}
+
 	.out-list {
 		list-style: none;
 		margin: clamp(1.5rem, 3vw, 2rem) 0 0;
@@ -575,40 +628,6 @@
 		color: var(--color-ink-soft);
 	}
 
-	.out-demo {
-		padding: clamp(1.5rem, 3vw, 2rem);
-		border-radius: var(--radius-lg);
-	}
-	.demo-tag {
-		display: inline-block;
-		font-family: var(--font-family-mono);
-		font-size: 0.62rem;
-		font-weight: 700;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--color-ink-faint);
-		border: 1px solid var(--color-border-default);
-		padding: 0.2rem 0.55rem;
-		border-radius: 999px;
-	}
-	.demo-head {
-		display: block;
-		margin-top: 1rem;
-		font-family: var(--font-family-heading);
-		font-weight: 600;
-		font-size: 1.05rem;
-		color: var(--color-ink);
-	}
-	.demo-sub {
-		margin-top: 0.6rem;
-		font-size: 0.85rem;
-		line-height: 1.55;
-		color: var(--color-ink-soft);
-	}
-	.demo-sub strong {
-		color: var(--color-ink);
-		font-weight: 600;
-	}
 	.demo-collabel {
 		display: flex;
 		justify-content: space-between;
@@ -705,8 +724,5 @@
 		color: var(--color-primary-700);
 	}
 	@media (min-width: 900px) {
-		.out-grid {
-			grid-template-columns: 1fr 0.9fr;
-		}
 	}
 </style>
