@@ -61,6 +61,7 @@
 
 	--color-bg-surface-default: #f4f1ea;
 	--color-bg-surface-raised: #faf8f3;
+	--color-surface-raised: #faf8f3;
 	--color-bg-surface-scrim: rgba(10, 12, 20, 0.5);
 	--color-bg-button-primary-default: #2f4ec0;
 	--color-bg-button-primary-hover: #5971cd;
@@ -111,14 +112,14 @@
 	--spacing-section-xl: 64px;
 
 	/* Radii from Figma design system */
-	--radius-xs: 4px;
-	--radius-sm: 6px;
-	--radius-md: 8px;
-	--radius-lg: 12px;
-	--radius-xl: 16px;
-	--radius-2xl: 24px;
-	--radius-3xl: 32px;
-	--radius-4xl: 40px;
+	--radius-xs: 0px;
+	--radius-sm: 0px;
+	--radius-md: 0px;
+	--radius-lg: 0px;
+	--radius-xl: 0px;
+	--radius-2xl: 0px;
+	--radius-3xl: 0px;
+	--radius-4xl: 0px;
 	--radius-pill: 2px;
 
 	/* Typography. Avenir is the brand face and is present on macOS/iOS, which
@@ -1036,30 +1037,32 @@
 	color: #ffffff;
 }
 
-/* Card. The name is legacy; the treatment is not. Boxes-on-a-page was the
-   most generic thing in the old system, so a "card" is now a block of content
-   sitting on the paper under a single rule. Nothing is outlined, nothing
-   floats. Name kept so every existing call site inherits the change. */
-.glass-card {
-	background: transparent;
-	border: 0;
-	border-top: 1px solid var(--color-rule);
-	border-radius: 0;
+/* Block. The name is legacy so every existing call site inherits this.
+   The previous attempt kept only a top border while component styles still
+   applied a 12px radius, which left a curved stub hanging off a straight
+   line: the broken corners visible across the site. Square is forced here at
+   a specificity component styles cannot beat, so the geometry is consistent
+   whatever a page asks for locally. */
+.glass-card,
+.glass-card:where(*) {
+	background: var(--color-surface-raised);
+	border: 1px solid var(--color-rule);
+	border-radius: 0 !important;
 	box-shadow: none;
 	transition: border-color var(--duration-hover) ease;
 }
 @media (hover: hover) and (pointer: fine) {
 	.glass-card:hover {
-		border-top-color: var(--color-ink);
+		border-color: var(--color-rule-strong);
 	}
 }
 .aura-space .glass-card {
-	background: transparent;
-	border-top-color: rgba(255, 255, 255, 0.16);
+	background: rgba(255, 255, 255, 0.03);
+	border-color: rgba(255, 255, 255, 0.14);
 }
 @media (hover: hover) and (pointer: fine) {
 	.aura-space .glass-card:hover {
-		border-top-color: rgba(255, 255, 255, 0.4);
+		border-color: rgba(255, 255, 255, 0.32);
 	}
 }
 

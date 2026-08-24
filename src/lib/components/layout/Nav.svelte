@@ -6,21 +6,22 @@
 
 	const productMenu = [
 		{
-			href: '/product',
-			label: 'Auracle',
-			desc: 'Your digital twin, in your messages',
-			tag: 'Consumer'
-		},
-		{
 			href: '/product/auracare',
 			label: 'Auracare CDSS',
 			desc: 'Decision support inside the consultation',
 			tag: 'Clinical'
+		},
+		{
+			href: '/product',
+			label: 'Auracle',
+			desc: 'The social history the record cannot supply',
+			tag: 'Consumer'
 		}
 	];
 
 	const links = [
 		{ href: '/technology', label: 'Technology' },
+		{ href: '/investors', label: 'Investors' },
 		{ href: '/careers', label: 'Careers' }
 	];
 
@@ -81,8 +82,7 @@
 		</div>
 
 		<div class="nav-cta">
-			<a class="nav-invest" href="/investors">For investors</a>
-			<a class="nav-waitlist" href="/investors">Enquire</a>
+			<a class="nav-waitlist" href="/investors#contact">Enquire</a>
 		</div>
 
 		<button
@@ -136,7 +136,9 @@
 					<a class="nav-invest" href="/investors" onclick={() => (mobileOpen = false)}
 						>For investors</a
 					>
-					<a class="nav-waitlist" href="/investors" onclick={() => (mobileOpen = false)}>Enquire</a>
+					<a class="nav-waitlist" href="/investors#contact" onclick={() => (mobileOpen = false)}
+						>Enquire</a
+					>
 				</div>
 			</div>
 		</div>
@@ -171,10 +173,12 @@
 		margin-left: 0.5rem;
 	}
 	.nav-item {
-		font-size: 0.9rem;
-		font-weight: 500;
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
 		color: var(--color-ink-soft);
-		transition: color 0.15s ease;
+		transition: color var(--duration-hover) ease;
 		white-space: nowrap;
 	}
 	.nav-item:hover {
@@ -310,8 +314,10 @@
 		margin-left: auto;
 	}
 	.nav-invest {
-		font-size: 0.88rem;
-		font-weight: 500;
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
 		color: var(--color-ink-soft);
 		padding: 0.5rem 0.4rem;
 	}

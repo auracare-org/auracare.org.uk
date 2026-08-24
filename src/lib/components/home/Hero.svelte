@@ -4,13 +4,10 @@
 </script>
 
 <!--
-  The hero is one statement and one photograph of the actual work.
-
-  The orbit graphic that used to sit here was a consumer-app device — icons
-  circling an avatar — and it made an infrastructure company read like a
-  wearable. It is replaced by the real consultation kit, which is the most
-  credible thing this company owns and the thing no competitor can copy from a
-  screenshot.
+  Type carries the hero. No photograph, no illustration, no device mock: the
+  claim is the asset. A rule and a set of standing figures sit under it so the
+  first screen states what the company is, what is live, and who to contact,
+  without asking anyone to scroll for it.
 -->
 <section class="hero">
 	<div class="container-wide">
@@ -27,8 +24,8 @@
 
 		<div class="hero-lower">
 			<p class="hero-sub" use:reveal={{ delay: 140 }}>
-				Auracare is clinical decision support infrastructure: encoding, reasoning and documentation
-				that runs inside the appointment, grounded in the terminology medicine already uses.
+				Encoding, reasoning and documentation that runs inside the appointment, grounded in the
+				terminology medicine already uses.
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 200 }}>
 				<a class="cta-primary" href="/investors">We are raising a seed round</a>
@@ -42,20 +39,24 @@
 		</div>
 	</div>
 
-	<figure class="hero-figure" use:reveal={{ delay: 240 }}>
-		<img
-			src="/img/consultation-kit.jpg"
-			alt="An Auracare tablet signed in beside a blood-pressure monitor, otoscope, recording stethoscope and specula, laid out on a clinic table"
-			width="958"
-			height="639"
-			fetchpriority="high"
-			decoding="async"
-		/>
-		<figcaption>
-			<span class="figure-num">Fig. 01</span>
-			<span>Auracare running beside our own examination hardware.</span>
-		</figcaption>
-	</figure>
+	<dl class="standings">
+		<div class="standing">
+			<dt>Ontology, live today</dt>
+			<dd>532k concepts</dd>
+		</div>
+		<div class="standing">
+			<dt>Pharmacy partnerships</dt>
+			<dd>28</dd>
+		</div>
+		<div class="standing">
+			<dt>Examination devices</dt>
+			<dd>3 built</dd>
+		</div>
+		<div class="standing">
+			<dt>Operating from</dt>
+			<dd>London &middot; Hong Kong &middot; SF</dd>
+		</div>
+	</dl>
 </section>
 
 <style>
@@ -179,37 +180,41 @@
 		}
 	}
 
-	/* The photograph runs wider than the text column and bleeds to the right
-	   edge, so the page feels like it continues past the frame. */
-	.hero-figure {
+	/* A standing rail of figures across the full width. Four facts, ruled,
+	   tabular. It replaces the photograph with something a clinician or an
+	   investor can actually use on the first screen. */
+	.standings {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
 		margin: clamp(3rem, 6vw, 5rem) 0 0;
-		position: relative;
+		border-top: 1px solid var(--color-ink);
 	}
-	.hero-figure img {
-		display: block;
-		width: 100%;
-		height: clamp(18rem, 42vw, 34rem);
-		object-fit: cover;
-		object-position: 50% 42%;
-		background: var(--color-surface-alt);
+	.standing {
+		padding: 1.5rem clamp(1.5rem, 4vw, 2.5rem);
+		border-bottom: 1px solid var(--color-rule);
+		border-right: 1px solid var(--color-rule);
 	}
-	figcaption {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.75rem;
-		padding: 0.75rem 1.5rem 0;
-		font-size: 0.72rem;
-		letter-spacing: 0.04em;
-		color: var(--color-ink-faint);
-	}
-	.figure-num {
+	.standing dt {
+		font-size: 0.68rem;
 		font-weight: 600;
 		letter-spacing: 0.16em;
 		text-transform: uppercase;
+		color: var(--color-ink-faint);
+	}
+	.standing dd {
+		margin: 0.6rem 0 0;
+		font-size: clamp(1.15rem, 2vw, 1.6rem);
+		font-weight: var(--weight-display);
+		letter-spacing: -0.02em;
 		color: var(--color-ink);
 		font-variant-numeric: tabular-nums;
 	}
 
+	@media (min-width: 700px) {
+		.standings {
+			grid-template-columns: repeat(4, 1fr);
+		}
+	}
 	@media (min-width: 900px) {
 		.hero-lower {
 			grid-template-columns: minmax(0, 1fr) auto;

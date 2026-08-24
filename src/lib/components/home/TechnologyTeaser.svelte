@@ -1,519 +1,167 @@
 <script lang="ts">
-	import ArchitecturePipeline from '$lib/components/ArchitecturePipeline.svelte';
 	import { reveal, countUp } from '$lib/actions/motion';
-	import { CONTACT, ONTOLOGY_STATS } from '$lib/data/company';
-	import { onMount } from 'svelte';
+	import { CONTACT } from '$lib/data/company';
 
-	type Tile =
-		| { kind: 'number'; target: number; suffix: 'k' | 'M'; label: string }
-		| { kind: 'text'; value: string; label: string };
-
-	const tiles: Tile[] = ONTOLOGY_STATS.map((s) => {
-		const m = s.value.match(/^([\d.]+)([kM])$/);
-		if (m) {
-			const num = parseFloat(m[1]);
-			const suffix = m[2] as 'k' | 'M';
-			const target = suffix === 'k' ? num * 1_000 : num * 1_000_000;
-			return { kind: 'number', target, suffix, label: s.label };
-		}
-		return { kind: 'text', value: s.value, label: s.label };
-	});
-
-	const formatK = (n: number) => `${Math.round(n / 1_000).toLocaleString()}k`;
-	const formatM = (n: number) => `${(n / 1_000_000).toFixed(1)}M`;
-
-	const concepts = [
-		'Hypertension',
-		'Diabetes mellitus',
-		'Asthma',
-		'Heart failure',
-		'Atrial fibrillation',
-		'COPD',
-		'Pneumonia',
-		'Anaemia',
-		'Hypothyroidism',
-		'Chronic kidney disease',
-		'Osteoarthritis',
-		'Depression',
-		'Anxiety disorder',
-		'Migraine',
-		'Epilepsy',
-		'Gout',
-		'Psoriasis',
-		"Crohn's disease",
-		'Coeliac disease',
-		'Type 2 diabetes',
-		'Angina pectoris',
-		'DVT',
-		'Pulmonary embolism',
-		'Sepsis',
-		'Meningitis',
-		'Sarcoidosis',
-		'Lupus',
-		'Vasculitis',
-		'Hepatitis B',
-		'Cirrhosis',
-		'Pancreatitis',
-		'Cholecystitis',
-		'Appendicitis',
-		'Diverticulitis',
-		'Endometriosis',
-		'PCOS',
-		'Preeclampsia',
-		'Osteoporosis',
-		'Rheumatoid arthritis',
-		'Multiple sclerosis',
-		"Parkinson's disease",
-		'Motor neurone disease',
-		'Myocardial infarction',
-		'Stroke',
-		'Aortic stenosis',
-		'Mitral regurgitation',
-		'Cardiomyopathy',
-		'Pericarditis',
-		'Pleural effusion',
-		'Bronchiectasis',
-		'Interstitial lung disease',
-		'Obstructive sleep apnoea',
-		'Pulmonary fibrosis',
-		'Tuberculosis',
-		'HIV',
-		'Malaria',
-		'Dengue fever',
-		'Lyme disease',
-		'Cellulitis',
-		'Osteomyelitis',
-		'Glomerulonephritis',
-		'Nephrotic syndrome',
-		'Renal calculi',
-		'Benign prostatic hyperplasia',
-		'Bladder cancer',
-		'Breast cancer',
-		'Lung cancer',
-		'Colorectal cancer',
-		'Melanoma',
-		'Lymphoma',
-		'Leukaemia',
-		'Myeloma',
-		'Thyroid cancer',
-		'Dementia',
-		'Bipolar disorder',
-		'Schizophrenia',
-		'ADHD',
-		'Autism spectrum',
-		'Anorexia nervosa',
-		'OCD',
-		'PTSD',
-		'Iron deficiency',
-		'B12 deficiency',
-		'Folate deficiency',
-		'Hyperkalaemia',
-		'Hyponatraemia',
-		'Hypercalcaemia',
-		"Addison's disease",
-		"Cushing's syndrome",
-		'Acromegaly',
-		'Pheochromocytoma',
-		"Conn's syndrome",
-		"Grave's disease",
-		"Hashimoto's",
-		'Diabetic ketoacidosis',
-		'Hypoglycaemia',
-		'Metabolic syndrome',
-		'Dyslipidaemia',
-		'Familial hypercholesterolaemia',
-		'Peripheral arterial disease',
-		"Raynaud's phenomenon",
-		'Varicose veins',
-		'Lymphoedema',
-		'Anaphylaxis',
-		'Angioedema'
+	/* The ontology, stated as a specification rather than decorated as tiles.
+	   The previous version rendered these on dark chips over a particle canvas:
+	   the chips were unreadable once the section moved onto paper, and the
+	   canvas was decoration with no argument behind it. */
+	const spec = [
+		{ value: 532_000, label: 'SNOMED CT concepts', suffix: 'k' },
+		{ value: 1_300_000, label: 'Relationships mapped', suffix: 'M' },
+		{ value: 31_900, label: 'ICD-11 categories', suffix: 'k' },
+		{ value: 217_000, label: 'LOINC lab codes', suffix: 'k' }
 	];
 
-	const PARTICLE_COUNT = 400;
-
-	interface Particle {
-		x: number;
-		y: number;
-		vx: number;
-		vy: number;
-		size: number;
-		opacity: number;
-		concept: string;
-	}
-
-	let canvasEl = $state<HTMLCanvasElement | null>(null);
-	let tooltip = $state<{ text: string; x: number; y: number } | null>(null);
-	let particlesArr: Particle[] = [];
-	let w = 0;
-	let h = 0;
-
-	function seed(s: number) {
-		return () => {
-			s = (s * 16807) % 2147483647;
-			return (s - 1) / 2147483646;
-		};
-	}
-
-	onMount(() => {
-		const canvas = canvasEl!;
-		const ctx = canvas.getContext('2d')!;
-		const dpr = window.devicePixelRatio || 1;
-		const rand = seed(42);
-
-		function resize() {
-			const rect = canvas.parentElement!.getBoundingClientRect();
-			w = rect.width;
-			h = rect.height;
-			canvas.width = w * dpr;
-			canvas.height = h * dpr;
-			canvas.style.width = w + 'px';
-			canvas.style.height = h + 'px';
-			ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-		}
-
-		resize();
-
-		// Init particles
-		for (let i = 0; i < PARTICLE_COUNT; i++) {
-			particlesArr.push({
-				x: rand() * w,
-				y: rand() * h,
-				vx: (rand() - 0.5) * 0.6,
-				vy: (rand() - 0.5) * 0.4,
-				size: 1.5 + rand() * 3,
-				opacity: 0.1 + rand() * 0.35,
-				concept: concepts[i % concepts.length]
-			});
-		}
-
-		let raf: number;
-
-		function frame() {
-			ctx.clearRect(0, 0, w, h);
-
-			for (const p of particlesArr) {
-				// Move
-				p.x += p.vx;
-				p.y += p.vy;
-
-				// Wrap around edges
-				if (p.x < -10) p.x = w + 10;
-				if (p.x > w + 10) p.x = -10;
-				if (p.y < -10) p.y = h + 10;
-				if (p.y > h + 10) p.y = -10;
-
-				// Draw square
-				ctx.fillStyle = `rgba(97, 128, 255, ${p.opacity})`;
-				ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
-			}
-
-			raf = requestAnimationFrame(frame);
-		}
-
-		frame();
-
-		const ro = new ResizeObserver(() => {
-			resize();
-			// Redistribute particles that are now out of bounds
-			for (const p of particlesArr) {
-				if (p.x > w) p.x = rand() * w;
-				if (p.y > h) p.y = rand() * h;
-			}
-		});
-		ro.observe(canvas.parentElement!);
-
-		// Hover detection
-		function onMouseMove(e: MouseEvent) {
-			const rect = canvas.getBoundingClientRect();
-			const mx = e.clientX - rect.left;
-			const my = e.clientY - rect.top;
-			const hitRadius = 14;
-
-			let found: Particle | null = null;
-			for (const p of particlesArr) {
-				const dx = mx - p.x;
-				const dy = my - p.y;
-				if (Math.abs(dx) < hitRadius && Math.abs(dy) < hitRadius) {
-					found = p;
-					break;
-				}
-			}
-
-			if (found) {
-				tooltip = { text: found.concept, x: e.clientX, y: e.clientY };
-			} else {
-				tooltip = null;
-			}
-		}
-
-		function onMouseLeave() {
-			tooltip = null;
-		}
-
-		canvas.addEventListener('mousemove', onMouseMove);
-		canvas.addEventListener('mouseleave', onMouseLeave);
-
-		return () => {
-			cancelAnimationFrame(raf);
-			ro.disconnect();
-			canvas.removeEventListener('mousemove', onMouseMove);
-			canvas.removeEventListener('mouseleave', onMouseLeave);
-		};
-	});
+	const formatK = (n: number) => `${Math.round(n / 1000)}k`;
+	const formatM = (n: number) => `${(n / 1_000_000).toFixed(1)}M`;
 </script>
 
 <section class="tech section-y">
-	<!-- Canvas fluid background -->
-	<div class="fluid-field">
-		<canvas bind:this={canvasEl} class="fluid-canvas"></canvas>
-		{#if tooltip}
-			<div class="particle-tip" style="left:{tooltip.x}px; top:{tooltip.y}px;">
-				{tooltip.text}
-			</div>
-		{/if}
-	</div>
-
 	<div class="container-wide tech-grid">
 		<div class="tech-copy">
+			<span class="index-num" use:reveal>03</span>
 			<h2 use:reveal={{ delay: 60 }}>
-				A learned model proposes. <span class="text-gradient-l">A symbolic layer disposes.</span>
+				A learned model proposes.<br />
+				<em>A symbolic layer disposes.</em>
 			</h2>
-			<p class="tech-lead" use:reveal={{ delay: 140 }}>
-				The Auracare CDSS runs on a <strong>neuro-symbolic</strong> architecture. Every signal is encoded
-				onto the terminology medicine already agrees on (SNOMED CT, ICD-11, HPO, LOINC), so every answer
-				traces back to a named source.
+			<p class="tech-lead" use:reveal={{ delay: 120 }}>
+				Every signal is encoded onto the terminology medicine already agrees on, so every answer
+				traces back to a named source rather than to a model's confidence.
 			</p>
-			<p class="tech-status" use:reveal={{ delay: 200 }}>
-				<span class="pill pill-live">Live today</span>
-				The graph is explorable right now. The reasoning engine that acts on it is in active development.
-			</p>
-
-			<div class="tech-cta" use:reveal={{ delay: 260 }}>
-				<a class="cta-primary" href={CONTACT.ontologyUrl} target="_blank" rel="noopener">
-					Explore the graph <span aria-hidden="true">↗</span>
+			<div class="tech-cta" use:reveal={{ delay: 180 }}>
+				<a class="link-rule" href={CONTACT.ontologyUrl} target="_blank" rel="noopener">
+					Explore the graph <span aria-hidden="true">&#8599;</span>
 				</a>
-				<a class="cta-ghost" href="/technology">
-					How the engine works <span aria-hidden="true">→</span>
+				<a class="link-rule" href="/technology">
+					How the engine works <span aria-hidden="true">&rarr;</span>
 				</a>
 			</div>
 		</div>
 
-		<div class="tech-visual" use:reveal={{ delay: 160 }}>
-			<dl class="stat-tiles">
-				{#each tiles as t, i}
-					<div class="stat-tile" use:reveal={{ delay: 120 + i * 70 }}>
-						{#if t.kind === 'number'}
-							<dd
-								class="stat-value"
-								use:countUp={{
-									value: t.target,
-									format: t.suffix === 'k' ? formatK : formatM
-								}}
-								aria-label={t.suffix === 'k' ? formatK(t.target) : formatM(t.target)}
-							></dd>
-						{:else}
-							<dd class="stat-value">{t.value}</dd>
-						{/if}
-						<dt class="stat-label">{t.label}</dt>
-					</div>
-				{/each}
-			</dl>
-		</div>
-
-		<div class="tech-pipeline">
-			<ArchitecturePipeline dark />
-		</div>
+		<dl class="spec">
+			{#each spec as row, i (row.label)}
+				<div class="spec-row" use:reveal={{ delay: 60 + i * 60 }}>
+					<dt>{row.label}</dt>
+					<dd
+						use:countUp={{ value: row.value, format: row.suffix === 'M' ? formatM : formatK }}
+						aria-label={row.suffix === 'M' ? formatM(row.value) : formatK(row.value)}
+					></dd>
+				</div>
+			{/each}
+			<p class="spec-note" use:reveal={{ delay: 300 }}>
+				The graph is live and explorable today. The reasoning engine that acts on it is in
+				development.
+			</p>
+		</dl>
 	</div>
 </section>
 
 <style>
 	.tech {
-		position: relative;
-		overflow: hidden;
-		background: var(--color-surface-alt);
-		border-block: 1px solid var(--color-rule);
+		border-top: 1px solid var(--color-rule);
 	}
-
-	.fluid-field {
-		position: absolute;
-		inset: 0;
-		z-index: 0;
-		pointer-events: none;
-	}
-	.fluid-canvas {
-		position: absolute;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-		pointer-events: auto;
-		cursor: crosshair;
-	}
-
-	.particle-tip {
-		position: fixed;
-		z-index: 20;
-		transform: translate(-50%, calc(-100% - 12px));
-		background: rgba(20, 24, 40, 0.95);
-		border: 1px solid rgba(97, 128, 255, 0.3);
-		color: var(--color-primary-300);
-		font-family: var(--font-family-mono);
-		font-size: 0.62rem;
-		font-weight: 700;
-		padding: 0.25rem 0.5rem;
-		border-radius: 4px;
-		white-space: nowrap;
-		pointer-events: none;
-	}
-
-	/* Content grid */
 	.tech-grid {
-		position: relative;
-		z-index: 1;
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: clamp(2.5rem, 5vw, 4rem);
-		align-items: center;
-		pointer-events: none;
-	}
-	.tech-pipeline {
-		grid-column: 1 / -1;
-	}
-	.tech-grid :global(a),
-	.tech-grid :global(button) {
-		pointer-events: auto;
-	}
-	.tech-copy h2 {
-		font-size: clamp(1.9rem, 4.4vw, 3rem);
-		line-height: 1.08;
-		letter-spacing: -0.02em;
-		margin-block: 0.75rem 1.25rem;
-	}
-	.text-gradient-l {
-		color: var(--color-primary-300);
-	}
-	.tech-lead {
-		font-size: clamp(1rem, 1.5vw, 1.14rem);
-		line-height: 1.65;
-		max-width: 36rem;
-	}
-	.tech-lead strong {
-		font-weight: 600;
-	}
-	.tech-status {
-		display: flex;
-		align-items: center;
-		flex-wrap: wrap;
-		gap: 0.6rem;
-		margin-top: 1.25rem;
-		font-size: 0.92rem;
-		line-height: 1.5;
-		color: var(--color-white-alpha-80);
-		max-width: 34rem;
+		gap: clamp(2.5rem, 5vw, 4.5rem);
+		align-items: start;
 	}
 
+	.index-num {
+		display: block;
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		color: var(--color-primary-600);
+		font-variant-numeric: tabular-nums;
+		margin-bottom: 1.5rem;
+	}
+	.tech h2 {
+		font-size: clamp(1.9rem, 3.6vw, 3rem);
+		line-height: 1.06;
+		letter-spacing: -0.03em;
+		margin: 0;
+	}
+	.tech h2 em {
+		font-style: normal;
+		color: var(--color-primary-600);
+	}
+	.tech-lead {
+		margin-top: 1.5rem;
+		font-size: 1.02rem;
+		line-height: 1.6;
+		color: var(--color-ink-soft);
+		max-width: 40ch;
+	}
 	.tech-cta {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.9rem;
-		margin-top: 1.9rem;
+		gap: 2rem;
+		margin-top: 2rem;
 	}
-	.cta-primary {
+	.link-rule {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.45rem;
-		background: #fff;
-		color: var(--color-ink);
-		font-weight: 500;
-		font-size: 0.98rem;
-		padding: 0.8rem 1.5rem;
-		border-radius: var(--radius-sm);
-		transition:
-			background var(--duration-hover) ease,
-			transform var(--duration-press) var(--ease-out);
-	}
-	.cta-primary:active {
-		transform: scale(0.97);
-	}
-	@media (hover: hover) and (pointer: fine) {
-		.cta-primary:hover {
-			background: #e8eaf2;
-			color: var(--color-ink);
-		}
-	}
-	.cta-ghost {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-		color: var(--color-white-alpha-80);
-		font-weight: 500;
-		font-size: 0.98rem;
-		padding: 0.8rem 1.35rem;
-		border-radius: var(--radius-sm);
-		border: 1px solid var(--color-border-dark-strong);
-		transition:
-			background var(--duration-hover) ease,
-			border-color var(--duration-hover) ease,
-			color var(--duration-hover) ease,
-			transform var(--duration-press) var(--ease-out);
-	}
-	.cta-ghost:active {
-		transform: scale(0.97);
-	}
-	@media (hover: hover) and (pointer: fine) {
-		.cta-ghost:hover {
-			color: var(--color-primary-600);
-			border-color: var(--color-white-alpha-20);
-			background: var(--color-white-alpha-10);
-		}
-	}
-
-	/* Visual side */
-	.tech-visual {
-		position: relative;
-		width: 100%;
-		max-width: 32rem;
-		margin-inline: auto;
-	}
-	.stat-tiles {
-		position: relative;
-		z-index: 1;
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: clamp(0.75rem, 2vw, 1.1rem);
-		margin: 0;
-	}
-	.stat-tile {
-		background: rgba(15, 18, 30, 0.85);
-		backdrop-filter: blur(8px);
-		border: 1px solid var(--color-border-dark);
-		border-radius: var(--radius-lg);
-		padding: clamp(1.1rem, 2.6vw, 1.6rem);
-	}
-	.stat-value {
-		font-family: var(--font-family-heading);
+		gap: 0.5rem;
+		font-size: 0.74rem;
 		font-weight: 600;
-		font-variant-numeric: tabular-nums;
-		font-size: clamp(1.8rem, 4vw, 2.6rem);
-		line-height: 1;
-		letter-spacing: -0.03em;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
 		color: var(--color-ink);
-		font-variant-numeric: tabular-nums;
-		min-height: 1em;
-	}
-	.stat-label {
-		margin-top: 0.5rem;
-		font-family: var(--font-family-mono);
-		font-weight: 700;
-		font-size: 0.72rem;
-		letter-spacing: 0.04em;
-		line-height: 1.4;
-		color: var(--color-dark-overlay-60);
+		padding-bottom: 0.3rem;
+		border-bottom: 1px solid var(--color-ink);
+		transition:
+			color var(--duration-hover) ease,
+			border-color var(--duration-hover) ease;
 	}
 
-	@media (min-width: 900px) {
+	/* The specification: a ruled table, the way a datasheet states a figure. */
+	.spec {
+		margin: 0;
+		border-top: 1px solid var(--color-ink);
+	}
+	.spec-row {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1.5rem;
+		padding-block: 1.15rem;
+		border-bottom: 1px solid var(--color-rule);
+	}
+	.spec-row dt {
+		font-size: 0.78rem;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-ink-faint);
+	}
+	.spec-row dd {
+		margin: 0;
+		font-size: clamp(1.6rem, 3vw, 2.4rem);
+		font-weight: var(--weight-display);
+		letter-spacing: -0.03em;
+		line-height: 1;
+		color: var(--color-ink);
+		font-variant-numeric: tabular-nums;
+	}
+	.spec-note {
+		margin: 1.25rem 0 0;
+		font-size: 0.88rem;
+		line-height: 1.55;
+		color: var(--color-ink-faint);
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.link-rule:hover {
+			color: var(--color-primary-600);
+			border-color: var(--color-primary-600);
+		}
+	}
+	@media (min-width: 940px) {
 		.tech-grid {
-			grid-template-columns: 1.05fr 0.95fr;
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+			gap: 5rem;
 		}
 	}
 </style>
