@@ -44,27 +44,27 @@
 		{
 			key: 'encoding',
 			label: 'Encoding',
-			body: 'The bridge. Each observation is entity-linked onto the clinical ontology and stamped with when it was true, building the one patient state the core reasons over.'
+			body: 'Each observation is matched to its concept in the clinical ontology and stamped with when it was true. This is the step that turns loose readings into a record the core can reason over.'
 		},
 		{
 			key: 'thinking',
 			label: 'Thinking',
-			body: 'The neuro-symbolic core weighs the evidence over the knowledge graph and returns a distribution over what is likely, never a single guess.'
+			body: 'The core weighs the evidence across the knowledge graph and returns a spread of what is likely, rather than committing to one answer.'
 		},
 		{
 			key: 'thesis',
 			label: 'Thesis',
-			body: 'The distribution is grounded against population data, turned into quantified risk, and stated as a ranked differential with its sources attached. A working thesis, held only as long as the evidence supports it.'
+			body: 'That spread is checked against population data, expressed as risk, and set out as a ranked differential with its sources attached. It is provisional, and it changes when the evidence does.'
 		},
 		{
 			key: 'voi',
 			label: 'Value-of-information',
-			body: 'The loop asks whether more evidence is worth acquiring. If yes, it picks the single next-best question, exam or test and feeds it back to the top. If not, it converges and hands the thesis on.'
+			body: 'The loop weighs whether another question would change the answer enough to justify the delay. If it would, it picks the single most useful one and starts again. If not, it stops here.'
 		},
 		{
 			key: 'outcome',
 			label: 'Medical outcome',
-			body: 'The thesis becomes an action: a referral, a prescription, further testing or a lifestyle plan, each one gated by safety and by what is permitted where the patient is.'
+			body: 'A referral, a prescription, further testing or a lifestyle plan, each checked against safety and against what the clinician is permitted to do where they practise.'
 		}
 	];
 
@@ -75,7 +75,7 @@
 		'Authoritative: it holds the veto over anything the learned side proposes'
 	];
 	const LEARNED = [
-		'A Heterogeneous Graph Transformer: a graph neural network that learns patterns across a patient’s linked clinical data',
+		'A Heterogeneous Graph Transformer: a neural network that learns patterns across a patient’s linked clinical data',
 		'Bends the generic textbook weights toward this patient’s comorbidities and trajectory, then ranks the shortlist',
 		'Advisory by construction: it proposes and personalises, but never makes an un-gated decision'
 	];
@@ -103,7 +103,7 @@
 		{
 			title: 'Encoding-confidence gate',
 			stage: 'Input · Encoding',
-			body: 'A signal that cannot be mapped to the right concept with enough confidence is flagged, not silently trusted. A mis-linked observation would poison everything downstream.'
+			body: 'A signal that cannot be matched to the right concept with enough confidence is flagged rather than quietly accepted. One mis-linked observation would corrupt everything downstream of it.'
 		},
 		{
 			title: 'Audit log of decisions',
@@ -128,7 +128,7 @@
 		{
 			title: 'Clinical assurance sampling',
 			stage: 'On live output',
-			body: 'The empirical face: human clinicians grade sampled live outputs against a harm ladder, with sign-off at every new deployment and ongoing random re-review.'
+			body: 'Clinicians grade samples of real output against a harm scale, with sign-off before each new deployment and random re-review after it.'
 		}
 	];
 
@@ -166,11 +166,11 @@
 	<div class="container-wide">
 		<span class="part-tag" use:reveal>Part one</span>
 		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracle · the consumer product</span>
-		<h2 use:reveal={{ delay: 80 }}>Auracle builds the picture no clinic ever sees.</h2>
+		<h2 use:reveal={{ delay: 80 }}>The half of your health a clinic never sees.</h2>
 		<p class="lede" use:reveal={{ delay: 140 }}>
-			Wellness apps fail the moment they demand effort. Auracle removes it. The signals you already
-			generate flow in on their own and become one timestamped model of your body: the part of your
-			health that lives between appointments.
+			Most of a person's health happens between appointments, and almost none of it gets written
+			down. Auracle collects it without asking anyone to keep a diary: the signals your devices
+			already produce arrive on their own, and anything they cannot see takes one reply.
 		</p>
 
 		<!-- The churn curve behind that first sentence: the same figure as the
@@ -281,11 +281,11 @@
 		</ol>
 
 		<div class="signals-block">
-			<h3 class="signals-head" use:reveal>Raw signals in, scores out.</h3>
+			<h3 class="signals-head" use:reveal>Every device, one format.</h3>
 			<p class="signals-sub" use:reveal={{ delay: 60 }}>
-				Sleep, movement, meals and mindfulness map to one timestamped schema, so every score is
-				derived the same way whatever device it came from. Wearables sync automatically; anything
-				else is a reply away.
+				Sleep, movement, meals and mindfulness are recorded in one shared format, so a figure means
+				the same thing whichever device reported it. Two people with different watches get
+				comparable numbers.
 			</p>
 			<ul class="signals-grid" use:reveal={{ delay: 100 }} aria-label="Signals Auracle ingests">
 				{#each TWIN_SIGNALS as sig, i}
@@ -312,14 +312,13 @@
 		<div class="twin-copy">
 			<h2 use:reveal={{ delay: 60 }}>One timestamped model of a person.</h2>
 			<p class="lede" use:reveal={{ delay: 120 }}>
-				A person’s health is scattered across devices, labs and memory. The patient state pulls it
-				onto one timeline, each observation encoded into the same clinical vocabulary and stamped
-				with when it was true.
+				A person's health is scattered across devices, labs and memory. We hold it as one record:
+				every observation written in the same clinical vocabulary and stamped with when it was true.
 			</p>
 			<p use:reveal={{ delay: 180 }}>
-				Because everything is timestamped, the state is longitudinal, not a flat snapshot. It can
-				answer <em>what a reading was</em>, <em>how it has changed</em>, and whether that matters
-				now: iron studies rising, a resting heart rate creeping up.
+				Because every entry carries its date, the record answers questions a snapshot cannot: what a
+				reading was, how it has moved, and whether the direction matters. Iron studies rising. A
+				resting heart rate creeping up over months.
 			</p>
 			<p use:reveal={{ delay: 220 }}>
 				Acute readings arrive the same way. Our own devices (a recording stethoscope, a
@@ -348,9 +347,9 @@
 		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracare CDSS · clinical reasoning</span>
 		<h2 use:reveal={{ delay: 80 }}>A loop, not a pipeline.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Most health AI runs a fixed pipeline: data in, answer out. Auracare behaves like a clinician
-			instead. It reasons, decides the next-best question, then reasons again. A pipeline ends when
-			it produces an answer; the loop only acts once no further question is worth its cost.
+			Most health AI answers whatever it is asked, once. A clinician does something else: they form
+			a view, work out what would change it, and go and find that out. Auracare runs the same way,
+			and keeps going round until asking again would not be worth the delay.
 		</p>
 
 		<!-- The safety overlay is drawn as a frame around the stages rather than a
@@ -374,14 +373,13 @@
 
 			<p class="loop-return">
 				<span class="loop-return-glyph" aria-hidden="true">↺</span>
-				Stage five returns to stage one until no further question is worth its cost.
+				Stage five decides whether to go round again, or to stop and act.
 			</p>
 		</div>
 
 		<p class="safety-note" use:reveal>
-			<strong>Stage five is the only exit.</strong> Nothing reaches a patient until value-of-information
-			says the next question is not worth its cost, and every action that follows is checked against
-			the safety overlay before it leaves the loop.
+			<strong>Stage five is the only way out of the loop.</strong> Nothing reaches a patient before it,
+			and everything that follows it is checked by the safety layer on the way past.
 		</p>
 	</div>
 </section>
@@ -393,10 +391,10 @@
 	<div class="container-wide">
 		<h2 use:reveal={{ delay: 60 }}>Two kinds of intelligence, checking each other.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Learned models are fluent but can be confidently wrong. Symbolic systems are rigorous but
-			rigid. We pair them and keep a named line between the two, because a regulator’s question is
-			not “is it accurate” but “which decisions crossed onto the learned side, and can you
-			reconstruct them.”
+			Learned models are fluent and occasionally confident about things that are false. Rule-based
+			systems are reliable and cannot handle anything they were not told about. We run both and keep
+			a marked line between them, because the question a regulator asks is which side of that line a
+			given decision came from, and whether you can reconstruct it.
 		</p>
 
 		<div class="core-grid">
@@ -424,8 +422,8 @@
 			The learned model <em>proposes</em>. The auditable layer <em>disposes</em>.
 		</p>
 		<p class="core-tail" use:reveal={{ delay: 200 }}>
-			A glass box, not a black box: every conclusion traces back to a named ontology edge or rule,
-			and every step is logged and replayable.
+			Every conclusion traces back to the specific rule or relationship that produced it, and every
+			step is logged in an order you can replay.
 		</p>
 	</div>
 </section>
@@ -437,8 +435,8 @@
 	<div class="container-wide">
 		<h2 use:reveal={{ delay: 60 }}>One gate on every stage.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			A single gate at the end would imply reasoning can be unsafe as long as the last check catches
-			it. So the overlay runs through the whole loop, in a different form at each stage.
+			One check at the end would mean everything before it is allowed to go wrong, provided the last
+			step catches it. The checks run at every stage instead, and take a different form at each.
 		</p>
 
 		<div class="clinician-note" use:reveal={{ delay: 160 }}>
@@ -482,12 +480,12 @@
 <!-- ============================================================ -->
 <section class="section-y graph-section aura-space graph-foundation">
 	<div class="container-wide">
-		<h2 use:reveal={{ delay: 60 }}>Grounded in what medicine already knows.</h2>
+		<h2 use:reveal={{ delay: 60 }}>Built on the terminology medicine already uses.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Auracle and the reasoning core both bind to the same live graph of clinical concepts and the
-			relationships between them. It is not scraped from the open web; it is mapped to the standards
-			clinicians, regulators and health systems already trust, and it is the one part of the system
-			you can explore for yourself today.
+			Both products read from the same graph of clinical concepts and the relationships between
+			them. None of it is scraped from the open web: it is mapped to the standards clinicians,
+			regulators and health systems already use. It is also the one part of the system that is
+			finished, and you can go and look at it now.
 		</p>
 
 		<div class="graph-tiles">

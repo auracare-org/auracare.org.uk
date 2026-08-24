@@ -277,6 +277,8 @@ export interface Milestone {
 	body: string;
 	era: 'nhs' | 'pivot' | 'ai';
 	fork?: boolean;
+	/** The entry the company is currently in. Exactly one should carry this. */
+	now?: boolean;
 }
 
 export const TIMELINE: Milestone[] = [
@@ -308,13 +310,20 @@ export const TIMELINE: Milestone[] = [
 	{
 		date: 'Jul 2026',
 		title: 'Auracle MVP',
-		body: 'The consumer product reaches its first build: a wellness companion in your messages.',
+		body: 'The consumer product reached its first build: a wellness companion in your messages.',
 		era: 'ai'
 	},
 	{
 		date: 'Aug 2026',
 		title: 'Auracle public launch',
-		body: 'Auracle opens to the public on iMessage, WhatsApp and RCS.',
+		body: 'Auracle opens to the public on iMessage, WhatsApp and RCS, and the ontology goes live for anyone to explore.',
+		era: 'ai',
+		now: true
+	},
+	{
+		date: 'Late 2026',
+		title: 'The core and the hardware',
+		body: 'The reasoning core moves from a validated design into build, while our stethoscope, BP monitor and otoscope head toward certification.',
 		era: 'ai'
 	},
 	{
@@ -324,15 +333,9 @@ export const TIMELINE: Milestone[] = [
 		era: 'ai'
 	},
 	{
-		date: '2026 → 2027',
-		title: 'The core and the hardware',
-		body: 'The reasoning core moves from a validated design into build, while our stethoscope, BP monitor and otoscope head toward certification, with more devices in the pipeline.',
-		era: 'ai'
-	},
-	{
 		date: 'Jun 2027 onward',
 		title: 'Clinical rollout',
-		body: 'With consumer and professional hardware certified, Auracare rolls out clinician-side, China-forward via the Greater Bay Area.',
+		body: 'With the devices certified, the CDSS rolls out clinician-side, China-forward via the Greater Bay Area.',
 		era: 'ai'
 	}
 ];

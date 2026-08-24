@@ -36,8 +36,11 @@
 						use:reveal={{ threshold: 0.35 }}
 					>
 						<span class="tl-dot" style="--dot:{eraDot[m.era]}" aria-hidden="true"></span>
-						<div class="tl-card glass-card" class:fork-card={m.fork}>
-							<span class="tl-date">{m.date}</span>
+						<div class="tl-card glass-card" class:fork-card={m.fork} class:now-card={m.now}>
+							<span class="tl-date">
+								{m.date}
+								{#if m.now}<span class="tl-now">We are here</span>{/if}
+							</span>
 							<h3>{m.title}</h3>
 							<p>{m.body}</p>
 							{#if m.fork}<span class="tl-forklabel">The pivot</span>{/if}
@@ -129,6 +132,26 @@
 		align-items: center;
 		justify-content: center;
 		z-index: 2;
+	}
+	.tl-date {
+		display: inline-flex;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+	}
+	/* The entry the company is actually in. Without it every date read as
+	   equally distant, which made a shipped month look like a projection. */
+	.tl-now {
+		font-size: 0.6rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+		border: 1px solid var(--color-primary-600);
+		padding: 0.15rem 0.45rem;
+	}
+	.now-card {
+		border-color: var(--color-primary-600);
 	}
 	.tl-node.is-fork .tl-dot {
 		width: 28px;
