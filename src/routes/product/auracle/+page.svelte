@@ -165,18 +165,24 @@
 			and only when there is something worth saying.
 		</p>
 
-		<ol class="day">
-			{#each day as slot, i}
-				<li class="day-row" use:reveal={{ delay: i * 70 }}>
+		<!-- The day drawn as a day: one rule running 07:00 to 22:00 with the four
+		     moments marked on it, and the long quiet stretches visible as the gaps
+		     between them. A plain list could not show that it only speaks four
+		     times, which is the entire claim. -->
+		<ol class="day" use:reveal={{ delay: 100 }}>
+			{#each day as slot (slot.time)}
+				<li class="day-row">
 					<span class="day-time">{slot.time}</span>
-					<span class="day-dot" aria-hidden="true"></span>
-					<div class="day-card">
+					<div class="day-body">
 						<h3>{slot.title}</h3>
 						<p>{slot.body}</p>
 					</div>
 				</li>
 			{/each}
 		</ol>
+		<p class="day-quiet" use:reveal>
+			Four moments. The rest of the day it says nothing, and quiet hours run from 22:00 to 07:00.
+		</p>
 	</div>
 </section>
 
@@ -189,24 +195,15 @@
 			does the structuring, the remembering, and the noticing.
 		</p>
 
-		<div class="log-grid">
-			{#each logging as pair, i}
-				<div class="log-pair" use:reveal={{ delay: i * 70 }}>
-					<p class="log-bubble you"><span class="who">You</span>{pair.you}</p>
-					<span class="log-arrow" aria-hidden="true">
-						<svg viewBox="0 0 24 24" fill="none">
-							<path
-								d="M5 12h14M13 6l6 6-6 6"
-								stroke="currentColor"
-								stroke-width="1.8"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
-					</span>
-					<p class="log-bubble twin"><span class="who">Auracle</span>{pair.twin}</p>
-				</div>
+		<!-- One thread, not three side-by-side pairs. The exchange only reads as
+		     texting if it is stacked the way a thread is: your message right,
+		     the reply left, in sequence down a single column. -->
+		<div class="thread" use:reveal={{ delay: 100 }}>
+			{#each logging as pair (pair.you)}
+				<p class="msg msg--you">{pair.you}</p>
+				<p class="msg msg--them">{pair.twin}</p>
 			{/each}
+			<p class="thread-note">Replying is the logging. There is nothing else to fill in.</p>
 		</div>
 	</div>
 </section>
@@ -221,15 +218,20 @@
 			<a class="keep-link" href="https://auracle.health" rel="noopener">auracle.health</a>.
 		</p>
 
-		<div class="keep-grid">
-			{#each retention as feature, i (feature.title)}
-				<div class="keep-card" use:reveal={{ delay: i * 70 }}>
-					<span class="keep-hook">{feature.hook}</span>
-					<h3>{feature.title}</h3>
-					<p>{feature.body}</p>
+		<!-- Five items do not divide into a grid without one row being a
+		     different width from the others, which is what made this look
+		     messy. As ruled rows every entry is the same shape. -->
+		<dl class="keep-list">
+			{#each retention as feature (feature.title)}
+				<div class="keep-row" use:reveal={{ delay: 40 }}>
+					<dt>
+						<span class="keep-hook">{feature.hook}</span>
+						<h3>{feature.title}</h3>
+					</dt>
+					<dd>{feature.body}</dd>
 				</div>
 			{/each}
-		</div>
+		</dl>
 	</div>
 </section>
 
@@ -244,8 +246,8 @@
 		</p>
 
 		<div class="src-grid">
-			{#each sources as col, i}
-				<div class="glass-card src-card" use:reveal={{ delay: i * 70 }}>
+			{#each sources as col (col.group)}
+				<div class="src-col" use:reveal={{ delay: 40 }}>
 					<h3>{col.group}</h3>
 					<ul>
 						{#each col.items as item}
@@ -324,43 +326,198 @@
 	.keep-link:hover {
 		color: var(--color-primary-600);
 	}
-	.keep-grid {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1rem;
+	/* A message thread. Bubbles alternate sides and the tails are asymmetric,
+	   which is what makes it read as a conversation rather than as two
+	   columns of quoted text. */
+	/* The day. One vertical rule with the four moments pinned to it; the space
+	   between them is the point, so the rows are spaced by time, not evenly. */
+	.day {
+		list-style: none;
+		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+		padding: 0 0 0 5.5rem;
+		position: relative;
 	}
-	.keep-card {
-		padding: 1.35rem 1.5rem;
-		border-radius: var(--radius-lg);
-		background: var(--color-neutral-0);
-		border: 1px solid var(--color-border-default);
-		box-shadow: var(--shadow-xs);
+	.day::before {
+		content: '';
+		position: absolute;
+		left: 4.25rem;
+		top: 0.6rem;
+		bottom: 0.6rem;
+		width: 1px;
+		background: var(--color-rule-strong);
 	}
-	.keep-hook {
-		display: inline-block;
-		font-family: var(--font-family-mono);
-		font-size: 0.62rem;
-		font-weight: 700;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-		color: var(--color-primary-600);
-		background: var(--color-primary-50);
-		border: 1px solid var(--color-primary-100);
-		padding: 0.2rem 0.6rem;
+	.day-row {
+		position: relative;
+		padding-block: 1.4rem;
+	}
+	.day-row::before {
+		content: '';
+		position: absolute;
+		left: -1.32rem;
+		top: 1.85rem;
+		width: 9px;
+		height: 9px;
 		border-radius: 999px;
-		margin-bottom: 0.75rem;
+		background: var(--color-surface-page);
+		border: 1.5px solid var(--color-primary-600);
 	}
-	.keep-card h3 {
+	.day-time {
+		position: absolute;
+		left: -5.5rem;
+		top: 1.55rem;
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: var(--color-ink);
+		font-variant-numeric: tabular-nums;
+	}
+	.day-row h3 {
 		font-size: 1.05rem;
 		letter-spacing: -0.01em;
-		margin-bottom: 0.35rem;
+		margin: 0 0 0.3rem;
 	}
-	.keep-card p {
-		font-size: 0.9rem;
+	.day-row p {
+		font-size: 0.95rem;
 		line-height: 1.55;
 		color: var(--color-ink-soft);
+		margin: 0;
+		max-width: 56ch;
 	}
+	.day-quiet {
+		margin: 1.75rem 0 0;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--color-rule);
+		font-size: 0.88rem;
+		color: var(--color-ink-faint);
+	}
+
+	/* Sources: three ruled columns. */
+	.src-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		border-top: 1px solid var(--color-ink);
+	}
+	.src-col {
+		padding-top: 1.5rem;
+	}
+	.src-col h3 {
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+		margin: 0 0 1rem;
+	}
+	.src-col ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.src-col li {
+		padding-block: 0.6rem;
+		border-top: 1px solid var(--color-rule);
+		font-size: 0.95rem;
+		color: var(--color-ink);
+	}
+	.src-note {
+		margin: 1rem 0 0;
+		font-size: 0.85rem;
+		line-height: 1.5;
+		color: var(--color-ink-faint);
+	}
+	@media (min-width: 860px) {
+		.src-grid {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 2.5rem;
+		}
+		.src-col + .src-col {
+			border-left: 1px solid var(--color-rule);
+			padding-left: 2.5rem;
+		}
+	}
+
+	.keep-list {
+		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+		border-top: 1px solid var(--color-ink);
+	}
+	.keep-row {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.5rem;
+		padding-block: 1.5rem;
+		border-bottom: 1px solid var(--color-rule);
+	}
+	.keep-hook {
+		display: block;
+		font-size: 0.64rem;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--color-ink-faint);
+		margin-bottom: 0.4rem;
+	}
+	.keep-row h3 {
+		font-size: 1.08rem;
+		letter-spacing: -0.01em;
+		margin: 0;
+	}
+	.keep-row dd {
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.55;
+		color: var(--color-ink-soft);
+		max-width: 60ch;
+	}
+	@media (min-width: 860px) {
+		.keep-row {
+			grid-template-columns: 18rem minmax(0, 1fr);
+			gap: 2.5rem;
+			align-items: baseline;
+		}
+	}
+
+	.thread {
+		max-width: 34rem;
+		margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.55rem;
+	}
+	.msg {
+		margin: 0;
+		max-width: 78%;
+		padding: 0.75rem 1.05rem;
+		font-size: 0.95rem;
+		line-height: 1.45;
+		border-radius: 18px;
+	}
+	.msg--you {
+		align-self: flex-end;
+		background: var(--color-primary-600);
+		color: #fff;
+		border-bottom-right-radius: 5px;
+	}
+	.msg--them {
+		align-self: flex-start;
+		background: var(--color-surface-alt);
+		color: var(--color-ink);
+		border-bottom-left-radius: 5px;
+		margin-bottom: 0.9rem;
+	}
+	.msg--them:last-of-type {
+		margin-bottom: 0;
+	}
+	.thread-note {
+		margin: 1.5rem 0 0;
+		text-align: center;
+		font-size: 0.78rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-ink-faint);
+	}
+
 	.btn-solid:active {
 		transform: scale(0.97);
 		transition-duration: var(--duration-press);
@@ -386,152 +543,6 @@
 		line-height: 1.6;
 		color: var(--color-ink-soft);
 		max-width: 44rem;
-	}
-	.day-row {
-		display: grid;
-		grid-template-columns: 3.4rem 1.2rem 1fr;
-		gap: 0.5rem 0.9rem;
-		align-items: start;
-	}
-	.day-time {
-		font-family: var(--font-family-mono);
-		font-size: 0.82rem;
-		font-weight: 700;
-		color: var(--color-primary-600);
-		padding-top: 1.1rem;
-		text-align: right;
-	}
-	.day-dot {
-		position: relative;
-		justify-self: center;
-		width: 0.85rem;
-		height: 0.85rem;
-		margin-top: 1.15rem;
-		border-radius: 999px;
-		background: var(--color-primary-500);
-		box-shadow: 0 0 0 4px rgba(56, 127, 245, 0.14);
-	}
-	.day-row:not(:last-child) .day-dot::after {
-		content: '';
-		position: absolute;
-		top: 1.1rem;
-		left: 50%;
-		transform: translateX(-50%);
-		width: 2px;
-		height: calc(100% + 1.6rem);
-		background: linear-gradient(var(--color-primary-200), transparent);
-	}
-	.day-card {
-		padding: 1rem 1.25rem 1.15rem;
-		background: var(--color-neutral-0);
-		border: 1px solid var(--color-border-default);
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-xs);
-	}
-	.day-card h3 {
-		font-size: 1.05rem;
-		letter-spacing: -0.01em;
-		margin-bottom: 0.3rem;
-	}
-	.day-card p {
-		font-size: 0.92rem;
-		line-height: 1.55;
-		color: var(--color-ink-soft);
-	}
-	.log-grid {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		display: grid;
-		gap: 1rem;
-	}
-	.log-pair {
-		display: grid;
-		grid-template-columns: 1fr auto 1fr;
-		gap: 0.9rem;
-		align-items: center;
-		padding: 1.1rem 1.25rem;
-		background: var(--color-neutral-0);
-		border: 1px solid var(--color-border-default);
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-xs);
-	}
-	.log-bubble {
-		font-size: 0.92rem;
-		line-height: 1.5;
-		padding: 0.75rem 0.95rem;
-		border-radius: 1.05rem;
-	}
-	.who {
-		display: block;
-		font-family: var(--font-family-mono);
-		font-size: 0.62rem;
-		font-weight: 700;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-		margin-bottom: 0.3rem;
-		opacity: 0.75;
-	}
-	.log-bubble.you {
-		background: #e9e9eb;
-		color: #111;
-		border-bottom-left-radius: 0.35rem;
-	}
-	.log-bubble.twin {
-		background: var(--color-primary-600);
-		color: #eef2ff;
-		border-bottom-right-radius: 0.35rem;
-	}
-	.log-bubble.twin .who {
-		color: #cdd9ff;
-		opacity: 1;
-	}
-	.log-arrow {
-		display: inline-flex;
-		width: 1.5rem;
-		height: 1.5rem;
-		color: var(--color-primary-400);
-		justify-self: center;
-	}
-	.log-arrow svg {
-		width: 100%;
-		height: 100%;
-	}
-	.src-card {
-		padding: 1.5rem 1.6rem;
-	}
-	.src-card h3 {
-		font-size: 1.15rem;
-		letter-spacing: -0.01em;
-		margin-bottom: 0.9rem;
-	}
-	.src-card ul {
-		list-style: none;
-		margin: 0 0 1rem;
-		padding: 0;
-		display: grid;
-		gap: 0.5rem;
-	}
-	.src-card li {
-		position: relative;
-		padding-left: 1.3rem;
-		font-size: 0.95rem;
-		color: var(--color-ink);
-	}
-	.src-card li::before {
-		content: '';
-		position: absolute;
-		left: 0;
-		top: 0.5em;
-		width: 0.45rem;
-		height: 0.45rem;
-		border-radius: 999px;
-		background: var(--color-primary-500);
-	}
-	.src-note {
-		font-size: 0.85rem;
-		line-height: 1.55;
-		color: var(--color-ink-faint);
-		border-top: 1px solid var(--color-border-default);
-		padding-top: 0.9rem;
 	}
 	.plan-grid {
 		display: grid;
@@ -648,16 +659,6 @@
 		/* Five hooks over two rows. The last two widen to span half the grid
 		   each rather than sitting centred under the row above: a centred
 		   orphan row reads as a misalignment, a filled row reads as a choice. */
-		.keep-grid {
-			grid-template-columns: repeat(6, 1fr);
-		}
-		.keep-card {
-			grid-column: span 2;
-		}
-		.keep-card:nth-child(4),
-		.keep-card:nth-child(5) {
-			grid-column: span 3;
-		}
 	}
 	@media (min-width: 860px) {
 		.plan-grid {
@@ -665,12 +666,5 @@
 		}
 	}
 	@media (max-width: 560px) {
-		.log-pair {
-			grid-template-columns: 1fr;
-			gap: 0.5rem;
-		}
-		.log-arrow {
-			transform: rotate(90deg);
-		}
 	}
 </style>
