@@ -11,7 +11,7 @@
 </script>
 
 <Seo
-	title="Auracare: the world's most personalised healthcare"
+	title="Auracare: the world's most personalized healthcare"
 	description="Auracare builds one living model of a person and two products on it: Auracle, a companion in your messages that builds your bio-psycho-social history, and the Auracare CDSS, clinical decision support inside the consultation. Auracle launches in August 2026."
 	path="/"
 />

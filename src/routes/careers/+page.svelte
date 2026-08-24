@@ -45,7 +45,6 @@
 
 <!-- 1) Hero -->
 <PageHero
-	kicker="Careers"
 	title="Come build the health system that"
 	accent="should exist."
 	sub="A small team teaching machines to reason about health, for people at home and clinicians in the room. It is early and it is hard, and we will not pretend otherwise."
@@ -54,7 +53,6 @@
 <!-- 2) Why join -->
 <section class="section-y why">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Why join</span>
 		<h2 use:reveal={{ delay: 60 }}>Small team. Big problem. No org chart to hide in.</h2>
 		<p class="why-lede" use:reveal={{ delay: 120 }}>
 			You will own real work from day one and ship without collecting sign-offs. We build the hard
@@ -67,7 +65,6 @@
 <!-- 3) Open roles -->
 <section class="section-y roles" id="roles">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Open roles</span>
 		<h2 use:reveal={{ delay: 60 }}>Where we’re hiring.</h2>
 		<p class="roles-note" use:reveal={{ delay: 120 }}>
 			Titles are a rough guide, not a checklist. Close enough? Interestingly different? Email us

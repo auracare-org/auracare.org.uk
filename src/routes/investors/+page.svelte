@@ -97,7 +97,6 @@
 
 <!-- ================= Hero ================= -->
 <PageHero
-	kicker="Seed round"
 	title="We are raising our"
 	accent="seed round."
 	sub="Auracle launches to the public in August 2026, and our first clinical trials in Asia begin in February 2027. This round pays for the launch, the trials, and device certification."

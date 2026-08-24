@@ -153,10 +153,10 @@
 <!-- Hero                                                          -->
 <!-- ============================================================ -->
 <PageHero
-	kicker="Technology"
 	title="Two products."
 	accent="One patient model."
-	sub="One timestamped picture of a person, grounded in the language medicine already agrees on. Auracle learns daily life; the Auracare CDSS reasons over the whole picture."
+	accentOwnLine
+	sub="Everything both products know about a person lives in one timestamped record, written in the terminology medicine already agrees on."
 />
 
 <!-- ============================================================ -->
@@ -310,7 +310,6 @@
 <section class="section-y twin-section">
 	<div class="container-wide twin-grid">
 		<div class="twin-copy">
-			<span class="eyebrow" use:reveal>The patient state</span>
 			<h2 use:reveal={{ delay: 60 }}>One timestamped model of a person.</h2>
 			<p class="lede" use:reveal={{ delay: 120 }}>
 				A person’s health is scattered across devices, labs and memory. The patient state pulls it
@@ -392,7 +391,6 @@
 <!-- ============================================================ -->
 <section class="section-y core-section aura-space">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>The neuro-symbolic core</span>
 		<h2 use:reveal={{ delay: 60 }}>Two kinds of intelligence, checking each other.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			Learned models are fluent but can be confidently wrong. Symbolic systems are rigorous but
@@ -437,7 +435,6 @@
 <!-- ============================================================ -->
 <section class="section-y safety-section aura-space">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Safety by design</span>
 		<h2 use:reveal={{ delay: 60 }}>One gate on every stage.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			A single gate at the end would imply reasoning can be unsafe as long as the last check catches
@@ -485,7 +482,6 @@
 <!-- ============================================================ -->
 <section class="section-y graph-section aura-space graph-foundation">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>What both products stand on</span>
 		<h2 use:reveal={{ delay: 60 }}>Grounded in what medicine already knows.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			Auracle and the reasoning core both bind to the same live graph of clinical concepts and the

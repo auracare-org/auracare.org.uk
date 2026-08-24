@@ -18,7 +18,7 @@
 
 		<h1 use:reveal={{ delay: 80 }}>
 			The world's most<br />
-			<em>personalised healthcare.</em>
+			<em>personalized healthcare.</em>
 		</h1>
 
 		<p class="hero-sub" use:reveal={{ delay: 160 }}>

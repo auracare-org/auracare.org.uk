@@ -72,7 +72,9 @@
 		position: relative;
 		max-width: 60rem;
 		margin: 0 auto;
-		padding-block: 0.5rem;
+		/* No trailing padding: it was part of what let the spine run past the
+		   final entry. */
+		padding-block: 0.5rem 0;
 	}
 	.tl-track,
 	.tl-fill {
@@ -81,8 +83,13 @@
 		width: 3px;
 		border-radius: var(--radius-xs);
 	}
+	/* The spine stops at the last entry. At `height: 100%` it inherited the
+	   container's trailing space and the last node's bottom margin, so the line
+	   carried on into empty page below June 2027. */
 	.tl-track {
-		height: 100%;
+		top: 6px;
+		bottom: 0;
+		height: auto;
 		background: var(--color-border-dark);
 	}
 	.tl-fill {
@@ -105,6 +112,9 @@
 	.tl-node {
 		position: relative;
 		padding-left: 48px;
+	}
+	.tl-node:last-child {
+		margin-bottom: 0;
 	}
 	.tl-dot {
 		position: absolute;

@@ -12,7 +12,6 @@
 <section id="waitlist" class="waitlist aura-space">
 	<div class="container-wide waitlist-grid">
 		<div class="waitlist-copy">
-			<span class="eyebrow" use:reveal>Join us</span>
 			<h2 use:reveal={{ delay: 60 }}>
 				Be first to meet <span class="text-gradient-l">Auracle</span>.
 			</h2>

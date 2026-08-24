@@ -8,7 +8,7 @@
 		<div class="footer-grid">
 			<div class="footer-brand">
 				<img src="/SVG/auracare-white.svg" alt="Auracare" class="footer-logo" />
-				<p class="footer-tag">The world's most personalised healthcare.</p>
+				<p class="footer-tag">The world's most personalized healthcare.</p>
 				<a class="footer-ontology" href={CONTACT.ontologyUrl} target="_blank" rel="noopener">
 					Explore the ontology
 					<svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"

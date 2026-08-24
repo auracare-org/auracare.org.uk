@@ -17,7 +17,6 @@
 <section class="market section-y">
 	<div class="container-wide">
 		<header class="market-head">
-			<p class="eyebrow" use:reveal>Traction to date</p>
 			<h2 use:reveal={{ delay: 60 }}>
 				Early days, <span class="text-gradient">real momentum</span>.
 			</h2>
@@ -66,14 +65,6 @@
 <style>
 	.market-head {
 		max-width: 44rem;
-	}
-	.eyebrow {
-		font-family: var(--font-family-mono);
-		font-size: 0.72rem;
-		font-weight: 700;
-		letter-spacing: 0.16em;
-		text-transform: uppercase;
-		color: var(--color-primary-500);
 	}
 	.market-head h2 {
 		font-size: clamp(1.9rem, 4vw, 2.9rem);

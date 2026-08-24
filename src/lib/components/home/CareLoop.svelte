@@ -7,7 +7,6 @@
 
 <section class="loop section-y" aria-labelledby="loop-heading">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>How they work together</span>
 		<h2 id="loop-heading" use:reveal={{ delay: 60 }}>
 			One patient-centred <span class="text-gradient">care loop</span>.
 		</h2>

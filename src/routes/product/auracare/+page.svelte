@@ -122,7 +122,7 @@
 
 <!-- ================= Hero ================= -->
 <PageHero
-	kicker="Auracare CDSS · In development"
+	meta="Clinical · In development"
 	title="Decision support that"
 	accent="stays out of the way."
 	sub="A clinical decision support system that works during the appointment, not after it. The clinician keeps their attention on the patient."
@@ -131,7 +131,6 @@
 <!-- ================= The clinical gap ================= -->
 <section class="section-y gap-sec">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>The gap</span>
 		<h2 use:reveal={{ delay: 60 }}>
 			Clinicians already want AI. Today’s tools don’t fit the room.
 		</h2>
@@ -156,7 +155,6 @@
 <!-- ================= In the room ================= -->
 <section class="section-y room-sec">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Inside the consultation</span>
 		<h2 use:reveal={{ delay: 60 }}>Everything arrives automatically, so nothing interrupts.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			The CDSS is built around a single rule: every time a clinician has to break away to search,
@@ -180,7 +178,6 @@
 <!-- ================= Hardware into the core ================= -->
 <section class="section-y hw-sec aura-space">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Our hardware, straight into the core</span>
 		<h2 use:reveal={{ delay: 60 }}>A closed link, with no middleman.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			Nothing is typed in or pulled from someone else’s integration. Our own devices feed the core
@@ -210,7 +207,6 @@
 <!-- ================= How it reasons ================= -->
 <section class="section-y arch-sec">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>The architecture</span>
 		<h2 use:reveal={{ delay: 60 }}>How it reasons.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			Most clinical AI sends a prompt to a general-purpose model and returns its answer. That is the
@@ -235,7 +231,6 @@
 <section class="section-y out-sec">
 	<div class="container-wide out-grid">
 		<div class="out-copy">
-			<span class="eyebrow" use:reveal>What comes back</span>
 			<h2 use:reveal={{ delay: 60 }}>Three outputs. One decision, and it’s the clinician’s.</h2>
 			<p class="lede" use:reveal={{ delay: 120 }}>
 				The core doesn’t hand down an answer. It lays out what it has reasoned toward, ranked and
@@ -319,19 +314,6 @@
 		.btn-solid:hover:active {
 			transform: translateY(-2px) scale(0.97);
 		}
-	}
-	.btn-ghost {
-		font-weight: 600;
-		font-size: 0.95rem;
-		color: #eaf0ff;
-		padding: 0.8rem 1.4rem;
-		border-radius: 999px;
-		border: 1px solid var(--color-border-dark-strong);
-		transition: border-color 0.2s ease;
-	}
-	.btn-ghost:hover {
-		border-color: #fff;
-		color: #fff;
 	}
 	.lede {
 		margin-top: 1rem;

@@ -150,7 +150,7 @@
 
 <!-- ================= Hero ================= -->
 <PageHero
-	kicker="Auracle · Consumer · Expected August 2026"
+	meta="Consumer · Expected August 2026"
 	title="The product built to be"
 	accent="texted back."
 	sub="A wellness companion that lives in the apps you already open a hundred times a day. It learns your daily life in conversation and builds one bio-psycho-social history you can share at an appointment."
@@ -159,7 +159,6 @@
 <!-- ================= A day with Auracle ================= -->
 <section class="section-y day-sec">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>A day, held together</span>
 		<h2 use:reveal={{ delay: 60 }}>It reaches out first, so remembering isn’t your job.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			Most wellness apps wait for you to show up. Auracle comes to you, a handful of times a day,
@@ -184,7 +183,6 @@
 <!-- ================= Replying is the logging ================= -->
 <section class="section-y log-sec">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Replying is the logging</span>
 		<h2 use:reveal={{ delay: 60 }}>Tell it like you’d tell a friend.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			There are no streaks to protect and no fields to fill. You text in your own words; Auracle
@@ -216,7 +214,6 @@
 <!-- ================= Built for retention ================= -->
 <section class="section-y keep-sec">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Retention</span>
 		<h2 use:reveal={{ delay: 60 }}>What keeps people replying.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			Only {TWIN_PROBLEM.stat} of wellness-app installers are still active a month after install: the
@@ -239,7 +236,6 @@
 <!-- ================= Everything it draws on ================= -->
 <section class="section-y src-sec">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Everything it draws on</span>
 		<h2 use:reveal={{ delay: 60 }}>Your data already exists. This is where you get it back.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			The services you use collect this data every day; you just never see it in one place. Auracle
@@ -267,7 +263,6 @@
 <section class="section-y plan-sec">
 	<div class="container-wide plan-grid">
 		<div class="plan-copy">
-			<span class="eyebrow" use:reveal>One plan</span>
 			<h2 use:reveal={{ delay: 60 }}>One subscription, in place of the pile.</h2>
 			<p class="lede" use:reveal={{ delay: 120 }}>
 				Wellness has become expensive: a separate app, and a separate bill, for every corner of your
@@ -648,19 +643,6 @@
 		justify-content: center;
 		gap: 0.8rem 1rem;
 		margin-top: 1.9rem;
-	}
-	.btn-ghost {
-		font-weight: 600;
-		font-size: 0.95rem;
-		color: #eaf0ff;
-		padding: 0.8rem 1.4rem;
-		border-radius: 999px;
-		border: 1px solid var(--color-border-dark-strong);
-		transition: border-color 0.2s ease;
-	}
-	.btn-ghost:hover {
-		border-color: #fff;
-		color: #fff;
 	}
 	@media (min-width: 1000px) {
 		/* Five hooks over two rows. The last two widen to span half the grid

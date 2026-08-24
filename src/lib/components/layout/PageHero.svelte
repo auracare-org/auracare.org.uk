@@ -7,34 +7,46 @@
 	 * Before this, five pages had five heroes: two dark, three light, with four
 	 * different decorative backgrounds between them (blob pairs, a grid overlay,
 	 * an orb, a set of orbs). Moving between pages felt like moving between
-	 * sites. This is the single treatment: paper, centred, kicker over statement
-	 * over one line of support, closed by a rule.
+	 * sites. This is the single treatment: paper, centred, statement over one
+	 * line of support, closed by a rule.
+	 *
+	 * There is deliberately no label above the statement. A wide-tracked
+	 * "TECHNOLOGY" over a heading that already says technology is decoration
+	 * standing in for hierarchy. Where a page genuinely has status to report,
+	 * it goes below the statement as `meta`, not above it.
 	 */
 	let {
-		kicker,
 		title,
 		sub = '',
-		accent = ''
+		accent = '',
+		accentOwnLine = false,
+		meta = ''
 	}: {
-		/** Wide-tracked label above the statement. */
-		kicker: string;
 		/** The statement. Keep it to a line or two. */
 		title: string;
 		/** One supporting sentence. Optional. */
 		sub?: string;
 		/** Trailing words of the title rendered in the brand blue. Optional. */
 		accent?: string;
+		/** Break before the accent so it holds its own line. */
+		accentOwnLine?: boolean;
+		/** Small status line, rendered BELOW the statement. Optional. */
+		meta?: string;
 	} = $props();
 </script>
 
 <section class="page-hero">
 	<div class="container-wide inner">
-		<span class="kicker" use:reveal>{kicker}</span>
-		<h1 use:reveal={{ delay: 70 }}>
-			{title}{#if accent}<em> {accent}</em>{/if}
+		<h1 use:reveal>
+			<!-- The space before the accent lives outside the <em> on purpose: inside
+			     it, the renderer collapsed it and the words ran together. -->
+			{title}{#if accent}{#if accentOwnLine}<br />{:else}{' '}{/if}<em>{accent}</em>{/if}
 		</h1>
 		{#if sub}
-			<p class="sub" use:reveal={{ delay: 140 }}>{sub}</p>
+			<p class="sub" use:reveal={{ delay: 80 }}>{sub}</p>
+		{/if}
+		{#if meta}
+			<p class="meta" use:reveal={{ delay: 140 }}>{meta}</p>
 		{/if}
 	</div>
 </section>
@@ -50,13 +62,13 @@
 		align-items: center;
 		text-align: center;
 	}
-	.kicker {
+	.meta {
+		margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
 		font-size: 0.68rem;
 		font-weight: 600;
-		letter-spacing: 0.24em;
+		letter-spacing: 0.18em;
 		text-transform: uppercase;
 		color: var(--color-ink-faint);
-		margin-bottom: clamp(1.25rem, 3vw, 2rem);
 	}
 	h1 {
 		font-size: clamp(2.1rem, 5.2vw, 4rem);

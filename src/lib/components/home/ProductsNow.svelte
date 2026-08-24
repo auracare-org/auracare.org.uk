@@ -23,9 +23,6 @@
 		<ol class="index">
 			{#each products as product (product.key)}
 				<li class="entry" use:reveal={{ delay: 60 }}>
-					<div class="entry-meta">
-						<span class="entry-status">{product.statusLabel}</span>
-					</div>
 					<div class="entry-body">
 						<h3>
 							<a href={product.href}>
@@ -35,6 +32,7 @@
 						</h3>
 						<p class="entry-tagline">{product.tagline}</p>
 						<p class="entry-blurb">{product.blurb}</p>
+						<p class="entry-status">{product.statusLabel}</p>
 					</div>
 				</li>
 			{/each}
@@ -61,7 +59,8 @@
 		line-height: 1.06;
 		letter-spacing: -0.03em;
 		margin: 0 0 clamp(2.5rem, 5vw, 4rem);
-		max-width: 22ch;
+		max-width: none;
+		text-align: left;
 	}
 
 	.index {
@@ -71,18 +70,11 @@
 		border-top: 1px solid var(--color-ink);
 	}
 	.entry {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 0.75rem;
-		padding-block: clamp(1.75rem, 3.5vw, 2.5rem);
+		padding-block: clamp(2rem, 4vw, 3rem);
 		border-bottom: 1px solid var(--color-rule);
 	}
-	.entry-meta {
-		display: flex;
-		align-items: baseline;
-		gap: 1rem;
-	}
 	.entry-status {
+		margin: 1.25rem 0 0;
 		font-size: 0.66rem;
 		font-weight: 600;
 		letter-spacing: 0.16em;
@@ -90,7 +82,7 @@
 		color: var(--color-ink-faint);
 	}
 	.entry h3 {
-		font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+		font-size: clamp(1.6rem, 3vw, 2.4rem);
 		letter-spacing: -0.02em;
 		margin: 0 0 0.4rem;
 	}
@@ -165,16 +157,6 @@
 		}
 		.entry h3 a:hover span {
 			transform: translateX(4px);
-		}
-	}
-	@media (min-width: 860px) {
-		.entry {
-			grid-template-columns: 16rem minmax(0, 1fr);
-			gap: 2.5rem;
-		}
-		.entry-meta {
-			flex-direction: column;
-			gap: 0.5rem;
 		}
 	}
 </style>
