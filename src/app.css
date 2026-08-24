@@ -1221,29 +1221,70 @@
    slightly-scaled state instead of sliding up from below: sliding reads as a
    template, dissolving reads as a page settling. The blur is what sells it,
    and it stays small because blur is expensive to composite. */
+/* A fade-up. This was a blur-and-scale dissolve at `scale(0.995)`, a half of
+   one percent, which is below the threshold at which anything reads as motion:
+   the page looked static even while it was animating. Travel does the work
+   now, and dropping the blur takes a per-element GPU layer with it. */
 .reveal {
 	opacity: 0;
-	filter: blur(6px);
-	transform: scale(0.995);
+	transform: translate3d(0, 18px, 0);
 	transition:
 		opacity var(--duration-reveal) var(--ease-out),
-		filter var(--duration-reveal) var(--ease-out),
 		transform var(--duration-reveal) var(--ease-out);
 	transition-delay: var(--reveal-delay, 0ms);
-	will-change: opacity, filter, transform;
+	will-change: opacity, transform;
 }
 .reveal--in {
 	opacity: 1;
-	filter: blur(0);
 	transform: none;
 }
-/* Once the dissolve has finished, drop the filter and the compositing hint
-   entirely. `filter: blur(0)` is visually identical to no filter but still
-   pins a GPU layer per element, and there are sixty of them on the homepage. */
+/* Once the entrance has finished, drop the compositing hint. There are sixty
+   of these on the homepage and each one otherwise pins a layer for good. */
 .reveal--done {
-	filter: none;
 	will-change: auto;
 	transition: none;
+}
+
+/* ------------------------------------------------------------------- */
+/* Page transitions.                                                    */
+/*                                                                      */
+/* Driven by the View Transitions API from +layout.svelte. The outgoing */
+/* page fades out fast and the incoming one fades up behind it, so a    */
+/* navigation reads as a dissolve rather than a cut. Browsers without   */
+/* the API never match these selectors and navigate as before.          */
+/* ------------------------------------------------------------------- */
+@keyframes page-out {
+	to {
+		opacity: 0;
+	}
+}
+@keyframes page-in {
+	from {
+		opacity: 0;
+		transform: translate3d(0, 10px, 0);
+	}
+}
+::view-transition-old(root) {
+	animation: page-out 140ms var(--ease-out) both;
+}
+::view-transition-new(root) {
+	animation: page-in 320ms var(--ease-out) 60ms both;
+}
+/* The header is fixed and shared between pages, so it should sit still while
+   the document under it changes rather than dissolving with it. */
+.site-header {
+	view-transition-name: site-header;
+}
+::view-transition-group(site-header),
+::view-transition-old(site-header),
+::view-transition-new(site-header) {
+	animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation: none;
+	}
 }
 
 @keyframes auraFloat {
@@ -1304,7 +1345,6 @@
 	}
 	.reveal {
 		transform: none !important;
-		filter: none !important;
 	}
 	.reveal--in {
 		opacity: 1 !important;

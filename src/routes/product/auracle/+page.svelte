@@ -143,7 +143,7 @@
 
 <Seo
 	title="Auracle: a wellness companion in your messages"
-	description="Auracle lives in the messaging apps you already use. It learns your daily life in conversation, connects the sources you choose, and builds a bio-psycho-social history you can share at an appointment. It launches in August 2026."
+	description="Auracle lives in the messaging apps you already use. It learns your daily life in conversation, connects the sources you choose, and builds a bio-psycho-social history you can share at an appointment. It launches in September 2026."
 	path="/product/auracle"
 />
 
@@ -185,7 +185,7 @@
 
 <!-- ================= Hero ================= -->
 <PageHero
-	meta="Consumer · Expected August 2026"
+	meta="Consumer · Expected September 2026"
 	title={'Your health,\nbefore it becomes'}
 	accent="healthcare."
 	accentOwnLine
@@ -386,7 +386,7 @@
 	<div class="container-wide cta-inner">
 		<h2 use:reveal>The waitlist is open.</h2>
 		<p use:reveal={{ delay: 80 }}>
-			Auracle launches on iMessage, WhatsApp and RCS in August 2026. The consumer site is
+			Auracle launches on iMessage, WhatsApp and RCS in September 2026. The consumer site is
 			auracle.health.
 		</p>
 		<div class="cta-actions" use:reveal={{ delay: 140 }}>
@@ -397,6 +397,47 @@
 </section>
 
 <style>
+	/* The closing band. `.cta-inner` and `.cta-actions` were styled further down
+	   the file, but `.cta-band` itself was never defined at all — so the section
+	   had no vertical padding and rendered with the heading jammed against the
+	   top edge of the dark ground and the buttons against the footer. The three
+	   rules live together here now, which is also what stopped the stray
+	   `max-width: none` down there from cancelling the heading's measure. */
+	.cta-band {
+		padding-block: clamp(4rem, 8vw, 6.5rem);
+		border-top: 1px solid var(--color-rule);
+	}
+	.cta-inner {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+	.cta-band h2 {
+		font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+		line-height: 1.04;
+		letter-spacing: -0.035em;
+		margin: 0;
+		max-width: 18ch;
+		color: #fff;
+		text-wrap: balance;
+	}
+	.cta-band p {
+		margin: clamp(1.25rem, 3vw, 1.75rem) 0 0;
+		font-size: clamp(1rem, 1.35vw, 1.14rem);
+		line-height: 1.7;
+		max-width: 46ch;
+		color: rgba(226, 230, 240, 0.75);
+		text-wrap: pretty;
+	}
+	.cta-actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.9rem;
+		margin-top: clamp(2rem, 4vw, 2.75rem);
+	}
+
 	.keep-link {
 		color: var(--color-primary-700);
 		font-weight: 600;
@@ -826,26 +867,6 @@
 		top: 0;
 		color: #0f9d6b;
 		font-weight: 700;
-	}
-	.cta-inner {
-		text-align: center;
-		max-width: 40rem;
-	}
-	.cta-inner h2 {
-		max-width: none;
-		font-size: clamp(1.9rem, 4.5vw, 3rem);
-	}
-	.cta-inner p {
-		margin: 0.9rem auto 0;
-		font-size: 1.05rem;
-		max-width: 30rem;
-	}
-	.cta-actions {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.8rem 1rem;
-		margin-top: 1.9rem;
 	}
 	@media (min-width: 860px) {
 		/* One split, shared. The sources grid and the plan grid used to run

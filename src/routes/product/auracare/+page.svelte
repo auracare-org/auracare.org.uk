@@ -510,21 +510,25 @@
 	.link-path--us .link-label {
 		color: var(--color-primary-300);
 	}
-	/* The steps as a chain: each one a block, joined by a rule, so the count is
-	   visible before a word is read. */
+	/* The steps as a chain running downward, one per row, joined by a short
+	   connector. Laid out as a wrapping horizontal row, five steps could not
+	   fit the column and "Record" dropped onto a second line with its connector
+	   left dangling into empty space — which broke the one thing the diagram
+	   exists to show. Vertically the two paths cannot wrap at all, and the
+	   difference in their length becomes the argument. */
 	.link-steps {
 		list-style: none;
 		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.5rem;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 1.35rem;
 		margin: 0;
 		padding: 0;
 	}
 	.link-steps li {
 		position: relative;
-		padding: 0.5rem 0.85rem;
-		font-size: 0.85rem;
+		padding: 0.55rem 0.9rem;
+		font-size: 0.88rem;
 		font-weight: 500;
 		color: #fff;
 		border: 1px solid rgba(255, 255, 255, 0.24);
@@ -532,10 +536,10 @@
 	.link-steps li + li::before {
 		content: '';
 		position: absolute;
-		left: -0.5rem;
-		top: 50%;
-		width: 0.5rem;
-		height: 1px;
+		left: 1.1rem;
+		top: -1.35rem;
+		width: 1px;
+		height: 1.35rem;
 		background: rgba(255, 255, 255, 0.28);
 	}
 	/* The steps our path removes, struck through rather than deleted: the point

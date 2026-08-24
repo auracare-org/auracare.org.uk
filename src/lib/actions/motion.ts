@@ -36,6 +36,7 @@ interface PendingReveal {
 
 const pending = new Set<PendingReveal>();
 let sweepQueued = 0;
+let sweepTimer = 0;
 let listening = false;
 
 function show(entry: PendingReveal) {
@@ -51,7 +52,10 @@ function show(entry: PendingReveal) {
 }
 
 function sweep() {
+	if (sweepQueued) cancelAnimationFrame(sweepQueued);
+	if (sweepTimer) clearTimeout(sweepTimer);
 	sweepQueued = 0;
+	sweepTimer = 0;
 	const vh = window.innerHeight || document.documentElement.clientHeight || 0;
 	for (const entry of [...pending]) {
 		const r = entry.node.getBoundingClientRect();
@@ -65,7 +69,14 @@ function sweep() {
 }
 
 function onScroll() {
-	if (!sweepQueued) sweepQueued = requestAnimationFrame(sweep);
+	if (sweepQueued || sweepTimer) return;
+	sweepQueued = requestAnimationFrame(sweep);
+	/* rAF is the right throttle while the page is being painted, but a throttled
+	   or backgrounded renderer can defer it indefinitely — and since every node
+	   starts at opacity 0, a sweep that never runs leaves the page blank rather
+	   than merely un-animated. A timer runs in that state, so it backstops the
+	   frame callback and whichever arrives first cancels the other. */
+	sweepTimer = window.setTimeout(sweep, 250);
 }
 
 function startListening() {
@@ -84,65 +95,32 @@ function stopListening() {
 		cancelAnimationFrame(sweepQueued);
 		sweepQueued = 0;
 	}
+	if (sweepTimer) {
+		clearTimeout(sweepTimer);
+		sweepTimer = 0;
+	}
 }
 
 /**
  * Reveal-on-scroll. Adds `.reveal` immediately and `.reveal--in` once the node
  * enters the viewport. Respects prefers-reduced-motion (reveals instantly).
  */
-/**
- * Pages already seen this session, by pathname.
- *
- * The reveal is an introduction, not decoration: it earns its keep the first
- * time someone reads a page and becomes a delay on every visit after that.
- * Coming back to a page you have already scrolled should feel instant, so each
- * path animates once per session and renders immediately from then on.
- */
-const SEEN_KEY = 'auracare:seen-paths';
-
-function seenPaths(): Set<string> {
-	if (typeof sessionStorage === 'undefined') return new Set();
-	try {
-		return new Set(JSON.parse(sessionStorage.getItem(SEEN_KEY) ?? '[]') as string[]);
-	} catch {
-		return new Set();
-	}
-}
-
-/* The decision is made once per navigation, not once per element. Every reveal
-   on a page must share one answer, otherwise the first element to mount would
-   mark the path seen and each element after it would skip its own entrance. */
-let decidedPath: string | null = null;
-let animateCurrentPath = true;
-
-function shouldAnimateHere(): boolean {
-	if (typeof window === 'undefined') return false;
-	const path = window.location.pathname;
-	if (path === decidedPath) return animateCurrentPath;
-
-	decidedPath = path;
-	animateCurrentPath = !seenPaths().has(path);
-
-	if (typeof sessionStorage !== 'undefined') {
-		try {
-			const paths = seenPaths();
-			paths.add(path);
-			sessionStorage.setItem(SEEN_KEY, JSON.stringify([...paths]));
-		} catch {
-			/* Private mode or a full quota: fall back to animating every time. */
-		}
-	}
-	return animateCurrentPath;
-}
+/* The reveal used to run at most once per path per session, on the theory that
+   an entrance earns its keep the first time you read a page and is a delay on
+   every visit after that. In practice it meant the site stopped moving
+   entirely after a few minutes of browsing: every page had been seen, so
+   everything rendered flat and the whole thing read as static. The entrance is
+   part of how the page reads, not a one-time introduction, so it plays every
+   time now. Reduced-motion still skips it outright.
+*/
 
 export const reveal: Action<HTMLElement, RevealParams | undefined> = (node, params) => {
 	const opts = { threshold: 0.15, once: true, delay: 0, ...(params ?? {}) };
 	node.classList.add('reveal');
 	if (opts.delay) node.style.setProperty('--reveal-delay', `${opts.delay}ms`);
 
-	// Reduced motion, no DOM, or a page this visitor has already read: show it
-	// immediately rather than replaying the introduction.
-	if (prefersReducedMotion() || typeof window === 'undefined' || !shouldAnimateHere()) {
+	// Reduced motion or no DOM: show it immediately.
+	if (prefersReducedMotion() || typeof window === 'undefined') {
 		node.classList.add('reveal--in');
 		return {};
 	}

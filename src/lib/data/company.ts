@@ -112,7 +112,7 @@ export const PRODUCTS: Product[] = [
 		blurb:
 			'Auracare’s social-history engine, shipped as a wellness companion in your messages. It learns your daily life in conversation and builds a history you can share at an appointment.',
 		status: 'ships-soon',
-		statusLabel: 'Expected August 2026',
+		statusLabel: 'Expected September 2026',
 		href: '/product/auracle'
 	},
 	{
@@ -163,9 +163,9 @@ export const TWIN_ROLE_HEADING = 'The consumer product leads.';
 
 export const TWIN_ROLE: TwinRole[] = [
 	{
-		stat: 'Aug 2026',
+		stat: 'Sep 2026',
 		title: 'Revenue starts with Auracle',
-		body: 'Auracle subscriptions begin earning at launch in August 2026. The CDSS cannot earn before certification in May 2027, so the consumer product carries revenue first.'
+		body: 'Auracle subscriptions begin earning at launch in September 2026. The CDSS cannot earn before certification in May 2027, so the consumer product carries revenue first.'
 	},
 	{
 		stat: 'One model',
@@ -316,7 +316,7 @@ export const TIMELINE: Milestone[] = [
 		era: 'ai'
 	},
 	{
-		date: 'Aug 2026',
+		date: 'Sep 2026',
 		title: 'Auracle public launch',
 		body: 'Auracle opens to the public on iMessage, WhatsApp and RCS, and the ontology goes live for anyone to explore.',
 		era: 'ai',

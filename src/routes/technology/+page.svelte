@@ -1004,12 +1004,15 @@
 		color: rgba(226, 232, 255, 0.55);
 		margin-bottom: 1.25rem;
 	}
+	/* Five equal columns spanning the full width, matched to the four figures
+	   above them. As a wrapping flex row the chips hugged the left edge at
+	   their content width and left most of the band empty. */
 	.standards-strip {
 		list-style: none;
 		margin: 0;
 		padding: 0;
-		display: flex;
-		flex-wrap: wrap;
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 0.75rem;
 	}
 	.graph-cta {
@@ -1049,12 +1052,16 @@
 		.graph-tile:not(:first-child) {
 			border-left: 1px solid rgba(255, 255, 255, 0.12);
 		}
+		.standards-strip {
+			grid-template-columns: repeat(5, minmax(0, 1fr));
+		}
 	}
 	.standard-chip {
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
 		gap: 0.2rem;
-		padding: 0.7rem 1.1rem;
+		padding: 0.9rem 1.1rem;
 		background: rgba(255, 255, 255, 0.05);
 		border: 1px solid rgba(255, 255, 255, 0.14);
 	}
