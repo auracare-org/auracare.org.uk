@@ -500,8 +500,8 @@
 								format: (n) =>
 									(Number.isInteger(parsed.num) ? Math.round(n).toLocaleString() : n.toFixed(1)) +
 									parsed.suffix
-							}}
-						></span>
+							}}>{stat.value}</span
+						>
 					{:else}
 						<span class="tile-value">{stat.value}</span>
 					{/if}

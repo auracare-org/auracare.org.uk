@@ -3,351 +3,149 @@
 	import { CARE_LOOP, CARE_LOOP_LINE } from '$lib/data/company';
 
 	const actorLabel = { auracle: 'Auracle', auracare: 'Auracare CDSS' } as const;
+
+	/* The loop has two halves: what happens between appointments, and what
+	   happens inside one. Grouping by actor shows the handoff, which the old
+	   snake-of-arrows layout only implied. */
+	const halves = [
+		{
+			side: 'Between appointments',
+			owner: 'auracle' as const,
+			steps: CARE_LOOP.map((s, i) => ({ ...s, n: i + 1 })).filter((s) => s.actor === 'auracle')
+		},
+		{
+			side: 'Inside the consultation',
+			owner: 'auracare' as const,
+			steps: CARE_LOOP.map((s, i) => ({ ...s, n: i + 1 })).filter((s) => s.actor === 'auracare')
+		}
+	];
 </script>
 
 <section class="loop section-y" aria-labelledby="loop-heading">
 	<div class="container-wide">
-		<h2 id="loop-heading" use:reveal={{ delay: 60 }}>
-			One patient-centred <span class="text-gradient">care loop</span>.
-		</h2>
-		<p class="lede" use:reveal={{ delay: 120 }}>
+		<h2 id="loop-heading" use:reveal>One patient-centred care loop.</h2>
+		<p class="lede" use:reveal={{ delay: 60 }}>
 			Daily life goes in. A fuller history reaches your clinician. The plan comes back as habits you
 			can keep.
 		</p>
 
-		<!-- A snake with arrows: steps 01 to 04 across the top, an arrow down
-		     into 05, back across the bottom to 08, and a return arrow up the
-		     left edge closing the loop. On narrow screens the snake unrolls into
-		     a single column with down arrows between the steps. -->
-		<div class="board">
-			<ol class="steps">
-				{#each CARE_LOOP as step, i (step.title)}
-					<li
-						class="step glass-card s{i + 1}"
-						class:step-twin={step.actor === 'auracle'}
-						use:reveal={{ delay: 80 + i * 60 }}
-					>
-						<div class="step-top">
-							<span class="step-num">{String(i + 1).padStart(2, '0')}</span>
-							<span class="step-actor">{actorLabel[step.actor]}</span>
-						</div>
-						<h3>{step.title}</h3>
-						<p>{step.body}</p>
-					</li>
-				{/each}
-			</ol>
-
-			<!-- Flow arrows, desktop only -->
-			<span class="arrow h a-top1" aria-hidden="true">
-				<svg viewBox="0 0 40 14" fill="none">
-					<path
-						d="M1 7h32m0 0-6-5.5M33 7l-6 5.5"
-						stroke="currentColor"
-						stroke-width="1.6"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			</span>
-			<span class="arrow h a-top2" aria-hidden="true">
-				<svg viewBox="0 0 40 14" fill="none">
-					<path
-						d="M1 7h32m0 0-6-5.5M33 7l-6 5.5"
-						stroke="currentColor"
-						stroke-width="1.6"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			</span>
-			<span class="arrow h a-top3" aria-hidden="true">
-				<svg viewBox="0 0 40 14" fill="none">
-					<path
-						d="M1 7h32m0 0-6-5.5M33 7l-6 5.5"
-						stroke="currentColor"
-						stroke-width="1.6"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			</span>
-			<span class="arrow v a-down" aria-hidden="true">
-				<svg viewBox="0 0 14 48" fill="none">
-					<path
-						d="M7 1v40m0 0-5.5-6M7 41l5.5-6"
-						stroke="currentColor"
-						stroke-width="1.6"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			</span>
-			<span class="arrow h a-bot1" aria-hidden="true">
-				<svg viewBox="0 0 40 14" fill="none">
-					<path
-						d="M39 7H7m0 0 6-5.5M7 7l6 5.5"
-						stroke="currentColor"
-						stroke-width="1.6"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			</span>
-			<span class="arrow h a-bot2" aria-hidden="true">
-				<svg viewBox="0 0 40 14" fill="none">
-					<path
-						d="M39 7H7m0 0 6-5.5M7 7l6 5.5"
-						stroke="currentColor"
-						stroke-width="1.6"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			</span>
-			<span class="arrow h a-bot3" aria-hidden="true">
-				<svg viewBox="0 0 40 14" fill="none">
-					<path
-						d="M39 7H7m0 0 6-5.5M7 7l6 5.5"
-						stroke="currentColor"
-						stroke-width="1.6"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			</span>
-			<span class="arrow v a-up" aria-hidden="true">
-				<svg viewBox="0 0 14 48" fill="none">
-					<path
-						d="M7 47V7m0 0L1.5 13M7 7l5.5 6"
-						stroke="currentColor"
-						stroke-width="1.6"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			</span>
-
-			<p class="board-caption">{CARE_LOOP_LINE}</p>
+		<div class="halves">
+			{#each halves as half (half.owner)}
+				<div class="half">
+					<div class="half-head" use:reveal>
+						<span class="half-side">{half.side}</span>
+						<span class="half-owner">{actorLabel[half.owner]}</span>
+					</div>
+					<ol class="steps">
+						{#each half.steps as step (step.title)}
+							<li class="step" use:reveal={{ delay: 40 }}>
+								<span class="step-num">{String(step.n).padStart(2, '0')}</span>
+								<div>
+									<h3>{step.title}</h3>
+									<p>{step.body}</p>
+								</div>
+							</li>
+						{/each}
+					</ol>
+				</div>
+			{/each}
 		</div>
 
-		<p class="loop-line" use:reveal={{ delay: 160 }}>
-			<span class="loop-glyph" aria-hidden="true">↺</span>
-			{CARE_LOOP_LINE}
-		</p>
+		<p class="loop-close" use:reveal>{CARE_LOOP_LINE}</p>
 	</div>
 </section>
 
 <style>
 	.loop {
-		background: var(--color-neutral-0);
-		border-block: 1px solid var(--color-border-default);
+		border-top: 1px solid var(--color-rule);
 	}
 	h2 {
-		font-size: clamp(1.9rem, 4.5vw, 3rem);
-		line-height: 1.08;
-		letter-spacing: -0.02em;
-		margin-block: 0.75rem 0.9rem;
-		max-width: 20ch;
+		font-size: clamp(1.9rem, 3.6vw, 3rem);
+		line-height: 1.06;
+		letter-spacing: -0.03em;
+		margin: 0 0 1.25rem;
 	}
 	.lede {
 		font-size: clamp(1rem, 1.4vw, 1.12rem);
 		line-height: 1.6;
 		color: var(--color-ink-soft);
-		max-width: 42rem;
+		max-width: 52ch;
+		margin: 0;
 	}
 
-	.board {
-		margin-top: clamp(2rem, 4vw, 3rem);
+	.halves {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: clamp(2.5rem, 5vw, 4rem);
+		margin-top: clamp(2.5rem, 5vw, 4rem);
 	}
+	.half-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+		padding-bottom: 0.9rem;
+		border-bottom: 1px solid var(--color-ink);
+	}
+	.half-side {
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--color-ink);
+	}
+	.half-owner {
+		font-size: 0.68rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+	}
+
 	.steps {
 		list-style: none;
 		margin: 0;
 		padding: 0;
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 2rem;
 	}
 	.step {
-		position: relative;
-		padding: 1.2rem 1.3rem;
-		border-radius: var(--radius-lg);
-	}
-	.step-top {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: 0.6rem;
+		display: grid;
+		grid-template-columns: 2.25rem minmax(0, 1fr);
+		gap: 1rem;
+		padding-block: 1.15rem;
+		border-bottom: 1px solid var(--color-rule);
 	}
 	.step-num {
-		font-family: var(--font-family-mono);
-		font-size: 0.78rem;
-		font-weight: 700;
-		letter-spacing: 0.1em;
-		color: var(--color-primary-600);
-	}
-	.step-actor {
-		font-family: var(--font-family-mono);
-		font-size: 0.6rem;
-		font-weight: 700;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--color-primary-600);
-		background: var(--color-primary-50);
-		border: 1px solid var(--color-primary-100);
-		padding: 0.15rem 0.5rem;
-		border-radius: 999px;
-	}
-	/* Auracle's steps carry a soft tint so the handoff between the two
-	   products reads at a glance. */
-	.step-twin .step-actor {
-		color: var(--color-ink-soft);
-		background: var(--color-surface-alt);
-		border-color: var(--color-border-default);
+		font-size: 0.72rem;
+		font-weight: 600;
+		color: var(--color-ink-faint);
+		font-variant-numeric: tabular-nums;
+		padding-top: 0.2rem;
 	}
 	.step h3 {
 		font-size: 1rem;
 		letter-spacing: -0.01em;
-		margin-bottom: 0.3rem;
+		margin: 0 0 0.25rem;
 	}
 	.step p {
-		font-size: 0.88rem;
+		font-size: 0.92rem;
 		line-height: 1.55;
 		color: var(--color-ink-soft);
+		margin: 0;
 	}
 
-	/* Arrows and the desktop caption live on the board grid; hidden until the
-	   snake layout kicks in. */
-	.arrow,
-	.board-caption {
-		display: none;
-	}
-
-	.loop-line {
-		margin-top: clamp(1.75rem, 3vw, 2.5rem);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.6rem;
-		text-align: center;
-		font-size: 0.95rem;
+	.loop-close {
+		margin: clamp(2rem, 4vw, 3rem) 0 0;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--color-ink);
+		font-size: clamp(1rem, 1.5vw, 1.2rem);
 		font-weight: 500;
-		color: var(--color-primary-600);
-	}
-	.loop-glyph {
-		font-size: 1.15rem;
-		line-height: 1;
+		color: var(--color-ink);
 	}
 
-	/* Mobile: the snake unrolls into a column, with a down arrow between steps. */
-	@media (max-width: 999px) {
-		.step:not(:last-child)::after {
-			content: '↓';
-			position: absolute;
-			left: 50%;
-			bottom: -1.7rem;
-			transform: translateX(-50%);
-			font-size: 1.1rem;
-			line-height: 1;
-			color: var(--color-primary-500);
-		}
-	}
-
-	/* Desktop: the snake. Odd columns hold the cards, even columns the
-	   arrows; the middle row carries the down/return arrows and the caption. */
-	@media (min-width: 1000px) {
-		.board {
-			display: grid;
-			grid-template-columns: 1fr 2.75rem 1fr 2.75rem 1fr 2.75rem 1fr;
-			grid-template-rows: auto 4.5rem auto;
-			align-items: stretch;
-		}
-		.steps {
-			display: contents;
-		}
-		.s1 {
-			grid-area: 1 / 1;
-		}
-		.s2 {
-			grid-area: 1 / 3;
-		}
-		.s3 {
-			grid-area: 1 / 5;
-		}
-		.s4 {
-			grid-area: 1 / 7;
-		}
-		.s5 {
-			grid-area: 3 / 7;
-		}
-		.s6 {
-			grid-area: 3 / 5;
-		}
-		.s7 {
-			grid-area: 3 / 3;
-		}
-		.s8 {
-			grid-area: 3 / 1;
-		}
-
-		.arrow {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			color: var(--color-ink-faint);
-		}
-		.arrow.h svg {
-			width: 100%;
-			max-width: 2.5rem;
-			height: 0.9rem;
-		}
-		.arrow.v svg {
-			width: 0.9rem;
-			height: 3.1rem;
-		}
-		.a-top1 {
-			grid-area: 1 / 2;
-		}
-		.a-top2 {
-			grid-area: 1 / 4;
-		}
-		.a-top3 {
-			grid-area: 1 / 6;
-		}
-		.a-down {
-			grid-area: 2 / 7;
-		}
-		.a-bot1 {
-			grid-area: 3 / 6;
-		}
-		.a-bot2 {
-			grid-area: 3 / 4;
-		}
-		.a-bot3 {
-			grid-area: 3 / 2;
-		}
-		/* The return arrow closes the loop, so it carries the accent. */
-		.a-up {
-			grid-area: 2 / 1;
-			color: var(--color-primary-600);
-		}
-
-		.board-caption {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			grid-row: 2;
-			grid-column: 2 / 7;
-			margin: 0;
-			text-align: center;
-			font-size: 0.95rem;
-			font-style: italic;
-			font-weight: 500;
-			color: var(--color-primary-600);
-		}
-
-		/* The caption inside the board replaces the mobile loop line. */
-		.loop-line {
-			display: none;
+	@media (min-width: 900px) {
+		.halves {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 3.5rem;
 		}
 	}
 </style>

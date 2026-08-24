@@ -1,181 +1,123 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
-	import {
-		AURACLE_URL,
-		CONTACT,
-		PLATFORM_NOTE,
-		NON_DEVICE_DISCLAIMER,
-		WAITLIST_URL
-	} from '$lib/data/company';
+	import { AURACLE_URL, CONTACT, NON_DEVICE_DISCLAIMER, WAITLIST_URL } from '$lib/data/company';
 </script>
 
-<section id="waitlist" class="waitlist aura-space">
-	<div class="container-wide waitlist-grid">
-		<div class="waitlist-copy">
-			<h2 use:reveal={{ delay: 60 }}>
-				Be first to meet <span class="text-gradient-l">Auracle</span>.
-			</h2>
-			<p class="lede" use:reveal={{ delay: 140 }}>
-				Auracle launches in August 2026. The consumer site is
-				<a class="lede-link" href={AURACLE_URL} rel="noopener">auracle.health</a>.
-			</p>
+<!--
+  The page's one conversion moment.
 
-			<p class="platform-note" use:reveal={{ delay: 200 }}>{PLATFORM_NOTE}</p>
-		</div>
+  This used to lead with the consumer waitlist, which is the wrong ask for an
+  umbrella site whose audience is clinicians, providers and investors. The
+  enquiry leads; the waitlist stays, in the position it deserves.
+-->
+<section id="contact" class="closing aura-space">
+	<div class="container-wide closing-inner">
+		<h2 use:reveal>Talk to us.</h2>
+		<p class="lede" use:reveal={{ delay: 60 }}>
+			We are raising our seed round, and we are looking for clinical partners as the CDSS moves
+			toward its first trials.
+		</p>
 
-		<div class="waitlist-panel glass-card" use:reveal={{ delay: 120 }}>
-			<div class="panel-copy">
-				<p class="panel-title">Join the waitlist</p>
-				<p class="panel-sub">Open now. We&rsquo;ll email you when your access is ready.</p>
+		<div class="paths">
+			<div class="path" use:reveal={{ delay: 100 }}>
+				<h3>Investors</h3>
+				<p>One founder replies directly, depending on where you invest from.</p>
+				<a class="btn-solid" href="/investors#contact">See the investor page</a>
 			</div>
-
-			<a class="submit" href={WAITLIST_URL}>Get early access</a>
-
-			<div class="investors">
-				<p class="investors-line">
-					Investor questions:
-					<a href="mailto:{CONTACT.seed}?subject=Auracare%20seed%20round">{CONTACT.seed}</a>, or
-					start with the investor page.
-				</p>
-				<a class="investors-link" href="/investors">
-					For investors <span aria-hidden="true">&rarr;</span>
+			<div class="path" use:reveal={{ delay: 140 }}>
+				<h3>Clinical partners</h3>
+				<p>Hospitals, practices and pharmacies working on decision support.</p>
+				<a
+					class="btn-ghost"
+					href="mailto:{CONTACT.clinical}?subject=Auracare%3A%20clinical%20partnership"
+				>
+					Write to our clinical team
 				</a>
 			</div>
 		</div>
+
+		<p class="aside" use:reveal>
+			Auracle, our consumer product, launches on iMessage, WhatsApp and RCS. The waitlist is open at
+			<a href={WAITLIST_URL} rel="noopener">app.auracle.health</a>, and the consumer site is
+			<a href={AURACLE_URL} rel="noopener">auracle.health</a>.
+		</p>
 	</div>
 
 	<p class="fineprint container-wide" use:reveal>{NON_DEVICE_DISCLAIMER}</p>
 </section>
 
 <style>
-	.waitlist {
-		position: relative;
-		padding-block: clamp(4rem, 9vw, 7rem);
-		overflow: hidden;
-		border-top: 1px solid var(--color-border-dark);
+	.closing {
+		padding-block: clamp(4rem, 8vw, 7rem) clamp(2.5rem, 5vw, 4rem);
 	}
-	.waitlist-grid {
-		position: relative;
-		z-index: 1;
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: clamp(2rem, 5vw, 3.5rem);
-		align-items: center;
-	}
-	.waitlist-copy h2 {
-		font-size: clamp(2rem, 5vw, 3.2rem);
-		line-height: 1.06;
-		letter-spacing: -0.02em;
-		margin-block: 0.6rem 1.1rem;
-	}
-	.text-gradient-l {
-		color: var(--color-primary-300);
+	h2 {
+		font-size: clamp(2.1rem, 4.6vw, 3.6rem);
+		line-height: 1.02;
+		letter-spacing: -0.035em;
+		margin: 0 0 1.25rem;
+		color: #fff;
 	}
 	.lede {
-		font-size: clamp(1rem, 1.5vw, 1.15rem);
+		font-size: clamp(1rem, 1.5vw, 1.2rem);
 		line-height: 1.6;
-		max-width: 34rem;
-	}
-	.lede-link,
-	.investors-line a {
-		color: #cdd9ff;
-		text-decoration: underline;
-		text-underline-offset: 2px;
-	}
-	.lede-link:hover,
-	.investors-line a:hover {
-		color: #fff;
-	}
-	.platform-note {
-		margin-top: 1.25rem;
-		font-size: 0.82rem;
-		color: rgba(226, 232, 255, 0.6) !important;
-		max-width: 32rem;
+		max-width: 52ch;
+		margin: 0;
 	}
 
-	/* Panel */
-	.waitlist-panel {
-		padding: clamp(1.5rem, 3vw, 2.25rem);
-		border-radius: var(--radius-4xl);
+	.paths {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		padding-top: clamp(2rem, 4vw, 3rem);
+		border-top: 1px solid rgba(255, 255, 255, 0.16);
 	}
-	.panel-copy {
-		margin-bottom: 1.25rem;
-	}
-	.panel-title {
-		font-family: var(--font-family-heading);
-		font-size: 1.25rem;
+	.path h3 {
+		font-size: 0.74rem;
 		font-weight: 600;
-		color: #fff;
-		margin-bottom: 0.4rem;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--color-primary-300);
+		margin: 0 0 0.75rem;
 	}
-	.panel-sub {
-		font-size: 0.9rem;
+	.path p {
+		font-size: 0.95rem;
 		line-height: 1.55;
-		color: rgba(234, 240, 255, 0.8) !important;
+		margin: 0 0 1.5rem;
+		max-width: 40ch;
 	}
 
-	.submit {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		background: #fff;
-		color: var(--color-ink);
-		font-weight: 500;
-		font-size: 1rem;
-		padding: 0.8rem 1.5rem;
-		border-radius: var(--radius-sm);
-		transition: background 0.15s ease;
-	}
-	.submit:hover {
-		background: #e8eaf2;
-		color: var(--color-ink);
-	}
-	.submit:focus-visible {
-		outline: 2px solid var(--color-primary-400);
-		outline-offset: 3px;
-	}
-
-	/* Investors */
-	.investors {
-		margin-top: 1.75rem;
+	.aside {
+		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
 		padding-top: 1.5rem;
-		border-top: 1px solid var(--color-border-dark);
+		border-top: 1px solid rgba(255, 255, 255, 0.12);
+		font-size: 0.92rem;
+		line-height: 1.6;
+		max-width: 62ch;
 	}
-	.investors-line {
-		font-size: 0.9rem;
-		color: rgba(234, 240, 255, 0.8) !important;
-		margin-bottom: 0.5rem;
-	}
-	.investors-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-		font-weight: 600;
-		color: #eaf0ff;
-	}
-	.investors-link:hover {
+	.aside a {
 		color: #fff;
-	}
-	.investors-link:focus-visible {
-		outline: 2px solid #6180ff;
-		outline-offset: 3px;
-		border-radius: 4px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+		transition: border-color var(--duration-hover) ease;
 	}
 
 	.fineprint {
-		position: relative;
-		z-index: 1;
-		margin-top: clamp(2rem, 5vw, 3rem);
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
 		font-size: 0.78rem;
-		line-height: 1.6;
-		color: rgba(226, 232, 255, 0.5) !important;
-		max-width: 52rem;
+		line-height: 1.55;
+		color: rgba(226, 230, 240, 0.45);
+		max-width: 72ch;
 	}
 
-	@media (min-width: 900px) {
-		.waitlist-grid {
-			grid-template-columns: 1fr 0.95fr;
+	@media (hover: hover) and (pointer: fine) {
+		.aside a:hover {
+			border-color: #fff;
+		}
+	}
+	@media (min-width: 800px) {
+		.paths {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 3.5rem;
 		}
 	}
 </style>

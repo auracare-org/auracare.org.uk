@@ -42,10 +42,11 @@
 			{#each spec as row, i (row.label)}
 				<div class="spec-row" use:reveal={{ delay: 60 + i * 60 }}>
 					<dt>{row.label}</dt>
-					<dd
-						use:countUp={{ value: row.value, format: row.suffix === 'M' ? formatM : formatK }}
-						aria-label={row.suffix === 'M' ? formatM(row.value) : formatK(row.value)}
-					></dd>
+					<!-- Seeded with the final value so the figure is present before the
+					     count-up runs, and without JavaScript at all. -->
+					<dd use:countUp={{ value: row.value, format: row.suffix === 'M' ? formatM : formatK }}>
+						{row.suffix === 'M' ? formatM(row.value) : formatK(row.value)}
+					</dd>
 				</div>
 			{/each}
 			<p class="spec-note" use:reveal={{ delay: 300 }}>
