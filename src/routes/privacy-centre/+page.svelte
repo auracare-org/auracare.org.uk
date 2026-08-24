@@ -367,7 +367,7 @@
 		padding: 0.9rem 1rem;
 		font-size: 0.88rem;
 		color: #b91c1c;
-		line-height: 1.5;
+		line-height: 1.65;
 	}
 
 	.submit-btn {

@@ -1,27 +1,87 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { slide } from 'svelte/transition';
-	import { WAITLIST_URL } from '$lib/data/company';
 
 	let mobileOpen = $state(false);
+	let ddOpen = $state(false);
+	let ddEl = $state<HTMLElement | null>(null);
+
+	/* The header answers the scroll instead of sitting there as a white slab.
+	   At the top it is borderless and lets the paper through; past the fold it
+	   takes on the page tone, draws its rule, and carries a brand-blue line
+	   showing how far down the document you are. The bar's height never
+	   changes: the layout measures it into `--header-h` and feeds that to
+	   main's padding, so anything that resized it would shift the whole page
+	   under the reader's cursor. */
+	let scrolled = $state(false);
+	let progress = $state(0);
+
+	$effect(() => {
+		/* The scrollable distance is the only expensive read here, and it only
+		   changes when the document does. Caching it against a ResizeObserver
+		   leaves the scroll handler reading nothing but `scrollY`, which is
+		   cheap enough to run straight through — so this needs no rAF throttle
+		   and keeps working in a tab where rAF is throttled to nothing. */
+		let max = 0;
+		const update = () => {
+			const y = window.scrollY;
+			scrolled = y > 8;
+			progress = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+		};
+		const remeasure = () => {
+			max = document.documentElement.scrollHeight - window.innerHeight;
+			update();
+		};
+
+		const ro = new ResizeObserver(remeasure);
+		ro.observe(document.documentElement);
+		window.addEventListener('scroll', update, { passive: true });
+		window.addEventListener('resize', remeasure);
+		remeasure();
+
+		return () => {
+			ro.disconnect();
+			window.removeEventListener('scroll', update);
+			window.removeEventListener('resize', remeasure);
+		};
+	});
+
+	/* Close on an outside click or Escape. Without this the menu stays open
+	   after you click past it, which reads as a stuck UI. */
+	$effect(() => {
+		if (!ddOpen) return;
+		const onDown = (e: MouseEvent) => {
+			if (ddEl && !ddEl.contains(e.target as Node)) ddOpen = false;
+		};
+		const onKey = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') ddOpen = false;
+		};
+		document.addEventListener('mousedown', onDown);
+		document.addEventListener('keydown', onKey);
+		return () => {
+			document.removeEventListener('mousedown', onDown);
+			document.removeEventListener('keydown', onKey);
+		};
+	});
 
 	const productMenu = [
-		{
-			href: '/product',
-			label: 'Auracle',
-			desc: 'Your digital twin, in your messages',
-			tag: 'Consumer'
-		},
 		{
 			href: '/product/auracare',
 			label: 'Auracare CDSS',
 			desc: 'Decision support inside the consultation',
 			tag: 'Clinical'
+		},
+		{
+			href: '/product/auracle',
+			label: 'Auracle',
+			desc: 'The social history the record cannot supply',
+			tag: 'Consumer'
 		}
 	];
 
 	const links = [
 		{ href: '/technology', label: 'Technology' },
+		{ href: '/investors', label: 'Investors' },
 		{ href: '/careers', label: 'Careers' }
 	];
 
@@ -32,16 +92,26 @@
 	const productActive = () => page.url.pathname.startsWith('/product');
 </script>
 
-<nav class="nav" aria-label="Primary">
+<nav class="nav" class:nav--scrolled={scrolled} aria-label="Primary">
 	<div class="container-wide nav-inner">
 		<a href="/" class="nav-logo" aria-label="Auracare home">
 			<img src="/SVG/Asset 5.svg" alt="Auracare" />
 		</a>
 
 		<div class="nav-links">
-			<div class="nav-dd">
-				<a href="/product" class="nav-item nav-dd-trigger" class:active={productActive()}>
-					Product
+			<div class="nav-dd" bind:this={ddEl}>
+				<!-- A button, not a link. As an <a href="/product"> a click navigated
+				     away before the menu could be used, and a tap on touch opened
+				     nothing at all: the menu was CSS :hover only. -->
+				<button
+					type="button"
+					class="nav-item nav-dd-trigger"
+					class:active={productActive()}
+					aria-expanded={ddOpen}
+					aria-haspopup="true"
+					onclick={() => (ddOpen = !ddOpen)}
+				>
+					Products
 					<svg
 						class="nav-caret"
 						width="10"
@@ -58,14 +128,15 @@
 							stroke-linejoin="round"
 						/>
 					</svg>
-				</a>
-				<div class="nav-submenu" role="menu">
+				</button>
+				<div class="nav-submenu" class:open={ddOpen} role="menu">
 					{#each productMenu as item}
 						<a
 							href={item.href}
 							class="nav-sub-item"
 							class:active={page.url.pathname === item.href}
 							role="menuitem"
+							onclick={() => (ddOpen = false)}
 						>
 							<span class="nav-sub-top">
 								<span class="nav-sub-label">{item.label}</span>
@@ -82,8 +153,7 @@
 		</div>
 
 		<div class="nav-cta">
-			<a class="nav-invest" href="/investors">For investors</a>
-			<a class="nav-waitlist" href={WAITLIST_URL}>Join the waitlist</a>
+			<a class="nav-waitlist" href="/investors#contact">Enquire</a>
 		</div>
 
 		<button
@@ -137,21 +207,55 @@
 					<a class="nav-invest" href="/investors" onclick={() => (mobileOpen = false)}
 						>For investors</a
 					>
-					<a class="nav-waitlist" href={WAITLIST_URL} onclick={() => (mobileOpen = false)}
-						>Join the waitlist</a
+					<a class="nav-waitlist" href="/investors#contact" onclick={() => (mobileOpen = false)}
+						>Enquire</a
 					>
 				</div>
 			</div>
 		</div>
 	{/if}
+
+	<span class="nav-progress" style="--p:{progress}" aria-hidden="true"></span>
 </nav>
 
 <style>
 	.nav {
-		background: rgba(252, 252, 253, 0.88);
-		backdrop-filter: blur(14px);
-		-webkit-backdrop-filter: blur(14px);
-		border-bottom: 1px solid var(--color-border-default);
+		position: relative;
+		background: transparent;
+		border-bottom: 1px solid transparent;
+		transition:
+			background var(--duration-hover) ease,
+			border-color var(--duration-hover) ease;
+	}
+	/* Opaque paper rather than a blurred translucent pane: glassmorphism is
+	   explicitly out of the system, and an opaque bar costs nothing to
+	   composite while scrolling. */
+	.nav--scrolled {
+		background: var(--color-surface-page);
+		border-bottom-color: var(--color-rule);
+	}
+	/* How far through the document you are, drawn on the header's own rule. */
+	.nav-progress {
+		position: absolute;
+		left: 0;
+		bottom: -1px;
+		height: 2px;
+		width: 100%;
+		transform: scaleX(var(--p, 0));
+		transform-origin: left center;
+		background: var(--color-primary-600);
+		opacity: 0;
+		transition: opacity var(--duration-hover) ease;
+		pointer-events: none;
+	}
+	.nav--scrolled .nav-progress {
+		opacity: 1;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.nav,
+		.nav-progress {
+			transition: none;
+		}
 	}
 	.nav-inner {
 		display: flex;
@@ -174,10 +278,12 @@
 		margin-left: 0.5rem;
 	}
 	.nav-item {
-		font-size: 0.9rem;
-		font-weight: 500;
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
 		color: var(--color-ink-soft);
-		transition: color 0.15s ease;
+		transition: color var(--duration-hover) ease;
 		white-space: nowrap;
 	}
 	.nav-item:hover {
@@ -193,15 +299,19 @@
 		display: inline-flex;
 	}
 	.nav-dd-trigger {
+		background: none;
+		border: 0;
+		cursor: pointer;
+		font-family: inherit;
 		display: inline-flex;
 		align-items: center;
 		gap: 0.28rem;
 	}
 	.nav-caret {
-		transition: transform 0.2s ease;
+		transition: transform var(--duration-popover) var(--ease-out);
 		opacity: 0.7;
 	}
-	.nav-dd:hover .nav-caret,
+	.nav-dd-trigger[aria-expanded='true'] .nav-caret,
 	.nav-dd:focus-within .nav-caret {
 		transform: rotate(180deg);
 	}
@@ -209,7 +319,10 @@
 		position: absolute;
 		top: calc(100% + 0.6rem);
 		left: 50%;
-		transform: translateX(-50%) translateY(6px);
+		/* Anchored to the trigger above, so it grows from the trigger rather
+		   than from its own centre. */
+		transform-origin: top center;
+		transform: translateX(-50%) translateY(4px) scale(0.97);
 		width: 20rem;
 		display: grid;
 		gap: 0.15rem;
@@ -224,9 +337,9 @@
 		visibility: hidden;
 		pointer-events: none;
 		transition:
-			opacity 0.18s ease,
-			transform 0.18s ease,
-			visibility 0.18s;
+			opacity var(--duration-popover) var(--ease-out),
+			transform var(--duration-popover) var(--ease-out),
+			visibility var(--duration-popover);
 		z-index: 20;
 	}
 	/* Invisible bridge so the menu doesn't close when crossing the gap. */
@@ -238,12 +351,12 @@
 		right: 0;
 		height: 0.7rem;
 	}
-	.nav-dd:hover .nav-submenu,
+	.nav-submenu.open,
 	.nav-dd:focus-within .nav-submenu {
 		opacity: 1;
 		visibility: visible;
 		pointer-events: auto;
-		transform: translateX(-50%) translateY(0);
+		transform: translateX(-50%) translateY(0) scale(1);
 	}
 	.nav-sub-item {
 		display: flex;
@@ -293,16 +406,6 @@
 		color: var(--color-ink-faint);
 	}
 
-	.nav-ext {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.28rem;
-		color: var(--color-ink);
-		font-weight: 600;
-	}
-	.nav-ext:hover {
-		color: var(--color-primary-600);
-	}
 	.nav-cta {
 		display: none;
 		align-items: center;
@@ -310,8 +413,10 @@
 		margin-left: auto;
 	}
 	.nav-invest {
-		font-size: 0.88rem;
-		font-weight: 500;
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
 		color: var(--color-ink-soft);
 		padding: 0.5rem 0.4rem;
 	}
@@ -323,17 +428,27 @@
 		font-weight: 500;
 		color: #fff;
 		background: var(--color-primary-600);
-		padding: 0.55rem 1.1rem;
-		border-radius: 6px;
+		padding: 0.7rem 1.4rem;
+		border-radius: 2px;
+		font-size: 0.7rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
 		box-shadow:
 			inset 0 1px 0 rgba(255, 255, 255, 0.12),
 			var(--shadow-xs);
-		transition: background 0.15s ease;
+		transition:
+			background var(--duration-hover) ease,
+			transform var(--duration-press) var(--ease-out);
 		white-space: nowrap;
 	}
-	.nav-waitlist:hover {
-		background: #5971cd;
-		color: #fff;
+	.nav-waitlist:active {
+		transform: scale(0.97);
+	}
+	@media (hover: hover) and (pointer: fine) {
+		.nav-waitlist:hover {
+			background: #5971cd;
+			color: #fff;
+		}
 	}
 	.nav-burger {
 		margin-left: auto;

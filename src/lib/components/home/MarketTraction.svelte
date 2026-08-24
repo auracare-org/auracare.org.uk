@@ -1,193 +1,149 @@
 <script lang="ts">
 	import { reveal, countUp } from '$lib/actions/motion';
-	import {
-		TRACTION,
-		FOUNDATION_EYEBROW,
-		FOUNDATION_TITLE,
-		FOUNDATION_POINTS
-	} from '$lib/data/company';
+	import { TRACTION, FOUNDATION_TITLE, FOUNDATION_POINTS } from '$lib/data/company';
 
-	// A traction stat counts up only when it is a plain integer ("28").
-	// Anything else ("$134k", "~$400k") is a label we keep verbatim.
-	function numericStat(stat: string): number | null {
-		return /^\d+$/.test(stat) ? Number(stat) : null;
+	/* Pull the number out of a stat however it is written, so "$134k" and
+	   "~$400k" animate too. Previously only a bare integer matched, which is
+	   why 28 was the only figure that moved. The prefix and suffix are kept so
+	   the currency symbol and the "k" render around the counting digits. */
+	function parseStat(stat: string): { prefix: string; num: number; suffix: string } | null {
+		const m = stat.match(/^([^\d]*)([\d,.]+)(.*)$/);
+		if (!m) return null;
+		const num = Number(m[2].replace(/,/g, ''));
+		return Number.isFinite(num) ? { prefix: m[1], num, suffix: m[3] } : null;
 	}
 </script>
 
+<!--
+  Traction as a ruled ledger rather than a grid of stat tiles.
+
+  Each line is a figure and what it refers to, which is how someone assessing
+  the company would want to read it, and it stops four unrelated numbers from
+  competing for the same visual weight.
+-->
 <section class="market section-y">
 	<div class="container-wide">
-		<header class="market-head">
-			<p class="eyebrow" use:reveal>Traction to date</p>
-			<h2 use:reveal={{ delay: 60 }}>
-				Early days, <span class="text-gradient">real momentum</span>.
-			</h2>
-			<p class="market-sub" use:reveal={{ delay: 120 }}>
-				Funding, partnerships and pedigree already behind us, before the raise.
-			</p>
-		</header>
+		<h2 use:reveal>Early days, real momentum.</h2>
+		<p class="market-sub" use:reveal={{ delay: 60 }}>
+			Funding, partnerships and clinical pilots already in place, before this round.
+		</p>
 
-		<div class="grid">
-			<!-- Foundation: who is building this, and the CAS route to trials -->
-			<article class="foundation glass-card" use:reveal>
-				<p class="foundation-eyebrow">{FOUNDATION_EYEBROW}</p>
-				<h3 class="foundation-title">{FOUNDATION_TITLE}</h3>
-				<ul class="foundation-points">
-					{#each FOUNDATION_POINTS as point, i}
-						<li class="foundation-point" use:reveal={{ delay: 120 + i * 90 }}>
-							<span class="foundation-point-title">{point.title}</span>
-							<span class="foundation-point-body">{point.body}</span>
-						</li>
-					{/each}
-				</ul>
-			</article>
-
-			<!-- Traction numbers -->
-			<ul class="traction" aria-label="Traction to date">
-				{#each TRACTION as item, i}
-					{@const n = numericStat(item.stat)}
-					<li class="stat glass-card" use:reveal={{ delay: i * 90 }}>
-						{#if n !== null}
+		<dl class="ledger">
+			{#each TRACTION as item (item.label)}
+				{@const parsed = parseStat(item.stat)}
+				<div class="row" use:reveal={{ delay: 40 }}>
+					<dt>{item.label}</dt>
+					<dd>
+						{#if parsed}
+							<!-- Seeded with the final value so the figure is present before the
+							     count-up runs, and without JavaScript at all. -->
 							<span
-								class="stat-value"
-								use:countUp={{ value: n, format: (v) => Math.round(v).toLocaleString() }}
-								aria-label={item.stat}
-							></span>
+								use:countUp={{
+									value: parsed.num,
+									format: (v) => parsed.prefix + Math.round(v).toLocaleString() + parsed.suffix
+								}}>{item.stat}</span
+							>
 						{:else}
-							<span class="stat-value">{item.stat}</span>
+							{item.stat}
 						{/if}
-						<span class="stat-label">{item.label}</span>
-					</li>
+					</dd>
+				</div>
+			{/each}
+		</dl>
+
+		<div class="foundation" use:reveal>
+			<h3>{FOUNDATION_TITLE}</h3>
+			<div class="points">
+				{#each FOUNDATION_POINTS as point (point.title)}
+					<div class="point">
+						<h4>{point.title}</h4>
+						<p>{point.body}</p>
+					</div>
 				{/each}
-			</ul>
+			</div>
 		</div>
 	</div>
 </section>
 
 <style>
-	.market-head {
-		max-width: 44rem;
+	.market {
+		border-top: 1px solid var(--color-rule);
 	}
-	.eyebrow {
-		font-family: var(--font-family-mono);
-		font-size: 0.72rem;
-		font-weight: 700;
-		letter-spacing: 0.16em;
-		text-transform: uppercase;
-		color: var(--color-primary-500);
-	}
-	.market-head h2 {
-		font-size: clamp(1.9rem, 4vw, 2.9rem);
-		line-height: 1.1;
-		letter-spacing: -0.02em;
-		margin-top: 0.75rem;
+	h2 {
+		font-size: clamp(1.9rem, 3.6vw, 3rem);
+		line-height: 1.06;
+		letter-spacing: -0.03em;
+		margin: 0 0 1.25rem;
 	}
 	.market-sub {
-		margin-top: 1rem;
-		font-size: clamp(1rem, 1.5vw, 1.12rem);
-		line-height: 1.6;
+		font-size: clamp(1rem, 1.4vw, 1.12rem);
+		line-height: 1.7;
 		color: var(--color-ink-soft);
+		max-width: 52ch;
+		margin: 0;
 	}
 
-	/* ---- Layout ---- */
-	.grid {
-		margin-top: clamp(2rem, 5vw, 3.5rem);
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1rem;
+	.ledger {
+		margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+		border-top: 1px solid var(--color-ink);
 	}
-
-	/* ---- Foundation box ---- */
-	.foundation {
+	.row {
 		display: flex;
-		flex-direction: column;
-		padding: clamp(1.5rem, 3vw, 2.25rem);
-		border-radius: var(--radius-lg);
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1.5rem;
+		padding-block: 1.35rem;
+		border-bottom: 1px solid var(--color-rule);
 	}
-	.foundation-eyebrow {
-		font-family: var(--font-family-mono);
-		font-size: 0.68rem;
-		font-weight: 700;
-		letter-spacing: 0.14em;
+	.row dt {
+		font-size: 0.82rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
 		text-transform: uppercase;
 		color: var(--color-ink-faint);
+		max-width: 46ch;
 	}
-	.foundation-title {
-		margin-top: 0.65rem;
-		font-family: var(--font-family-heading);
-		font-size: clamp(1.35rem, 2.4vw, 1.75rem);
-		font-weight: 600;
-		letter-spacing: -0.02em;
-		line-height: 1.15;
-		color: var(--color-ink);
-	}
-	.foundation-points {
-		list-style: none;
-		margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
-		padding: 0;
-		display: grid;
-		gap: 1.25rem;
-	}
-	.foundation-point {
-		display: flex;
-		flex-direction: column;
-		gap: 0.3rem;
-		padding-left: 1rem;
-		border-left: 2px solid color-mix(in srgb, var(--color-primary-500), transparent 55%);
-	}
-	.foundation-point-title {
-		font-family: var(--font-family-heading);
-		font-size: 1.02rem;
-		font-weight: 600;
-		letter-spacing: -0.01em;
-		color: var(--color-ink);
-	}
-	.foundation-point-body {
-		font-size: 0.92rem;
-		line-height: 1.55;
-		color: var(--color-ink-faint);
-	}
-
-	/* ---- Traction ---- */
-	.traction {
-		list-style: none;
+	.row dd {
 		margin: 0;
-		padding: 0;
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1rem;
-	}
-	.stat {
-		display: flex;
-		flex-direction: column;
-		padding: 1.35rem 1.5rem;
-		border-radius: var(--radius-lg);
-	}
-	.stat-value {
-		display: block;
-		font-family: var(--font-family-heading);
-		font-size: clamp(1.7rem, 3.2vw, 2.4rem);
-		font-weight: 600;
+		font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+		font-weight: var(--weight-display);
 		letter-spacing: -0.03em;
 		line-height: 1;
 		color: var(--color-ink);
 		font-variant-numeric: tabular-nums;
-	}
-	.stat-label {
-		display: block;
-		margin-top: 0.5rem;
-		font-size: 0.9rem;
-		line-height: 1.45;
-		color: var(--color-ink-faint);
+		white-space: nowrap;
 	}
 
-	@media (min-width: 900px) {
-		.grid {
+	.foundation {
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+	}
+	.foundation h3 {
+		font-size: clamp(1.15rem, 2vw, 1.5rem);
+		letter-spacing: -0.02em;
+		margin: 0 0 1.5rem;
+		max-width: 34ch;
+	}
+	.points {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.75rem;
+	}
+	.point h4 {
+		font-size: 0.98rem;
+		margin: 0 0 0.4rem;
+	}
+	.point p {
+		font-size: 0.92rem;
+		line-height: 1.65;
+		color: var(--color-ink-soft);
+		margin: 0;
+		max-width: 52ch;
+	}
+
+	@media (min-width: 860px) {
+		.points {
 			grid-template-columns: repeat(2, 1fr);
-			align-items: stretch;
-		}
-		/* Stat cards keep a comfortable minimum height when paired with the foundation box. */
-		.stat {
-			justify-content: flex-end;
+			gap: 2.5rem;
 		}
 	}
 </style>

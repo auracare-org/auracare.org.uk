@@ -3,12 +3,12 @@
 	const year = new Date().getFullYear();
 </script>
 
-<footer class="footer aura-space">
+<footer class="footer aura-space aura-space--ink">
 	<div class="container-wide">
 		<div class="footer-grid">
 			<div class="footer-brand">
 				<img src="/SVG/auracare-white.svg" alt="Auracare" class="footer-logo" />
-				<p class="footer-tag">The world's most personalised healthcare.</p>
+				<p class="footer-tag">The world's most personalized healthcare.</p>
 				<a class="footer-ontology" href={CONTACT.ontologyUrl} target="_blank" rel="noopener">
 					Explore the ontology
 					<svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"
@@ -25,7 +25,7 @@
 
 			<nav class="footer-col" aria-label="Product">
 				<h4>Product</h4>
-				<a href="/product">Auracle</a>
+				<a href="/product/auracle">Auracle</a>
 				<a href="/product/auracare">Auracare CDSS</a>
 				<a href={CONTACT.ontologyUrl} target="_blank" rel="noopener">Ontology explorer</a>
 				<a href={WAITLIST_URL}>Join the waitlist</a>
@@ -133,7 +133,7 @@
 		border-top: 1px solid rgba(255, 255, 255, 0.12);
 		color: rgba(226, 232, 255, 0.5) !important;
 		font-size: 0.78rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		max-width: 52rem;
 	}
 	.footer-bottom {

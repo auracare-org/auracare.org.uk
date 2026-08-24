@@ -9,7 +9,8 @@ export interface TeamMember {
 }
 
 /**
- * The current team: five people, one clean role each.
+ * The current team: six people, one clean role each. Insertion order here is
+ * the render order on the site.
  * Former team members, advisors and interns are intentionally not listed.
  */
 export const team: Record<string, TeamMember> = {
@@ -38,6 +39,13 @@ export const team: Record<string, TeamMember> = {
 		bio: 'Co-founder, PPE at LSE, and runs an OEM with two factories. Leads operations and partnerships, and business relations in Hong Kong and China.',
 		linkedin: 'https://www.linkedin.com/in/hin-lun-chen/',
 		website: 'https://www.hinlun.com/'
+	},
+	'julius-chu': {
+		id: 'julius-chu',
+		name: 'Julius Chu',
+		role: 'CPO',
+		bio: 'Computer science at NYU. Leads product: the design system, the consumer experience, and how the two products fit together.',
+		linkedin: 'https://www.linkedin.com/in/juliuschu'
 	},
 	'ahnaf-kabir': {
 		id: 'ahnaf-kabir',

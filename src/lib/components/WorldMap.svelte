@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { scrollProgress, prefersReducedMotion } from '$lib/actions/motion';
-	import { VIEWBOX, countryPaths, arcPath } from '$lib/map/geo';
+	import { VIEWBOX, MAP_ASPECT, countryPaths, arcPath } from '$lib/map/geo';
 	import { MARKET_WAVES, MARKET_POINTS, MARKET_ARCS, type MarketTone } from '$lib/data/company';
 
 	const toneColor: Record<MarketTone, string> = {
@@ -168,7 +168,7 @@
 				</div>
 
 				<!-- Map in the middle -->
-				<div class="map-stage" bind:this={stageEl}>
+				<div class="map-stage" bind:this={stageEl} style="--map-ar:{MAP_ASPECT}">
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<svg
 						class="map-svg"
@@ -278,6 +278,12 @@
 		display: flex;
 		flex-direction: column;
 		gap: clamp(1rem, 2vw, 1.5rem);
+		/* Explicit, because .container-wide centres itself with auto inline
+		   margins and this sits inside a flex column once the section pins.
+		   Auto margins on the cross axis cancel the stretch, so the container
+		   collapsed to fit-content — the whole section rendered ~680px wide
+		   inside a 1265px band and read as sitting off to one side. */
+		width: 100%;
 	}
 
 	/* Header */
@@ -299,22 +305,36 @@
 
 	/* Map */
 	.map-stage {
+		/* The map's drawn height. Both the frame's width cap and the svg's own
+		   height are derived from it, so the two can't drift apart. */
+		--map-h: 42vh;
 		/* Never let the caption changing lines squeeze the map (flex-shrink). */
 		flex: none;
 		position: relative;
 		width: 100%;
+		/* The frame is cut to the map's own 2:1 proportion rather than to the
+		   full container width. It used to stretch the whole 1200px column while
+		   preserveAspectRatio letterboxed a 756px map inside it, leaving ~185px
+		   of dead panel on each side: correctly centred, and reading as
+		   anything but. Capping the width at twice the map's height means the
+		   map fills its frame edge to edge at every size. */
+		max-width: min(100%, calc(var(--map-h) * var(--map-ar) + 1.5rem));
+		margin-inline: auto;
 		border: 1px solid var(--color-border-dark);
 		border-radius: var(--radius-lg);
 		padding: 0.75rem;
 		background: var(--color-surface-dark);
 	}
 	.map-svg {
+		display: block;
 		width: 100%;
-		/* Fixed frame: preserveAspectRatio letterboxes the map inside this box, so
-		   its size never depends on the viewport regime, the wave, or the caption
-		   length below it. (A max-height cap alone would let the map fall back to a
-		   width-driven size on taller/narrower layouts.) */
-		height: 42vh;
+		/* Height follows the viewBox's own ratio, capped so a wide viewport can
+		   never push the map past the sticky frame. Paired with the max-width
+		   above, one of the two constraints always binds exactly and neither
+		   leaves a letterbox. */
+		aspect-ratio: var(--map-ar);
+		height: auto;
+		max-height: var(--map-h);
 		overflow: visible;
 	}
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageHero from '$lib/components/layout/PageHero.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import ArchitecturePipeline from '$lib/components/ArchitecturePipeline.svelte';
 	import { reveal } from '$lib/actions/motion';
@@ -10,19 +11,19 @@
 			stat: '~80%',
 			label: 'of doctors already reach for AI',
 			title: 'The demand is already there',
-			body: 'Clinicians want the help. What breaks is the moment they turn to a screen mid-consultation: the patient watches their doctor google, and trust erodes.'
+			body: 'Clinicians want the help. Trust breaks the moment they turn to a screen mid-consultation.'
 		},
 		{
 			stat: '34%',
 			label: 'specialty-benchmark score',
 			title: 'Generic by architecture',
-			body: 'The general-purpose models these tools run on score around a third on specialty-level clinical benchmarks, with no personalisation to the patient actually in the room.'
+			body: 'The general-purpose models behind these tools score around a third on specialty benchmarks, and know nothing about the patient in the room.'
 		},
 		{
 			stat: 'gaps',
 			label: 'between every record',
 			title: 'Disconnected from daily life',
-			body: 'The record is a series of snapshots with long silences in between. Lifestyle and social history are slow to gather and easy to misremember, so the picture is always partial.'
+			body: 'The record is a series of snapshots with long silences between them. Lifestyle and social history are slow to gather and easy to misremember.'
 		}
 	];
 
@@ -31,17 +32,17 @@
 		{
 			k: '01',
 			title: 'The context is already in the room',
-			body: 'The patient arrives with a complete lifestyle summary from their twin, and acute vitals stream live from our own devices, so nothing has to be dug up on the spot.'
+			body: 'The patient arrives with a complete lifestyle summary from Auracle, and acute vitals stream live from our own devices, so nothing is dug up on the spot.'
 		},
 		{
 			k: '02',
 			title: 'Nobody stops to type',
-			body: 'The consultation is transcribed as it happens. No one breaks the conversation to write notes, and no one reads from a keyboard.'
+			body: 'The consultation is transcribed as it happens. No one breaks the conversation to write notes.'
 		},
 		{
 			k: '03',
 			title: 'The clinician stays with the patient',
-			body: 'The CDSS reasons in the background and surfaces what’s useful. The clinician never appears to search anything, so eye contact, and the relationship, holds.'
+			body: 'The CDSS reasons in the background and surfaces what is useful, so the clinician never appears to search anything.'
 		}
 	];
 
@@ -53,11 +54,11 @@
 		},
 		{
 			title: 'Next steps, tailored',
-			body: 'Guideline-aligned options that respect what’s available where the clinician works, including that practice’s own referral rules.'
+			body: 'Guideline-aligned options that respect what is available where the clinician works, including the practice’s own referral rules.'
 		},
 		{
 			title: 'Documentation, automatic',
-			body: 'Structured, formatted consultation notes written by the core, so admin shrinks and screen time turns back into patient time.'
+			body: 'Structured consultation notes written by the core, so screen time turns back into patient time.'
 		}
 	];
 
@@ -73,7 +74,7 @@
 		{ name: 'Allergic rhinitis', pct: 11 }
 	];
 
-	/* The twin's personality is yours to shape: spectrums, not fixed settings. */
+	/* Auracle's personality is yours to shape: spectrums, not fixed settings. */
 	const personaTraits = [
 		{ label: 'Warmth', left: 'Clinical', right: 'Warm', pos: 74 },
 		{ label: 'Detail', left: 'Concise', right: 'Thorough', pos: 42 },
@@ -120,96 +121,89 @@
 </svelte:head>
 
 <!-- ================= Hero ================= -->
-<section class="hero aura-space">
-	<div class="hero-grid-bg" aria-hidden="true"></div>
-	<div class="hero-orb" aria-hidden="true"></div>
-	<div class="container-wide hero-inner">
-		<span class="pill pill-dev" use:reveal>Auracare CDSS · In development</span>
-		<h1 use:reveal={{ delay: 60 }}>
-			The decision support that <span class="hl">stays out of the way</span>.
-		</h1>
-		<p class="hero-sub" use:reveal={{ delay: 130 }}>
-			Auracare CDSS is our clinical product: a clinical decision support system that works during
-			the appointment, not after it. The twin you may already know walks into the clinic with the
-			patient, and the clinician keeps their attention exactly where it belongs.
-		</p>
-		<div class="hero-cta" use:reveal={{ delay: 200 }}>
-			<a
-				class="btn-solid"
-				href="mailto:{CONTACT.clinical}?subject=Auracare%3A%20Clinical%20partnership"
-				>Talk to us about clinical partnerships</a
-			>
-			<a class="btn-quiet" href="/technology">See the technology →</a>
-		</div>
-	</div>
-</section>
+<PageHero
+	meta="Clinical · In development"
+	title="Decision support that"
+	accent="stays out of the way."
+	sub="A clinical decision support system that works during the appointment, not after it. The clinician keeps their attention on the patient."
+/>
 
-<!-- ================= The clinical gap ================= -->
+<!-- ================= The gap, and how it closes ================= -->
+<!-- These were two consecutive sections, each a heading over a list: the
+     problem, then the answer, in the same shape. Pairing them puts each
+     failure next to the thing that removes it, which is the argument. -->
 <section class="section-y gap-sec">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>The gap</span>
-		<h2 use:reveal={{ delay: 60 }}>
-			Clinicians already want AI. Today’s tools don’t fit the room.
-		</h2>
-		<p class="lede" use:reveal={{ delay: 120 }}>
-			The appetite is settled; the fit isn’t. The tools on offer weren’t designed for the
-			consultation, and it shows in three ways.
+		<h2 use:reveal>Clinicians already want AI. Today's tools don't fit the room.</h2>
+		<p class="lede" use:reveal={{ delay: 60 }}>
+			The appetite is settled; the fit is not. Three things break in the consultation, and the CDSS
+			is built to remove each one.
 		</p>
 
-		<div class="gap-grid">
-			{#each gap as g, i}
-				<div class="glass-card gap-card" use:reveal={{ delay: i * 90 }}>
+		<div class="gap-figures">
+			{#each gap as g (g.title)}
+				<div class="gap-figure" use:reveal={{ delay: 40 }}>
 					<span class="gap-stat">{g.stat}</span>
 					<span class="gap-label">{g.label}</span>
-					<h3>{g.title}</h3>
 					<p>{g.body}</p>
 				</div>
 			{/each}
 		</div>
-	</div>
-</section>
 
-<!-- ================= In the room ================= -->
-<section class="section-y room-sec">
-	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Inside the consultation</span>
-		<h2 use:reveal={{ delay: 60 }}>Everything arrives automatically, so nothing interrupts.</h2>
-		<p class="lede" use:reveal={{ delay: 120 }}>
-			The CDSS is built around a single rule: every time a clinician has to break away to search,
-			type or look something up, the consultation suffers. So it removes those moments.
-		</p>
-
-		<ol class="room">
-			{#each room as step, i}
-				<li class="room-step" use:reveal={{ delay: i * 90 }}>
-					<span class="room-k" aria-hidden="true">{step.k}</span>
-					<div>
-						<h3>{step.title}</h3>
-						<p>{step.body}</p>
-					</div>
-				</li>
-			{/each}
-		</ol>
+		<div class="answers">
+			<h3 class="answers-head" use:reveal>What replaces each one</h3>
+			<ol class="room">
+				{#each room as step (step.title)}
+					<li class="room-step" use:reveal={{ delay: 40 }}>
+						<span class="room-k" aria-hidden="true">{step.k}</span>
+						<div>
+							<h4>{step.title}</h4>
+							<p>{step.body}</p>
+						</div>
+					</li>
+				{/each}
+			</ol>
+		</div>
 	</div>
 </section>
 
 <!-- ================= Hardware into the core ================= -->
 <section class="section-y hw-sec aura-space">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Our hardware, straight into the core</span>
 		<h2 use:reveal={{ delay: 60 }}>A closed link, with no middleman.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Acute readings don’t get typed in or pulled from someone else’s integration. Our own devices
-			feed the reasoning core directly: one closed hardware-to-software link, so the data the core
-			sees is exactly the data the device captured.
+			Nothing is typed in or pulled from someone else’s integration. Our own devices feed the core
+			directly, so what it sees is exactly what the device captured.
 		</p>
 
-		<div class="path" use:reveal={{ delay: 140 }} aria-hidden="true">
-			<span class="path-node">Our devices</span>
-			<span class="path-line"
-				><span class="path-strike">no manual entry · no third party</span></span
-			>
-			<span class="path-node path-core">Reasoning core</span>
+		<!-- What the link is, and what the usual path costs. A "From / dashed
+		     line / Into" diagram said only that two things are connected, which
+		     is true of every integration ever built and so argued nothing. The
+		     claim is about what is *not* in the middle, so the two paths are
+		     set against each other and the removed steps are struck through. -->
+		<div class="link" use:reveal={{ delay: 100 }}>
+			<div class="link-path link-path--them">
+				<span class="link-label">The usual path</span>
+				<ol class="link-steps">
+					<li>Device</li>
+					<li class="cut">Vendor cloud</li>
+					<li class="cut">Third-party API</li>
+					<li class="cut">Manual re-entry</li>
+					<li>Record</li>
+				</ol>
+				<p class="link-cost">Four places for a reading to be reshaped, delayed or lost.</p>
+			</div>
+			<div class="link-path link-path--us">
+				<span class="link-label">Ours</span>
+				<ol class="link-steps">
+					<li>Our device</li>
+					<li>The reasoning core</li>
+				</ol>
+				<p class="link-cost">
+					One hop. What the core sees is exactly what the device captured, with the timestamp it was
+					captured at.
+				</p>
+			</div>
 		</div>
 
 		<ul class="hw-grid">
@@ -227,12 +221,11 @@
 <!-- ================= How it reasons ================= -->
 <section class="section-y arch-sec">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>The architecture</span>
 		<h2 use:reveal={{ delay: 60 }}>How it reasons.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Most clinical AI sends a prompt to a general-purpose model and returns its answer; that is the
-			34% in the gap above. Here, every signal is encoded onto the clinical ontology first, a
-			<strong>neuro-symbolic</strong> core reasons over the knowledge graph, and what comes back is ranked,
+			Most clinical AI sends a prompt to a general-purpose model and returns its answer. That is the
+			34% above. Here, every signal is encoded onto the clinical ontology first and a
+			<strong>neuro-symbolic</strong> core reasons over the knowledge graph, so what comes back is ranked,
 			sourced and auditable.
 		</p>
 
@@ -249,182 +242,156 @@
 </section>
 
 <!-- ================= What the clinician gets back ================= -->
+<!-- The demo panel carried three separate explanatory paragraphs around one
+     small chart, which buried the chart. One caption above, one line below,
+     and the three outputs listed plainly beside it. -->
 <section class="section-y out-sec">
-	<div class="container-wide out-grid">
-		<div class="out-copy">
-			<span class="eyebrow" use:reveal>What comes back</span>
-			<h2 use:reveal={{ delay: 60 }}>Three outputs. One decision, and it’s the clinician’s.</h2>
-			<p class="lede" use:reveal={{ delay: 120 }}>
-				The core doesn’t hand down an answer. It lays out what it has reasoned toward, ranked and
-				traceable, and leaves the judgement where it has to stay: with the person in the room.
-			</p>
+	<div class="container-wide">
+		<h2 use:reveal>Three outputs. The decision stays with the clinician.</h2>
+		<p class="lede" use:reveal={{ delay: 60 }}>
+			The core does not hand down an answer. It sets out what it reasoned toward, ranked and
+			traceable, and leaves the judgement with the person in the room.
+		</p>
 
-			<ul class="out-list">
-				{#each outputs as o, i}
-					<li use:reveal={{ delay: 140 + i * 70 }}>
+		<div class="out-grid">
+			<ol class="out-list">
+				{#each outputs as o (o.title)}
+					<li use:reveal={{ delay: 40 }}>
 						<h3>{o.title}</h3>
 						<p>{o.body}</p>
 					</li>
 				{/each}
-			</ul>
-		</div>
+			</ol>
 
-		<div class="out-demo glass-card" use:reveal={{ delay: 160 }}>
-			<span class="demo-tag">Illustrative, not a real patient</span>
-			<span class="demo-head">Ranked differential</span>
-			<p class="demo-sub">
-				The figure beside each is <strong>clinician agreement</strong>, not model certainty: how
-				often clinicians agree with that placement. The figures here are illustrative; the core is
-				in development, and we will measure and publish the real rate from its first studies.
-			</p>
-			<div class="demo-collabel" aria-hidden="true">
-				<span>Differential</span>
-				<span>Clinician agreement</span>
-			</div>
-			<ul class="demo-list">
-				{#each differentialExample as d}
-					<li class="demo-row" class:lead={d.lead}>
-						<span class="demo-name">{d.name}</span>
-						<span class="demo-bar" aria-hidden="true">
-							<span class="demo-fill" style="width:{d.pct}%"></span>
-						</span>
-						<span class="demo-pct">{d.pct}%</span>
-					</li>
-				{/each}
-			</ul>
-			<p class="demo-foot">
-				The core never reports a probability of being right. It lays out what it has reasoned
-				toward, ranked and traceable; the clinician selects, and that selection shapes the next
-				steps and the notes.
-			</p>
+			<figure class="out-demo" use:reveal={{ delay: 80 }}>
+				<figcaption>
+					<span class="demo-head">Ranked differential</span>
+					<span class="demo-tag">Illustrative, not a real patient</span>
+				</figcaption>
+				<div class="demo-collabel" aria-hidden="true">
+					<span>Differential</span>
+					<span>Clinician agreement</span>
+				</div>
+				<ul class="demo-list">
+					{#each differentialExample as d (d.name)}
+						<li class="demo-row" class:lead={d.lead}>
+							<span class="demo-name">{d.name}</span>
+							<span class="demo-bar" aria-hidden="true">
+								<span class="demo-fill" style="width:{d.pct}%"></span>
+							</span>
+							<span class="demo-pct">{d.pct}%</span>
+						</li>
+					{/each}
+				</ul>
+				<p class="demo-foot">
+					The figure is how often clinicians agree with that placement, not the model's confidence
+					in itself. These numbers are illustrative until the first studies report.
+				</p>
+			</figure>
 		</div>
 	</div>
 </section>
 
 <!-- ================= Regulatory + CTA ================= -->
-<section class="cta-band aura-space">
+<!-- Matches the homepage closing band: left-aligned statement, the two real
+     paths side by side, the regulatory note as fine print at the foot. -->
+<section id="contact" class="closing aura-space">
 	<div class="container-wide">
-		<p class="reg-note" use:reveal>{REGULATORY_NOTE}</p>
-		<div class="cta-inner">
-			<h2 use:reveal>Building the clinical side? Let’s talk.</h2>
-			<p use:reveal={{ delay: 80 }}>
-				Clinical partners, health systems and investors: we’d like to hear from you as the CDSS
-				moves toward its first trials.
-			</p>
-			<div class="cta-actions" use:reveal={{ delay: 140 }}>
+		<h2 use:reveal>Building the clinical side?</h2>
+		<p class="lede" use:reveal={{ delay: 60 }}>
+			We would like to hear from clinical partners and health systems as the CDSS moves toward its
+			first trials.
+		</p>
+
+		<div class="paths">
+			<div class="path" use:reveal={{ delay: 100 }}>
+				<h3>Clinical partners</h3>
+				<p>Hospitals, practices and pharmacies working on decision support.</p>
 				<a
 					class="btn-solid"
 					href="mailto:{CONTACT.clinical}?subject=Auracare%3A%20Clinical%20partnership"
-					>Clinical partnerships</a
 				>
-				<a class="btn-ghost" href="/investors">For investors</a>
+					Write to our clinical team
+				</a>
+			</div>
+			<div class="path" use:reveal={{ delay: 140 }}>
+				<h3>Investors</h3>
+				<p>One founder replies directly, depending on where you invest from.</p>
+				<a class="btn-ghost" href="/investors#contact">See the investor page</a>
 			</div>
 		</div>
+
+		<p class="reg-note" use:reveal>{REGULATORY_NOTE}</p>
 	</div>
 </section>
 
 <style>
-	/* ---------------- Hero ---------------- */
-	.hero {
-		position: relative;
-		overflow: clip;
-		padding-block: clamp(4rem, 10vw, 8rem) clamp(3rem, 7vw, 6rem);
+	.closing {
+		padding-block: clamp(4rem, 8vw, 7rem) clamp(2.5rem, 5vw, 4rem);
 	}
-	.hero-grid-bg {
-		position: absolute;
-		inset: 0;
-		background-image:
-			linear-gradient(rgba(97, 128, 255, 0.06) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(97, 128, 255, 0.06) 1px, transparent 1px);
-		background-size: 46px 46px;
-		mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 30%, transparent 75%);
-		-webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 30%, transparent 75%);
-	}
-	.hero-orb {
-		position: absolute;
-		top: -18%;
-		right: -8%;
-		width: 38rem;
-		height: 38rem;
-		background: radial-gradient(circle, rgba(56, 127, 245, 0.28), transparent 62%);
-		pointer-events: none;
-	}
-	.hero-inner {
-		position: relative;
-		z-index: 1;
-		max-width: 50rem;
-	}
-	.hero h1 {
-		font-size: clamp(2.3rem, 6vw, 4.2rem);
-		line-height: 1.05;
-		letter-spacing: -0.025em;
-		margin-block: 1rem 1.2rem;
-	}
-	.hl {
-		background: linear-gradient(100deg, #8aa0ff, #cdd9ff);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-	.hero-sub {
-		font-size: clamp(1.02rem, 1.6vw, 1.2rem);
-		line-height: 1.6;
-		max-width: 44rem;
-	}
-	.hero-cta {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.8rem 1.2rem;
-		margin-top: 1.9rem;
-	}
-
-	/* ---------------- Buttons ---------------- */
-	.btn-solid {
-		background: #fff;
-		color: var(--color-primary-700);
-		font-weight: 600;
-		font-size: 0.95rem;
-		padding: 0.8rem 1.5rem;
-		border-radius: 999px;
-		box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
-		transition:
-			transform 0.2s ease,
-			color 0.2s ease;
-	}
-	.btn-solid:hover {
-		transform: translateY(-2px);
-		color: var(--color-primary-800);
-	}
-	.btn-quiet {
-		font-weight: 600;
-		font-size: 0.95rem;
-		color: #cdd9ff;
-	}
-	.btn-quiet:hover {
+	.closing h2 {
+		font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+		line-height: 1.02;
+		letter-spacing: -0.035em;
+		margin: 0 0 1.25rem;
 		color: #fff;
 	}
-	.btn-ghost {
-		font-weight: 600;
-		font-size: 0.95rem;
-		color: #eaf0ff;
-		padding: 0.8rem 1.4rem;
-		border-radius: 999px;
-		border: 1px solid var(--color-border-dark-strong);
-		transition: border-color 0.2s ease;
+	.closing .lede {
+		font-size: clamp(1rem, 1.5vw, 1.2rem);
+		line-height: 1.7;
+		max-width: 52ch;
+		margin: 0;
 	}
-	.btn-ghost:hover {
-		border-color: #fff;
-		color: #fff;
+	.paths {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		padding-top: clamp(2rem, 4vw, 3rem);
+		border-top: 1px solid rgba(255, 255, 255, 0.16);
+	}
+	.path h3 {
+		font-size: 0.74rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--color-primary-300);
+		margin: 0 0 0.75rem;
+	}
+	.path p {
+		font-size: 0.95rem;
+		line-height: 1.65;
+		margin: 0 0 1.5rem;
+		max-width: 40ch;
+	}
+	.reg-note {
+		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+		padding-top: 1.5rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.12);
+		font-size: 0.8rem;
+		line-height: 1.65;
+		color: rgba(226, 230, 240, 0.5);
+		max-width: 72ch;
+	}
+	@media (min-width: 800px) {
+		.paths {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 3.5rem;
+		}
 	}
 
-	/* ---------------- Shared headings ---------------- */
-	h2 {
-		font-size: clamp(1.7rem, 3.6vw, 2.6rem);
-		line-height: 1.1;
-		letter-spacing: -0.02em;
-		margin-block: 0.6rem 0;
-		max-width: 26ch;
+	.btn-solid:active {
+		transform: scale(0.97);
+		transition-duration: var(--duration-press);
+	}
+	@media (hover: hover) and (pointer: fine) {
+		.btn-solid:hover {
+			transform: translateY(-2px);
+			color: var(--color-primary-800);
+		}
+		.btn-solid:hover:active {
+			transform: translateY(-2px) scale(0.97);
+		}
 	}
 	.lede {
 		margin-top: 1rem;
@@ -433,23 +400,53 @@
 		color: var(--color-ink-soft);
 		max-width: 46rem;
 	}
-
-	/* ---------------- Clinical gap ---------------- */
-	.gap-grid {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+	.gap-figures {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: 1.1rem;
+		gap: 2rem;
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		padding-top: 1.75rem;
+		border-top: 1px solid var(--color-ink);
 	}
-	.gap-card {
-		padding: 1.6rem 1.7rem;
-		display: flex;
-		flex-direction: column;
+	.gap-figure p {
+		margin: 0.75rem 0 0;
+		font-size: 0.93rem;
+		line-height: 1.65;
+		color: var(--color-ink-soft);
 	}
+	.answers {
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		padding-top: clamp(1.5rem, 3vw, 2rem);
+		border-top: 1px solid var(--color-ink);
+	}
+	.answers-head {
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--color-ink-faint);
+		margin: 0 0 1.5rem;
+	}
+	.room-step h4 {
+		font-size: 1.02rem;
+		margin: 0 0 0.25rem;
+	}
+	@media (min-width: 860px) {
+		.gap-figures {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 2.5rem;
+		}
+		.gap-figure + .gap-figure {
+			border-left: 1px solid var(--color-rule);
+			padding-left: 2.5rem;
+		}
+	}
+
 	.gap-stat {
 		font-family: var(--font-family-heading);
 		font-size: clamp(2rem, 4vw, 2.7rem);
 		font-weight: 700;
+		font-variant-numeric: tabular-nums;
 		line-height: 1;
 		color: var(--color-primary-600);
 	}
@@ -460,22 +457,6 @@
 		letter-spacing: 0.06em;
 		color: var(--color-ink-faint);
 		margin-top: 0.4rem;
-	}
-	.gap-card h3 {
-		font-size: 1.12rem;
-		letter-spacing: -0.01em;
-		margin: 1.1rem 0 0.4rem;
-	}
-	.gap-card p {
-		font-size: 0.93rem;
-		line-height: 1.55;
-		color: var(--color-ink-soft);
-	}
-
-	/* ---------------- In the room ---------------- */
-	.room-sec {
-		background: var(--color-surface-alt);
-		border-block: 1px solid var(--color-border-default);
 	}
 	.room {
 		list-style: none;
@@ -502,66 +483,92 @@
 		color: var(--color-primary-500);
 		padding-top: 0.15rem;
 	}
-	.room-step h3 {
-		font-size: 1.12rem;
-		letter-spacing: -0.01em;
-		margin-bottom: 0.35rem;
-	}
 	.room-step p {
 		font-size: 0.95rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
 		max-width: 52ch;
 	}
-
-	/* ---------------- Hardware ---------------- */
-	.path {
+	/* Two paths, one above the other, so the length of each is the argument. */
+	.link {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2rem;
 		margin-top: clamp(2rem, 4vw, 3rem);
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		flex-wrap: wrap;
+		padding-block: clamp(1.75rem, 3vw, 2.25rem);
+		border-block: 1px solid rgba(255, 255, 255, 0.16);
 	}
-	.path-node {
-		font-family: var(--font-family-heading);
+	.link-label {
+		display: block;
+		font-size: 0.64rem;
 		font-weight: 600;
-		font-size: 0.95rem;
-		color: #fff;
-		padding: 0.7rem 1.1rem;
-		border-radius: 999px;
-		border: 1px solid var(--color-border-dark-strong);
-		background: rgba(255, 255, 255, 0.05);
-		white-space: nowrap;
-	}
-	.path-core {
-		background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-500));
-		border-color: var(--color-primary-400);
-	}
-	.path-line {
-		flex: 1;
-		min-width: 8rem;
-		height: 1px;
-		background: repeating-linear-gradient(
-			90deg,
-			rgba(148, 171, 255, 0.6) 0 8px,
-			transparent 8px 16px
-		);
-		position: relative;
-		display: flex;
-		justify-content: center;
-	}
-	.path-strike {
-		position: absolute;
-		top: -0.7rem;
-		font-family: var(--font-family-mono);
-		font-weight: 700;
-		font-size: 0.6rem;
-		letter-spacing: 0.06em;
+		letter-spacing: 0.2em;
 		text-transform: uppercase;
-		color: rgba(226, 232, 255, 0.6);
-		background: var(--color-surface-dark);
-		padding: 0 0.6rem;
-		white-space: nowrap;
+		color: rgba(226, 230, 240, 0.55);
+		margin-bottom: 1rem;
+	}
+	.link-path--us .link-label {
+		color: var(--color-primary-300);
+	}
+	/* The steps as a chain: each one a block, joined by a rule, so the count is
+	   visible before a word is read. */
+	.link-steps {
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+		margin: 0;
+		padding: 0;
+	}
+	.link-steps li {
+		position: relative;
+		padding: 0.5rem 0.85rem;
+		font-size: 0.85rem;
+		font-weight: 500;
+		color: #fff;
+		border: 1px solid rgba(255, 255, 255, 0.24);
+	}
+	.link-steps li + li::before {
+		content: '';
+		position: absolute;
+		left: -0.5rem;
+		top: 50%;
+		width: 0.5rem;
+		height: 1px;
+		background: rgba(255, 255, 255, 0.28);
+	}
+	/* The steps our path removes, struck through rather than deleted: the point
+	   is what is gone, and you cannot see the absence of something invisible. */
+	.link-steps li.cut {
+		color: rgba(226, 230, 240, 0.4);
+		border-style: dashed;
+		border-color: rgba(255, 255, 255, 0.16);
+		text-decoration: line-through;
+		text-decoration-color: rgba(255, 255, 255, 0.35);
+	}
+	.link-path--us .link-steps li {
+		border-color: var(--color-primary-300);
+	}
+	.link-cost {
+		margin: 1rem 0 0;
+		font-size: 0.88rem;
+		line-height: 1.7;
+		color: rgba(226, 230, 240, 0.72);
+		max-width: 46ch;
+	}
+	@media (min-width: 860px) {
+		.link {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 0;
+		}
+		.link-path--us {
+			border-left: 1px solid rgba(255, 255, 255, 0.16);
+			padding-left: 3rem;
+		}
+		.link-path--them {
+			padding-right: 3rem;
+		}
 	}
 	.hw-grid {
 		list-style: none;
@@ -584,25 +591,57 @@
 	}
 	.hw-card p {
 		font-size: 0.9rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: rgba(226, 232, 255, 0.72);
 	}
 	.hw-more {
 		margin-top: 1.5rem;
 		font-size: 0.95rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		font-weight: 500;
 		color: var(--color-primary-300) !important;
 		max-width: 52rem;
 	}
-
-	/* ---------------- Outputs ---------------- */
 	.out-grid {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: clamp(2rem, 5vw, 3.5rem);
-		align-items: center;
+		gap: clamp(2rem, 4vw, 3rem);
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		align-items: start;
 	}
+	.out-demo {
+		margin: 0;
+		padding: 1.5rem;
+		border: 1px solid var(--color-rule);
+		background: var(--color-surface-raised);
+	}
+	.out-demo figcaption {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.75rem;
+		margin-bottom: 1.25rem;
+	}
+	.demo-head {
+		font-size: 1rem;
+		font-weight: 600;
+		color: var(--color-ink);
+	}
+	.demo-tag {
+		font-size: 0.6rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--color-ink-faint);
+	}
+	@media (min-width: 900px) {
+		.out-grid {
+			grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+			gap: 3.5rem;
+		}
+	}
+
 	.out-list {
 		list-style: none;
 		margin: clamp(1.5rem, 3vw, 2rem) 0 0;
@@ -621,44 +660,10 @@
 	}
 	.out-list p {
 		font-size: 0.93rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink-soft);
 	}
 
-	.out-demo {
-		padding: clamp(1.5rem, 3vw, 2rem);
-		border-radius: var(--radius-lg);
-	}
-	.demo-tag {
-		display: inline-block;
-		font-family: var(--font-family-mono);
-		font-size: 0.62rem;
-		font-weight: 700;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--color-ink-faint);
-		border: 1px solid var(--color-border-default);
-		padding: 0.2rem 0.55rem;
-		border-radius: 999px;
-	}
-	.demo-head {
-		display: block;
-		margin-top: 1rem;
-		font-family: var(--font-family-heading);
-		font-weight: 600;
-		font-size: 1.05rem;
-		color: var(--color-ink);
-	}
-	.demo-sub {
-		margin-top: 0.6rem;
-		font-size: 0.85rem;
-		line-height: 1.55;
-		color: var(--color-ink-soft);
-	}
-	.demo-sub strong {
-		color: var(--color-ink);
-		font-weight: 600;
-	}
 	.demo-collabel {
 		display: flex;
 		justify-content: space-between;
@@ -732,19 +737,13 @@
 		padding-top: 1rem;
 		border-top: 1px solid var(--color-border-default);
 		font-size: 0.85rem;
-		line-height: 1.55;
+		line-height: 1.65;
 		color: var(--color-ink-faint);
-	}
-
-	/* ---------------- How it reasons ---------------- */
-	.arch-sec {
-		background: var(--color-surface-alt);
-		border-block: 1px solid var(--color-border-default);
 	}
 	.arch-note {
 		margin-top: clamp(1.5rem, 3vw, 2rem);
 		font-size: 0.85rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		color: var(--color-ink-faint);
 		max-width: 52rem;
 	}
@@ -760,60 +759,6 @@
 	.arch-link:hover {
 		color: var(--color-primary-700);
 	}
-
-	/* ---------------- Regulatory + CTA ---------------- */
-	.cta-band {
-		padding-block: clamp(3rem, 6vw, 5rem);
-		border-top: 1px solid var(--color-border-dark);
-	}
-	.reg-note {
-		font-size: 0.82rem;
-		line-height: 1.6;
-		color: rgba(226, 232, 255, 0.55) !important;
-		max-width: 52rem;
-		margin-inline: auto;
-		text-align: center;
-		padding: 1rem 1.25rem;
-		border-radius: var(--radius-md);
-		background: rgba(255, 255, 255, 0.05);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-	}
-	.cta-inner {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		text-align: center;
-		max-width: 42rem;
-		margin-inline: auto;
-	}
-	.cta-inner h2 {
-		max-width: none;
-		font-size: clamp(1.9rem, 4.5vw, 2.9rem);
-		margin-inline: auto;
-	}
-	.cta-inner p {
-		margin: 0.9rem auto 0;
-		font-size: 1.05rem;
-		max-width: 34rem;
-	}
-	.cta-actions {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.8rem 1rem;
-		margin-top: 1.9rem;
-	}
-
-	/* ---------------- Responsive ---------------- */
-	@media (min-width: 720px) {
-		.gap-grid {
-			grid-template-columns: repeat(3, 1fr);
-		}
-		.hw-grid {
-			grid-template-columns: repeat(3, 1fr);
-		}
-	}
 	@media (min-width: 900px) {
-		.out-grid {
-			grid-template-columns: 1fr 0.9fr;
-		}
 	}
 </style>

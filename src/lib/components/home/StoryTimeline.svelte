@@ -18,8 +18,8 @@
 				We began at the front line of care.<br />We built on every lesson it taught us.
 			</h2>
 			<p use:reveal={{ delay: 120 }}>
-				Auracare didn’t start with a digital twin. It started with twenty pharmacies, a wall we
-				couldn’t move, and everything we learned on the way.
+				Auracare did not start with a digital twin. It started with twenty-eight pharmacies and an
+				NHS API we could not reach until 2028.
 			</p>
 		</div>
 
@@ -35,21 +35,12 @@
 						class:is-fork={m.fork}
 						use:reveal={{ threshold: 0.35 }}
 					>
-						<span class="tl-dot" style="--dot:{eraDot[m.era]}" aria-hidden="true">
-							{#if m.fork}
-								<svg viewBox="0 0 24 24" width="13" height="13" fill="none"
-									><path
-										d="M6 3v6a4 4 0 0 0 4 4h4M18 3v6a4 4 0 0 1-4 4"
-										stroke="#fff"
-										stroke-width="2.4"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/></svg
-								>
-							{/if}
-						</span>
-						<div class="tl-card glass-card" class:fork-card={m.fork}>
-							<span class="tl-date">{m.date}</span>
+						<span class="tl-dot" style="--dot:{eraDot[m.era]}" aria-hidden="true"></span>
+						<div class="tl-card glass-card" class:fork-card={m.fork} class:now-card={m.now}>
+							<span class="tl-date">
+								{m.date}
+								{#if m.now}<span class="tl-now">We are here</span>{/if}
+							</span>
 							<h3>{m.title}</h3>
 							<p>{m.body}</p>
 							{#if m.fork}<span class="tl-forklabel">The pivot</span>{/if}
@@ -84,7 +75,9 @@
 		position: relative;
 		max-width: 60rem;
 		margin: 0 auto;
-		padding-block: 0.5rem;
+		/* No trailing padding: it was part of what let the spine run past the
+		   final entry. */
+		padding-block: 0.5rem 0;
 	}
 	.tl-track,
 	.tl-fill {
@@ -93,13 +86,25 @@
 		width: 3px;
 		border-radius: var(--radius-xs);
 	}
+	/* The spine stops at the last entry. At `height: 100%` it inherited the
+	   container's trailing space and the last node's bottom margin, so the line
+	   carried on into empty page below June 2027. */
+	/* The spine stops at the last entry, and its last stretch fades out rather
+	   than ending on a hard cut: the story keeps going past June 2027, and a
+	   line that simply stops reads as the end of it. */
 	.tl-track {
-		height: 100%;
+		top: 6px;
+		bottom: 0;
+		height: auto;
 		background: var(--color-border-dark);
+		-webkit-mask-image: linear-gradient(to bottom, #000 0 82%, transparent 100%);
+		mask-image: linear-gradient(to bottom, #000 0 82%, transparent 100%);
 	}
 	.tl-fill {
 		background: var(--color-primary-400);
 		transition: height 0.15s linear;
+		-webkit-mask-image: linear-gradient(to bottom, #000 0 82%, transparent 100%);
+		mask-image: linear-gradient(to bottom, #000 0 82%, transparent 100%);
 	}
 	.tl-track,
 	.tl-fill {
@@ -118,6 +123,9 @@
 		position: relative;
 		padding-left: 48px;
 	}
+	.tl-node:last-child {
+		margin-bottom: 0;
+	}
 	.tl-dot {
 		position: absolute;
 		left: 8px;
@@ -131,6 +139,26 @@
 		align-items: center;
 		justify-content: center;
 		z-index: 2;
+	}
+	.tl-date {
+		display: inline-flex;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+	}
+	/* The entry the company is actually in. Without it every date read as
+	   equally distant, which made a shipped month look like a projection. */
+	.tl-now {
+		font-size: 0.6rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+		border: 1px solid var(--color-primary-600);
+		padding: 0.15rem 0.45rem;
+	}
+	.now-card {
+		border-color: var(--color-primary-600);
 	}
 	.tl-node.is-fork .tl-dot {
 		width: 28px;
