@@ -164,7 +164,7 @@
 <!-- ============================================================ -->
 <section id="auracle" class="section-y twin-product">
 	<div class="container-wide">
-		<span class="part-tag" use:reveal>Part one</span>
+		<span class="part-tag" use:reveal>I</span>
 		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracle · the consumer product</span>
 		<h2 use:reveal={{ delay: 80 }}>The half of your health a clinic never sees.</h2>
 		<p class="lede" use:reveal={{ delay: 140 }}>
@@ -343,7 +343,7 @@
 <!-- ============================================================ -->
 <section id="auracare" class="section-y loop-section">
 	<div class="container-wide">
-		<span class="part-tag" use:reveal>Part two</span>
+		<span class="part-tag" use:reveal>II</span>
 		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracare CDSS · clinical reasoning</span>
 		<h2 use:reveal={{ delay: 80 }}>A loop, not a pipeline.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
@@ -352,30 +352,98 @@
 			and keeps going round until asking again would not be worth the delay.
 		</p>
 
-		<!-- The safety overlay is drawn as a frame around the stages rather than a
-		     pill floating above them, because "wraps every stage" is the claim.
-		     The abstract numbered circles that used to sit here duplicated this
-		     list without naming anything, so they are gone. -->
-		<div class="loop-frame" use:reveal={{ delay: 140 }}>
-			<span class="loop-frame-label">Safety overlay · every stage</span>
+		<!--
+		  The loop, drawn as a loop.
 
-			<ol class="loop-list">
-				{#each LOOP as stage, i}
-					<li class="loop-item" use:reveal={{ delay: 60 + i * 60 }}>
-						<span class="loop-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-						<div class="loop-text">
-							<h3>{stage.label}</h3>
-							<p>{stage.body}</p>
-						</div>
-					</li>
+		  A framed list said "cycle" and showed a column, and its overlay label was
+		  absolutely positioned against the frame, which put it on top of the lede
+		  above it. Five stages now sit on a real circle with the direction of
+		  travel marked, stage five exits outward to the outcome, and the safety
+		  overlay is the ring the whole thing sits inside. The ordered list below
+		  carries the same content for screen readers and narrow screens.
+		-->
+		<figure class="loop-fig" use:reveal={{ delay: 120 }}>
+			<svg viewBox="0 0 640 560" role="img" aria-labelledby="loop-fig-title">
+				<title id="loop-fig-title">
+					The reasoning loop: input, encoding, thinking, thesis and value-of-information run as a
+					cycle inside a safety overlay; stage five either repeats the cycle or exits to a medical
+					outcome.
+				</title>
+				<defs>
+					<marker
+						id="loopHead"
+						viewBox="0 0 10 10"
+						refX="7"
+						refY="5"
+						markerWidth="6"
+						markerHeight="6"
+						orient="auto-start-reverse"
+					>
+						<path d="M0 0 L10 5 L0 10 z" fill="currentColor" />
+					</marker>
+				</defs>
+
+				<!-- The safety overlay: the ring everything happens inside -->
+				<circle class="ring" cx="290" cy="250" r="228" />
+				<text class="ring-label" x="290" y="34" text-anchor="middle"
+					>SAFETY OVERLAY · EVERY STAGE</text
+				>
+
+				<!-- Direction of travel -->
+				<circle class="path" cx="290" cy="250" r="150" />
+				{#each LOOP.slice(0, 5) as _s, i}
+					{@const a0 = (i / 5) * 2 * Math.PI - Math.PI / 2 + 0.34}
+					{@const a1 = ((i + 1) / 5) * 2 * Math.PI - Math.PI / 2 - 0.34}
+					<path
+						class="arc"
+						marker-end="url(#loopHead)"
+						d="M {290 + 150 * Math.cos(a0)} {250 + 150 * Math.sin(a0)} A 150 150 0 0 1 {290 +
+							150 * Math.cos(a1)} {250 + 150 * Math.sin(a1)}"
+					/>
 				{/each}
-			</ol>
 
-			<p class="loop-return">
-				<span class="loop-return-glyph" aria-hidden="true">↺</span>
-				Stage five decides whether to go round again, or to stop and act.
-			</p>
-		</div>
+				<!-- The five cycling stages -->
+				{#each LOOP.slice(0, 5) as stage, i}
+					{@const a = (i / 5) * 2 * Math.PI - Math.PI / 2}
+					{@const x = 290 + 150 * Math.cos(a)}
+					{@const y = 250 + 150 * Math.sin(a)}
+					<g class="node" class:exit={i === 4}>
+						<circle cx={x} cy={y} r="42" />
+						<text class="node-num" {x} y={y - 4} text-anchor="middle">0{i + 1}</text>
+						<text class="node-label" {x} y={y + 13} text-anchor="middle">
+							{stage.label.length > 12 ? 'VOI' : stage.label}
+						</text>
+					</g>
+				{/each}
+
+				<!-- Stage five is the only exit, and it converges inward: the cycle
+				     runs around the outside and drops into the outcome at the centre.
+				     The exit therefore starts at stage five's edge, not at a fixed
+				     point that happened to sit under a different node. -->
+				<path class="exit-line" marker-end="url(#loopHead)" d="M 186 216 L 200 226" />
+				<g class="node outcome">
+					<rect x="205" y="222" width="170" height="56" />
+					<text class="node-num" x="290" y="246" text-anchor="middle">06</text>
+					<text class="node-label" x="290" y="264" text-anchor="middle">Medical outcome</text>
+				</g>
+			</svg>
+			<figcaption>
+				Stages one to five cycle. Stage five is the only exit, and everything leaving it passes the
+				safety overlay.
+			</figcaption>
+		</figure>
+
+		<ol class="loop-list">
+			{#each LOOP as stage, i}
+				<li class="loop-item" use:reveal={{ delay: 40 }}>
+					<span class="loop-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+					<div class="loop-text">
+						<h3>{stage.label}</h3>
+						<p>{stage.body}</p>
+					</div>
+				</li>
+			{/each}
+		</ol>
 
 		<p class="safety-note" use:reveal>
 			<strong>Stage five is the only way out of the loop.</strong> Nothing reaches a patient before it,
@@ -387,41 +455,43 @@
 <!-- ============================================================ -->
 <!-- Auracare · the neuro-symbolic core                            -->
 <!-- ============================================================ -->
-<section class="section-y core-section aura-space">
+<section class="section-y core-section">
 	<div class="container-wide">
-		<h2 use:reveal={{ delay: 60 }}>Two kinds of intelligence, checking each other.</h2>
-		<p class="lede" use:reveal={{ delay: 120 }}>
+		<h2 use:reveal>Two kinds of intelligence, checking each other.</h2>
+		<p class="lede" use:reveal={{ delay: 60 }}>
 			Learned models are fluent and occasionally confident about things that are false. Rule-based
 			systems are reliable and cannot handle anything they were not told about. We run both and keep
 			a marked line between them, because the question a regulator asks is which side of that line a
 			given decision came from, and whether you can reconstruct it.
 		</p>
 
-		<div class="core-grid">
-			<div class="glass-card core-panel" use:reveal={{ delay: 120 }}>
-				<span class="panel-tag panel-tag--symbolic">Symbolic</span>
-				<h3>Auditable, authoritative</h3>
-				<ul>
-					{#each SYMBOLIC as point}
-						<li>{point}</li>
-					{/each}
-				</ul>
-			</div>
-			<div class="glass-card core-panel" use:reveal={{ delay: 200 }}>
-				<span class="panel-tag panel-tag--learned">Learned</span>
-				<h3>Adaptive, advisory</h3>
+		<!-- Two columns facing each other across a rule. The role each side plays
+		     is stated as a word; it was previously encoded in two arbitrary
+		     chip colours, which carried no meaning on their own. -->
+		<div class="core-split">
+			<div class="core-col" use:reveal={{ delay: 60 }}>
+				<p class="col-role">Proposes</p>
+				<h3>Learned</h3>
+				<p class="col-sub">Adaptive, advisory</p>
 				<ul>
 					{#each LEARNED as point}
 						<li>{point}</li>
 					{/each}
 				</ul>
 			</div>
+			<div class="core-col" use:reveal={{ delay: 100 }}>
+				<p class="col-role">Disposes</p>
+				<h3>Symbolic</h3>
+				<p class="col-sub">Auditable, authoritative</p>
+				<ul>
+					{#each SYMBOLIC as point}
+						<li>{point}</li>
+					{/each}
+				</ul>
+			</div>
 		</div>
 
-		<p class="core-line" use:reveal={{ delay: 160 }}>
-			The learned model <em>proposes</em>. The auditable layer <em>disposes</em>.
-		</p>
-		<p class="core-tail" use:reveal={{ delay: 200 }}>
+		<p class="core-tail" use:reveal>
 			Every conclusion traces back to the specific rule or relationship that produced it, and every
 			step is logged in an order you can replay.
 		</p>
@@ -717,37 +787,110 @@
 			grid-template-columns: repeat(3, 1fr);
 		}
 	}
-	.loop-frame-label {
-		position: absolute;
-		top: 0;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		background: var(--color-surface-page);
-		padding: 0 0.85rem;
-		font-size: 0.68rem;
-		font-weight: 600;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: var(--color-primary-700);
-		white-space: nowrap;
+	/* Part numerals. Set large and bold so they read as chapter marks rather
+	   than as another small grey label above a heading. */
+	.part-tag {
+		display: block;
+		font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		line-height: 1;
+		color: var(--color-ink);
+		margin-bottom: 1.1rem;
 	}
-
+	.loop-fig {
+		margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+	}
+	.loop-fig svg {
+		display: block;
+		width: 100%;
+		max-width: 46rem;
+		height: auto;
+		margin-inline: auto;
+		color: var(--color-primary-600);
+	}
+	.ring {
+		fill: none;
+		stroke: var(--color-rule-strong);
+		stroke-width: 1;
+		stroke-dasharray: 5 7;
+	}
+	.ring-label {
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		fill: var(--color-ink-faint);
+	}
+	.path {
+		fill: none;
+		stroke: var(--color-rule);
+		stroke-width: 1;
+	}
+	.arc {
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.5;
+		opacity: 0.55;
+	}
+	.node circle,
+	.node rect {
+		fill: var(--color-surface-page);
+		stroke: var(--color-ink);
+		stroke-width: 1.5;
+	}
+	.node.exit circle {
+		stroke: var(--color-primary-600);
+		stroke-width: 2.5;
+	}
+	.node.outcome rect {
+		fill: var(--color-ink);
+		stroke: var(--color-ink);
+	}
+	.node.outcome .node-num,
+	.node.outcome .node-label {
+		fill: var(--color-surface-page);
+	}
+	.node-num {
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		fill: var(--color-primary-600);
+	}
+	.node-label {
+		font-size: 12px;
+		font-weight: 600;
+		fill: var(--color-ink);
+	}
+	.exit-line {
+		fill: none;
+		stroke: var(--color-primary-600);
+		stroke-width: 2;
+	}
+	figcaption {
+		margin: 1.25rem auto 0;
+		text-align: center;
+		font-size: 0.85rem;
+		line-height: 1.5;
+		color: var(--color-ink-faint);
+		max-width: 46ch;
+	}
 	.loop-list {
 		list-style: none;
 		display: grid;
-		gap: 0.5rem 2rem;
-		margin: 0;
+		gap: 0 2.5rem;
+		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
 		padding: 0;
 		grid-template-columns: 1fr;
 		text-align: left;
+		border-top: 1px solid var(--color-ink);
 	}
 	.loop-item {
 		display: grid;
 		grid-template-columns: 2.4rem 1fr;
 		gap: 0.9rem;
 		align-items: start;
-		padding-block: 0.9rem;
-		border-top: 1px solid rgba(47, 78, 192, 0.1);
+		padding-block: 1.15rem;
+		border-bottom: 1px solid var(--color-rule);
 	}
 	.loop-num {
 		font-size: 0.75rem;
@@ -766,23 +909,7 @@
 		color: var(--color-ink-soft);
 		margin: 0;
 	}
-	.loop-return {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.5rem;
-		margin: clamp(1rem, 2vw, 1.5rem) 0 0;
-		padding-top: 1rem;
-		border-top: 1px solid rgba(47, 78, 192, 0.12);
-		font-size: 0.9rem;
-		font-weight: 500;
-		color: var(--color-primary-700);
-		text-align: center;
-	}
-	.loop-return-glyph {
-		font-size: 1.05rem;
-		line-height: 1;
-	}
+
 	.safety-note {
 		margin: 1.5rem auto 0;
 		font-size: 0.95rem;
@@ -797,89 +924,70 @@
 		.loop-list {
 			grid-template-columns: repeat(2, 1fr);
 		}
-		/* Two columns: the item starting each column loses its rule too. */
-		.loop-item:nth-child(2) {
-			border-top: 0;
-		}
 	}
-	.core-panel {
-		padding: clamp(1.5rem, 3vw, 2.25rem);
+	.core-section {
+		border-top: 1px solid var(--color-rule);
 	}
-	.panel-tag {
-		display: inline-block;
-		font-family: var(--font-family-heading);
-		font-size: 0.7rem;
-		font-weight: 700;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		padding: 0.28rem 0.7rem;
-		border-radius: 999px;
-		margin-bottom: 0.9rem;
-	}
-	.panel-tag--symbolic {
-		color: #eaf0ff;
-		background: rgba(97, 128, 255, 0.22);
-		border: 1px solid rgba(97, 128, 255, 0.4);
-	}
-	.panel-tag--learned {
-		color: #d7ffe9;
-		background: rgba(52, 211, 153, 0.16);
-		border: 1px solid rgba(52, 211, 153, 0.4);
-	}
-	.core-panel h3 {
-		font-size: 1.25rem;
-		margin-bottom: 0.9rem;
-	}
-	.core-panel ul {
-		list-style: none;
+	.core-split {
 		display: grid;
-		gap: 0.7rem;
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+		margin-top: clamp(2.5rem, 5vw, 4rem);
+		border-top: 1px solid var(--color-ink);
 	}
-	.core-panel li {
-		position: relative;
-		padding-left: 1.5rem;
-		line-height: 1.5;
-		color: rgba(226, 232, 255, 0.82);
-		font-size: 0.95rem;
+	.core-col {
+		padding-top: 1.75rem;
 	}
-	.core-panel li::before {
-		content: '';
-		position: absolute;
-		left: 0;
-		top: 0.55em;
-		width: 0.5rem;
-		height: 0.5rem;
-		border-radius: 999px;
-		background: var(--color-primary-400, #6180ff);
+	.col-role {
+		font-size: 0.68rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-primary-600);
+		margin: 0 0 0.75rem;
 	}
-	.core-line {
-		margin-top: clamp(1.75rem, 4vw, 2.5rem);
-		text-align: center;
-		font-family: var(--font-family-heading);
-		font-size: clamp(1.15rem, 2.4vw, 1.7rem);
-		font-weight: 500;
-		color: #fff !important;
-		line-height: 1.4;
+	.core-col h3 {
+		font-size: clamp(1.5rem, 2.6vw, 2rem);
+		letter-spacing: -0.025em;
+		margin: 0;
 	}
-	.core-line em {
-		font-style: normal;
-		background: linear-gradient(100deg, #8aa0ff, #cdd9ff);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-		font-weight: 700;
+	.col-sub {
+		margin: 0.3rem 0 1.25rem;
+		font-size: 0.9rem;
+		color: var(--color-ink-faint);
+	}
+	.core-col ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.core-col li {
+		padding-block: 0.85rem;
+		border-top: 1px solid var(--color-rule);
+		font-size: 0.92rem;
+		line-height: 1.55;
+		color: var(--color-ink-soft);
 	}
 	.core-tail {
-		margin-top: 0.9rem;
-		text-align: center;
-		font-size: 0.98rem;
-		line-height: 1.6;
-		max-width: 44rem;
-		margin-inline: auto;
+		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--color-ink);
+		font-size: clamp(1rem, 1.5vw, 1.15rem);
+		line-height: 1.55;
+		color: var(--color-ink);
+		max-width: 60ch;
 	}
-	@media (min-width: 760px) {
-		.core-grid {
-			grid-template-columns: 1fr 1fr;
+	@media (min-width: 880px) {
+		.core-split {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 0;
+		}
+		.core-col + .core-col {
+			border-left: 1px solid var(--color-rule);
+			padding-left: 3rem;
+		}
+		.core-col:first-child {
+			padding-right: 3rem;
 		}
 	}
 	.twin-copy p + p {

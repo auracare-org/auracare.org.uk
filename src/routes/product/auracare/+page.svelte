@@ -184,12 +184,22 @@
 			directly, so what it sees is exactly what the device captured.
 		</p>
 
-		<div class="path" use:reveal={{ delay: 140 }} aria-hidden="true">
-			<span class="path-node">Our devices</span>
-			<span class="path-line"
-				><span class="path-strike">no manual entry · no third party</span></span
-			>
-			<span class="path-node path-core">Reasoning core</span>
+		<!-- The two ends of the link and what is absent between them. The pills
+		     here were absolutely positioned against a dashed line and collapsed
+		     on top of each other; this is a three-column grid instead. -->
+		<div class="link" use:reveal={{ delay: 100 }}>
+			<div class="link-end">
+				<span class="link-label">From</span>
+				<p>Our devices</p>
+			</div>
+			<div class="link-mid" aria-hidden="true">
+				<span class="link-rule"></span>
+				<span class="link-note">No manual entry · no third party</span>
+			</div>
+			<div class="link-end link-end--to">
+				<span class="link-label">Into</span>
+				<p>The reasoning core</p>
+			</div>
 		</div>
 
 		<ul class="hw-grid">
@@ -280,28 +290,93 @@
 </section>
 
 <!-- ================= Regulatory + CTA ================= -->
-<section class="cta-band aura-space">
+<!-- Matches the homepage closing band: left-aligned statement, the two real
+     paths side by side, the regulatory note as fine print at the foot. -->
+<section id="contact" class="closing aura-space">
 	<div class="container-wide">
-		<p class="reg-note" use:reveal>{REGULATORY_NOTE}</p>
-		<div class="cta-inner">
-			<h2 use:reveal>Building the clinical side? Let’s talk.</h2>
-			<p use:reveal={{ delay: 80 }}>
-				Clinical partners, health systems and investors: we’d like to hear from you as the CDSS
-				moves toward its first trials.
-			</p>
-			<div class="cta-actions" use:reveal={{ delay: 140 }}>
+		<h2 use:reveal>Building the clinical side?</h2>
+		<p class="lede" use:reveal={{ delay: 60 }}>
+			We would like to hear from clinical partners and health systems as the CDSS moves toward its
+			first trials.
+		</p>
+
+		<div class="paths">
+			<div class="path" use:reveal={{ delay: 100 }}>
+				<h3>Clinical partners</h3>
+				<p>Hospitals, practices and pharmacies working on decision support.</p>
 				<a
 					class="btn-solid"
 					href="mailto:{CONTACT.clinical}?subject=Auracare%3A%20Clinical%20partnership"
-					>Clinical partnerships</a
 				>
-				<a class="btn-ghost" href="/investors">For investors</a>
+					Write to our clinical team
+				</a>
+			</div>
+			<div class="path" use:reveal={{ delay: 140 }}>
+				<h3>Investors</h3>
+				<p>One founder replies directly, depending on where you invest from.</p>
+				<a class="btn-ghost" href="/investors#contact">See the investor page</a>
 			</div>
 		</div>
+
+		<p class="reg-note" use:reveal>{REGULATORY_NOTE}</p>
 	</div>
 </section>
 
 <style>
+	.closing {
+		padding-block: clamp(4rem, 8vw, 7rem) clamp(2.5rem, 5vw, 4rem);
+	}
+	.closing h2 {
+		font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+		line-height: 1.02;
+		letter-spacing: -0.035em;
+		margin: 0 0 1.25rem;
+		color: #fff;
+	}
+	.closing .lede {
+		font-size: clamp(1rem, 1.5vw, 1.2rem);
+		line-height: 1.6;
+		max-width: 52ch;
+		margin: 0;
+	}
+	.paths {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		padding-top: clamp(2rem, 4vw, 3rem);
+		border-top: 1px solid rgba(255, 255, 255, 0.16);
+	}
+	.path h3 {
+		font-size: 0.74rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--color-primary-300);
+		margin: 0 0 0.75rem;
+	}
+	.path p {
+		font-size: 0.95rem;
+		line-height: 1.55;
+		margin: 0 0 1.5rem;
+		max-width: 40ch;
+	}
+	.reg-note {
+		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+		padding-top: 1.5rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.12);
+		font-size: 0.8rem;
+		line-height: 1.55;
+		color: rgba(226, 230, 240, 0.5);
+		max-width: 72ch;
+	}
+	@media (min-width: 800px) {
+		.paths {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 3.5rem;
+		}
+	}
+
 	.btn-solid:active {
 		transform: scale(0.97);
 		transition-duration: var(--duration-press);
@@ -389,46 +464,62 @@
 		color: var(--color-ink-soft);
 		max-width: 52ch;
 	}
-	.path-node {
-		font-family: var(--font-family-heading);
+	.link {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+		align-items: center;
+		margin-top: clamp(2rem, 4vw, 3rem);
+		padding-block: clamp(1.5rem, 3vw, 2rem);
+		border-block: 1px solid rgba(255, 255, 255, 0.16);
+	}
+	.link-label {
+		display: block;
+		font-size: 0.64rem;
 		font-weight: 600;
-		font-size: 0.95rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-primary-300);
+		margin-bottom: 0.4rem;
+	}
+	.link-end p {
+		margin: 0;
+		font-size: clamp(1.1rem, 2vw, 1.5rem);
+		font-weight: 600;
+		letter-spacing: -0.02em;
 		color: #fff;
-		padding: 0.7rem 1.1rem;
-		border-radius: 999px;
-		border: 1px solid var(--color-border-dark-strong);
-		background: rgba(255, 255, 255, 0.05);
-		white-space: nowrap;
 	}
-	.path-core {
-		background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-500));
-		border-color: var(--color-primary-400);
+	.link-mid {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.6rem;
 	}
-	.path-line {
-		flex: 1;
-		min-width: 8rem;
+	.link-rule {
+		width: 100%;
 		height: 1px;
 		background: repeating-linear-gradient(
-			90deg,
-			rgba(148, 171, 255, 0.6) 0 8px,
-			transparent 8px 16px
+			to right,
+			rgba(255, 255, 255, 0.3) 0 6px,
+			transparent 6px 12px
 		);
-		position: relative;
-		display: flex;
-		justify-content: center;
 	}
-	.path-strike {
-		position: absolute;
-		top: -0.7rem;
-		font-family: var(--font-family-mono);
-		font-weight: 700;
-		font-size: 0.6rem;
-		letter-spacing: 0.06em;
+	.link-note {
+		font-size: 0.64rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
 		text-transform: uppercase;
-		color: rgba(226, 232, 255, 0.6);
-		background: var(--color-surface-dark);
-		padding: 0 0.6rem;
-		white-space: nowrap;
+		color: rgba(226, 230, 240, 0.6);
+		text-align: center;
+	}
+	@media (min-width: 760px) {
+		.link {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr);
+			gap: 2rem;
+		}
+		.link-end--to {
+			text-align: right;
+		}
 	}
 	.hw-grid {
 		list-style: none;
@@ -612,41 +703,6 @@
 	}
 	.arch-link:hover {
 		color: var(--color-primary-700);
-	}
-	.reg-note {
-		font-size: 0.82rem;
-		line-height: 1.6;
-		color: rgba(226, 232, 255, 0.55) !important;
-		max-width: 52rem;
-		margin-inline: auto;
-		text-align: center;
-		padding: 1rem 1.25rem;
-		border-radius: var(--radius-md);
-		background: rgba(255, 255, 255, 0.05);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-	}
-	.cta-inner {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		text-align: center;
-		max-width: 42rem;
-		margin-inline: auto;
-	}
-	.cta-inner h2 {
-		max-width: none;
-		font-size: clamp(1.9rem, 4.5vw, 2.9rem);
-		margin-inline: auto;
-	}
-	.cta-inner p {
-		margin: 0.9rem auto 0;
-		font-size: 1.05rem;
-		max-width: 34rem;
-	}
-	.cta-actions {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.8rem 1rem;
-		margin-top: 1.9rem;
 	}
 	@media (min-width: 900px) {
 		.out-grid {
