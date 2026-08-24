@@ -2,10 +2,15 @@
 	import { reveal, countUp } from '$lib/actions/motion';
 	import { TRACTION, FOUNDATION_TITLE, FOUNDATION_POINTS } from '$lib/data/company';
 
-	// A traction stat counts up only when it is a plain integer ("28").
-	// Anything else ("$134k", "2 LOIs") is a label we keep verbatim.
-	function numericStat(stat: string): number | null {
-		return /^\d+$/.test(stat) ? Number(stat) : null;
+	/* Pull the number out of a stat however it is written, so "$134k" and
+	   "~$400k" animate too. Previously only a bare integer matched, which is
+	   why 28 was the only figure that moved. The prefix and suffix are kept so
+	   the currency symbol and the "k" render around the counting digits. */
+	function parseStat(stat: string): { prefix: string; num: number; suffix: string } | null {
+		const m = stat.match(/^([^\d]*)([\d,.]+)(.*)$/);
+		if (!m) return null;
+		const num = Number(m[2].replace(/,/g, ''));
+		return Number.isFinite(num) ? { prefix: m[1], num, suffix: m[3] } : null;
 	}
 </script>
 
@@ -25,18 +30,19 @@
 
 		<dl class="ledger">
 			{#each TRACTION as item (item.label)}
-				{@const n = numericStat(item.stat)}
+				{@const parsed = parseStat(item.stat)}
 				<div class="row" use:reveal={{ delay: 40 }}>
 					<dt>{item.label}</dt>
 					<dd>
-						{#if n !== null}
-							<!-- Rendered with its final value, not empty: the count-up only runs
-							     when the row scrolls into view, so an empty span meant the
-							     figure was missing until then, and missing entirely without
-							     JavaScript. The action overwrites this text when it runs. -->
-							<span use:countUp={{ value: n, format: (v) => Math.round(v).toLocaleString() }}>
-								{item.stat}
-							</span>
+						{#if parsed}
+							<!-- Seeded with the final value so the figure is present before the
+							     count-up runs, and without JavaScript at all. -->
+							<span
+								use:countUp={{
+									value: parsed.num,
+									format: (v) => parsed.prefix + Math.round(v).toLocaleString() + parsed.suffix
+								}}>{item.stat}</span
+							>
 						{:else}
 							{item.stat}
 						{/if}

@@ -34,6 +34,15 @@
 		{ name: 'Context', note: 'Screen time, location and daily rhythm' }
 	];
 
+	/* Loop diagram geometry. The five stages run from the top clockwise down
+	   the right side to the bottom, which leaves the whole left half free for
+	   the return leg so it never crosses a node. */
+	const R = 160;
+	const NODE_R = 44;
+	const ANGLES = [-Math.PI / 2, -Math.PI / 4, 0, Math.PI / 4, Math.PI / 2];
+	const cx = (a: number) => 280 + R * Math.cos(a);
+	const cy = (a: number) => 330 + R * Math.sin(a);
+
 	/* --- Auracare: the reasoning loop ----------------------------- */
 	const LOOP = [
 		{
@@ -164,7 +173,6 @@
 <!-- ============================================================ -->
 <section id="auracle" class="section-y twin-product">
 	<div class="container-wide">
-		<span class="part-tag" use:reveal>I</span>
 		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracle · the consumer product</span>
 		<h2 use:reveal={{ delay: 80 }}>The half of your health a clinic never sees.</h2>
 		<p class="lede" use:reveal={{ delay: 140 }}>
@@ -343,7 +351,6 @@
 <!-- ============================================================ -->
 <section id="auracare" class="section-y loop-section">
 	<div class="container-wide">
-		<span class="part-tag" use:reveal>II</span>
 		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracare CDSS · clinical reasoning</span>
 		<h2 use:reveal={{ delay: 80 }}>A loop, not a pipeline.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
@@ -362,8 +369,18 @@
 		  overlay is the ring the whole thing sits inside. The ordered list below
 		  carries the same content for screen readers and narrow screens.
 		-->
+		<!--
+		  Geometry notes, because the previous version bled.
+
+		  The five cycling stages sit on an arc from the top down the right side
+		  to the bottom, so the return leg owns the empty left half and never
+		  crosses a node. Stage five sits at the bottom and its exit drops
+		  straight down into the outcome, which stays inside the safety ring
+		  because it is still gated by it. The ring label sits clear above the
+		  ring rather than on top of the dashed stroke.
+		-->
 		<figure class="loop-fig" use:reveal={{ delay: 120 }}>
-			<svg viewBox="0 0 640 560" role="img" aria-labelledby="loop-fig-title">
+			<svg viewBox="0 0 560 680" role="img" aria-labelledby="loop-fig-title">
 				<title id="loop-fig-title">
 					The reasoning loop: input, encoding, thinking, thesis and value-of-information run as a
 					cycle inside a safety overlay; stage five either repeats the cycle or exits to a medical
@@ -373,58 +390,59 @@
 					<marker
 						id="loopHead"
 						viewBox="0 0 10 10"
-						refX="7"
+						refX="8"
 						refY="5"
-						markerWidth="6"
-						markerHeight="6"
+						markerWidth="5"
+						markerHeight="5"
 						orient="auto-start-reverse"
 					>
 						<path d="M0 0 L10 5 L0 10 z" fill="currentColor" />
 					</marker>
 				</defs>
 
-				<!-- The safety overlay: the ring everything happens inside -->
-				<circle class="ring" cx="290" cy="250" r="228" />
-				<text class="ring-label" x="290" y="34" text-anchor="middle"
+				<circle class="ring" cx="280" cy="330" r="300" />
+				<text class="ring-label" x="280" y="22" text-anchor="middle"
 					>SAFETY OVERLAY · EVERY STAGE</text
 				>
 
-				<!-- Direction of travel -->
-				<circle class="path" cx="290" cy="250" r="150" />
-				{#each LOOP.slice(0, 5) as _s, i}
-					{@const a0 = (i / 5) * 2 * Math.PI - Math.PI / 2 + 0.34}
-					{@const a1 = ((i + 1) / 5) * 2 * Math.PI - Math.PI / 2 - 0.34}
-					<path
-						class="arc"
-						marker-end="url(#loopHead)"
-						d="M {290 + 150 * Math.cos(a0)} {250 + 150 * Math.sin(a0)} A 150 150 0 0 1 {290 +
-							150 * Math.cos(a1)} {250 + 150 * Math.sin(a1)}"
-					/>
+				{#each ANGLES as a, i}
+					{#if ANGLES[i + 1] !== undefined}
+						<path
+							class="arc"
+							marker-end="url(#loopHead)"
+							d="M {cx(a + 0.28)} {cy(a + 0.28)} A {R} {R} 0 0 1 {cx(ANGLES[i + 1] - 0.28)} {cy(
+								ANGLES[i + 1] - 0.28
+							)}"
+						/>
+					{/if}
 				{/each}
 
-				<!-- The five cycling stages -->
+				<!-- The return leg, up the empty left side -->
+				<path
+					class="arc"
+					marker-end="url(#loopHead)"
+					d="M {cx(Math.PI / 2 + 0.3)} {cy(Math.PI / 2 + 0.3)} A {R} {R} 0 0 1 {cx(
+						-Math.PI / 2 - 0.3
+					)} {cy(-Math.PI / 2 - 0.3)}"
+				/>
+
 				{#each LOOP.slice(0, 5) as stage, i}
-					{@const a = (i / 5) * 2 * Math.PI - Math.PI / 2}
-					{@const x = 290 + 150 * Math.cos(a)}
-					{@const y = 250 + 150 * Math.sin(a)}
 					<g class="node" class:exit={i === 4}>
-						<circle cx={x} cy={y} r="42" />
-						<text class="node-num" {x} y={y - 4} text-anchor="middle">0{i + 1}</text>
-						<text class="node-label" {x} y={y + 13} text-anchor="middle">
-							{stage.label.length > 12 ? 'VOI' : stage.label}
+						<circle cx={cx(ANGLES[i])} cy={cy(ANGLES[i])} r={NODE_R} />
+						<text class="node-num" x={cx(ANGLES[i])} y={cy(ANGLES[i]) - 5} text-anchor="middle">
+							0{i + 1}
+						</text>
+						<text class="node-label" x={cx(ANGLES[i])} y={cy(ANGLES[i]) + 13} text-anchor="middle">
+							{stage.label.length > 12 ? 'Value of info.' : stage.label}
 						</text>
 					</g>
 				{/each}
 
-				<!-- Stage five is the only exit, and it converges inward: the cycle
-				     runs around the outside and drops into the outcome at the centre.
-				     The exit therefore starts at stage five's edge, not at a fixed
-				     point that happened to sit under a different node. -->
-				<path class="exit-line" marker-end="url(#loopHead)" d="M 186 216 L 200 226" />
+				<path class="exit-line" marker-end="url(#loopHead)" d="M 280 534 L 280 560" />
 				<g class="node outcome">
-					<rect x="205" y="222" width="170" height="56" />
-					<text class="node-num" x="290" y="246" text-anchor="middle">06</text>
-					<text class="node-label" x="290" y="264" text-anchor="middle">Medical outcome</text>
+					<rect x="180" y="566" width="200" height="54" />
+					<text class="node-num" x="280" y="589" text-anchor="middle">06</text>
+					<text class="node-label" x="280" y="607" text-anchor="middle">Medical outcome</text>
 				</g>
 			</svg>
 			<figcaption>
@@ -609,6 +627,34 @@
 		line-height: 1.65;
 		max-width: 46rem;
 	}
+	/* The figure and its shape, side by side. The base rule declaring `display:
+	   grid` had been lost, so `grid-template-columns` in the media query below
+	   was inert and the chart stacked underneath the number instead. */
+	/* Section separation. Every section sat on the same bone with the same
+	   padding, so the page read as one continuous column. Alternating the
+	   ground and ruling the joins gives each one an edge to start at. */
+	.twin-product,
+	.loop-section,
+	.core-section {
+		border-top: 1px solid var(--color-rule);
+	}
+	.twin-section,
+	.core-section {
+		background: var(--color-surface-alt);
+	}
+
+	.churn {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: clamp(1.75rem, 4vw, 3rem);
+		align-items: center;
+		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+		padding-block: clamp(1.75rem, 3vw, 2.5rem);
+		border-block: 1px solid var(--color-rule);
+	}
+	.churn-stat {
+		max-width: 46ch;
+	}
 	.churn-only {
 		display: block;
 		font-family: var(--font-family-heading);
@@ -787,17 +833,6 @@
 			grid-template-columns: repeat(3, 1fr);
 		}
 	}
-	/* Part numerals. Set large and bold so they read as chapter marks rather
-	   than as another small grey label above a heading. */
-	.part-tag {
-		display: block;
-		font-size: clamp(1.5rem, 2.8vw, 2.2rem);
-		font-weight: 700;
-		letter-spacing: 0.04em;
-		line-height: 1;
-		color: var(--color-ink);
-		margin-bottom: 1.1rem;
-	}
 	.loop-fig {
 		margin: clamp(2.5rem, 5vw, 4rem) 0 0;
 	}
@@ -820,11 +855,6 @@
 		font-weight: 600;
 		letter-spacing: 0.18em;
 		fill: var(--color-ink-faint);
-	}
-	.path {
-		fill: none;
-		stroke: var(--color-rule);
-		stroke-width: 1;
 	}
 	.arc {
 		fill: none;
