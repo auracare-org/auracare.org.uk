@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageHero from '$lib/components/layout/PageHero.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal, countUp } from '$lib/actions/motion';
 	import { CONTACT, ONTOLOGY_STATS } from '$lib/data/company';
@@ -151,30 +152,12 @@
 <!-- ============================================================ -->
 <!-- Hero                                                          -->
 <!-- ============================================================ -->
-<section class="tech-hero aura-space">
-	<!-- The .bubble decorations here were retired to a no-op in a previous
-	     cleanup, so this hero had been rendering flat. The wash replaces them. -->
-	<div class="wash-dark" aria-hidden="true"></div>
-	<div class="container-wide hero-inner">
-		<span class="eyebrow" use:reveal>Technology</span>
-		<h1 use:reveal={{ delay: 60 }}>
-			Two products. <span class="text-gradient-l">One patient model.</span>
-		</h1>
-		<p class="hero-sub" use:reveal={{ delay: 140 }}>
-			One timestamped picture of a person, grounded in the language medicine already agrees on.
-			<strong>Auracle</strong> learns your daily life. <strong>Auracare CDSS</strong> reasons over the
-			whole picture: vitals, history, symptoms and everything Auracle captures.
-		</p>
-		<nav class="hero-jump" use:reveal={{ delay: 200 }} aria-label="Jump to a product">
-			<a href="#auracle">Auracle <span aria-hidden="true">→</span></a>
-			<a href="#auracare">Auracare CDSS <span aria-hidden="true">→</span></a>
-		</nav>
-		<div class="hero-status" use:reveal={{ delay: 260 }}>
-			<span class="pill pill-live">Knowledge graph: live today</span>
-			<span class="pill pill-dev">Reasoning engine: in development</span>
-		</div>
-	</div>
-</section>
+<PageHero
+	kicker="Technology"
+	title="Two products."
+	accent="One patient model."
+	sub="One timestamped picture of a person, grounded in the language medicine already agrees on. Auracle learns daily life; the Auracare CDSS reasons over the whole picture."
+/>
 
 <!-- ============================================================ -->
 <!-- PART ONE · AURACLE                                           -->
@@ -557,114 +540,10 @@
 </section>
 
 <style>
-	/* ---------------- Hero ---------------- */
-	.tech-hero {
-		padding-block: clamp(4rem, 10vw, 8rem);
-	}
-	.hero-inner {
-		position: relative;
-		z-index: 1;
-		max-width: 52rem;
-	}
-	.tech-hero h1 {
-		font-size: clamp(2.4rem, 6vw, 4.2rem);
-		line-height: 1.05;
-		letter-spacing: -0.02em;
-		margin-block: 0.75rem 1.25rem;
-	}
-	.text-gradient-l {
-		background: linear-gradient(100deg, #8aa0ff, #cdd9ff);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-	.hero-sub {
-		font-size: clamp(1rem, 1.6vw, 1.2rem);
-		line-height: 1.6;
-		max-width: 42rem;
-	}
-	.hero-jump {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.75rem;
-		margin-top: 1.75rem;
-	}
-	.hero-jump a {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		font-family: var(--font-family-heading);
-		font-weight: 600;
-		font-size: 0.95rem;
-		color: #eaf0ff;
-		padding: 0.6rem 1.2rem;
-		border-radius: 999px;
-		border: 1px solid rgba(148, 171, 255, 0.35);
-		background: rgba(97, 128, 255, 0.12);
-		transition:
-			transform 0.2s ease,
-			border-color 0.2s ease,
-			background 0.2s ease;
-	}
-	.hero-jump a:hover {
-		transform: translateY(-2px);
-		border-color: rgba(148, 171, 255, 0.7);
-		background: rgba(97, 128, 255, 0.22);
-	}
-	.hero-status {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.6rem;
-		margin-top: 1.25rem;
-	}
-
-	/* ---------------- Shared ---------------- */
-	h2 {
-		font-size: clamp(1.7rem, 3.6vw, 2.6rem);
-		line-height: 1.1;
-		letter-spacing: -0.015em;
-		margin-block: 0.6rem 0.9rem;
-		max-width: 24ch;
-	}
 	.lede {
 		font-size: clamp(1rem, 1.5vw, 1.15rem);
 		line-height: 1.65;
 		max-width: 46rem;
-	}
-	/* Part label sitting above the eyebrow, so each half is unmistakable. */
-	.part-tag {
-		display: inline-block;
-		font-family: var(--font-family-heading);
-		font-size: 0.72rem;
-		font-weight: 700;
-		letter-spacing: 0.16em;
-		text-transform: uppercase;
-		color: var(--color-primary-500);
-		margin-bottom: 0.6rem;
-	}
-	/* Anchor targets clear the sticky nav. */
-	#auracle,
-	#auracare {
-		scroll-margin-top: 5rem;
-	}
-
-	/* ---------------- Auracle ---------------- */
-	.twin-product {
-		background: var(--color-surface-alt);
-		border-block: 1px solid var(--color-border-default);
-	}
-	/* Churn figure: stat and curve stack on mobile, sit side by side above 720. */
-	.churn {
-		margin: clamp(2rem, 4vw, 3rem) 0 0;
-		padding: clamp(1.4rem, 3vw, 2rem);
-		border-radius: var(--radius-2xl);
-		background: #fff;
-		border: 1px solid var(--color-border-default);
-		box-shadow: var(--shadow-xs);
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: clamp(1.4rem, 3vw, 2rem);
-		align-items: center;
 	}
 	.churn-only {
 		display: block;
@@ -734,17 +613,6 @@
 		font-size: 11px;
 		fill: var(--color-ink-faint);
 	}
-	/* SVG text scales with the viewBox, so a narrow card shrinks these to
-	   nothing: bump the user units back up below the two-column breakpoint. */
-	@media (max-width: 719px) {
-		.churn-pt {
-			font-size: 20px;
-		}
-		.churn-note,
-		.churn-tick {
-			font-size: 18px;
-		}
-	}
 	.churn-src {
 		grid-column: 1 / -1;
 		border-top: 1px solid var(--color-border-default);
@@ -752,28 +620,6 @@
 		font-size: 0.8rem;
 		line-height: 1.55;
 		color: var(--color-ink-faint);
-	}
-	/* The curve draws itself in on reveal; static for reduced motion. */
-	@media (prefers-reduced-motion: no-preference) {
-		.churn-curve {
-			stroke-dasharray: 600;
-			stroke-dashoffset: 600;
-		}
-		.churn:global(.reveal--in) .churn-curve {
-			animation: churn-draw 1.4s ease-out forwards;
-		}
-		.churn-area,
-		.churn-dot,
-		.churn-pt,
-		.churn-note {
-			opacity: 0;
-		}
-		.churn:global(.reveal--in) .churn-area,
-		.churn:global(.reveal--in) .churn-dot,
-		.churn:global(.reveal--in) .churn-pt,
-		.churn:global(.reveal--in) .churn-note {
-			animation: churn-fade 0.6s ease-out 0.9s forwards;
-		}
 	}
 	@keyframes churn-draw {
 		to {
@@ -877,18 +723,6 @@
 			grid-template-columns: repeat(3, 1fr);
 		}
 	}
-
-	/* ---------------- Loop ---------------- */
-	/* The overlay is a frame around the stages, with its label sitting on the
-	   border like a legend, so "wraps every stage" is shown rather than said. */
-	.loop-frame {
-		position: relative;
-		margin-top: clamp(2.75rem, 5vw, 3.75rem);
-		border: 1px solid rgba(47, 78, 192, 0.22);
-		border-radius: var(--radius-2xl);
-		background: linear-gradient(180deg, rgba(239, 242, 255, 0.6), rgba(252, 252, 253, 0));
-		padding: clamp(1.75rem, 4vw, 2.5rem) clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 3vw, 1.75rem);
-	}
 	.loop-frame-label {
 		position: absolute;
 		top: 0;
@@ -920,10 +754,6 @@
 		align-items: start;
 		padding-block: 0.9rem;
 		border-top: 1px solid rgba(47, 78, 192, 0.1);
-	}
-	/* The first item in each column needs no rule above it. */
-	.loop-item:first-child {
-		border-top: 0;
 	}
 	.loop-num {
 		font-size: 0.75rem;
@@ -977,14 +807,6 @@
 		.loop-item:nth-child(2) {
 			border-top: 0;
 		}
-	}
-
-	/* ---------------- Core ---------------- */
-	.core-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.25rem;
-		margin-top: clamp(2rem, 4vw, 3rem);
 	}
 	.core-panel {
 		padding: clamp(1.5rem, 3vw, 2.25rem);
@@ -1066,14 +888,6 @@
 			grid-template-columns: 1fr 1fr;
 		}
 	}
-
-	/* ---------------- Patient state ---------------- */
-	.twin-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: clamp(2rem, 5vw, 3.5rem);
-		align-items: center;
-	}
 	.twin-copy p + p {
 		margin-top: 1rem;
 	}
@@ -1114,13 +928,6 @@
 		.twin-grid {
 			grid-template-columns: 1.1fr 0.9fr;
 		}
-	}
-
-	/* ---------------- Graph ---------------- */
-	/* Two dark sections meet here (safety → graph); a hairline keeps them
-	   from reading as one continuous block. */
-	.graph-foundation {
-		border-top: 1px solid var(--color-border-dark);
 	}
 	.graph-tiles {
 		display: grid;
@@ -1178,15 +985,6 @@
 			grid-template-columns: repeat(4, 1fr);
 		}
 	}
-
-	/* ---------------- Grounding chips ---------------- */
-	.standards-strip {
-		list-style: none;
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.75rem;
-		margin-top: clamp(1.75rem, 4vw, 2.5rem);
-	}
 	.standard-chip {
 		display: flex;
 		flex-direction: column;
@@ -1213,17 +1011,6 @@
 		font-weight: 500;
 		color: var(--color-primary-300);
 	}
-
-	/* ---------------- Safety ---------------- */
-	.clinician-note {
-		margin-top: clamp(1.75rem, 4vw, 2.5rem);
-		max-width: 52rem;
-		padding: clamp(1.25rem, 3vw, 1.75rem);
-		border-radius: var(--radius-md);
-		background: rgba(99, 102, 241, 0.1);
-		border: 1px solid rgba(99, 102, 241, 0.35);
-		border-left: 3px solid var(--color-primary-300);
-	}
 	.clinician-stage {
 		display: inline-block;
 		font-family: var(--font-family-mono);
@@ -1240,32 +1027,6 @@
 	}
 	.clinician-note strong {
 		color: #fff;
-	}
-	/* The rail: one continuous line with a gate at each stage. */
-	.safety-rail {
-		list-style: none;
-		margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
-		padding: 0;
-		max-width: 46rem;
-		position: relative;
-		text-align: left;
-	}
-	/* The line itself, running the full height behind the markers. */
-	.safety-rail::before {
-		content: '';
-		position: absolute;
-		left: 1.05rem;
-		top: 0.9rem;
-		bottom: 0.9rem;
-		width: 1px;
-		background: linear-gradient(
-			to bottom,
-			transparent,
-			var(--color-primary-400) 12%,
-			var(--color-primary-400) 88%,
-			transparent
-		);
-		opacity: 0.5;
 	}
 	.safety-gate {
 		position: relative;

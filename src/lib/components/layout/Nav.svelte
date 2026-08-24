@@ -3,6 +3,26 @@
 	import { slide } from 'svelte/transition';
 
 	let mobileOpen = $state(false);
+	let ddOpen = $state(false);
+	let ddEl = $state<HTMLElement | null>(null);
+
+	/* Close on an outside click or Escape. Without this the menu stays open
+	   after you click past it, which reads as a stuck UI. */
+	$effect(() => {
+		if (!ddOpen) return;
+		const onDown = (e: MouseEvent) => {
+			if (ddEl && !ddEl.contains(e.target as Node)) ddOpen = false;
+		};
+		const onKey = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') ddOpen = false;
+		};
+		document.addEventListener('mousedown', onDown);
+		document.addEventListener('keydown', onKey);
+		return () => {
+			document.removeEventListener('mousedown', onDown);
+			document.removeEventListener('keydown', onKey);
+		};
+	});
 
 	const productMenu = [
 		{
@@ -12,7 +32,7 @@
 			tag: 'Clinical'
 		},
 		{
-			href: '/product',
+			href: '/product/auracle',
 			label: 'Auracle',
 			desc: 'The social history the record cannot supply',
 			tag: 'Consumer'
@@ -39,9 +59,19 @@
 		</a>
 
 		<div class="nav-links">
-			<div class="nav-dd">
-				<a href="/product" class="nav-item nav-dd-trigger" class:active={productActive()}>
-					Product
+			<div class="nav-dd" bind:this={ddEl}>
+				<!-- A button, not a link. As an <a href="/product"> a click navigated
+				     away before the menu could be used, and a tap on touch opened
+				     nothing at all: the menu was CSS :hover only. -->
+				<button
+					type="button"
+					class="nav-item nav-dd-trigger"
+					class:active={productActive()}
+					aria-expanded={ddOpen}
+					aria-haspopup="true"
+					onclick={() => (ddOpen = !ddOpen)}
+				>
+					Products
 					<svg
 						class="nav-caret"
 						width="10"
@@ -58,14 +88,15 @@
 							stroke-linejoin="round"
 						/>
 					</svg>
-				</a>
-				<div class="nav-submenu" role="menu">
+				</button>
+				<div class="nav-submenu" class:open={ddOpen} role="menu">
 					{#each productMenu as item}
 						<a
 							href={item.href}
 							class="nav-sub-item"
 							class:active={page.url.pathname === item.href}
 							role="menuitem"
+							onclick={() => (ddOpen = false)}
 						>
 							<span class="nav-sub-top">
 								<span class="nav-sub-label">{item.label}</span>
@@ -194,6 +225,10 @@
 		display: inline-flex;
 	}
 	.nav-dd-trigger {
+		background: none;
+		border: 0;
+		cursor: pointer;
+		font-family: inherit;
 		display: inline-flex;
 		align-items: center;
 		gap: 0.28rem;
@@ -202,7 +237,7 @@
 		transition: transform var(--duration-popover) var(--ease-out);
 		opacity: 0.7;
 	}
-	.nav-dd:hover .nav-caret,
+	.nav-dd-trigger[aria-expanded='true'] .nav-caret,
 	.nav-dd:focus-within .nav-caret {
 		transform: rotate(180deg);
 	}
@@ -242,7 +277,7 @@
 		right: 0;
 		height: 0.7rem;
 	}
-	.nav-dd:hover .nav-submenu,
+	.nav-submenu.open,
 	.nav-dd:focus-within .nav-submenu {
 		opacity: 1;
 		visibility: visible;
@@ -297,16 +332,6 @@
 		color: var(--color-ink-faint);
 	}
 
-	.nav-ext {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.28rem;
-		color: var(--color-ink);
-		font-weight: 600;
-	}
-	.nav-ext:hover {
-		color: var(--color-primary-600);
-	}
 	.nav-cta {
 		display: none;
 		align-items: center;

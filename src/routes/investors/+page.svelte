@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageHero from '$lib/components/layout/PageHero.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import WorldMap from '$lib/components/WorldMap.svelte';
 	import { reveal } from '$lib/actions/motion';
@@ -46,7 +47,7 @@
 
 	const quickLinks = [
 		{
-			href: '/product',
+			href: '/product/auracle',
 			title: 'Auracle',
 			desc: 'The consumer product: a wellness companion in your messages. Launches August 2026.'
 		},
@@ -95,22 +96,12 @@
 />
 
 <!-- ================= Hero ================= -->
-<section class="hero">
-	<div class="wash" aria-hidden="true"></div>
-	<div class="container-wide hero-inner above-wash">
-		<span class="eyebrow" use:reveal>Seed round</span>
-		<h1 use:reveal={{ delay: 60 }}>We're raising our seed round.</h1>
-		<p class="hero-sub" use:reveal={{ delay: 140 }}>
-			Auracle launches to the public in August 2026, and our first clinical trials in Asia begin in
-			February 2027. This round pays for the launch, the trials, and taking our three devices
-			through certification.
-		</p>
-		<div class="hero-cta" use:reveal={{ delay: 220 }}>
-			<!-- Interim mailto; swap for the Typeform link when it exists. -->
-			<a class="cta-primary" href={mailto(CONTACT.seed)}>Write to us</a>
-		</div>
-	</div>
-</section>
+<PageHero
+	kicker="Seed round"
+	title="We are raising our"
+	accent="seed round."
+	sub="Auracle launches to the public in August 2026, and our first clinical trials in Asia begin in February 2027. This round pays for the launch, the trials, and device certification."
+/>
 
 <!-- ================= Who to talk to ================= -->
 <section id="contact" class="section-y who">
@@ -230,73 +221,6 @@
 </section>
 
 <style>
-	/* ---------------- Hero ---------------- */
-	.hero {
-		padding-block: clamp(4rem, 10vw, 7rem) clamp(2.5rem, 6vw, 4.5rem);
-		background: linear-gradient(180deg, #eef2ff 0%, #f7f9ff 55%, var(--color-surface-page) 100%);
-		border-bottom: 1px solid var(--color-border-default);
-	}
-	.hero-inner {
-		max-width: 50rem;
-	}
-	.hero h1 {
-		font-size: clamp(2.2rem, 5vw, 3.4rem);
-		line-height: 1.08;
-		letter-spacing: -0.025em;
-		margin-block: 1rem 1.1rem;
-	}
-	.hero-sub {
-		font-size: clamp(1rem, 1.6vw, 1.15rem);
-		line-height: 1.65;
-		color: var(--color-ink-soft);
-		max-width: 44rem;
-	}
-	.hero-cta {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.8rem 1rem;
-		margin-top: 1.8rem;
-	}
-	.cta-primary {
-		display: inline-flex;
-		align-items: center;
-		background: var(--color-primary-600);
-		color: #fff;
-		font-weight: 500;
-		font-size: 0.98rem;
-		padding: 0.8rem 1.5rem;
-		border-radius: 6px;
-		border: none;
-		cursor: pointer;
-		box-shadow:
-			inset 0 1px 0 rgba(255, 255, 255, 0.12),
-			var(--shadow-xs);
-		transition: background 0.15s ease;
-	}
-	.cta-primary:hover {
-		background: var(--color-primary-700);
-		color: #fff;
-	}
-	.cta-primary:focus-visible {
-		outline: 2px solid var(--color-primary-400);
-		outline-offset: 3px;
-	}
-	/* ---------------- Shared ---------------- */
-	.lede {
-		font-size: clamp(1rem, 1.6vw, 1.15rem);
-		color: var(--color-ink-soft);
-		max-width: 40rem;
-		margin-top: 0.6rem;
-	}
-
-	/* ---------------- Founders ---------------- */
-	.founder-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.25rem;
-		margin-top: clamp(1.75rem, 4vw, 2.5rem);
-	}
 	.founder-card {
 		display: flex;
 		flex-direction: column;
@@ -385,12 +309,6 @@
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
-
-	/* ---------------- Proof ---------------- */
-	.proof {
-		background: var(--color-surface-alt);
-		border-block: 1px solid var(--color-border-default);
-	}
 	.proof-grid {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
@@ -420,18 +338,6 @@
 		.proof-grid {
 			grid-template-columns: repeat(4, 1fr);
 		}
-	}
-
-	/* ---------------- Business model ---------------- */
-	.model-eyebrow {
-		display: block;
-		font-family: var(--font-family-mono);
-		font-size: 0.72rem;
-		font-weight: 700;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-		color: var(--color-primary-600);
-		margin-bottom: 0.6rem;
 	}
 	.model-grid {
 		display: grid;
@@ -505,14 +411,6 @@
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
-
-	/* ---------------- Quick links ---------------- */
-	.catchup-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1rem;
-		margin-top: clamp(1.5rem, 3.5vw, 2.25rem);
-	}
 	.catchup-card {
 		display: flex;
 		flex-direction: column;
@@ -547,15 +445,6 @@
 		.catchup-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
-	}
-
-	/* ---------------- FAQ ---------------- */
-	.faq-list {
-		display: flex;
-		flex-direction: column;
-		gap: 0.8rem;
-		margin-top: clamp(1.5rem, 3.5vw, 2.25rem);
-		max-width: 52rem;
 	}
 	.faq-item {
 		padding: 0;

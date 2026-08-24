@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageHero from '$lib/components/layout/PageHero.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT } from '$lib/data/company';
@@ -43,36 +44,12 @@
 />
 
 <!-- 1) Hero -->
-<section class="hero aura-space">
-	<div class="wash-dark" aria-hidden="true"></div>
-	<div class="hero-orbs" aria-hidden="true">
-		<span
-			class="bubble"
-			style="--bubble-size:420px;--bubble-color:rgba(97,128,255,.32);--bubble-blur:20px; top:-10%; right:-6%"
-		></span>
-		<span
-			class="bubble"
-			style="--bubble-size:300px;--bubble-color:rgba(56,127,245,.26);--bubble-blur:14px; bottom:-12%; left:-4%"
-		></span>
-	</div>
-
-	<div class="container-wide hero-inner">
-		<span class="eyebrow" use:reveal>Careers</span>
-		<h1 use:reveal={{ delay: 60 }}>
-			Come build the health system that <span class="text-gradient-l">should exist</span>.
-		</h1>
-		<p class="hero-sub" use:reveal={{ delay: 140 }}>
-			<strong>Auracare</strong> is a small team teaching machines to reason about health, for people
-			at home and clinicians in the room. It is early and it is hard, and we will not pretend otherwise.
-		</p>
-		<div class="hero-cta" use:reveal={{ delay: 220 }}>
-			<a class="cta-primary" href="#roles">See open roles</a>
-			<a class="cta-ghost" href={mailto('Careers: speculative application')}>
-				Pitch us a role <span aria-hidden="true">→</span>
-			</a>
-		</div>
-	</div>
-</section>
+<PageHero
+	kicker="Careers"
+	title="Come build the health system that"
+	accent="should exist."
+	sub="A small team teaching machines to reason about health, for people at home and clinicians in the room. It is early and it is hard, and we will not pretend otherwise."
+/>
 
 <!-- 2) Why join -->
 <section class="section-y why">
@@ -126,68 +103,6 @@
 </section>
 
 <style>
-	/* Hero */
-	.hero {
-		padding-block: clamp(7rem, 12vw, 10rem) clamp(3rem, 7vw, 5rem);
-		display: flex;
-		align-items: center;
-	}
-	.hero-orbs {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-	}
-	.hero-orbs .bubble {
-		animation: auraFloat 9s ease-in-out infinite;
-	}
-	.hero-inner {
-		position: relative;
-		z-index: 1;
-		max-width: 46rem;
-	}
-	.hero h1 {
-		font-size: clamp(2.2rem, 5.5vw, 3.9rem);
-		line-height: 1.06;
-		letter-spacing: -0.02em;
-		margin-block: 0.75rem 1.25rem;
-	}
-	.text-gradient-l {
-		background: linear-gradient(100deg, #8aa0ff, #cdd9ff);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-	.hero-sub {
-		font-size: clamp(1rem, 1.6vw, 1.18rem);
-		line-height: 1.65;
-		max-width: 40rem;
-	}
-	.hero-sub strong {
-		color: #fff;
-		font-weight: 600;
-	}
-	.hero-cta {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.9rem;
-		margin-top: 1.9rem;
-	}
-	.cta-primary {
-		background: #fff;
-		color: var(--color-primary-700);
-		font-weight: 600;
-		padding: 0.85rem 1.6rem;
-		border-radius: 999px;
-		box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
-		transition:
-			transform var(--duration-hover) var(--ease-out),
-			box-shadow var(--duration-hover) ease,
-			color var(--duration-hover) ease;
-	}
-	.cta-primary:active {
-		transform: scale(0.97);
-		transition-duration: var(--duration-press);
-	}
 	@media (hover: hover) and (pointer: fine) {
 		.cta-primary:hover {
 			color: var(--color-primary-800);
@@ -198,58 +113,7 @@
 			transform: translateY(-2px) scale(0.97);
 		}
 	}
-	.cta-ghost {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-		color: #eaf0ff;
-		font-weight: 600;
-		padding: 0.85rem 1.2rem;
-		border-radius: 999px;
-		border: 1px solid rgba(255, 255, 255, 0.25);
-		transition:
-			background var(--duration-hover) ease,
-			transform var(--duration-hover) var(--ease-out);
-	}
-	.cta-ghost:active {
-		transform: scale(0.97);
-		transition-duration: var(--duration-press);
-	}
 	@media (hover: hover) and (pointer: fine) {
-		.cta-ghost:hover {
-			color: #fff;
-			background: rgba(255, 255, 255, 0.1);
-			transform: translateY(-2px);
-		}
-		.cta-ghost:hover:active {
-			transform: translateY(-2px) scale(0.97);
-		}
-	}
-
-	/* Section headings */
-	.section-y h2 {
-		font-size: clamp(1.7rem, 3.4vw, 2.5rem);
-		line-height: 1.12;
-		letter-spacing: -0.015em;
-		margin-block: 0.6rem 0;
-		max-width: 26ch;
-	}
-
-	/* Why join */
-	.why-lede {
-		font-size: 1.08rem;
-		line-height: 1.7;
-		color: var(--color-neutral-700);
-		margin-top: 1.75rem;
-		max-width: 52rem;
-	}
-
-	/* Roles */
-	.roles-note {
-		margin-top: 1rem;
-		max-width: 48rem;
-		line-height: 1.65;
-		color: var(--color-neutral-700);
 	}
 	.role-grid {
 		display: grid;
@@ -291,11 +155,6 @@
 		background: var(--color-primary-600);
 		color: #fff;
 		transform: translateY(-1px);
-	}
-
-	/* Closing */
-	.closing {
-		text-align: center;
 	}
 	.closing-inner {
 		max-width: 42rem;

@@ -25,7 +25,7 @@
 
 			<nav class="footer-col" aria-label="Product">
 				<h4>Product</h4>
-				<a href="/product">Auracle</a>
+				<a href="/product/auracle">Auracle</a>
 				<a href="/product/auracare">Auracare CDSS</a>
 				<a href={CONTACT.ontologyUrl} target="_blank" rel="noopener">Ontology explorer</a>
 				<a href={WAITLIST_URL}>Join the waitlist</a>

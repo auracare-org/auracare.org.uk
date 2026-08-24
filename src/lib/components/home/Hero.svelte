@@ -17,9 +17,8 @@
 		<span class="kicker" use:reveal>Clinical decision support infrastructure</span>
 
 		<h1 use:reveal={{ delay: 80 }}>
-			The consultation is<br />
-			<em>where medicine happens.</em><br />
-			We build for that room.
+			The world's most<br />
+			<em>personalised healthcare.</em>
 		</h1>
 
 		<p class="hero-sub" use:reveal={{ delay: 160 }}>
@@ -86,10 +85,10 @@
 	/* The largest type on the site by a clear margin. Bold, tight and set on
 	   three authored lines so the shape is deliberate at every width. */
 	.hero h1 {
-		font-size: clamp(2.35rem, 6.6vw, 5.6rem);
-		line-height: 0.97;
-		letter-spacing: -0.04em;
-		font-weight: 700;
+		font-size: clamp(2.5rem, 7vw, 5.8rem);
+		line-height: 0.98;
+		letter-spacing: -0.038em;
+		font-weight: 600;
 		margin: 0;
 		text-wrap: balance;
 	}

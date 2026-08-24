@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageHero from '$lib/components/layout/PageHero.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import ArchitecturePipeline from '$lib/components/ArchitecturePipeline.svelte';
 	import { reveal } from '$lib/actions/motion';
@@ -120,30 +121,12 @@
 </svelte:head>
 
 <!-- ================= Hero ================= -->
-<section class="hero aura-space">
-	<div class="wash-dark" aria-hidden="true"></div>
-	<div class="hero-grid-bg" aria-hidden="true"></div>
-	<div class="hero-orb" aria-hidden="true"></div>
-	<div class="container-wide hero-inner">
-		<span class="pill pill-dev" use:reveal>Auracare CDSS · In development</span>
-		<h1 use:reveal={{ delay: 60 }}>
-			The decision support that <span class="hl">stays out of the way</span>.
-		</h1>
-		<p class="hero-sub" use:reveal={{ delay: 130 }}>
-			A clinical decision support system that works during the appointment, not after it. The
-			history Auracle has built walks into the clinic with the patient, and the clinician keeps
-			their attention on them.
-		</p>
-		<div class="hero-cta" use:reveal={{ delay: 200 }}>
-			<a
-				class="btn-solid"
-				href="mailto:{CONTACT.clinical}?subject=Auracare%3A%20Clinical%20partnership"
-				>Talk to us about clinical partnerships</a
-			>
-			<a class="btn-quiet" href="/technology">See the technology →</a>
-		</div>
-	</div>
-</section>
+<PageHero
+	kicker="Auracare CDSS · In development"
+	title="Decision support that"
+	accent="stays out of the way."
+	sub="A clinical decision support system that works during the appointment, not after it. The clinician keeps their attention on the patient."
+/>
 
 <!-- ================= The clinical gap ================= -->
 <section class="section-y gap-sec">
@@ -324,74 +307,6 @@
 </section>
 
 <style>
-	/* ---------------- Hero ---------------- */
-	.hero {
-		position: relative;
-		overflow: clip;
-		padding-block: clamp(4rem, 10vw, 8rem) clamp(3rem, 7vw, 6rem);
-	}
-	.hero-grid-bg {
-		position: absolute;
-		inset: 0;
-		background-image:
-			linear-gradient(rgba(97, 128, 255, 0.06) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(97, 128, 255, 0.06) 1px, transparent 1px);
-		background-size: 46px 46px;
-		mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 30%, transparent 75%);
-		-webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 30%, transparent 75%);
-	}
-	.hero-orb {
-		position: absolute;
-		top: -18%;
-		right: -8%;
-		width: 38rem;
-		height: 38rem;
-		background: radial-gradient(circle, rgba(56, 127, 245, 0.28), transparent 62%);
-		pointer-events: none;
-	}
-	.hero-inner {
-		position: relative;
-		z-index: 1;
-		max-width: 50rem;
-	}
-	.hero h1 {
-		font-size: clamp(2.3rem, 6vw, 4.2rem);
-		line-height: 1.05;
-		letter-spacing: -0.025em;
-		margin-block: 1rem 1.2rem;
-	}
-	.hl {
-		background: linear-gradient(100deg, #8aa0ff, #cdd9ff);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-	.hero-sub {
-		font-size: clamp(1.02rem, 1.6vw, 1.2rem);
-		line-height: 1.6;
-		max-width: 44rem;
-	}
-	.hero-cta {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.8rem 1.2rem;
-		margin-top: 1.9rem;
-	}
-
-	/* ---------------- Buttons ---------------- */
-	.btn-solid {
-		background: #fff;
-		color: var(--color-primary-700);
-		font-weight: 600;
-		font-size: 0.95rem;
-		padding: 0.8rem 1.5rem;
-		border-radius: 999px;
-		box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
-		transition:
-			transform var(--duration-hover) var(--ease-out),
-			color var(--duration-hover) ease;
-	}
 	.btn-solid:active {
 		transform: scale(0.97);
 		transition-duration: var(--duration-press);
@@ -404,14 +319,6 @@
 		.btn-solid:hover:active {
 			transform: translateY(-2px) scale(0.97);
 		}
-	}
-	.btn-quiet {
-		font-weight: 600;
-		font-size: 0.95rem;
-		color: #cdd9ff;
-	}
-	.btn-quiet:hover {
-		color: #fff;
 	}
 	.btn-ghost {
 		font-weight: 600;
@@ -426,29 +333,12 @@
 		border-color: #fff;
 		color: #fff;
 	}
-
-	/* ---------------- Shared headings ---------------- */
-	h2 {
-		font-size: clamp(1.7rem, 3.6vw, 2.6rem);
-		line-height: 1.1;
-		letter-spacing: -0.02em;
-		margin-block: 0.6rem 0;
-		max-width: 26ch;
-	}
 	.lede {
 		margin-top: 1rem;
 		font-size: clamp(1rem, 1.4vw, 1.12rem);
 		line-height: 1.65;
 		color: var(--color-ink-soft);
 		max-width: 46rem;
-	}
-
-	/* ---------------- Clinical gap ---------------- */
-	.gap-grid {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.1rem;
 	}
 	.gap-card {
 		padding: 1.6rem 1.7rem;
@@ -480,12 +370,6 @@
 		font-size: 0.93rem;
 		line-height: 1.55;
 		color: var(--color-ink-soft);
-	}
-
-	/* ---------------- In the room ---------------- */
-	.room-sec {
-		background: var(--color-surface-alt);
-		border-block: 1px solid var(--color-border-default);
 	}
 	.room {
 		list-style: none;
@@ -522,15 +406,6 @@
 		line-height: 1.6;
 		color: var(--color-ink-soft);
 		max-width: 52ch;
-	}
-
-	/* ---------------- Hardware ---------------- */
-	.path {
-		margin-top: clamp(2rem, 4vw, 3rem);
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		flex-wrap: wrap;
 	}
 	.path-node {
 		font-family: var(--font-family-heading);
@@ -604,14 +479,6 @@
 		font-weight: 500;
 		color: var(--color-primary-300) !important;
 		max-width: 52rem;
-	}
-
-	/* ---------------- Outputs ---------------- */
-	.out-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: clamp(2rem, 5vw, 3.5rem);
-		align-items: center;
 	}
 	.out-list {
 		list-style: none;
@@ -745,12 +612,6 @@
 		line-height: 1.55;
 		color: var(--color-ink-faint);
 	}
-
-	/* ---------------- How it reasons ---------------- */
-	.arch-sec {
-		background: var(--color-surface-alt);
-		border-block: 1px solid var(--color-border-default);
-	}
 	.arch-note {
 		margin-top: clamp(1.5rem, 3vw, 2rem);
 		font-size: 0.85rem;
@@ -769,12 +630,6 @@
 	}
 	.arch-link:hover {
 		color: var(--color-primary-700);
-	}
-
-	/* ---------------- Regulatory + CTA ---------------- */
-	.cta-band {
-		padding-block: clamp(3rem, 6vw, 5rem);
-		border-top: 1px solid var(--color-border-dark);
 	}
 	.reg-note {
 		font-size: 0.82rem;
@@ -810,16 +665,6 @@
 		justify-content: center;
 		gap: 0.8rem 1rem;
 		margin-top: 1.9rem;
-	}
-
-	/* ---------------- Responsive ---------------- */
-	@media (min-width: 720px) {
-		.gap-grid {
-			grid-template-columns: repeat(3, 1fr);
-		}
-		.hw-grid {
-			grid-template-columns: repeat(3, 1fr);
-		}
 	}
 	@media (min-width: 900px) {
 		.out-grid {

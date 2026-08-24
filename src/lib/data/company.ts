@@ -113,7 +113,7 @@ export const PRODUCTS: Product[] = [
 			'Auracare’s social-history engine, shipped as a wellness companion in your messages. It learns your daily life in conversation and builds a history you can share at an appointment.',
 		status: 'ships-soon',
 		statusLabel: 'Expected August 2026',
-		href: '/product'
+		href: '/product/auracle'
 	},
 	{
 		key: 'auracare',

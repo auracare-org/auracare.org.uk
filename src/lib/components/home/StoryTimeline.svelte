@@ -35,19 +35,7 @@
 						class:is-fork={m.fork}
 						use:reveal={{ threshold: 0.35 }}
 					>
-						<span class="tl-dot" style="--dot:{eraDot[m.era]}" aria-hidden="true">
-							{#if m.fork}
-								<svg viewBox="0 0 24 24" width="13" height="13" fill="none"
-									><path
-										d="M6 3v6a4 4 0 0 0 4 4h4M18 3v6a4 4 0 0 1-4 4"
-										stroke="#fff"
-										stroke-width="2.4"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/></svg
-								>
-							{/if}
-						</span>
+						<span class="tl-dot" style="--dot:{eraDot[m.era]}" aria-hidden="true"></span>
 						<div class="tl-card glass-card" class:fork-card={m.fork}>
 							<span class="tl-date">{m.date}</span>
 							<h3>{m.title}</h3>

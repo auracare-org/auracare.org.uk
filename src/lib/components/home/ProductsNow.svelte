@@ -1,44 +1,37 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
 	import { PRODUCTS } from '$lib/data/company';
+
+	/* The ontology entry is not a product, so it is pulled out of the list and
+	   rendered as the closing statement instead. */
+	const products = PRODUCTS.filter((p) => p.key !== 'ontology');
+	const model = PRODUCTS.find((p) => p.key === 'ontology')!;
 </script>
 
 <!--
-  An index of what the company builds, not a row of feature cards.
+  Two products, then the thing underneath them.
 
-  The previous version was three bordered cards with decorative icon motifs,
-  which is the pattern every other site in the category uses. This states the
-  same three things as numbered entries in a ruled list: the clinical product
-  first, because that is what this company is.
+  The patient model used to sit as a third entry in this list, which read as a
+  third product. It is not one: it is the engine the other two run on. It now
+  closes the section as a statement about both, which is also the argument the
+  company actually wants to make.
 -->
 <section id="products" class="products section-y">
 	<div class="container-wide">
-		<div class="sec-head" use:reveal>
-			<span class="index-num">02</span>
-			<h2>Two products, one patient model.</h2>
-		</div>
+		<h2 use:reveal>Two products, one patient model.</h2>
 
 		<ol class="index">
-			{#each PRODUCTS as product, i (product.key)}
-				<li class="entry" use:reveal={{ delay: 60 + i * 60 }}>
+			{#each products as product (product.key)}
+				<li class="entry" use:reveal={{ delay: 60 }}>
 					<div class="entry-meta">
-						<span class="entry-num">{String(i + 1).padStart(2, '0')}</span>
 						<span class="entry-status">{product.statusLabel}</span>
 					</div>
 					<div class="entry-body">
 						<h3>
-							{#if product.href}
-								<a
-									href={product.href}
-									target={product.external ? '_blank' : undefined}
-									rel={product.external ? 'noopener' : undefined}
-								>
-									{product.name}
-									<span aria-hidden="true">{product.external ? '↗' : '→'}</span>
-								</a>
-							{:else}
+							<a href={product.href}>
 								{product.name}
-							{/if}
+								<span aria-hidden="true">&rarr;</span>
+							</a>
 						</h3>
 						<p class="entry-tagline">{product.tagline}</p>
 						<p class="entry-blurb">{product.blurb}</p>
@@ -46,6 +39,16 @@
 				</li>
 			{/each}
 		</ol>
+
+		<div class="engine" use:reveal>
+			<p class="engine-lead">
+				Both run on <strong>one patient model</strong>: a single, timestamped picture of a person,
+				grounded in the terminology medicine already agrees on. {model.blurb}
+			</p>
+			<a class="engine-link" href={model.href} target="_blank" rel="noopener">
+				Explore the graph <span aria-hidden="true">&#8599;</span>
+			</a>
+		</div>
 	</div>
 </section>
 
@@ -53,26 +56,12 @@
 	.products {
 		border-top: 1px solid var(--color-rule);
 	}
-	.sec-head {
-		display: flex;
-		align-items: baseline;
-		gap: clamp(1rem, 3vw, 2.5rem);
-		margin-bottom: clamp(2.5rem, 5vw, 4rem);
-	}
-	.index-num {
-		font-size: 0.7rem;
-		font-weight: 600;
-		letter-spacing: 0.18em;
-		color: var(--color-primary-600);
-		font-variant-numeric: tabular-nums;
-		flex: none;
-	}
-	.sec-head h2 {
+	.products h2 {
 		font-size: clamp(1.9rem, 3.6vw, 3rem);
 		line-height: 1.06;
 		letter-spacing: -0.03em;
-		margin: 0;
-		max-width: 20ch;
+		margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+		max-width: 22ch;
 	}
 
 	.index {
@@ -92,13 +81,6 @@
 		display: flex;
 		align-items: baseline;
 		gap: 1rem;
-	}
-	.entry-num {
-		font-size: 0.7rem;
-		font-weight: 600;
-		letter-spacing: 0.16em;
-		color: var(--color-primary-600);
-		font-variant-numeric: tabular-nums;
 	}
 	.entry-status {
 		font-size: 0.66rem;
@@ -137,7 +119,47 @@
 		max-width: 62ch;
 	}
 
+	/* The engine statement: wider measure, no rule above it, so it reads as a
+	   conclusion rather than as a third row of the list. */
+	.engine {
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 1.25rem;
+	}
+	.engine-lead {
+		font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+		line-height: 1.55;
+		color: var(--color-ink);
+		max-width: 60ch;
+		margin: 0;
+	}
+	.engine-lead strong {
+		font-weight: 600;
+		color: var(--color-primary-600);
+	}
+	.engine-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.74rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-ink);
+		padding-bottom: 0.3rem;
+		border-bottom: 1px solid var(--color-ink);
+		transition:
+			color var(--duration-hover) ease,
+			border-color var(--duration-hover) ease;
+	}
+
 	@media (hover: hover) and (pointer: fine) {
+		.engine-link:hover {
+			color: var(--color-primary-600);
+			border-color: var(--color-primary-600);
+		}
 		.entry h3 a:hover {
 			color: var(--color-primary-600);
 		}

@@ -20,7 +20,6 @@
 <section class="tech section-y">
 	<div class="container-wide tech-grid">
 		<div class="tech-copy">
-			<span class="index-num" use:reveal>03</span>
 			<h2 use:reveal={{ delay: 60 }}>
 				A learned model proposes.<br />
 				<em>A symbolic layer disposes.</em>
@@ -68,15 +67,6 @@
 		align-items: start;
 	}
 
-	.index-num {
-		display: block;
-		font-size: 0.7rem;
-		font-weight: 600;
-		letter-spacing: 0.18em;
-		color: var(--color-primary-600);
-		font-variant-numeric: tabular-nums;
-		margin-bottom: 1.5rem;
-	}
 	.tech h2 {
 		font-size: clamp(1.9rem, 3.6vw, 3rem);
 		line-height: 1.06;

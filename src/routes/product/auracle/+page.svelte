@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageHero from '$lib/components/layout/PageHero.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import SafetyRouting from '$lib/components/SafetyRouting.svelte';
 	import { reveal } from '$lib/actions/motion';
@@ -108,7 +109,7 @@
 <Seo
 	title="Auracle: a wellness companion in your messages"
 	description="Auracle lives in the messaging apps you already use. It learns your daily life in conversation, connects the sources you choose, and builds a bio-psycho-social history you can share at an appointment. It launches in August 2026."
-	path="/product"
+	path="/product/auracle"
 />
 
 <svelte:head>
@@ -119,7 +120,7 @@
 			"name": "Auracle",
 			"applicationCategory": "HealthApplication",
 			"operatingSystem": "iOS, Android",
-			"url": "https://auracare.org.uk/product",
+			"url": "https://auracare.org.uk/product/auracle",
 			"description": "A personal health companion that lives in your messages. Auracle learns your patterns from the wearables and apps you already use, then checks in with a morning brief, a nudge only when it matters, and an evening wrap. A general-wellness product, not a medical device.",
 			"publisher": { "@id": "https://auracare.org.uk/#organization" },
 			"offers": { "@type": "Offer", "availability": "https://schema.org/PreOrder" }
@@ -140,7 +141,7 @@
 					"@type": "ListItem",
 					"position": 2,
 					"name": "Auracle",
-					"item": "https://auracare.org.uk/product"
+					"item": "https://auracare.org.uk/product/auracle"
 				}
 			]
 		}
@@ -148,32 +149,12 @@
 </svelte:head>
 
 <!-- ================= Hero ================= -->
-<section class="hero">
-	<div class="hero-bg" aria-hidden="true">
-		<span class="blob blob-a"></span>
-		<span class="blob blob-b"></span>
-	</div>
-	<div class="container-wide hero-inner">
-		<span class="pill pill-soon" use:reveal>Auracle · Consumer · Expected August 2026</span>
-		<h1 use:reveal={{ delay: 60 }}>
-			The product built to be <span class="hl">texted back</span>.
-		</h1>
-		<p class="hero-sub" use:reveal={{ delay: 130 }}>
-			A wellness companion that lives in the apps you already open a hundred times a day. It learns
-			your daily life in conversation and builds one bio-psycho-social history: your body, your
-			mind, and the life around them. Share it at an appointment and the Auracare CDSS reasons over
-			it.
-		</p>
-		<div class="hero-cta" use:reveal={{ delay: 200 }}>
-			<a class="btn-solid" href={WAITLIST_URL}>Join the waitlist</a>
-			<a class="btn-quiet" href="/product/auracare">See Auracare CDSS →</a>
-		</div>
-		<p class="hero-note" use:reveal={{ delay: 260 }}>
-			{TRY_TWIN_NOTE.text}
-			<a class="hero-link" href={TRY_TWIN_NOTE.href} rel="noopener">{TRY_TWIN_NOTE.linkLabel}</a>.
-		</p>
-	</div>
-</section>
+<PageHero
+	kicker="Auracle · Consumer · Expected August 2026"
+	title="The product built to be"
+	accent="texted back."
+	sub="A wellness companion that lives in the apps you already open a hundred times a day. It learns your daily life in conversation and builds one bio-psycho-social history you can share at an appointment."
+/>
 
 <!-- ================= A day with Auracle ================= -->
 <section class="section-y day-sec">
@@ -339,93 +320,6 @@
 </section>
 
 <style>
-	/* ---------------- Hero ---------------- */
-	.hero {
-		position: relative;
-		overflow: clip;
-		padding-block: clamp(4rem, 10vw, 7.5rem) clamp(3rem, 7vw, 5.5rem);
-		background: linear-gradient(180deg, #eef2ff 0%, #f7f9ff 55%, var(--color-surface-page) 100%);
-		border-bottom: 1px solid var(--color-border-default);
-	}
-	.hero-bg {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-	}
-	.blob {
-		position: absolute;
-		border-radius: 999px;
-		filter: blur(60px);
-		opacity: 0.55;
-	}
-	.blob-a {
-		width: 32rem;
-		height: 32rem;
-		top: -12rem;
-		right: -8rem;
-		background: radial-gradient(circle, rgba(97, 128, 255, 0.5), transparent 70%);
-	}
-	/* Was a green wash, which is the success colour and reads as a different
-	   brand. Kept as a second blue so the hero stays on palette. */
-	.blob-b {
-		width: 22rem;
-		height: 22rem;
-		bottom: -10rem;
-		left: -6rem;
-		background: radial-gradient(circle, rgba(148, 171, 255, 0.45), transparent 70%);
-	}
-	.hero-inner {
-		position: relative;
-		z-index: 1;
-		max-width: 46rem;
-	}
-	.hero h1 {
-		font-size: clamp(2.3rem, 6vw, 4.1rem);
-		line-height: 1.04;
-		letter-spacing: -0.025em;
-		margin-block: 1rem 1.1rem;
-	}
-	.hl {
-		background: linear-gradient(100deg, var(--color-primary-500), var(--color-primary-700));
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-	.hero-sub {
-		font-size: clamp(1.02rem, 1.6vw, 1.2rem);
-		line-height: 1.6;
-		color: var(--color-ink-soft);
-		max-width: 40rem;
-	}
-	.hero-cta {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.8rem 1.1rem;
-		margin-top: 1.9rem;
-	}
-	.hero-note {
-		margin-top: 1.5rem;
-		font-size: 0.8rem;
-		line-height: 1.55;
-		color: var(--color-ink-faint);
-		max-width: 30rem;
-	}
-	.hero-link {
-		color: var(--color-primary-700);
-		font-weight: 600;
-		text-decoration: underline;
-		text-underline-offset: 2px;
-	}
-	.hero-link:hover {
-		color: var(--color-primary-600);
-	}
-
-	/* ---------------- Built for retention ---------------- */
-	.keep-sec {
-		background: var(--color-surface-alt);
-		border-block: 1px solid var(--color-border-default);
-	}
 	.keep-link {
 		color: var(--color-primary-700);
 		font-weight: 600;
@@ -472,20 +366,6 @@
 		line-height: 1.55;
 		color: var(--color-ink-soft);
 	}
-
-	/* ---------------- Shared buttons ---------------- */
-	.btn-solid {
-		background: var(--color-primary-600);
-		color: #fff;
-		font-weight: 600;
-		font-size: 0.95rem;
-		padding: 0.8rem 1.5rem;
-		border-radius: 999px;
-		box-shadow: 0 12px 26px rgba(47, 78, 192, 0.28);
-		transition:
-			transform var(--duration-hover) var(--ease-out),
-			background var(--duration-hover) ease;
-	}
 	.btn-solid:active {
 		transform: scale(0.97);
 		transition-duration: var(--duration-press);
@@ -505,38 +385,12 @@
 		text-align: center;
 		margin-top: 1.4rem;
 	}
-	.btn-quiet {
-		font-weight: 600;
-		font-size: 0.95rem;
-		color: var(--color-primary-700);
-	}
-	.btn-quiet:hover {
-		color: var(--color-primary-600);
-	}
-
-	/* ---------------- Shared headings ---------------- */
-	h2 {
-		font-size: clamp(1.7rem, 3.6vw, 2.6rem);
-		line-height: 1.1;
-		letter-spacing: -0.02em;
-		margin-block: 0.6rem 0;
-		max-width: 24ch;
-	}
 	.lede {
 		margin-top: 1rem;
 		font-size: clamp(1rem, 1.4vw, 1.12rem);
 		line-height: 1.6;
 		color: var(--color-ink-soft);
 		max-width: 44rem;
-	}
-
-	/* ---------------- Day timeline ---------------- */
-	.day {
-		list-style: none;
-		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
-		padding: 0;
-		display: grid;
-		gap: 0.4rem;
 	}
 	.day-row {
 		display: grid;
@@ -588,12 +442,6 @@
 		font-size: 0.92rem;
 		line-height: 1.55;
 		color: var(--color-ink-soft);
-	}
-
-	/* ---------------- Replying is the logging ---------------- */
-	.log-sec {
-		background: var(--color-surface-alt);
-		border-block: 1px solid var(--color-border-default);
 	}
 	.log-grid {
 		margin-top: clamp(2.5rem, 5vw, 3.5rem);
@@ -652,14 +500,6 @@
 		width: 100%;
 		height: 100%;
 	}
-
-	/* ---------------- Sources ---------------- */
-	.src-grid {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.1rem;
-	}
 	.src-card {
 		padding: 1.5rem 1.6rem;
 	}
@@ -697,12 +537,6 @@
 		color: var(--color-ink-faint);
 		border-top: 1px solid var(--color-border-default);
 		padding-top: 0.9rem;
-	}
-
-	/* ---------------- Plan ---------------- */
-	.plan-sec {
-		background: var(--color-surface-alt);
-		border-block: 1px solid var(--color-border-default);
 	}
 	.plan-grid {
 		display: grid;
@@ -795,12 +629,6 @@
 		color: #0f9d6b;
 		font-weight: 700;
 	}
-
-	/* ---------------- CTA band ---------------- */
-	.cta-band {
-		padding-block: clamp(3.5rem, 7vw, 5.5rem);
-		border-top: 1px solid var(--color-border-dark);
-	}
 	.cta-inner {
 		text-align: center;
 		max-width: 40rem;
@@ -833,16 +661,6 @@
 	.btn-ghost:hover {
 		border-color: #fff;
 		color: #fff;
-	}
-
-	/* ---------------- Responsive ---------------- */
-	@media (min-width: 720px) {
-		.src-grid {
-			grid-template-columns: repeat(3, 1fr);
-		}
-		.keep-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
 	}
 	@media (min-width: 1000px) {
 		/* Five hooks over two rows. The last two widen to span half the grid
