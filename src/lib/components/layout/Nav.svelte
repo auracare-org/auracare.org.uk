@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { slide } from 'svelte/transition';
-	import { WAITLIST_URL } from '$lib/data/company';
 
 	let mobileOpen = $state(false);
 
@@ -83,7 +82,7 @@
 
 		<div class="nav-cta">
 			<a class="nav-invest" href="/investors">For investors</a>
-			<a class="nav-waitlist" href={WAITLIST_URL}>Join the waitlist</a>
+			<a class="nav-waitlist" href="/investors">Enquire</a>
 		</div>
 
 		<button
@@ -137,9 +136,7 @@
 					<a class="nav-invest" href="/investors" onclick={() => (mobileOpen = false)}
 						>For investors</a
 					>
-					<a class="nav-waitlist" href={WAITLIST_URL} onclick={() => (mobileOpen = false)}
-						>Join the waitlist</a
-					>
+					<a class="nav-waitlist" href="/investors" onclick={() => (mobileOpen = false)}>Enquire</a>
 				</div>
 			</div>
 		</div>
@@ -326,8 +323,11 @@
 		font-weight: 500;
 		color: #fff;
 		background: var(--color-primary-600);
-		padding: 0.55rem 1.1rem;
-		border-radius: 6px;
+		padding: 0.7rem 1.4rem;
+		border-radius: 2px;
+		font-size: 0.7rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
 		box-shadow:
 			inset 0 1px 0 rgba(255, 255, 255, 0.12),
 			var(--shadow-xs);

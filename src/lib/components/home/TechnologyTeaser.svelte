@@ -263,7 +263,7 @@
 	});
 </script>
 
-<section class="tech aura-space section-y">
+<section class="tech section-y">
 	<!-- Canvas fluid background -->
 	<div class="fluid-field">
 		<canvas bind:this={canvasEl} class="fluid-canvas"></canvas>
@@ -331,7 +331,8 @@
 	.tech {
 		position: relative;
 		overflow: hidden;
-		border-block: 1px solid var(--color-border-dark);
+		background: var(--color-surface-alt);
+		border-block: 1px solid var(--color-rule);
 	}
 
 	.fluid-field {
@@ -461,7 +462,7 @@
 	}
 	@media (hover: hover) and (pointer: fine) {
 		.cta-ghost:hover {
-			color: #fff;
+			color: var(--color-primary-600);
 			border-color: var(--color-white-alpha-20);
 			background: var(--color-white-alpha-10);
 		}
@@ -496,7 +497,7 @@
 		font-size: clamp(1.8rem, 4vw, 2.6rem);
 		line-height: 1;
 		letter-spacing: -0.03em;
-		color: #ffffff;
+		color: var(--color-ink);
 		font-variant-numeric: tabular-nums;
 		min-height: 1em;
 	}

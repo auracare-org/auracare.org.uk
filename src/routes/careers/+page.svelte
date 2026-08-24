@@ -74,10 +74,10 @@
 	</div>
 </section>
 
-<!-- 2) The honest pitch -->
+<!-- 2) Why join -->
 <section class="section-y why">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal>The honest pitch</span>
+		<span class="eyebrow" use:reveal>Why join</span>
 		<h2 use:reveal={{ delay: 60 }}>Small team. Big problem. No org chart to hide in.</h2>
 		<p class="why-lede" use:reveal={{ delay: 120 }}>
 			You will own real work from day one and ship without collecting sign-offs. We build the hard
@@ -235,7 +235,7 @@
 		max-width: 26ch;
 	}
 
-	/* The honest pitch */
+	/* Why join */
 	.why-lede {
 		font-size: 1.08rem;
 		line-height: 1.7;

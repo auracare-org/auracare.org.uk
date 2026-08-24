@@ -28,18 +28,23 @@
 	--color-neutral-900: #343844;
 	--color-neutral-1000: #1c1f25;
 
-	/* Semantic ink & surface tokens, aligned to Figma text/header and text/body */
-	--color-ink: #212529;
-	--color-ink-soft: #495565;
-	--color-ink-faint: #6c757d;
-	--color-surface-page: #fcfcfd;
-	--color-surface-alt: #f5f6fa;
+	/* Semantic ink & surface tokens.
+	   The canvas is bone, not blue-white: a warm paper ground reads as
+	   printed matter rather than as another dashboard, and it makes the one
+	   brand blue land far harder than it does on a blue-tinted page. */
+	--color-ink: #14161a;
+	--color-ink-soft: #4a4f57;
+	--color-ink-faint: #7a7f88;
+	--color-surface-page: #f4f1ea;
+	--color-surface-alt: #ebe7dd;
+	--color-rule: #d8d3c7;
+	--color-rule-strong: #b9b2a2;
 	/* Sections use a deep brand blue; only the footer keeps the near-black,
 	   so the page ends on a darker note than it runs on. */
-	--color-surface-blue: #16224c;
-	--color-surface-blue-raised: #1d2b5c;
-	--color-surface-dark: #0e1015;
-	--color-surface-dark-raised: #14171e;
+	--color-surface-blue: #14161a;
+	--color-surface-blue-raised: #1b1e24;
+	--color-surface-dark: #14161a;
+	--color-surface-dark-raised: #1b1e24;
 
 	--color-text-header-primary: #2f4ec0;
 	--color-text-header-secondary: #14161d;
@@ -54,8 +59,8 @@
 	--color-text-button-secondary-active: #2f4ec0;
 	--color-text-button-secondary-disabled: #828c95;
 
-	--color-bg-surface-default: #fcfcfd;
-	--color-bg-surface-raised: #ffffff;
+	--color-bg-surface-default: #f4f1ea;
+	--color-bg-surface-raised: #faf8f3;
 	--color-bg-surface-scrim: rgba(10, 12, 20, 0.5);
 	--color-bg-button-primary-default: #2f4ec0;
 	--color-bg-button-primary-hover: #5971cd;
@@ -66,8 +71,8 @@
 	--color-bg-button-secondary-active: #8295d9;
 	--color-bg-button-secondary-disabled: #ced4da;
 
-	--color-border-default: #dee2e6;
-	--color-border-strong: #acb8e6;
+	--color-border-default: #d8d3c7;
+	--color-border-strong: #b9b2a2;
 	--color-border-hover: #acb8e6;
 	--color-border-focus: #2f4ec0;
 	--color-border-error: #ee4444;
@@ -114,7 +119,7 @@
 	--radius-2xl: 24px;
 	--radius-3xl: 32px;
 	--radius-4xl: 40px;
-	--radius-pill: 9999px;
+	--radius-pill: 2px;
 
 	/* Typography. Avenir is the brand face and is present on macOS/iOS, which
 	   covers most of the audience. Nunito Sans is the closest freely-hostable
@@ -148,10 +153,10 @@
 	/* Shadows. Tinted toward the brand navy rather than neutral grey: a
 	   blue-cast shadow on a blue-cast page reads as depth, a grey one reads
 	   as dirt. Kept shallow; the gradient wash carries most of the lift. */
-	--shadow-xs: 0 1px 3px rgba(0, 55, 112, 0.08);
-	--shadow-sm: 0 1px 3px rgba(0, 55, 112, 0.08), 0 2px 6px rgba(0, 55, 112, 0.04);
-	--shadow-md: 0 2px 6px rgba(0, 55, 112, 0.04), 0 8px 24px rgba(0, 55, 112, 0.08);
-	--shadow-lg: 0 2px 6px rgba(0, 55, 112, 0.05), 0 20px 48px rgba(0, 55, 112, 0.12);
+	--shadow-xs: none;
+	--shadow-sm: none;
+	--shadow-md: none;
+	--shadow-lg: 0 24px 60px rgba(20, 22, 26, 0.18);
 	/* Legacy names kept so old references degrade gracefully */
 	--shadow-glass-glow: 0 1px 3px rgba(0, 55, 112, 0.08), 0 8px 24px rgba(0, 55, 112, 0.08);
 	--shadow-glass-glow-strong: 0 2px 6px rgba(0, 55, 112, 0.05), 0 20px 48px rgba(0, 55, 112, 0.12);
@@ -262,10 +267,12 @@
 	align-items: center;
 	justify-content: center;
 	gap: 0.45rem;
-	padding: 0.7rem 1.4rem;
+	padding: 0.95rem 1.75rem;
 	border-radius: var(--radius-pill);
-	font-weight: 500;
-	font-size: 0.95rem;
+	font-weight: 600;
+	font-size: 0.78rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
 	/* Named properties only. `all` transitions layout properties by accident
 	   and costs a frame budget nothing here needs. */
 	transition:
@@ -288,13 +295,11 @@
 @utility btn-primary {
 	background: var(--color-bg-button-primary-default);
 	color: var(--color-text-button-primary-default);
-	box-shadow:
-		inset 0 1px 0 rgba(255, 255, 255, 0.12),
-		var(--shadow-xs);
-	font-weight: 500;
+	box-shadow: none;
+	font-weight: 600;
 	border-radius: var(--radius-pill);
 	&:hover {
-		background: var(--color-bg-button-primary-hover);
+		background: var(--color-ink);
 		color: var(--color-text-button-primary-hover);
 	}
 	&:active {
@@ -961,40 +966,13 @@
 	position: relative;
 }
 
-/* ------------------------------------------------------------------- */
-/* The gradient wash.                                                   */
-/* Depth here is atmospheric colour, not a drop shadow: a soft mesh in   */
-/* the upper third of a hero, mixed only from brand blues so it reads as */
-/* Auracare rather than as generic SaaS. Put it on a hero's decorative   */
-/* child, never on the content wrapper.                                 */
-/* ------------------------------------------------------------------- */
-@utility wash {
-	position: absolute;
-	inset: 0 0 auto 0;
-	height: clamp(22rem, 46vw, 38rem);
-	pointer-events: none;
-	z-index: 0;
-	background:
-		radial-gradient(60% 55% at 12% 8%, rgba(148, 171, 255, 0.4) 0%, rgba(148, 171, 255, 0) 62%),
-		radial-gradient(48% 48% at 78% 2%, rgba(47, 78, 192, 0.22) 0%, rgba(47, 78, 192, 0) 60%),
-		radial-gradient(70% 60% at 50% 0%, rgba(220, 226, 255, 0.75) 0%, rgba(220, 226, 255, 0) 70%);
-	/* Fades out before it reaches the content below, so no hard seam. */
-	mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%);
-	-webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%);
-}
-
-/* Dark surfaces get the same idea in reverse: light pooling at the top. */
-@utility wash-dark {
-	position: absolute;
-	inset: 0 0 auto 0;
-	height: clamp(20rem, 40vw, 32rem);
-	pointer-events: none;
-	z-index: 0;
-	background:
-		radial-gradient(55% 55% at 20% 0%, rgba(97, 128, 255, 0.28) 0%, rgba(97, 128, 255, 0) 65%),
-		radial-gradient(50% 50% at 80% 4%, rgba(47, 78, 192, 0.3) 0%, rgba(47, 78, 192, 0) 62%);
-	mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 100%);
-	-webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 100%);
+/* The gradient wash and its dark twin were removed: a soft glow behind a
+   headline is the default look this brand is trying not to have. Depth now
+   comes from paper, rules, real photography and scale. The class names stay as
+   no-ops so no page renders a stray empty box. */
+.wash,
+.wash-dark {
+	display: none;
 }
 
 /* Any content sitting on a washed surface needs to be lifted above it. */
@@ -1024,20 +1002,12 @@
 @utility eyebrow {
 	display: inline-flex;
 	align-items: center;
-	gap: 0.6rem;
 	font-family: var(--font-family-mono);
-	font-size: 0.72rem;
-	font-weight: 700;
-	letter-spacing: 0.14em;
+	font-size: 0.68rem;
+	font-weight: 600;
+	letter-spacing: 0.2em;
 	text-transform: uppercase;
-	color: var(--color-primary-600);
-	&::before {
-		content: '';
-		width: 0.45rem;
-		height: 0.45rem;
-		background: currentColor;
-		flex: none;
-	}
+	color: var(--color-ink-faint);
 }
 
 /* Dark editorial section: a deep brand blue, hairline separations. The
@@ -1066,34 +1036,30 @@
 	color: #ffffff;
 }
 
-/* Card: flat surface, hairline border. Name kept from the old system. */
+/* Card. The name is legacy; the treatment is not. Boxes-on-a-page was the
+   most generic thing in the old system, so a "card" is now a block of content
+   sitting on the paper under a single rule. Nothing is outlined, nothing
+   floats. Name kept so every existing call site inherits the change. */
 .glass-card {
-	background: #ffffff;
-	border: 1px solid var(--color-border-default);
-	border-radius: var(--radius-lg);
-	box-shadow: var(--shadow-xs);
-	transition:
-		border-color 0.2s ease,
-		box-shadow 0.2s ease;
+	background: transparent;
+	border: 0;
+	border-top: 1px solid var(--color-rule);
+	border-radius: 0;
+	box-shadow: none;
+	transition: border-color var(--duration-hover) ease;
 }
 @media (hover: hover) and (pointer: fine) {
 	.glass-card:hover {
-		border-color: var(--color-border-strong);
-		box-shadow: var(--shadow-sm);
+		border-top-color: var(--color-ink);
 	}
 }
 .aura-space .glass-card {
-	background: var(--color-surface-blue-raised);
-	border-color: var(--color-border-dark);
-	box-shadow: none;
-}
-.aura-space--ink .glass-card {
-	background: var(--color-surface-dark-raised);
+	background: transparent;
+	border-top-color: rgba(255, 255, 255, 0.16);
 }
 @media (hover: hover) and (pointer: fine) {
 	.aura-space .glass-card:hover {
-		border-color: var(--color-border-dark-strong);
-		box-shadow: none;
+		border-top-color: rgba(255, 255, 255, 0.4);
 	}
 }
 
@@ -1107,38 +1073,17 @@
 	align-items: center;
 	gap: 0.45rem;
 	font-family: var(--font-family-mono);
-	font-size: 0.68rem;
-	font-weight: 700;
-	letter-spacing: 0.06em;
+	font-size: 0.66rem;
+	font-weight: 600;
+	letter-spacing: 0.16em;
 	text-transform: uppercase;
-	padding: 0.3rem 0.6rem;
-	border-radius: 6px;
-	border: 1px solid transparent;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--color-ink-faint);
 }
-.pill-live {
-	color: var(--color-ink-soft);
-	background: var(--color-neutral-50);
-	border-color: var(--color-border-default);
-}
-.pill-soon {
-	color: var(--color-ink-soft);
-	background: var(--color-neutral-50);
-	border-color: var(--color-border-default);
-}
-.pill-dev {
-	color: var(--color-ink-soft);
-	background: var(--color-neutral-50);
-	border-color: var(--color-border-default);
-}
-.aura-space .pill-live {
-	color: rgba(226, 230, 240, 0.7);
-	background: rgba(255, 255, 255, 0.04);
-	border-color: rgba(255, 255, 255, 0.12);
-}
-.aura-space .pill-soon {
-	color: rgba(226, 230, 240, 0.7);
-	background: rgba(255, 255, 255, 0.04);
-	border-color: rgba(255, 255, 255, 0.12);
+.aura-space .pill {
+	color: rgba(226, 230, 240, 0.6);
 }
 
 /* ------------------------------------------------------------------- */
@@ -1150,14 +1095,23 @@
 /* and list copy below stays left-aligned and therefore readable.        */
 /* ------------------------------------------------------------------- */
 .section-y > .container-wide > h2,
+.section-y > .container-wide > p,
 .section-y > .container-wide > .lede,
-.section-y > .container-wide > .section-lede {
+.section-y > .container-wide > .section-lede,
+.section-y > .container-wide > .why-lede,
+.section-y > .container-wide > .routing-lede {
 	text-align: center;
 	margin-inline: auto;
 }
+/* Any intro paragraph, whatever it is called. The old rule matched `.lede`
+   only, so pages using their own name for the same thing stayed left-aligned
+   under a centred heading. */
+.section-y > .container-wide > p,
 .section-y > .container-wide > .lede,
-.section-y > .container-wide > .section-lede {
-	max-width: 48rem;
+.section-y > .container-wide > .section-lede,
+.section-y > .container-wide > .why-lede,
+.section-y > .container-wide > .routing-lede {
+	max-width: 46rem;
 }
 /* The eyebrow is inline-flex, so it needs the flex box centring rather
    than auto margins. */
