@@ -39,7 +39,7 @@ export const AURACLE_URL = 'https://auracle.health';
  * Auracle pages. Split so the trailing link can be rendered as an anchor.
  */
 export const TRY_TWIN_NOTE = {
-	text: 'Want to try Auracle? Auracle v1 launches on iMessage, WhatsApp and RCS, and the waitlist is open. See more at',
+	text: 'Auracle v1 launches on iMessage, WhatsApp and RCS. The waitlist is open at',
 	linkLabel: 'auracle.health',
 	href: AURACLE_URL
 } as const;
@@ -106,11 +106,11 @@ export interface Product {
 
 export const PRODUCTS: Product[] = [
 	{
-		key: 'auratwin',
+		key: 'auracle',
 		name: 'Auracle',
 		tagline: 'A companion in your messages',
 		blurb:
-			'Auracare’s social-history engine, shipped as a wellness companion that lives where you already talk. It learns daily life in conversation, connects the sources you choose, and builds a complete history you can share at an appointment.',
+			'Auracare’s social-history engine, shipped as a wellness companion in your messages. It learns your daily life in conversation and builds a history you can share at an appointment.',
 		status: 'ships-soon',
 		statusLabel: 'Expected August 2026',
 		href: '/product'
@@ -120,7 +120,7 @@ export const PRODUCTS: Product[] = [
 		name: 'Auracare CDSS',
 		tagline: 'Decision support inside the consultation',
 		blurb:
-			'A clinical decision support system that works in the background during the appointment: it reasons over the picture Auracle builds, live vitals from our own devices and the conversation itself, so the clinician keeps their eyes on the patient.',
+			'Clinical decision support that runs in the background during the appointment, reasoning over Auracle’s history, live vitals from our own devices and the conversation itself. The clinician keeps their eyes on the patient.',
 		status: 'in-development',
 		statusLabel: 'Expected May 2027',
 		href: '/product/auracare'
@@ -130,7 +130,7 @@ export const PRODUCTS: Product[] = [
 		name: 'One patient model',
 		tagline: '532,000 concepts you can see',
 		blurb:
-			'Both products share one model of the patient, grounded in the terminology medicine already agrees on (SNOMED CT, ICD-11, HPO, LOINC) and rendered as a live, explorable graph. This part you can explore today.',
+			'Both products share one model of the patient, grounded in the terminology medicine already agrees on: SNOMED CT, ICD-11, HPO and LOINC. It is live and explorable today.',
 		status: 'live',
 		statusLabel: 'Live',
 		href: CONTACT.ontologyUrl,
@@ -144,7 +144,7 @@ export const PRODUCTS: Product[] = [
 
 export const TWIN_PROBLEM = {
 	stat: '4%',
-	line: 'of wellness-app installers are still active a month later. The apps fail the moment they demand effort: a niche app for every habit, a form for every log, a streak to keep alive.',
+	line: 'of wellness-app installers are still active a month later. They fail the moment they demand effort: an app for every habit, a form for every log, a streak to keep alive.',
 	answer: 'Auracle removes the effort instead.'
 } as const;
 
@@ -165,17 +165,17 @@ export const TWIN_ROLE: TwinRole[] = [
 	{
 		stat: 'Aug 2026',
 		title: 'Revenue starts with Auracle',
-		body: 'Auracle subscriptions begin earning at consumer launch in August 2026. The CDSS cannot earn before certification, targeted for May 2027, so the consumer product carries revenue first.'
+		body: 'Auracle subscriptions begin earning at launch in August 2026. The CDSS cannot earn before certification in May 2027, so the consumer product carries revenue first.'
 	},
 	{
 		stat: 'One model',
 		title: 'The consumer product feeds the clinical one',
-		body: 'Auracle builds the bio-psycho-social history a consultation cannot gather itself. Shared by the patient, that history is the input the CDSS reasons over.'
+		body: 'Auracle builds the bio-psycho-social history a consultation has no time to gather. The patient shares it, and the CDSS reasons over it.'
 	},
 	{
 		stat: 'Continuous',
 		title: 'Retention is the data pipeline',
-		body: 'Every reply keeps the history current, so the quality of the CDSS input tracks the quality of the consumer product. Retention is the number to hold us to.'
+		body: 'Every reply keeps the history current, so CDSS input quality tracks consumer product quality. Retention is the number to hold us to.'
 	}
 ];
 
@@ -187,7 +187,7 @@ export interface CareLoopStep {
 	title: string;
 	body: string;
 	/** Which side of the loop is doing the work at this step. */
-	actor: 'auratwin' | 'auracare';
+	actor: 'auracle' | 'auracare';
 }
 
 export const CARE_LOOP_LINE = 'One continuous loop: the picture keeps getting richer.';
@@ -196,19 +196,19 @@ export const CARE_LOOP_LINE = 'One continuous loop: the picture keeps getting ri
    into 05, back across the bottom to 08, and a return arrow closing the loop. */
 export const CARE_LOOP: CareLoopStep[] = [
 	{
-		actor: 'auratwin',
+		actor: 'auracle',
 		title: 'Auracle builds the picture',
-		body: 'Connectors and conversation, day by day, become one living bio-psycho-social history.'
+		body: 'Connectors and conversation become one living bio-psycho-social history.'
 	},
 	{
-		actor: 'auratwin',
+		actor: 'auracle',
 		title: 'You share it at the appointment',
 		body: 'A complete history, ready for the clinician before the appointment starts.'
 	},
 	{
 		actor: 'auracare',
 		title: 'The CDSS reasons over everything',
-		body: 'The shared history, acute vitals, live transcription, labs and records together; it asks only what’s worth asking.'
+		body: 'Shared history, acute vitals, transcription, labs and records together. It asks only what is worth asking.'
 	},
 	{
 		actor: 'auracare',
@@ -218,27 +218,27 @@ export const CARE_LOOP: CareLoopStep[] = [
 	{
 		actor: 'auracare',
 		title: 'Three outputs',
-		body: 'A lifestyle plan, a referral or a guideline-aligned medication package, matched to where the clinician works.'
+		body: 'A lifestyle plan, a referral or a guideline-aligned medication package, matched to the clinician’s jurisdiction.'
 	},
 	{
 		actor: 'auracare',
 		title: 'Notes write themselves',
-		body: 'Formatted consultation notes, generated by the core with a reasoning chain for the whole session.'
+		body: 'Formatted consultation notes with a reasoning chain for the whole session.'
 	},
 	{
-		actor: 'auratwin',
+		actor: 'auracle',
 		title: 'Advice becomes routine',
-		body: 'The plan flows back into Auracle as gentle reminders, tuned to how the person actually lives.'
+		body: 'The plan returns to Auracle as reminders, tuned to how the person actually lives.'
 	},
 	{
-		actor: 'auratwin',
+		actor: 'auracle',
 		title: 'Trends get caught early',
-		body: 'The twin watches the follow-through and flags change sooner: a richer picture, every time round.'
+		body: 'Auracle watches the follow-through and flags change sooner, so the next appointment starts further ahead.'
 	}
 ];
 
 export const REGULATORY_NOTE =
-	'Auracare is our clinical decision support system, still in development. Its regulatory pathway is not yet confirmed and is under active, continuous review.';
+	'The Auracare CDSS is in development. Its regulatory pathway is not yet confirmed and is under continuous review.';
 
 /* ------------------------------------------------------------------ */
 /* Our own medical hardware                                            */
@@ -252,7 +252,7 @@ export interface HardwareDevice {
 export const HARDWARE: HardwareDevice[] = [
 	{
 		name: 'Recording stethoscope',
-		note: 'Captures heart and lung sounds as data the core can read, not just for the ear.'
+		note: 'Captures heart and lung sounds as data the core can read.'
 	},
 	{
 		name: 'Blood-pressure monitor',
@@ -260,12 +260,12 @@ export const HARDWARE: HardwareDevice[] = [
 	},
 	{
 		name: 'Otoscope',
-		note: 'A closer look inside, captured and passed on to the core automatically.'
+		note: 'Captured and passed to the core automatically.'
 	}
 ];
 
 export const HARDWARE_MORE =
-	'And more devices are on the way, the same closed hardware-to-software link, extended to new measurements.';
+	'More devices are on the way, extending the same closed hardware-to-software link to new measurements.';
 
 /* ------------------------------------------------------------------ */
 /* Company timeline (scroll animation, with the May-2026 fork)        */
@@ -289,13 +289,13 @@ export const TIMELINE: Milestone[] = [
 	{
 		date: '2025 → early 2026',
 		title: '28 pharmacy partnerships',
-		body: 'Our prior venture reached twenty-eight UK pharmacies, including a regional director, and taught us the structural gaps inside a public health system first-hand.',
+		body: 'Our prior venture reached twenty-eight UK pharmacies, including a regional director, and showed us the structural gaps inside a public health system first-hand.',
 		era: 'nhs'
 	},
 	{
 		date: 'Early 2026',
 		title: 'We hit the wall',
-		body: 'We had already built out our aggregation product, but the NHS gates its API behind contracts that only renew in 2028. Rather than wait, we shelved that line, knowing everything we had built was a foundation we could build on.',
+		body: 'Our aggregation product was built, but the NHS gates its API behind contracts that do not renew until 2028. We shelved that line and kept the foundation.',
 		era: 'nhs'
 	},
 	{
@@ -308,7 +308,7 @@ export const TIMELINE: Milestone[] = [
 	{
 		date: 'Jul 2026',
 		title: 'Auracle MVP',
-		body: 'The consumer digital twin reaches its first build: a wellness companion that lives in your messages.',
+		body: 'The consumer product reaches its first build: a wellness companion in your messages.',
 		era: 'ai'
 	},
 	{
@@ -380,7 +380,8 @@ export const MARKET_WAVES: MarketWave[] = [
 		key: 'clinical',
 		tone: 'clinical',
 		title: 'Clinical trials',
-		caption: 'Auracare enters clinical trials with hospitals and institutions in Hong Kong and China.'
+		caption:
+			'Auracare enters clinical trials with hospitals and institutions in Hong Kong and China.'
 	},
 	{
 		order: 2,

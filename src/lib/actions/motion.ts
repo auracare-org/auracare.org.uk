@@ -16,6 +16,73 @@ interface RevealParams {
 }
 
 /**
+ * Reveal-on-scroll registry.
+ *
+ * This deliberately does not use IntersectionObserver. An observer only queues
+ * a callback when the intersection ratio *crosses* a threshold, so a fast
+ * scroll, an anchor jump or a restored scroll position can take an element
+ * from "below the fold" (ratio 0) to "above the fold" (ratio 0) without ever
+ * crossing one. The element then stays at `opacity: 0` permanently, leaving a
+ * blank band on the page.
+ *
+ * A single rAF-throttled sweep over the nodes still waiting is both simpler and
+ * correct. It binds on the first registration and unbinds the moment the last
+ * node is revealed, so a fully-revealed page carries no scroll cost at all.
+ */
+interface PendingReveal {
+	node: HTMLElement;
+	once: boolean;
+}
+
+const pending = new Set<PendingReveal>();
+let sweepQueued = 0;
+let listening = false;
+
+function show(entry: PendingReveal) {
+	entry.node.classList.add('reveal--in');
+	if (entry.once) {
+		pending.delete(entry);
+		if (pending.size === 0) stopListening();
+	}
+}
+
+function sweep() {
+	sweepQueued = 0;
+	const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+	for (const entry of [...pending]) {
+		const r = entry.node.getBoundingClientRect();
+		// Revealed once the top edge rises into the lower tenth of the viewport,
+		// or if the element has already been scrolled clean past.
+		const entered = r.top < vh * 0.9 && r.bottom > 0;
+		const passed = r.bottom <= 0;
+		if (entered || passed) show(entry);
+		else if (!entry.once) entry.node.classList.remove('reveal--in');
+	}
+}
+
+function onScroll() {
+	if (!sweepQueued) sweepQueued = requestAnimationFrame(sweep);
+}
+
+function startListening() {
+	if (listening) return;
+	listening = true;
+	window.addEventListener('scroll', onScroll, { passive: true });
+	window.addEventListener('resize', onScroll);
+}
+
+function stopListening() {
+	if (!listening) return;
+	listening = false;
+	window.removeEventListener('scroll', onScroll);
+	window.removeEventListener('resize', onScroll);
+	if (sweepQueued) {
+		cancelAnimationFrame(sweepQueued);
+		sweepQueued = 0;
+	}
+}
+
+/**
  * Reveal-on-scroll. Adds `.reveal` immediately and `.reveal--in` once the node
  * enters the viewport. Respects prefers-reduced-motion (reveals instantly).
  */
@@ -24,34 +91,22 @@ export const reveal: Action<HTMLElement, RevealParams | undefined> = (node, para
 	node.classList.add('reveal');
 	if (opts.delay) node.style.setProperty('--reveal-delay', `${opts.delay}ms`);
 
-	if (prefersReducedMotion() || typeof IntersectionObserver === 'undefined') {
+	if (prefersReducedMotion() || typeof window === 'undefined') {
 		node.classList.add('reveal--in');
 		return {};
 	}
 
-	// An element taller than the viewport can never reach the configured
-	// intersection ratio, so clamp the threshold to what is actually achievable.
-	const viewport = window.innerHeight || document.documentElement.clientHeight || 0;
-	const achievable = node.offsetHeight > 0 && viewport > 0 ? viewport / node.offsetHeight : 1;
-	const threshold = Math.min(opts.threshold, achievable * 0.5);
+	const entry: PendingReveal = { node, once: opts.once };
+	pending.add(entry);
+	startListening();
+	// Evaluate straight away so anything already in view on load reveals without
+	// waiting for the visitor to move.
+	onScroll();
 
-	const io = new IntersectionObserver(
-		(entries) => {
-			for (const e of entries) {
-				if (e.isIntersecting) {
-					node.classList.add('reveal--in');
-					if (opts.once) io.unobserve(node);
-				} else if (!opts.once) {
-					node.classList.remove('reveal--in');
-				}
-			}
-		},
-		{ threshold }
-	);
-	io.observe(node);
 	return {
 		destroy() {
-			io.disconnect();
+			pending.delete(entry);
+			if (pending.size === 0) stopListening();
 		}
 	};
 };

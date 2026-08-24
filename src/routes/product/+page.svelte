@@ -28,7 +28,7 @@
 		}
 	];
 
-	/* Replying is the logging: what you text ➝ what the twin captures. */
+	/* Replying is the logging: what you text ➝ what Auracle captures. */
 	const logging = [
 		{
 			you: 'slept awful, up around 3 and never really went back',
@@ -90,7 +90,7 @@
 		{
 			hook: 'Useful on off-days',
 			title: 'Environmental check-ins',
-			body: 'UV, pollen, weather, even mosquitoes: opt-in nudges tied to where you actually are, so the twin earns its place on days you would never open a health app.'
+			body: 'UV, pollen, weather, even mosquitoes: opt-in nudges tied to where you actually are, so Auracle earns its place on days you would never open a health app.'
 		},
 		{
 			hook: 'Never gets muted',
@@ -100,7 +100,7 @@
 		{
 			hook: 'Trust compounds',
 			title: 'Your data, your rules',
-			body: 'Everything the twin knows can be inspected, edited and exported from the web app; every source is opt-in and revocable.'
+			body: 'Everything Auracle knows can be inspected, edited and exported from the web app; every source is opt-in and revocable.'
 		}
 	];
 </script>
@@ -159,9 +159,9 @@
 			The product built to be <span class="hl">texted back</span>.
 		</h1>
 		<p class="hero-sub" use:reveal={{ delay: 130 }}>
-			Auracle is Auracare's social-history engine, shipped as a wellness companion that lives in
-			the apps people already open a hundred times a day. It learns your daily life in conversation
-			and builds one bio-psycho-social history: your body, your mind, and the life around them, held
+			Auracle is Auracare's social-history engine, shipped as a wellness companion that lives in the
+			apps people already open a hundred times a day. It learns your daily life in conversation and
+			builds one bio-psycho-social history: your body, your mind, and the life around them, held
 			together over months. You can export and share this data at an appointment, where the Auracare
 			CDSS will reason over it.
 		</p>
@@ -182,14 +182,14 @@
 		<span class="eyebrow" use:reveal>A day, held together</span>
 		<h2 use:reveal={{ delay: 60 }}>It reaches out first, so remembering isn’t your job.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Most wellness apps wait for you to show up. Auracle runs the other way round: it comes to
-			you, a handful of times a day, and only when there’s something worth saying. Reaching out
-			first is what turns a tool you remember into a conversation you keep.
+			Most wellness apps wait for you to show up. Auracle runs the other way round: it comes to you,
+			a handful of times a day, and only when there’s something worth saying. Reaching out first is
+			what turns a tool you remember into a conversation you keep.
 		</p>
 
 		<ol class="day">
 			{#each day as slot, i}
-				<li class="day-row" use:reveal={{ delay: i * 90 }}>
+				<li class="day-row" use:reveal={{ delay: i * 70 }}>
 					<span class="day-time">{slot.time}</span>
 					<span class="day-dot" aria-hidden="true"></span>
 					<div class="day-card">
@@ -214,7 +214,7 @@
 
 		<div class="log-grid">
 			{#each logging as pair, i}
-				<div class="log-pair" use:reveal={{ delay: i * 90 }}>
+				<div class="log-pair" use:reveal={{ delay: i * 70 }}>
 					<p class="log-bubble you"><span class="who">You</span>{pair.you}</p>
 					<span class="log-arrow" aria-hidden="true">
 						<svg viewBox="0 0 24 24" fill="none">
@@ -270,7 +270,7 @@
 
 		<div class="src-grid">
 			{#each sources as col, i}
-				<div class="glass-card src-card" use:reveal={{ delay: i * 90 }}>
+				<div class="glass-card src-card" use:reveal={{ delay: i * 70 }}>
 					<h3>{col.group}</h3>
 					<ul>
 						{#each col.items as item}
@@ -483,13 +483,22 @@
 		border-radius: 999px;
 		box-shadow: 0 12px 26px rgba(47, 78, 192, 0.28);
 		transition:
-			transform 0.2s ease,
-			background 0.2s ease;
+			transform var(--duration-hover) var(--ease-out),
+			background var(--duration-hover) ease;
 	}
-	.btn-solid:hover {
-		transform: translateY(-2px);
-		background: var(--color-primary-700);
-		color: #fff;
+	.btn-solid:active {
+		transform: scale(0.97);
+		transition-duration: var(--duration-press);
+	}
+	@media (hover: hover) and (pointer: fine) {
+		.btn-solid:hover {
+			transform: translateY(-2px);
+			background: var(--color-primary-700);
+			color: #fff;
+		}
+		.btn-solid:hover:active {
+			transform: translateY(-2px) scale(0.97);
+		}
 	}
 	.btn-solid.full {
 		display: block;

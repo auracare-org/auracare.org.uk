@@ -18,8 +18,8 @@
 			<span class="eyebrow" use:reveal>Legal</span>
 			<h1 use:reveal={{ delay: 60 }}>Terms of Service</h1>
 			<p class="lede" use:reveal={{ delay: 140 }}>
-				These terms govern the Auracare website, the Auracle waitlist and, once you’re using it,
-				the Auracle service itself. Please read them carefully.
+				These terms govern the Auracare website, the Auracle waitlist and, once you’re using it, the
+				Auracle service itself. Please read them carefully.
 			</p>
 			<p class="meta" use:reveal={{ delay: 200 }}>Last updated: {lastUpdated}</p>
 		</header>
@@ -27,11 +27,11 @@
 		<article class="prose">
 			<h2 id="acceptance">1. These terms, and when they apply</h2>
 			<p>
-				By using this website (the “Site”) or joining the Auracle waitlist, you agree to these
-				Terms of Service (the “Terms”). Before you first use Auracle, our consumer wellness
-				service, you will be asked to read and accept these Terms during onboarding; by using
-				Auracle you agree to all of them. If you do not agree with any part of these Terms, please
-				do not use the Site, the waitlist or Auracle.
+				By using this website (the “Site”) or joining the Auracle waitlist, you agree to these Terms
+				of Service (the “Terms”). Before you first use Auracle, our consumer wellness service, you
+				will be asked to read and accept these Terms during onboarding; by using Auracle you agree
+				to all of them. If you do not agree with any part of these Terms, please do not use the
+				Site, the waitlist or Auracle.
 			</p>
 
 			<h2 id="who-we-are">2. Who we are</h2>
@@ -64,7 +64,7 @@
 				your region being right.
 			</p>
 
-			<h2 id="what-auratwin-is">5. What Auracle is, and what it never does</h2>
+			<h2 id="what-auracle-is">5. What Auracle is, and what it never does</h2>
 			<p>
 				Auracle is an AI wellness companion that builds a personal “digital twin” from the sources
 				you choose to connect and checks in with you over your messages. Aura is an AI: you are
@@ -250,8 +250,8 @@
 				not enforce a right straight away, we have not given it up. You may not transfer your rights
 				under these Terms; we may transfer ours to a successor of our business, with notice to you
 				and without reducing your rights. These Terms, together with the policies they link to, are
-				the whole agreement between us about the Site, the waitlist and Auracle, and no one else
-				has any rights under them.
+				the whole agreement between us about the Site, the waitlist and Auracle, and no one else has
+				any rights under them.
 			</p>
 
 			<h2 id="contact">22. Contact us</h2>

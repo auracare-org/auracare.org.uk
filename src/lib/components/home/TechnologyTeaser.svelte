@@ -280,10 +280,9 @@
 				A learned model proposes. <span class="text-gradient-l">A symbolic layer disposes.</span>
 			</h2>
 			<p class="tech-lead" use:reveal={{ delay: 140 }}>
-				That <strong>neuro-symbolic</strong> architecture is what the Auracare CDSS runs on. Every signal
-				is encoded onto the clinical ontology, the terminology medicine already agrees on (SNOMED CT,
-				ICD-11, HPO, LOINC), and the core reasons over the knowledge graph, so every answer traces back
-				to a named source.
+				The Auracare CDSS runs on a <strong>neuro-symbolic</strong> architecture. Every signal is encoded
+				onto the terminology medicine already agrees on (SNOMED CT, ICD-11, HPO, LOINC), so every answer
+				traces back to a named source.
 			</p>
 			<p class="tech-status" use:reveal={{ delay: 200 }}>
 				<span class="pill pill-live">Live today</span>
@@ -303,7 +302,7 @@
 		<div class="tech-visual" use:reveal={{ delay: 160 }}>
 			<dl class="stat-tiles">
 				{#each tiles as t, i}
-					<div class="stat-tile" use:reveal={{ delay: 120 + i * 90 }}>
+					<div class="stat-tile" use:reveal={{ delay: 120 + i * 70 }}>
 						{#if t.kind === 'number'}
 							<dd
 								class="stat-value"
@@ -428,11 +427,18 @@
 		font-size: 0.98rem;
 		padding: 0.8rem 1.5rem;
 		border-radius: var(--radius-sm);
-		transition: background 0.15s ease;
+		transition:
+			background var(--duration-hover) ease,
+			transform var(--duration-press) var(--ease-out);
 	}
-	.cta-primary:hover {
-		background: #e8eaf2;
-		color: var(--color-ink);
+	.cta-primary:active {
+		transform: scale(0.97);
+	}
+	@media (hover: hover) and (pointer: fine) {
+		.cta-primary:hover {
+			background: #e8eaf2;
+			color: var(--color-ink);
+		}
 	}
 	.cta-ghost {
 		display: inline-flex;
@@ -445,14 +451,20 @@
 		border-radius: var(--radius-sm);
 		border: 1px solid var(--color-border-dark-strong);
 		transition:
-			background 0.15s ease,
-			border-color 0.15s ease,
-			color 0.15s ease;
+			background var(--duration-hover) ease,
+			border-color var(--duration-hover) ease,
+			color var(--duration-hover) ease,
+			transform var(--duration-press) var(--ease-out);
 	}
-	.cta-ghost:hover {
-		color: #fff;
-		border-color: var(--color-white-alpha-20);
-		background: var(--color-white-alpha-10);
+	.cta-ghost:active {
+		transform: scale(0.97);
+	}
+	@media (hover: hover) and (pointer: fine) {
+		.cta-ghost:hover {
+			color: #fff;
+			border-color: var(--color-white-alpha-20);
+			background: var(--color-white-alpha-10);
+		}
 	}
 
 	/* Visual side */

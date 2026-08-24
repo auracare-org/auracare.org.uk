@@ -3,7 +3,7 @@
 	import { reveal, countUp } from '$lib/actions/motion';
 	import { CONTACT, ONTOLOGY_STATS } from '$lib/data/company';
 
-	/* --- Auracle: how the twin gets built ------------------------ */
+	/* --- Auracle: how the history gets built ------------------------ */
 	const TWIN_STEPS = [
 		{
 			n: '01',
@@ -13,16 +13,16 @@
 		{
 			n: '02',
 			label: 'Normalise',
-			body: 'Every source records data its own way. The twin translates each record into one shared format (resting heart rate is the same field whether it came from a ring or a watch), removes duplicates across devices, and timestamps each reading in your local time, so last night’s sleep is counted on the right day. The result is one clean, consistent stream instead of a dozen feeds that don’t line up.'
+			body: 'Every source records data its own way. Auracle translates each record into one shared format (resting heart rate is the same field whether it came from a ring or a watch), removes duplicates across devices, and timestamps each reading in your local time, so last night’s sleep is counted on the right day. The result is one clean, consistent stream instead of a dozen feeds that don’t line up.'
 		},
 		{
 			n: '03',
 			label: 'Converse',
-			body: 'The twin keeps an eye on the normalised stream and messages you first when something shifts (a run of poor recovery, a sedentary streak) and answers when you text back. Just reply in plain language; that is the logging. It all happens in your messages: no new app, no forms, no streaks to keep alive.'
+			body: 'Auracle keeps an eye on the normalised stream and messages you first when something shifts (a run of poor recovery, a sedentary streak) and answers when you text back. Just reply in plain language; that is the logging. It all happens in your messages: no new app, no forms, no streaks to keep alive.'
 		}
 	];
 
-	/* Signals the twin ingests. Categories, not a device list, so it
+	/* Signals Auracle ingests. Categories, not a device list, so it
 	   holds regardless of which watch or ring a person owns. */
 	const TWIN_SIGNALS = [
 		{ name: 'Sleep', note: 'Duration, efficiency, deep and REM' },
@@ -38,7 +38,7 @@
 		{
 			key: 'input',
 			label: 'Input',
-			body: 'The prior and the acute, on one timeline: everyday-life signals from the twin, clinical history, and vitals captured live in the room, all as points on a single timestamped record.'
+			body: 'The prior and the acute, on one timeline: everyday-life signals from Auracle, clinical history, and vitals captured live in the room, all as points on a single timestamped record.'
 		},
 		{
 			key: 'encoding',
@@ -81,7 +81,7 @@
 
 	/* --- The patient state ---------------------------------------- */
 	const STATE_SOURCES = [
-		'Everyday-life signals from the twin',
+		'Everyday-life signals from Auracle',
 		'Acute vitals, streamed from our own devices',
 		'Lab results & records',
 		'Clinical notes & history',
@@ -171,11 +171,11 @@
 			Everything we build stands on a single idea: one timestamped picture of a person, grounded in
 			the language medicine already agrees on. <strong>Auracle</strong> is a consumer twin that
 			learns your daily life. <strong>Auracare CDSS</strong> is clinical decision support that reasons
-			over the whole picture: vitals, history, symptoms and everything the twin captures. This page is
+			over the whole picture: vitals, history, symptoms and everything Auracle captures. This page is
 			how both work.
 		</p>
 		<nav class="hero-jump" use:reveal={{ delay: 200 }} aria-label="Jump to a product">
-			<a href="#auratwin">Auracle <span aria-hidden="true">→</span></a>
+			<a href="#auracle">Auracle <span aria-hidden="true">→</span></a>
 			<a href="#auracare">Auracare CDSS <span aria-hidden="true">→</span></a>
 		</nav>
 		<div class="hero-status" use:reveal={{ delay: 260 }}>
@@ -188,15 +188,15 @@
 <!-- ============================================================ -->
 <!-- PART ONE · AURACLE                                           -->
 <!-- ============================================================ -->
-<section id="auratwin" class="section-y twin-product">
+<section id="auracle" class="section-y twin-product">
 	<div class="container-wide">
 		<span class="part-tag" use:reveal>Part one</span>
-		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracle · the digital twin</span>
-		<h2 use:reveal={{ delay: 80 }}>The twin builds the picture no clinic ever sees.</h2>
+		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracle · the consumer product</span>
+		<h2 use:reveal={{ delay: 80 }}>Auracle builds the picture no clinic ever sees.</h2>
 		<p class="lede" use:reveal={{ delay: 140 }}>
 			Wellness apps fail the moment they demand effort. Auracle removes it: the signals you already
 			generate flow in on their own, get normalised into one timestamped model of your body, and the
-			twin reaches you where you already talk. The result is a high-context, continuously updated
+			Auracle reaches you where you already talk. The result is a high-context, continuously updated
 			view of daily life: the part of your health that lives between appointments.
 		</p>
 
@@ -311,12 +311,12 @@
 			<h3 class="signals-head" use:reveal>Raw signals in, scores out.</h3>
 			<p class="signals-sub" use:reveal={{ delay: 60 }}>
 				Sleep, movement, meals and mindfulness sessions map to one canonical, timestamped schema.
-				From those inputs the twin computes the scores you read: a Sleep Score from sleep stages,
+				From those inputs Auracle computes the scores you read: a Sleep Score from sleep stages,
 				duration and consistency; recovery from resting heart rate and heart-rate variability, so
 				every number is derived the same way, whatever device it came from. Wearables sync
 				automatically; anything else is a reply away.
 			</p>
-			<ul class="signals-grid" use:reveal={{ delay: 100 }} aria-label="Signals the twin ingests">
+			<ul class="signals-grid" use:reveal={{ delay: 100 }} aria-label="Signals Auracle ingests">
 				{#each TWIN_SIGNALS as sig, i}
 					<li class="signal-chip" style="--i:{i}">
 						<span class="sig-name">{sig.name}</span>
@@ -325,9 +325,9 @@
 				{/each}
 			</ul>
 			<p class="ehr-note" use:reveal>
-				Health records can be read into the twin but never acted on by it. Auracle is a
+				Health records can be read into Auracle but never acted on by it. Auracle is a
 				general-wellness product under the FD&amp;C Act §520(o)(1)(B) exclusion, not a medical
-				device: the twin gives wellness guidance, not diagnosis.
+				device: Auracle gives wellness guidance, not diagnosis.
 			</p>
 		</div>
 	</div>
@@ -710,7 +710,7 @@
 		margin-bottom: 0.6rem;
 	}
 	/* Anchor targets clear the sticky nav. */
-	#auratwin,
+	#auracle,
 	#auracare {
 		scroll-margin-top: 5rem;
 	}

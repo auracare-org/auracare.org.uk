@@ -54,11 +54,11 @@
 				</li>
 				<li>
 					Things you tell Aura in conversation about how you feel, what you ate, and your habits,
-					and the wellness inferences the twin draws from them (for example, your sleep baseline);
+					and the wellness inferences Auracle draws from them (for example, your sleep baseline);
 				</li>
 				<li>
 					Reproductive health data, only if you choose to tell Aura about your menstrual cycle (such
-					as when a period starts), and the cycle context the twin derives from it to interpret your
+					as when a period starts), and the cycle context Auracle derives from it to interpret your
 					other measurements. You are never asked for it, and Auracle works fully without it. Aura
 					does not predict fertile windows or ovulation, does not give contraception or conception
 					guidance, and does not tell you what a change in your cycle might mean medically;

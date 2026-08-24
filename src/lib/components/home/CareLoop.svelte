@@ -2,7 +2,7 @@
 	import { reveal } from '$lib/actions/motion';
 	import { CARE_LOOP, CARE_LOOP_LINE } from '$lib/data/company';
 
-	const actorLabel = { auratwin: 'Auracle', auracare: 'Auracare CDSS' } as const;
+	const actorLabel = { auracle: 'Auracle', auracare: 'Auracare CDSS' } as const;
 </script>
 
 <section class="loop section-y" aria-labelledby="loop-heading">
@@ -12,9 +12,8 @@
 			One patient-centred <span class="text-gradient">care loop</span>.
 		</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
-			Daily life in, sharper decisions out, habits back in. This is where the data your day already
-			produces comes back to you: as a fuller history at the appointment, and better habits after
-			it.
+			Daily life goes in. A fuller history reaches your clinician. The plan comes back as habits you
+			can keep.
 		</p>
 
 		<!-- A snake with arrows: steps 01 to 04 across the top, an arrow down
@@ -26,7 +25,7 @@
 				{#each CARE_LOOP as step, i (step.title)}
 					<li
 						class="step glass-card s{i + 1}"
-						class:step-twin={step.actor === 'auratwin'}
+						class:step-twin={step.actor === 'auracle'}
 						use:reveal={{ delay: 80 + i * 60 }}
 					>
 						<div class="step-top">

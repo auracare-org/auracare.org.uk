@@ -16,7 +16,7 @@
 		},
 		{
 			title: 'Data / Connectors Engineer',
-			body: 'Turn wearables, apps, health platforms and our own devices into clean, comparable signals for the twin and the clinical core. A big part of this is automating personal data requests and streamlining user sign-on, so consent and privacy are built in from the start.',
+			body: 'Turn wearables, apps, health platforms and our own devices into clean, comparable signals for Auracle and the clinical core. A big part of this is automating personal data requests and streamlining user sign-on, so consent and privacy are built in from the start.',
 			subject: 'Careers: Data / Connectors Engineer'
 		},
 		{
@@ -99,7 +99,7 @@
 		</p>
 		<div class="role-grid">
 			{#each roles as role, i}
-				<article class="glass-card role-card" use:reveal={{ delay: 140 + i * 80 }}>
+				<article class="glass-card role-card" use:reveal={{ delay: 140 + i * 70 }}>
 					<div class="role-body">
 						<h3>{role.title}</h3>
 						<p>{role.body}</p>
@@ -181,14 +181,23 @@
 		border-radius: 999px;
 		box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
 		transition:
-			transform 0.2s ease,
-			box-shadow 0.2s ease,
-			color 0.2s ease;
+			transform var(--duration-hover) var(--ease-out),
+			box-shadow var(--duration-hover) ease,
+			color var(--duration-hover) ease;
 	}
-	.cta-primary:hover {
-		color: var(--color-primary-800);
-		transform: translateY(-2px);
-		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.32);
+	.cta-primary:active {
+		transform: scale(0.97);
+		transition-duration: var(--duration-press);
+	}
+	@media (hover: hover) and (pointer: fine) {
+		.cta-primary:hover {
+			color: var(--color-primary-800);
+			transform: translateY(-2px);
+			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.32);
+		}
+		.cta-primary:hover:active {
+			transform: translateY(-2px) scale(0.97);
+		}
 	}
 	.cta-ghost {
 		display: inline-flex;
@@ -200,13 +209,22 @@
 		border-radius: 999px;
 		border: 1px solid rgba(255, 255, 255, 0.25);
 		transition:
-			background 0.2s ease,
-			transform 0.2s ease;
+			background var(--duration-hover) ease,
+			transform var(--duration-hover) var(--ease-out);
 	}
-	.cta-ghost:hover {
-		color: #fff;
-		background: rgba(255, 255, 255, 0.1);
-		transform: translateY(-2px);
+	.cta-ghost:active {
+		transform: scale(0.97);
+		transition-duration: var(--duration-press);
+	}
+	@media (hover: hover) and (pointer: fine) {
+		.cta-ghost:hover {
+			color: #fff;
+			background: rgba(255, 255, 255, 0.1);
+			transform: translateY(-2px);
+		}
+		.cta-ghost:hover:active {
+			transform: translateY(-2px) scale(0.97);
+		}
 	}
 
 	/* Section headings */

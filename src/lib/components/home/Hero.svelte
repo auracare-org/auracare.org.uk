@@ -119,12 +119,9 @@
 				The world's most personalised <em>healthcare</em>.
 			</h1>
 			<p class="hero-sub" use:reveal={{ delay: 140 }}>
-				One living model of a person, and two products built on it.
-				<strong>Auracle</strong> lives in your messages and builds a complete picture of your
-				bio-psycho-social history: sleep, movement, nutrition, screen time and the rest of daily
-				life. <strong>Auracare CDSS</strong> works beside the clinician, inside the consultation. Shared
-				at an appointment, the picture Auracle builds becomes the history both the clinician and the
-				CDSS work from.
+				One model of a person, and two products built on it.
+				<strong>Auracle</strong> builds your health history from everyday life, in your messages.
+				The <strong>Auracare CDSS</strong> puts that history in front of your clinician during the consultation.
 			</p>
 			<div class="hero-cta" use:reveal={{ delay: 220 }}>
 				<a class="cta-primary" href="/investors">We're raising a seed round</a>
@@ -295,11 +292,18 @@
 		box-shadow:
 			inset 0 1px 0 rgba(255, 255, 255, 0.12),
 			var(--shadow-xs);
-		transition: background 0.15s ease;
+		transition:
+			background var(--duration-hover) ease,
+			transform var(--duration-press) var(--ease-out);
 	}
-	.cta-primary:hover {
-		background: var(--color-primary-700);
-		color: #fff;
+	.cta-primary:active {
+		transform: scale(0.97);
+	}
+	@media (hover: hover) and (pointer: fine) {
+		.cta-primary:hover {
+			background: var(--color-primary-700);
+			color: #fff;
+		}
 	}
 	.cta-primary:focus-visible {
 		outline: 2px solid var(--color-primary-400);
@@ -312,16 +316,23 @@
 		color: var(--color-ink);
 		font-weight: 500;
 		font-size: 0.98rem;
-		transition: color 0.15s ease;
+		transition:
+			color var(--duration-hover) ease,
+			transform var(--duration-press) var(--ease-out);
 	}
 	.cta-ghost span {
-		transition: transform 0.2s ease;
+		transition: transform var(--duration-hover) var(--ease-out);
 	}
-	.cta-ghost:hover {
-		color: var(--color-primary-600);
+	.cta-ghost:active {
+		transform: scale(0.97);
 	}
-	.cta-ghost:hover span {
-		transform: translateX(3px);
+	@media (hover: hover) and (pointer: fine) {
+		.cta-ghost:hover {
+			color: var(--color-primary-600);
+		}
+		.cta-ghost:hover span {
+			transform: translateX(3px);
+		}
 	}
 	.hero-note {
 		margin-top: 1.5rem;
@@ -338,15 +349,16 @@
 		color: var(--color-primary-700);
 	}
 
-	/* Visual. In the stacked layout it leads, above the headline; the wide
-	   layout restores copy left, visual right. */
+	/* Visual. It is decorative, so on the stacked layout the headline goes
+	   first: leading with a full screen of orbit pushed the actual proposition
+	   below the fold on a phone. The wide layout is copy left, visual right. */
 	.hero-visual {
 		position: relative;
 		width: 100%;
 		max-width: 28rem;
 		margin-inline: auto;
 		aspect-ratio: 1;
-		order: -1;
+		order: 0;
 	}
 	.hero-orbits {
 		position: absolute;

@@ -22,7 +22,7 @@
 				Early days, <span class="text-gradient">real momentum</span>.
 			</h2>
 			<p class="market-sub" use:reveal={{ delay: 120 }}>
-				Funding, partnerships and pedigree already behind us, before the raise.
+				Funding, partnerships and clinical pilots already in place, before this round.
 			</p>
 		</header>
 
@@ -33,7 +33,7 @@
 				<h3 class="foundation-title">{FOUNDATION_TITLE}</h3>
 				<ul class="foundation-points">
 					{#each FOUNDATION_POINTS as point, i}
-						<li class="foundation-point" use:reveal={{ delay: 120 + i * 90 }}>
+						<li class="foundation-point" use:reveal={{ delay: 120 + i * 70 }}>
 							<span class="foundation-point-title">{point.title}</span>
 							<span class="foundation-point-body">{point.body}</span>
 						</li>
@@ -45,7 +45,7 @@
 			<ul class="traction" aria-label="Traction to date">
 				{#each TRACTION as item, i}
 					{@const n = numericStat(item.stat)}
-					<li class="stat glass-card" use:reveal={{ delay: i * 90 }}>
+					<li class="stat glass-card" use:reveal={{ delay: i * 70 }}>
 						{#if n !== null}
 							<span
 								class="stat-value"

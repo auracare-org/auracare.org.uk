@@ -11,7 +11,7 @@
 	const stages = [
 		{
 			label: 'Signals in',
-			note: 'The twin’s shared history, live vitals from our devices, and the conversation itself'
+			note: 'Auracle’s shared history, live vitals from our devices, and the conversation itself'
 		},
 		{
 			label: 'Encoder',
@@ -30,7 +30,7 @@
 
 <ol class="pipeline" class:dark>
 	{#each stages as s, i}
-		<li class="stage" use:reveal={{ delay: 80 + i * 90 }}>
+		<li class="stage" use:reveal={{ delay: 80 + i * 70 }}>
 			<span class="stage-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
 			<span class="stage-label">{s.label}</span>
 			<span class="stage-note">{s.note}</span>

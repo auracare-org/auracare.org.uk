@@ -111,12 +111,34 @@
 	--radius-3xl: 32px;
 	--radius-4xl: 40px;
 
-	/* Typography from Figma design system */
-	--font-family-heading: 'DM Sans', 'Helvetica Neue', system-ui, sans-serif;
-	--font-family-sans: 'Poppins', 'Helvetica Neue', system-ui, sans-serif;
+	/* Typography. Avenir is the brand face and is present on macOS/iOS, which
+	   covers most of the audience. Nunito Sans is the closest freely-hostable
+	   match and carries Windows/Android; the metrics are near enough that the
+	   layout does not shift between them. */
+	--font-family-heading:
+		'Avenir Next', 'Avenir', 'Nunito Sans', 'Helvetica Neue', system-ui, sans-serif;
+	--font-family-sans:
+		'Avenir Next', 'Avenir', 'Nunito Sans', 'Helvetica Neue', system-ui, sans-serif;
 	/* Was a monospace face used for eyebrows/pills/labels; reads too "AI".
-	   Repointed to the heading sans so those labels feel human. */
-	--font-family-mono: 'DM Sans', 'Helvetica Neue', system-ui, sans-serif;
+	   Repointed to the brand sans so those labels feel human. */
+	--font-family-mono:
+		'Avenir Next', 'Avenir', 'Nunito Sans', 'Helvetica Neue', system-ui, sans-serif;
+
+	/* ============================================================= */
+	/* Motion. Custom curves: the CSS built-ins are too weak to read  */
+	/* as intentional. Enter/exit uses ease-out so movement starts    */
+	/* immediately; on-screen movement uses ease-in-out.              */
+	/* ============================================================= */
+	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+	--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+	--ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+	/* Durations. UI interactions stay under 300ms; scroll reveals are
+	   explanatory rather than interactive, so they may run longer. */
+	--duration-press: 140ms;
+	--duration-hover: 180ms;
+	--duration-popover: 200ms;
+	--duration-reveal: 480ms;
 
 	/* Shadows: quiet, layered; no glow */
 	--shadow-xs: 0 1px 2px rgba(20, 22, 29, 0.05);
@@ -219,14 +241,22 @@
 	border-radius: 6px;
 	font-weight: 500;
 	font-size: 0.95rem;
+	/* Named properties only. `all` transitions layout properties by accident
+	   and costs a frame budget nothing here needs. */
 	transition:
-		background 0.15s ease,
-		border-color 0.15s ease,
-		color 0.15s ease;
+		background var(--duration-hover) ease,
+		border-color var(--duration-hover) ease,
+		color var(--duration-hover) ease,
+		transform var(--duration-press) var(--ease-out);
 	outline: none;
 	&:focus-visible {
 		outline: 2px solid var(--color-border-focus);
 		outline-offset: 2px;
+	}
+	/* Press feedback: the interface confirms it heard the click before any
+	   navigation resolves. Subtle enough to feel, not to notice. */
+	&:active {
+		transform: scale(0.97);
 	}
 }
 
@@ -350,7 +380,9 @@
 @utility slide-in-left {
 	opacity: 0;
 	transform: translateX(-1.25rem);
-	transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+	transition:
+		opacity var(--duration-reveal) var(--ease-out),
+		transform var(--duration-reveal) var(--ease-out);
 	&.visible {
 		opacity: 1;
 		transform: translateX(0);
@@ -360,7 +392,9 @@
 @utility slide-in-right {
 	opacity: 0;
 	transform: translateX(1.25rem);
-	transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+	transition:
+		opacity var(--duration-reveal) var(--ease-out),
+		transform var(--duration-reveal) var(--ease-out);
 	&.visible {
 		opacity: 1;
 		transform: translateX(0);
@@ -388,7 +422,9 @@
 	backdrop-filter: blur(12px);
 	-webkit-backdrop-filter: blur(12px);
 	border-bottom: 1px solid var(--color-border-default);
-	transition: all 0.3s ease;
+	transition:
+		background var(--duration-hover) ease,
+		border-color var(--duration-hover) ease;
 }
 
 @utility nav-link {
@@ -950,18 +986,22 @@
 		border-color 0.2s ease,
 		box-shadow 0.2s ease;
 }
-.glass-card:hover {
-	border-color: var(--color-border-strong);
-	box-shadow: var(--shadow-sm);
+@media (hover: hover) and (pointer: fine) {
+	.glass-card:hover {
+		border-color: var(--color-border-strong);
+		box-shadow: var(--shadow-sm);
+	}
 }
 .aura-space .glass-card {
 	background: var(--color-surface-dark-raised);
 	border-color: var(--color-border-dark);
 	box-shadow: none;
 }
-.aura-space .glass-card:hover {
-	border-color: var(--color-border-dark-strong);
-	box-shadow: none;
+@media (hover: hover) and (pointer: fine) {
+	.aura-space .glass-card:hover {
+		border-color: var(--color-border-dark-strong);
+		box-shadow: none;
+	}
 }
 
 .text-glow {
@@ -1033,10 +1073,10 @@
 /* Reveal-on-scroll (driven by the `reveal` action in $lib/actions/motion) */
 .reveal {
 	opacity: 0;
-	transform: translateY(16px);
+	transform: translateY(12px);
 	transition:
-		opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-		transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+		opacity var(--duration-reveal) var(--ease-out),
+		transform var(--duration-reveal) var(--ease-out);
 	transition-delay: var(--reveal-delay, 0ms);
 	will-change: opacity, transform;
 }
@@ -1088,17 +1128,23 @@
 }
 
 /* Global reduced-motion guard: kill decorative motion, keep content visible. */
+/* Reduced motion means less movement, not no transition. Opacity and colour
+   still carry meaning, so they stay; anything that travels across the screen
+   is removed. */
 @media (prefers-reduced-motion: reduce) {
 	*,
 	*::before,
 	*::after {
 		animation-duration: 0.001ms !important;
 		animation-iteration-count: 1 !important;
-		transition-duration: 0.001ms !important;
 		scroll-behavior: auto !important;
+		transition-property: opacity, color, background-color, border-color !important;
+		transition-duration: 160ms !important;
 	}
 	.reveal {
-		opacity: 1 !important;
 		transform: none !important;
+	}
+	.reveal--in {
+		opacity: 1 !important;
 	}
 }

@@ -18,8 +18,8 @@
 				We began at the front line of care.<br />We built on every lesson it taught us.
 			</h2>
 			<p use:reveal={{ delay: 120 }}>
-				Auracare didn’t start with a digital twin. It started with twenty pharmacies, a wall we
-				couldn’t move, and everything we learned on the way.
+				Auracare did not start with a digital twin. It started with twenty-eight pharmacies and an
+				NHS API we could not reach until 2028.
 			</p>
 		</div>
 

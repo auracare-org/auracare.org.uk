@@ -158,7 +158,7 @@
 
 		<div class="gap-grid">
 			{#each gap as g, i}
-				<div class="glass-card gap-card" use:reveal={{ delay: i * 90 }}>
+				<div class="glass-card gap-card" use:reveal={{ delay: i * 70 }}>
 					<span class="gap-stat">{g.stat}</span>
 					<span class="gap-label">{g.label}</span>
 					<h3>{g.title}</h3>
@@ -181,7 +181,7 @@
 
 		<ol class="room">
 			{#each room as step, i}
-				<li class="room-step" use:reveal={{ delay: i * 90 }}>
+				<li class="room-step" use:reveal={{ delay: i * 70 }}>
 					<span class="room-k" aria-hidden="true">{step.k}</span>
 					<div>
 						<h3>{step.title}</h3>
@@ -389,12 +389,21 @@
 		border-radius: 999px;
 		box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
 		transition:
-			transform 0.2s ease,
-			color 0.2s ease;
+			transform var(--duration-hover) var(--ease-out),
+			color var(--duration-hover) ease;
 	}
-	.btn-solid:hover {
-		transform: translateY(-2px);
-		color: var(--color-primary-800);
+	.btn-solid:active {
+		transform: scale(0.97);
+		transition-duration: var(--duration-press);
+	}
+	@media (hover: hover) and (pointer: fine) {
+		.btn-solid:hover {
+			transform: translateY(-2px);
+			color: var(--color-primary-800);
+		}
+		.btn-solid:hover:active {
+			transform: translateY(-2px) scale(0.97);
+		}
 	}
 	.btn-quiet {
 		font-weight: 600;

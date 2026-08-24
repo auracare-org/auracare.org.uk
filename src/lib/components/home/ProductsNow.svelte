@@ -17,10 +17,10 @@
 
 		<div class="grid">
 			{#each PRODUCTS as product, i (product.key)}
-				<article class="glass-card card" use:reveal={{ delay: 140 + i * 120 }}>
+				<article class="glass-card card" use:reveal={{ delay: 140 + i * 70 }}>
 					<div class="card-head">
 						<div class="motif" aria-hidden="true">
-							{#if product.key === 'auratwin'}
+							{#if product.key === 'auracle'}
 								<!-- twin figure -->
 								<svg viewBox="0 0 48 48" fill="none">
 									<circle cx="24" cy="10" r="5" fill="#2f4ec0" />

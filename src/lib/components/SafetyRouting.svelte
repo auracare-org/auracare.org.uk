@@ -359,8 +359,15 @@
 		border: 1px solid var(--color-border-default);
 		background: #fff;
 		cursor: pointer;
-		transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+		transition:
+			border-color var(--duration-popover) ease,
+			background var(--duration-popover) ease,
+			box-shadow var(--duration-popover) ease,
+			transform var(--duration-press) var(--ease-out);
 		box-shadow: var(--shadow-xs);
+	}
+	.help-node:active {
+		transform: scale(0.97);
 	}
 	.help-node-active {
 		border-color: #dc2626;

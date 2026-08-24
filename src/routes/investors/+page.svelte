@@ -100,8 +100,8 @@
 		<span class="eyebrow" use:reveal>Seed round</span>
 		<h1 use:reveal={{ delay: 60 }}>We're raising our seed round.</h1>
 		<p class="hero-sub" use:reveal={{ delay: 140 }}>
-			Auracle launches to the public in August 2026, and our first clinical trials in Asia begin
-			in February 2027. This round pays for the launch, the trials, and taking our three devices
+			Auracle launches to the public in August 2026, and our first clinical trials in Asia begin in
+			February 2027. This round pays for the launch, the trials, and taking our three devices
 			through certification.
 		</p>
 		<div class="hero-cta" use:reveal={{ delay: 220 }}>
@@ -120,7 +120,7 @@
 		</p>
 		<div class="founder-grid">
 			{#each founders as f, i (f.key)}
-				<article class="founder-card glass-card" use:reveal={{ delay: 140 + i * 80 }}>
+				<article class="founder-card glass-card" use:reveal={{ delay: 140 + i * 70 }}>
 					{#if f.img}
 						<img class="founder-photo" src={f.img} alt="Portrait of {f.name}" loading="lazy" />
 					{/if}
@@ -162,7 +162,7 @@
 		<h2 use:reveal={{ delay: 60 }}>{TWIN_ROLE_HEADING}</h2>
 		<div class="model-grid">
 			{#each TWIN_ROLE as role, i (role.title)}
-				<div class="model-card glass-card" use:reveal={{ delay: 100 + i * 80 }}>
+				<div class="model-card glass-card" use:reveal={{ delay: 100 + i * 70 }}>
 					<span class="model-stat">{role.stat}</span>
 					<h3>{role.title}</h3>
 					<p>{role.body}</p>
@@ -173,7 +173,7 @@
 		<h3 class="model-sub" use:reveal>Two routes to clinical revenue</h3>
 		<div class="model-paths">
 			{#each clinicalPaths as p, i (p.key)}
-				<div class="model-path glass-card" use:reveal={{ delay: 80 + i * 80 }}>
+				<div class="model-path glass-card" use:reveal={{ delay: 80 + i * 70 }}>
 					<span class="model-badge">Path {p.key}</span>
 					<h4>{p.title}</h4>
 					<p>{p.body}</p>
@@ -346,11 +346,18 @@
 		font-size: 0.88rem;
 		padding: 0.55rem 1.05rem;
 		border-radius: 6px;
-		transition: background 0.15s ease;
+		transition:
+			background var(--duration-hover) ease,
+			transform var(--duration-press) var(--ease-out);
 	}
-	.founder-write:hover {
-		background: var(--color-primary-700);
-		color: #fff;
+	.founder-write:active {
+		transform: scale(0.97);
+	}
+	@media (hover: hover) and (pointer: fine) {
+		.founder-write:hover {
+			background: var(--color-primary-700);
+			color: #fff;
+		}
 	}
 	.founder-write:focus-visible {
 		outline: 2px solid var(--color-primary-400);

@@ -198,7 +198,7 @@
 		gap: 0.28rem;
 	}
 	.nav-caret {
-		transition: transform 0.2s ease;
+		transition: transform var(--duration-popover) var(--ease-out);
 		opacity: 0.7;
 	}
 	.nav-dd:hover .nav-caret,
@@ -209,7 +209,10 @@
 		position: absolute;
 		top: calc(100% + 0.6rem);
 		left: 50%;
-		transform: translateX(-50%) translateY(6px);
+		/* Anchored to the trigger above, so it grows from the trigger rather
+		   than from its own centre. */
+		transform-origin: top center;
+		transform: translateX(-50%) translateY(4px) scale(0.97);
 		width: 20rem;
 		display: grid;
 		gap: 0.15rem;
@@ -224,9 +227,9 @@
 		visibility: hidden;
 		pointer-events: none;
 		transition:
-			opacity 0.18s ease,
-			transform 0.18s ease,
-			visibility 0.18s;
+			opacity var(--duration-popover) var(--ease-out),
+			transform var(--duration-popover) var(--ease-out),
+			visibility var(--duration-popover);
 		z-index: 20;
 	}
 	/* Invisible bridge so the menu doesn't close when crossing the gap. */
@@ -243,7 +246,7 @@
 		opacity: 1;
 		visibility: visible;
 		pointer-events: auto;
-		transform: translateX(-50%) translateY(0);
+		transform: translateX(-50%) translateY(0) scale(1);
 	}
 	.nav-sub-item {
 		display: flex;
@@ -328,12 +331,19 @@
 		box-shadow:
 			inset 0 1px 0 rgba(255, 255, 255, 0.12),
 			var(--shadow-xs);
-		transition: background 0.15s ease;
+		transition:
+			background var(--duration-hover) ease,
+			transform var(--duration-press) var(--ease-out);
 		white-space: nowrap;
 	}
-	.nav-waitlist:hover {
-		background: #5971cd;
-		color: #fff;
+	.nav-waitlist:active {
+		transform: scale(0.97);
+	}
+	@media (hover: hover) and (pointer: fine) {
+		.nav-waitlist:hover {
+			background: #5971cd;
+			color: #fff;
+		}
 	}
 	.nav-burger {
 		margin-left: auto;
