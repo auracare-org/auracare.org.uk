@@ -20,6 +20,10 @@
   Six bordered cards each carrying a photo, a role, a bio and two links was the
   densest block on the page and the least skimmable. A roster reads at a
   glance: portrait, name, role on one line, and the detail beside it.
+
+  This used to close with its own "We are raising our seed round" block and a
+  Talk to a founder button. The closing section directly below says the same
+  thing with the same link, so the page made the ask twice in a row.
 -->
 <section class="team section-y">
 	<div class="container-wide">
@@ -41,12 +45,6 @@
 				{/if}
 			{/snippet}
 		</Roster>
-
-		<div class="raise" use:reveal>
-			<h3>We are raising our seed round.</h3>
-			<p>One founder replies directly, depending on where you invest from.</p>
-			<a class="btn-solid" href="/investors#contact">Talk to a founder</a>
-		</div>
 	</div>
 </section>
 
@@ -89,23 +87,6 @@
 		transition:
 			color var(--duration-hover) ease,
 			border-color var(--duration-hover) ease;
-	}
-
-	.raise {
-		margin-top: clamp(2.5rem, 5vw, 4rem);
-		padding-top: clamp(1.75rem, 3vw, 2.5rem);
-		border-top: 1px solid var(--color-ink);
-	}
-	.raise h3 {
-		font-size: clamp(1.5rem, 2.8vw, 2.2rem);
-		letter-spacing: -0.025em;
-		margin: 0 0 0.75rem;
-	}
-	.raise p {
-		font-size: 1rem;
-		color: var(--color-ink-soft);
-		margin: 0 0 1.75rem;
-		max-width: 48ch;
 	}
 
 	@media (hover: hover) and (pointer: fine) {

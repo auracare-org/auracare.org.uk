@@ -36,14 +36,22 @@
 			</div>
 		</div>
 
-		<p class="aside" use:reveal>
-			Auracle, our consumer product, launches on iMessage, WhatsApp and RCS. The waitlist is open at
-			<a href={WAITLIST_URL} rel="noopener">app.auracle.health</a>, and the consumer site is
-			<a href={AURACLE_URL} rel="noopener">auracle.health</a>.
-		</p>
+		<!-- One foot, one rule, one left edge. The aside carried its own top
+		     border but was capped at 62ch, so the rule stopped two-thirds of the
+		     way across and read as a broken divider; and the fineprint was a
+		     `container-wide` element whose own `max-width` overrode the
+		     container's, leaving it centred as a narrow column of left-aligned
+		     text that lined up with nothing else in the section. -->
+		<div class="closing-foot">
+			<p class="aside" use:reveal>
+				Auracle, our consumer product, launches on iMessage, WhatsApp and RCS. The waitlist is open
+				at
+				<a href={WAITLIST_URL} rel="noopener">app.auracle.health</a>, and the consumer site is
+				<a href={AURACLE_URL} rel="noopener">auracle.health</a>.
+			</p>
+			<p class="fineprint" use:reveal={{ delay: 60 }}>{NON_DEVICE_DISCLAIMER}</p>
+		</div>
 	</div>
-
-	<p class="fineprint container-wide" use:reveal>{NON_DEVICE_DISCLAIMER}</p>
 </section>
 
 <style>
@@ -87,10 +95,13 @@
 		max-width: 40ch;
 	}
 
+	.closing-foot {
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		padding-top: clamp(1.75rem, 3vw, 2.25rem);
+		border-top: 1px solid rgba(255, 255, 255, 0.16);
+	}
 	.aside {
-		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
-		padding-top: 1.5rem;
-		border-top: 1px solid rgba(255, 255, 255, 0.12);
+		margin: 0;
 		font-size: 0.92rem;
 		line-height: 1.7;
 		max-width: 62ch;
@@ -102,7 +113,7 @@
 	}
 
 	.fineprint {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		margin: clamp(1.75rem, 3vw, 2.5rem) 0 0;
 		font-size: 0.78rem;
 		line-height: 1.65;
 		color: rgba(226, 230, 240, 0.45);

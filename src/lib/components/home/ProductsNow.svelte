@@ -64,12 +64,14 @@
 	.products {
 		border-top: 1px solid var(--color-rule);
 	}
+	/* Centred, like every other section heading on the site. It carried an
+	   explicit `text-align: left` that opted out of the shared rule, so this was
+	   the one section whose heading sat off the page's centre line. */
 	.products h2 {
 		font-size: clamp(1.9rem, 3.6vw, 3rem);
 		line-height: 1.06;
 		letter-spacing: -0.03em;
-		margin: 0 0 clamp(2.5rem, 5vw, 4rem);
-		text-align: left;
+		margin: 0 auto clamp(2.5rem, 5vw, 4rem);
 	}
 
 	.panels {
