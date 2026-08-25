@@ -449,10 +449,17 @@
 	}
 	/* The day. One vertical rule with the four moments pinned to it; the space
 	   between them is the point, so the rows are spaced by time, not evenly. */
+	/* Centred as a block under a centred heading and lede. It ran the full
+	   container width and hard left, so the one part of the section with a
+	   visible structure — the rule, the times, the dots — was the part that sat
+	   off the page's centre line. The copy inside stays left-aligned: the times
+	   hang in a gutter and the dots pin to a vertical rule, and neither
+	   survives centred text. */
 	.day {
 		list-style: none;
-		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+		margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
 		padding: 0 0 0 5.5rem;
+		max-width: 44rem;
 		position: relative;
 	}
 	.day::before {
@@ -500,8 +507,13 @@
 		margin: 0;
 		max-width: 56ch;
 	}
-	.day-quiet {
-		margin: 1.75rem 0 0;
+	/* Matched to the timeline's measure so its rule spans exactly the block
+	   above it rather than the narrower shared lede width. The class is doubled
+	   to outrank `.section-y > .container-wide > p`, which is a more specific
+	   selector than a scoped single class and was pinning this to 40rem. */
+	.day-quiet.day-quiet {
+		margin: 1.75rem auto 0;
+		max-width: 44rem;
 		padding-top: 1.25rem;
 		border-top: 1px solid var(--color-rule);
 		font-size: 0.88rem;

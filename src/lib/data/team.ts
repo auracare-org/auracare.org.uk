@@ -43,6 +43,7 @@ export const team: Record<string, TeamMember> = {
 	'julius-chu': {
 		id: 'julius-chu',
 		name: 'Julius Chu',
+		img: '/JPG/julius-chu.jpg',
 		role: 'CPO',
 		bio: 'Computer science at NYU. Leads product: the design system, the consumer experience, and how the two products fit together.',
 		linkedin: 'https://www.linkedin.com/in/juliuschu'
