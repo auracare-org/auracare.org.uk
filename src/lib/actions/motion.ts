@@ -132,6 +132,21 @@ function stopListening() {
 }
 
 /**
+ * Run the sweep now, synchronously.
+ *
+ * A page arriving through a client-side navigation mounts with every revealable
+ * node at `opacity: 0` and its first sweep queued for the next frame. Inside a
+ * view transition that frame can land after the incoming page has been
+ * captured, so the new page cross-fades in empty and its content appears
+ * afterwards. Calling this once the navigation has settled reveals whatever is
+ * already in view before that capture, and the entrance still plays because the
+ * class change drives a CSS transition either way.
+ */
+export function revealNow(): void {
+	if (pending.size) sweep();
+}
+
+/**
  * Reveal-on-scroll. Adds `.reveal` immediately and `.reveal--in` once the node
  * enters the viewport. Respects prefers-reduced-motion (reveals instantly).
  */
