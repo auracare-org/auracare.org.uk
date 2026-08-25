@@ -31,25 +31,6 @@
 		}
 	];
 
-	/* What actually happens during the appointment. */
-	const room = [
-		{
-			k: '01',
-			title: 'The context is already in the room',
-			body: 'The patient arrives with a complete lifestyle summary from Auracle, and acute vitals stream live from our own devices, so nothing is dug up on the spot. Every one of those signals is already coded to the clinical ontology, so the core reads them as clinical fact rather than loose text.'
-		},
-		{
-			k: '02',
-			title: 'Nobody stops to type',
-			body: 'The consultation is transcribed as it happens. No one breaks the conversation to write notes.'
-		},
-		{
-			k: '03',
-			title: 'The clinician stays with the patient',
-			body: 'The CDSS reasons in the background and surfaces what is useful, so the clinician never appears to search anything.'
-		}
-	];
-
 	/* The three things the core hands back, judgement staying with the clinician. */
 	const outputs = [
 		{
@@ -132,16 +113,18 @@
 	sub="A clinical decision support system that works during the appointment, not after it. The clinician keeps their attention on the patient."
 />
 
-<!-- ================= The gap, and how it closes ================= -->
-<!-- These were two consecutive sections, each a heading over a list: the
-     problem, then the answer, in the same shape. Pairing them puts each
-     failure next to the thing that removes it, which is the argument. -->
+<!-- ================= Proof of need ================= -->
+<!-- This section only establishes that the need is real: the demand, the
+     ceiling on the tools serving it, and the hole in the record. It used to
+     answer itself with a matching list of what the CDSS does instead, which
+     asserted a fix without showing one. How it actually works is the rest of
+     the page: the hardware link, the reasoning core, the three outputs. -->
 <section class="section-y gap-sec">
 	<div class="container-wide">
 		<h2 use:reveal>Clinicians already want AI. Today's tools don't fit the room.</h2>
 		<p class="lede" use:reveal={{ delay: 60 }}>
-			The appetite is settled; the fit is not. Three things break in the consultation, and the CDSS
-			is built to remove each one.
+			The appetite is settled; the fit is not. Three things break in the consultation, and they are
+			why the demand is still unmet.
 		</p>
 
 		<div class="gap-figures">
@@ -152,21 +135,6 @@
 					<p>{g.body}</p>
 				</div>
 			{/each}
-		</div>
-
-		<div class="answers">
-			<h3 class="answers-head" use:reveal>What replaces each one</h3>
-			<ol class="room">
-				{#each room as step (step.title)}
-					<li class="room-step" use:reveal={{ delay: 40 }}>
-						<span class="room-k" aria-hidden="true">{step.k}</span>
-						<div>
-							<h4>{step.title}</h4>
-							<p>{step.body}</p>
-						</div>
-					</li>
-				{/each}
-			</ol>
 		</div>
 	</div>
 </section>
@@ -428,23 +396,6 @@
 		line-height: 1.65;
 		color: var(--color-ink-soft);
 	}
-	.answers {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
-		padding-top: clamp(1.5rem, 3vw, 2rem);
-		border-top: 1px solid var(--color-ink);
-	}
-	.answers-head {
-		font-size: 0.7rem;
-		font-weight: 600;
-		letter-spacing: 0.18em;
-		text-transform: uppercase;
-		color: var(--color-ink-faint);
-		margin: 0 0 1.5rem;
-	}
-	.room-step h4 {
-		font-size: 1.02rem;
-		margin: 0 0 0.25rem;
-	}
 	@media (min-width: 860px) {
 		.gap-figures {
 			grid-template-columns: repeat(3, 1fr);
@@ -471,39 +422,6 @@
 		letter-spacing: 0.06em;
 		color: var(--color-ink-faint);
 		margin-top: 0.4rem;
-	}
-	.room {
-		list-style: none;
-		margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
-		padding: 0;
-		display: grid;
-		gap: 1rem;
-	}
-	.room-step {
-		display: flex;
-		gap: 1.1rem;
-		align-items: flex-start;
-		padding: 1.4rem 1.6rem;
-		background: var(--color-neutral-0);
-		border: 1px solid var(--color-border-default);
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-xs);
-	}
-	/* primary-600, not 500. The 500 is a mid blue that only clears 3.8:1 on the
-	   paper ground, under AA for text this size. */
-	.room-k {
-		flex: none;
-		font-family: var(--font-family-mono);
-		font-size: 1.05rem;
-		font-weight: 700;
-		color: var(--color-primary-600);
-		padding-top: 0.15rem;
-	}
-	.room-step p {
-		font-size: 0.95rem;
-		line-height: 1.7;
-		color: var(--color-ink-soft);
-		max-width: 52ch;
 	}
 	/* Two paths, side by side, so the length of each is the argument.
 	   Capped and centred: at the full container width each column was 576px
