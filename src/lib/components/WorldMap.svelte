@@ -454,6 +454,10 @@
 			transform: translateX(0);
 		}
 	}
+	/* Ink on the wave tone, not white. The tones are chosen to read against a
+	   near-black map, which makes them light — white on the lightest of them
+	   was 3.48:1, and on the amber it would have been about half that. Ink
+	   clears 4.7:1 on the darkest tone and better on every other. */
 	.cap-badge {
 		flex: none;
 		font-family: var(--font-family-mono);
@@ -461,7 +465,7 @@
 		font-weight: 700;
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
-		color: #fff;
+		color: var(--color-ink);
 		background: var(--c);
 		padding: 0.3rem 0.55rem;
 		border-radius: var(--radius-sm);

@@ -5,11 +5,15 @@
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT, HARDWARE, HARDWARE_MORE, REGULATORY_NOTE } from '$lib/data/company';
 
+	/* Flipped once the differential figure is scrolled to, which starts the
+	   bars growing. */
+	let barsIn = $state(false);
+
 	/* Why today's clinical AI doesn't fit the consultation. */
 	const gap = [
 		{
 			stat: '~80%',
-			label: 'of doctors already reach for AI',
+			label: 'of doctors already use AI',
 			title: 'The demand is already there',
 			body: 'Clinicians want the help. Trust breaks the moment they turn to a screen mid-consultation.'
 		},
@@ -20,7 +24,7 @@
 			body: 'The general-purpose models behind these tools score around a third on specialty benchmarks, and know nothing about the patient in the room.'
 		},
 		{
-			stat: 'gaps',
+			stat: 'Gaps',
 			label: 'between every record',
 			title: 'Disconnected from daily life',
 			body: 'The record is a series of snapshots with long silences between them. Lifestyle and social history are slow to gather and easy to misremember.'
@@ -263,7 +267,7 @@
 				{/each}
 			</ol>
 
-			<figure class="out-demo" use:reveal={{ delay: 80 }}>
+			<figure class="out-demo" use:reveal={{ delay: 80, onEnter: () => (barsIn = true) }}>
 				<figcaption>
 					<span class="demo-head">Ranked differential</span>
 					<span class="demo-tag">Illustrative, not a real patient</span>
@@ -272,12 +276,22 @@
 					<span>Differential</span>
 					<span>Clinician agreement</span>
 				</div>
+				<!-- The bars grow from nothing as the figure scrolls in, staggered
+				     down the list, so the ranking arrives in rank order. The width
+				     is the transitioned property rather than a transform, because
+				     a scaled bar would drag its own border and its right edge with
+				     it; the fill is a plain block, so animating width composites
+				     no worse and lands on an exact percentage. -->
 				<ul class="demo-list">
-					{#each differentialExample as d (d.name)}
+					{#each differentialExample as d, i (d.name)}
 						<li class="demo-row" class:lead={d.lead}>
 							<span class="demo-name">{d.name}</span>
 							<span class="demo-bar" aria-hidden="true">
-								<span class="demo-fill" style="width:{d.pct}%"></span>
+								<span
+									class="demo-fill"
+									class:is-grown={barsIn}
+									style="--pct:{d.pct}%; --bar-delay:{i * 90}ms"
+								></span>
 							</span>
 							<span class="demo-pct">{d.pct}%</span>
 						</li>
@@ -475,12 +489,14 @@
 		border-radius: var(--radius-lg);
 		box-shadow: var(--shadow-xs);
 	}
+	/* primary-600, not 500. The 500 is a mid blue that only clears 3.8:1 on the
+	   paper ground, under AA for text this size. */
 	.room-k {
 		flex: none;
 		font-family: var(--font-family-mono);
 		font-size: 1.05rem;
 		font-weight: 700;
-		color: var(--color-primary-500);
+		color: var(--color-primary-600);
 		padding-top: 0.15rem;
 	}
 	.room-step p {
@@ -497,6 +513,9 @@
 		margin-top: clamp(2rem, 4vw, 3rem);
 		padding-block: clamp(1.75rem, 3vw, 2.25rem);
 		border-block: 1px solid rgba(255, 255, 255, 0.16);
+	}
+	.link-path {
+		text-align: center;
 	}
 	.link-label {
 		display: block;
@@ -516,11 +535,14 @@
 	   left dangling into empty space — which broke the one thing the diagram
 	   exists to show. Vertically the two paths cannot wrap at all, and the
 	   difference in their length becomes the argument. */
+	/* Centred under a centred heading. Both chains ran hard left inside their
+	   own half, so the two paths sat against the dividing rule and the left
+	   edge respectively rather than reading as a matched pair. */
 	.link-steps {
 		list-style: none;
 		display: flex;
 		flex-direction: column;
-		align-items: flex-start;
+		align-items: center;
 		gap: 1.35rem;
 		margin: 0;
 		padding: 0;
@@ -536,7 +558,7 @@
 	.link-steps li + li::before {
 		content: '';
 		position: absolute;
-		left: 1.1rem;
+		left: 50%;
 		top: -1.35rem;
 		width: 1px;
 		height: 1.35rem;
@@ -555,23 +577,25 @@
 		border-color: var(--color-primary-300);
 	}
 	.link-cost {
-		margin: 1rem 0 0;
+		margin: 1rem auto 0;
 		font-size: 0.88rem;
 		line-height: 1.7;
 		color: rgba(226, 230, 240, 0.72);
-		max-width: 46ch;
+		max-width: 40ch;
 	}
 	@media (min-width: 860px) {
 		.link {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 			gap: 0;
 		}
+		/* Padding is symmetric on both halves. With 3rem on one side only, the
+		   content box's centre sat 1.5rem off the column's, so centring the
+		   chain inside it put the chain visibly off-centre in its half. */
+		.link-path {
+			padding-inline: 3rem;
+		}
 		.link-path--us {
 			border-left: 1px solid rgba(255, 255, 255, 0.16);
-			padding-left: 3rem;
-		}
-		.link-path--them {
-			padding-right: 3rem;
 		}
 	}
 	.hw-grid {
@@ -711,14 +735,30 @@
 		background: var(--color-surface-alt);
 		overflow: hidden;
 	}
+	/* Grows from nothing when the figure is scrolled to, staggered down the
+	   list so the ranking arrives in rank order. */
 	.demo-fill {
 		display: block;
+		width: 0;
 		height: 100%;
 		border-radius: 999px;
 		background: var(--color-primary-300);
+		transition: width 900ms var(--ease-out);
+		transition-delay: var(--bar-delay, 0ms);
 	}
+	.demo-fill.is-grown {
+		width: var(--pct);
+	}
+	/* The leading differential is the brand blue; the rest are the tint. It was
+	   a two-stop gradient, which the rest of the site does not use anywhere. */
 	.demo-row.lead .demo-fill {
-		background: linear-gradient(90deg, var(--color-primary-600), var(--color-primary-500));
+		background: var(--color-primary-600);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.demo-fill {
+			transition: none;
+			width: var(--pct);
+		}
 	}
 	.demo-pct {
 		grid-row: 2;
@@ -751,8 +791,12 @@
 		color: var(--color-ink-faint);
 		max-width: 52rem;
 	}
+	/* Centred under the centred note above it. `inline-flex` cannot be centred
+	   by auto margins, so it becomes a flex box sized to its own content. */
 	.arch-link {
-		display: inline-flex;
+		display: flex;
+		width: max-content;
+		margin-inline: auto;
 		align-items: center;
 		gap: 0.45rem;
 		margin-top: 0.9rem;

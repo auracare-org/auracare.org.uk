@@ -34,7 +34,13 @@
 	   brand blue land far harder than it does on a blue-tinted page. */
 	--color-ink: #14161a;
 	--color-ink-soft: #4a4f57;
-	--color-ink-faint: #7a7f88;
+	/* Was #7a7f88, which is 3.57:1 on the page ground and 3.26:1 on the alt —
+	   under AA for small text, and this token carries the small text: eyebrows,
+	   ledger labels, captions, notes. #646870 is the same hue darkened until it
+	   clears 4.5:1 against the darker of the two grounds (4.96:1 and 4.53:1),
+	   and still sits clearly lighter than --color-ink-soft at 7.31:1, so the
+	   three-step ink hierarchy survives. */
+	--color-ink-faint: #646870;
 	--color-surface-page: #f4f1ea;
 	--color-surface-alt: #ebe7dd;
 	--color-rule: #d8d3c7;
@@ -1045,8 +1051,14 @@
 .aura-space h4 {
 	color: #f4f5f8;
 }
-.aura-space p {
-	color: rgba(226, 230, 240, 0.6);
+/* Body copy on a dark ground.
+   The doubled class is deliberate: a component's own `.lede { color: … }` is a
+   scoped rule of equal specificity that loads after this file, so it won any
+   tie and left ink-coloured paragraphs sitting on near-black at ~2.2:1.
+   Repeating the class outranks it without reaching for !important. */
+.aura-space p,
+.aura-space.aura-space :is(p, .lede, .section-lede, li) {
+	color: rgba(226, 230, 240, 0.66);
 }
 .aura-space .eyebrow {
 	color: var(--color-primary-300);
@@ -1238,6 +1250,15 @@
    one percent, which is below the threshold at which anything reads as motion:
    the page looked static even while it was animating. Travel does the work
    now, and dropping the blur takes a per-element GPU layer with it. */
+/* No `will-change` here, deliberately.
+   It was set to `opacity, transform` on every revealable element, which on the
+   homepage is sixty of them — sixty compositor layers pinned from first paint
+   and held until each one finished its own transition. That is a large amount
+   of layer memory for the compositor to push around on every scroll frame, and
+   it was the largest single cause of the page feeling heavy under the thumb.
+   Opacity and transform are composited properties anyway: the browser promotes
+   the element when the transition starts, and a 480ms transition is far longer
+   than it needs to do so. The hint bought nothing and cost the scroll. */
 .reveal {
 	opacity: 0;
 	transform: translate3d(0, 18px, 0);
@@ -1245,16 +1266,14 @@
 		opacity var(--duration-reveal) var(--ease-out),
 		transform var(--duration-reveal) var(--ease-out);
 	transition-delay: var(--reveal-delay, 0ms);
-	will-change: opacity, transform;
 }
 .reveal--in {
 	opacity: 1;
 	transform: none;
 }
-/* Once the entrance has finished, drop the compositing hint. There are sixty
-   of these on the homepage and each one otherwise pins a layer for good. */
+/* Once the entrance has finished the element is static, so drop the transition
+   too: nothing should re-animate it. */
 .reveal--done {
-	will-change: auto;
 	transition: none;
 }
 

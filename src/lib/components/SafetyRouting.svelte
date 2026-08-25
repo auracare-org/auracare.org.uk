@@ -298,8 +298,10 @@
 		color: var(--color-ink-soft);
 		font-size: 0.9rem;
 	}
+	/* #dc2626 is 4.28:1 on the paper ground, just under AA for text this size.
+	   One step darker clears it at 5.09:1 and still reads as the same red. */
 	.red {
-		color: #dc2626;
+		color: #c81e1e;
 		font-weight: 700;
 	}
 

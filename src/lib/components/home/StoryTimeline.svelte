@@ -172,13 +172,16 @@
 		padding: 1.25rem 1.4rem;
 		position: relative;
 	}
+	/* The brand blue, not the 300 tint. The tint is the shade meant for dark
+	   grounds; on this section's white it came out at 2.08:1, which is the
+	   lowest contrast anywhere on the site. */
 	.tl-date {
 		font-family: var(--font-family-mono);
 		font-size: 0.72rem;
 		font-weight: 700;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		color: var(--color-primary-300);
+		color: var(--color-primary-600);
 	}
 	.tl-card h3 {
 		font-size: 1.15rem;

@@ -13,6 +13,12 @@ interface RevealParams {
 	once?: boolean;
 	/** Stagger delay in ms. */
 	delay?: number;
+	/**
+	 * Called the first time the node is revealed. Lets a component start its own
+	 * animation on the same trigger without registering a second scroll
+	 * listener — the sweep is already running, so this rides along with it.
+	 */
+	onEnter?: () => void;
 }
 
 /**
@@ -32,6 +38,7 @@ interface RevealParams {
 interface PendingReveal {
 	node: HTMLElement;
 	once: boolean;
+	onEnter?: () => void;
 }
 
 const pending = new Set<PendingReveal>();
@@ -41,6 +48,11 @@ let listening = false;
 
 function show(entry: PendingReveal) {
 	entry.node.classList.add('reveal--in');
+	if (entry.onEnter) {
+		const fire = entry.onEnter;
+		entry.onEnter = undefined; // once only, even for a repeating reveal
+		fire();
+	}
 	// Release the GPU layer once the dissolve has actually finished.
 	entry.node.addEventListener('transitionend', () => entry.node.classList.add('reveal--done'), {
 		once: true
@@ -57,26 +69,40 @@ function sweep() {
 	sweepQueued = 0;
 	sweepTimer = 0;
 	const vh = window.innerHeight || document.documentElement.clientHeight || 0;
-	for (const entry of [...pending]) {
+
+	/* Every rect is read before a single class is written. Reading and writing
+	   alternately inside one loop invalidates layout on each write, so the next
+	   `getBoundingClientRect` forces a fresh reflow — sixty nodes then cost
+	   sixty synchronous layouts per frame, which is most of a frame budget on
+	   its own and is what made a long page feel heavy under the thumb. */
+	const entering: PendingReveal[] = [];
+	const leaving: PendingReveal[] = [];
+	for (const entry of pending) {
 		const r = entry.node.getBoundingClientRect();
 		// Revealed once the top edge rises into the lower tenth of the viewport,
 		// or if the element has already been scrolled clean past.
 		const entered = r.top < vh * 0.9 && r.bottom > 0;
 		const passed = r.bottom <= 0;
-		if (entered || passed) show(entry);
-		else if (!entry.once) entry.node.classList.remove('reveal--in');
+		if (entered || passed) entering.push(entry);
+		else if (!entry.once) leaving.push(entry);
 	}
+	for (const entry of leaving) entry.node.classList.remove('reveal--in');
+	for (const entry of entering) show(entry);
 }
 
 function onScroll() {
 	if (sweepQueued || sweepTimer) return;
+	/* While the page is being painted, rAF is the throttle and it is guaranteed
+	   to run — no timer needed, and arming one anyway meant every scroll burst
+	   scheduled two sweeps instead of one. A hidden document is the one state
+	   where rAF can be deferred indefinitely, and since every node starts at
+	   opacity 0 a sweep that never runs leaves the page blank rather than merely
+	   un-animated. So the timer is armed only there. */
+	if (typeof document !== 'undefined' && document.hidden) {
+		sweepTimer = window.setTimeout(sweep, 250);
+		return;
+	}
 	sweepQueued = requestAnimationFrame(sweep);
-	/* rAF is the right throttle while the page is being painted, but a throttled
-	   or backgrounded renderer can defer it indefinitely — and since every node
-	   starts at opacity 0, a sweep that never runs leaves the page blank rather
-	   than merely un-animated. A timer runs in that state, so it backstops the
-	   frame callback and whichever arrives first cancels the other. */
-	sweepTimer = window.setTimeout(sweep, 250);
 }
 
 function startListening() {
@@ -84,6 +110,9 @@ function startListening() {
 	listening = true;
 	window.addEventListener('scroll', onScroll, { passive: true });
 	window.addEventListener('resize', onScroll);
+	// Coming back to a tab that was hidden while it loaded: sweep once now that
+	// frames are being served again.
+	document.addEventListener('visibilitychange', onScroll);
 }
 
 function stopListening() {
@@ -91,6 +120,7 @@ function stopListening() {
 	listening = false;
 	window.removeEventListener('scroll', onScroll);
 	window.removeEventListener('resize', onScroll);
+	document.removeEventListener('visibilitychange', onScroll);
 	if (sweepQueued) {
 		cancelAnimationFrame(sweepQueued);
 		sweepQueued = 0;
@@ -116,16 +146,18 @@ function stopListening() {
 
 export const reveal: Action<HTMLElement, RevealParams | undefined> = (node, params) => {
 	const opts = { threshold: 0.15, once: true, delay: 0, ...(params ?? {}) };
+	const onEnter = opts.onEnter;
 	node.classList.add('reveal');
 	if (opts.delay) node.style.setProperty('--reveal-delay', `${opts.delay}ms`);
 
 	// Reduced motion or no DOM: show it immediately.
 	if (prefersReducedMotion() || typeof window === 'undefined') {
 		node.classList.add('reveal--in');
+		onEnter?.();
 		return {};
 	}
 
-	const entry: PendingReveal = { node, once: opts.once };
+	const entry: PendingReveal = { node, once: opts.once, onEnter };
 	pending.add(entry);
 	startListening();
 	// Evaluate straight away so anything already in view on load reveals without
