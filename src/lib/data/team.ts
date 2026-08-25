@@ -57,10 +57,10 @@ export const team: Record<string, TeamMember> = {
 		linkedin: 'https://www.linkedin.com/in/akn101',
 		website: 'https://akn.me.uk/'
 	},
-	'karam-salah': {
-		id: 'karam-salah',
-		name: 'Karam Salah',
-		img: '/JPG/karam-salah.jpg',
+	'karam-elradie': {
+		id: 'karam-elradie',
+		name: 'Karam Elradie',
+		img: '/JPG/karam-elradie.jpg',
 		role: 'Head of ML',
 		bio: 'Leads machine learning: the neuro-symbolic core and graph models behind our reasoning.'
 	}
