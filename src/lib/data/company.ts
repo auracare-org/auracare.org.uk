@@ -304,8 +304,8 @@ export const TIMELINE: Milestone[] = [
 	},
 	{
 		date: 'May 2026',
-		title: 'We pivot to Auracare AI',
-		body: 'A new direction: two products on one patient model, Auracle for people and the Auracare CDSS for clinicians.',
+		title: 'We pivot to building the Auracare CDSS',
+		body: 'A new direction: a clinical decision support system for clinicians, with Auracle as the consumer front on the same patient model.',
 		era: 'pivot',
 		fork: true
 	},
