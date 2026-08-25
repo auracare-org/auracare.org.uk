@@ -76,7 +76,14 @@
 		gap: 1.25rem;
 		margin: 0.6rem 0 0;
 	}
+	/* Standalone profile links, one per person: they sit on their own line and
+	   are not part of a sentence, so they carry a real tap height. */
 	.links a {
+		display: inline-flex;
+		align-items: center;
+		@media (pointer: coarse) {
+			min-height: 44px;
+		}
 		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.12em;

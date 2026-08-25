@@ -320,7 +320,9 @@
 	/* A standalone action, so it carries a real tap height rather than just
 	   its line box. */
 	.founder-write {
-		min-height: 44px;
+		@media (pointer: coarse) {
+			min-height: 44px;
+		}
 		margin-top: 0.9rem;
 		display: inline-flex;
 		align-items: center;
@@ -339,9 +341,14 @@
 	.founder-write span {
 		transition: transform var(--duration-hover) var(--ease-out);
 	}
+	/* A mailto on its own line under the role, not a link inside a sentence. */
 	.founder-mail {
-		display: inline-block;
-		margin-top: 0.4rem;
+		display: inline-flex;
+		align-items: center;
+		@media (pointer: coarse) {
+			min-height: 44px;
+		}
+		margin-top: 0.15rem;
 		font-size: 0.82rem;
 		color: var(--color-ink-faint);
 		transition: color var(--duration-hover) ease;

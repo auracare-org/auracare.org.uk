@@ -151,7 +151,9 @@
 	/* A standalone action, so it carries a real tap height rather than just
 	   its line box. */
 	.cta-ghost {
-		min-height: 44px;
+		@media (pointer: coarse) {
+			min-height: 44px;
+		}
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
