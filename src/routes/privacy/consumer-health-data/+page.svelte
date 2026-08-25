@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageHero from '$lib/components/layout/PageHero.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT } from '$lib/data/company';
@@ -11,30 +12,24 @@
 	noindex={false}
 />
 
-<section class="page-hero aura-space">
-	<span
-		class="bubble"
-		style="--bubble-size:420px;--bubble-color:rgba(97,128,255,.30);--bubble-blur:20px; top:-14%; right:-6%"
-		aria-hidden="true"
-	></span>
-	<div class="container-wide hero-inner">
-		<span class="eyebrow" use:reveal>Consumer Health Data</span>
-		<h1 use:reveal={{ delay: 60 }}>
-			Consumer Health Data <span class="text-gradient-l">Privacy Policy</span>
-		</h1>
-		<p class="lede" use:reveal={{ delay: 140 }}>
-			This policy is for residents of Washington and Nevada, and anyone whose consumer health data
-			is collected in those states. It supplements our main
-			<a href="/privacy">Privacy Policy</a> and explains what consumer health data Auracle collects,
-			why, and the rights you have over it.
-		</p>
-		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 24 July 2026</p>
-	</div>
-</section>
+<PageHero
+	title="Consumer Health Data"
+	accent="Privacy Policy."
+	accentOwnLine
+	sub="This policy is for residents of Washington and Nevada, and anyone whose consumer health data is collected in those states. It supplements our main Privacy Policy and explains what consumer health data Auracle collects, why, and the rights you have over it."
+	meta="Consumer Health Data · Last updated 24 July 2026"
+/>
 
 <section class="policy section-y">
 	<div class="container-wide">
 		<article class="prose">
+			<!-- The hero's supporting line used to carry this link. PageHero takes
+			     plain text, so the cross-reference to the parent policy is stated
+			     here instead rather than being lost. -->
+			<p class="doc-note">
+				This policy supplements our main <a href="/privacy">Privacy Policy</a>.
+			</p>
+
 			<h2 id="scope">Why this policy exists</h2>
 			<p>
 				The Washington My Health My Data Act and Nevada's consumer health data law (SB 370) give you
@@ -155,74 +150,4 @@
 </section>
 
 <style>
-	.page-hero {
-		position: relative;
-		padding-block: clamp(6rem, 12vw, 9rem) clamp(2.5rem, 6vw, 4rem);
-		overflow: hidden;
-	}
-	.hero-inner {
-		position: relative;
-		z-index: 1;
-		max-width: 46rem;
-	}
-	.page-hero h1 {
-		font-size: clamp(2.2rem, 5.5vw, 3.6rem);
-		line-height: 1.15;
-		letter-spacing: -0.02em;
-		margin-block: 0.75rem 1.1rem;
-	}
-	.text-gradient-l {
-		background: linear-gradient(100deg, #8aa0ff, #cdd9ff);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-	.lede {
-		font-size: clamp(1rem, 1.6vw, 1.18rem);
-		line-height: 1.7;
-		max-width: 40rem;
-	}
-	.lede a {
-		color: inherit;
-		text-decoration: underline;
-		text-underline-offset: 2px;
-	}
-	.meta {
-		margin-top: 1.25rem;
-		font-size: 0.85rem;
-		color: rgba(226, 232, 255, 0.6) !important;
-	}
-
-	.prose {
-		max-width: 44rem;
-		margin-inline: auto;
-		color: var(--color-ink-soft);
-		line-height: 1.7;
-	}
-	.prose :global(h2) {
-		font-size: clamp(1.35rem, 2.6vw, 1.7rem);
-		letter-spacing: -0.01em;
-		margin-top: 2.75rem;
-		margin-bottom: 0.75rem;
-		color: var(--color-ink);
-	}
-	.prose :global(p) {
-		margin-block: 0.75rem;
-	}
-	.prose :global(ul) {
-		margin-block: 0.75rem;
-		padding-left: 1.25rem;
-		list-style: disc;
-	}
-	.prose :global(li) {
-		margin-block: 0.4rem;
-	}
-	.prose :global(a) {
-		color: var(--color-primary-600);
-		text-decoration: underline;
-		text-underline-offset: 2px;
-	}
-	.prose :global(a:hover) {
-		color: var(--color-primary-700);
-	}
 </style>

@@ -154,7 +154,7 @@
 				</div>
 			{/if}
 
-			<button type="submit" class="btn-primary submit-btn"> Open email to submit </button>
+			<button type="submit" class="btn-solid submit-btn">Open email to submit</button>
 		</form>
 
 		<div class="info-panels" use:reveal={{ delay: 180 }}>
@@ -212,30 +212,34 @@
 	}
 
 	.right-card {
-		background: var(--color-surface-alt);
-		border: 1px solid var(--color-neutral-200);
-		border-radius: 0.6rem;
-		padding: 0.75rem 1rem;
+		background: var(--color-surface-raised);
+		border: 1px solid var(--color-rule);
+		padding: 0.85rem 1rem;
 		text-align: left;
 		cursor: pointer;
 		transition:
-			background 0.15s,
-			border-color 0.15s;
+			background var(--duration-hover) ease,
+			border-color var(--duration-hover) ease,
+			color var(--duration-hover) ease;
 		color: var(--color-ink-soft);
 		font-size: 0.88rem;
 		font-weight: 500;
 	}
 
 	.right-card:hover {
-		background: var(--color-primary-50);
-		border-color: var(--color-primary-300);
-		color: var(--color-ink-soft);
+		border-color: var(--color-rule-strong);
+		color: var(--color-ink);
 	}
 
+	/* The chosen one is marked by ink, not by a blue fill: this is a selected
+	   state in a form, not a brand moment. */
 	.right-card--active {
-		background: var(--color-primary-100);
-		border-color: var(--color-primary-400);
-		color: var(--color-neutral-1000);
+		background: var(--color-ink);
+		border-color: var(--color-ink);
+		color: var(--color-surface-page);
+	}
+	.right-card--active:hover {
+		color: var(--color-surface-page);
 	}
 
 	.right-label {
@@ -245,11 +249,11 @@
 	/* Selected description */
 	.selected-desc {
 		background: var(--color-surface-alt);
-		border-left: 3px solid var(--color-primary-400);
-		border-radius: 0 0.4rem 0.4rem 0;
+		border-left: 2px solid var(--color-primary-600);
 		padding: 0.9rem 1.1rem;
 		margin-bottom: 2rem;
 		font-size: 0.92rem;
+		line-height: 1.7;
 		color: var(--color-ink-soft);
 	}
 
@@ -294,38 +298,38 @@
 
 	.field input,
 	.field textarea {
-		background: var(--color-neutral-0);
-		border: 1px solid var(--color-neutral-300);
-		border-radius: 0.5rem;
-		padding: 0.7rem 0.9rem;
-		color: var(--color-ink-soft);
+		background: var(--color-surface-raised);
+		border: 1px solid var(--color-rule-strong);
+		padding: 0.8rem 0.9rem;
+		color: var(--color-ink);
 		font-size: 0.95rem;
 		font-family: inherit;
-		transition: border-color 0.15s;
+		transition: border-color var(--duration-hover) ease;
 		width: 100%;
 		box-sizing: border-box;
 	}
 
+	/* The focus ring is the brand blue on a border that is already there, so
+	   the field does not change colour under the cursor mid-typing. */
 	.field input:focus,
 	.field textarea:focus {
-		outline: none;
-		border-color: var(--color-primary-400);
-		background: var(--color-primary-50);
+		outline: 2px solid var(--color-primary-600);
+		outline-offset: 1px;
+		border-color: var(--color-primary-600);
 	}
 
 	.field input::placeholder,
 	.field textarea::placeholder {
-		color: var(--color-neutral-400);
+		color: var(--color-ink-faint);
 	}
 
 	.delete-warning {
-		background: #fff5f5;
-		border: 1px solid #fca5a5;
-		border-radius: 0.5rem;
-		padding: 0.9rem 1rem;
+		background: var(--color-surface-alt);
+		border-left: 2px solid #c81e1e;
+		padding: 0.9rem 1.1rem;
 		font-size: 0.88rem;
-		color: #b91c1c;
-		line-height: 1.65;
+		color: #c81e1e;
+		line-height: 1.7;
 	}
 
 	.submit-btn {
