@@ -110,7 +110,7 @@ export const PRODUCTS: Product[] = [
 		name: 'Auracle',
 		tagline: 'A companion in your messages',
 		blurb:
-			'Auracare’s social-history engine, shipped as a wellness companion in your messages. It learns your daily life in conversation and builds a history you can share at an appointment.',
+			'Auracare’s social-history engine, shipped as a wellness companion in your messages. It learns your daily life in conversation and builds a SNOMED CT-encoded history you can share at an appointment.',
 		status: 'ships-soon',
 		statusLabel: 'Expected September 2026',
 		href: '/product/auracle'
