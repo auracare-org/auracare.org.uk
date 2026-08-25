@@ -331,7 +331,7 @@
 	}
 	.closing h2 {
 		font-size: clamp(2.1rem, 4.6vw, 3.4rem);
-		line-height: 1.02;
+		line-height: 1.15;
 		letter-spacing: -0.035em;
 		margin: 0 0 1.25rem;
 		color: #fff;

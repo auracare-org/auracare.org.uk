@@ -187,7 +187,7 @@
 	}
 	.head h2 {
 		font-size: clamp(1.9rem, 3.6vw, 2.8rem);
-		line-height: 1.1;
+		line-height: 1.15;
 		letter-spacing: -0.02em;
 		margin: 0.75rem 0 1.25rem;
 	}

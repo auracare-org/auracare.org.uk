@@ -2,6 +2,7 @@
 	import PageHero from '$lib/components/layout/PageHero.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal, countUp } from '$lib/actions/motion';
+	import LoopDial from '$lib/components/LoopDial.svelte';
 	import { CONTACT, ONTOLOGY_STATS } from '$lib/data/company';
 
 	/* --- Auracle: how the history gets built ------------------------ */
@@ -39,31 +40,37 @@
 		{
 			key: 'input',
 			label: 'Input',
+			short: 'Input',
 			body: 'One timeline: everyday-life signals from Auracle, clinical history, and vitals captured live in the room, all on a single timestamped record.'
 		},
 		{
 			key: 'encoding',
 			label: 'Encoding',
+			short: 'Encoding',
 			body: 'Each observation is matched to its concept in the clinical ontology and stamped with when it was true. This is the step that turns loose readings into a record the core can reason over.'
 		},
 		{
 			key: 'thinking',
 			label: 'Thinking',
+			short: 'Thinking',
 			body: 'The core weighs the evidence across the knowledge graph and returns a spread of what is likely, rather than committing to one answer.'
 		},
 		{
 			key: 'thesis',
 			label: 'Thesis',
+			short: 'Thesis',
 			body: 'That spread is checked against population data, expressed as risk, and set out as a ranked differential with its sources attached. It is provisional, and it changes when the evidence does.'
 		},
 		{
 			key: 'voi',
 			label: 'Value-of-information',
+			short: 'Worth asking?',
 			body: 'The loop weighs whether another question would change the answer enough to justify the delay. If it would, it picks the single most useful one and starts again. If not, it stops here.'
 		},
 		{
 			key: 'outcome',
 			label: 'Medical outcome',
+			short: 'Outcome',
 			body: 'A referral, a prescription, further testing or a lifestyle plan, each checked against safety and against what the clinician is permitted to do where they practise.'
 		}
 	];
@@ -360,23 +367,33 @@
 			and keeps going round until asking again would not be worth the delay.
 		</p>
 
-		<!-- Deliberately a list, not a diagram. Two attempts at drawing this as a
-		     circle produced arcs that bled through the nodes and labels that
-		     collided with the ring, and the shape added nothing the numbered
-		     sequence does not already say. The safety overlay is stated once
-		     underneath instead of drawn around it. -->
+		<!-- The six stages explained on the left, the shape shown on the right,
+		     the same way the care loop is drawn on the homepage. Two earlier
+		     attempts put the explanation *on* the ring and produced labels that
+		     collided with the arcs; the split is what makes the drawing
+		     possible, because a dial carrying nothing but six words can be
+		     small enough to read at a glance. -->
+		<div class="loop-layout">
+			<ol class="loop-list">
+				{#each LOOP as stage, i}
+					<li class="loop-item" use:reveal={{ delay: 60 + i * 50 }}>
+						<span class="loop-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+						<div class="loop-text">
+							<h3>{stage.label}</h3>
+							<p>{stage.body}</p>
+						</div>
+					</li>
+				{/each}
+			</ol>
 
-		<ol class="loop-list">
-			{#each LOOP as stage, i}
-				<li class="loop-item" use:reveal={{ delay: 40 }}>
-					<span class="loop-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-					<div class="loop-text">
-						<h3>{stage.label}</h3>
-						<p>{stage.body}</p>
-					</div>
-				</li>
-			{/each}
-		</ol>
+			<div class="loop-dial" use:reveal={{ delay: 160 }}>
+				<LoopDial
+					labels={LOOP.map((stage) => stage.short)}
+					centre="Round again, until another question would not change the answer"
+					nodeSize="clamp(4.25rem, 16vw, 6.5rem)"
+				/>
+			</div>
+		</div>
 
 		<p class="safety-note" use:reveal>
 			<strong>Stage five is the only way out of the loop.</strong> Nothing reaches a patient before it,
@@ -799,9 +816,23 @@
 		color: var(--color-primary-700);
 	}
 
-	@media (min-width: 800px) {
-		.loop-list {
-			grid-template-columns: repeat(2, 1fr);
+	/* The list and the dial, side by side. The list used to run as two columns
+	   across the full width; beside a dial it stays one column, which is also
+	   the order the six stages actually happen in. */
+	.loop-layout {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: clamp(2rem, 5vw, 4rem);
+		align-items: center;
+		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+	}
+	.loop-list {
+		margin-top: 0;
+	}
+	@media (min-width: 940px) {
+		.loop-layout {
+			grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+			gap: clamp(2.5rem, 5vw, 4.5rem);
 		}
 	}
 	.core-section {
@@ -933,7 +964,7 @@
 		font-weight: var(--weight-display);
 		font-family: var(--font-family-heading);
 		letter-spacing: -0.025em;
-		line-height: 1.25;
+		line-height: 1.35;
 		color: var(--color-ink);
 	}
 	.state-label {
@@ -990,10 +1021,14 @@
 
 	/* The standards, set well clear of the figures above them. They used to
 	   butt straight up against the last row of numbers. */
+	/* Centred under a centred heading, like the figures above it. The label,
+	   the strip, the caption and the CTA each found their own left edge, which
+	   left four different starting points stacked down one column. */
 	.standards {
 		margin-top: clamp(2.75rem, 6vw, 4.5rem);
 		padding-top: clamp(1.75rem, 3vw, 2.25rem);
 		border-top: 1px solid rgba(255, 255, 255, 0.22);
+		text-align: center;
 	}
 	.standards-label {
 		display: block;
@@ -1019,6 +1054,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
+		justify-content: center;
 		gap: 0.9rem;
 		margin-top: clamp(1.75rem, 4vw, 2.5rem);
 	}
@@ -1078,7 +1114,8 @@
 		color: rgba(226, 232, 255, 0.6);
 	}
 	.grounding-caption {
-		margin-top: 1.5rem;
+		margin: 1.5rem auto 0;
+		max-width: 34ch;
 		font-family: var(--font-family-heading);
 		font-size: clamp(1.05rem, 2vw, 1.35rem);
 		font-weight: 500;

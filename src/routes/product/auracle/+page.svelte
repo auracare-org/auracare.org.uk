@@ -415,7 +415,7 @@
 	}
 	.cta-band h2 {
 		font-size: clamp(2.1rem, 4.6vw, 3.4rem);
-		line-height: 1.04;
+		line-height: 1.15;
 		letter-spacing: -0.035em;
 		margin: 0;
 		max-width: 18ch;

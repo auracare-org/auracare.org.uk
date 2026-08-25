@@ -70,7 +70,7 @@
 
 	.tech h2 {
 		font-size: clamp(1.9rem, 3.6vw, 3rem);
-		line-height: 1.06;
+		line-height: 1.15;
 		letter-spacing: -0.03em;
 		margin: 0;
 	}

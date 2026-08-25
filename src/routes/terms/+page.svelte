@@ -274,7 +274,7 @@
 	}
 	.terms-head h1 {
 		font-size: clamp(2.2rem, 5vw, 3.2rem);
-		line-height: 1.08;
+		line-height: 1.15;
 		letter-spacing: -0.02em;
 		margin-block: 0.6rem 1rem;
 	}
@@ -300,7 +300,7 @@
 	}
 	.prose h2 {
 		font-size: clamp(1.15rem, 2vw, 1.4rem);
-		line-height: 1.25;
+		line-height: 1.35;
 		letter-spacing: -0.01em;
 		margin-top: 2.4rem;
 		margin-bottom: 0.75rem;
