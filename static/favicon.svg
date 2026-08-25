@@ -1,19 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Auracare">
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	width="108"
+	height="108"
+	viewBox="0 0 108 108"
+	role="img"
+	aria-label="Auracare"
+>
 	<defs>
-		<radialGradient id="bg" cx="38%" cy="32%" r="80%">
-			<stop offset="0%" stop-color="#6180ff" />
-			<stop offset="55%" stop-color="#2f4ec0" />
-			<stop offset="100%" stop-color="#1d2d6e" />
-		</radialGradient>
-		<radialGradient id="core" cx="50%" cy="45%" r="55%">
-			<stop offset="0%" stop-color="#ffffff" />
-			<stop offset="65%" stop-color="#dbe4ff" />
-			<stop offset="100%" stop-color="#9fb3ff" />
-		</radialGradient>
+		<clipPath id="rounded">
+			<rect width="108" height="108" rx="22" ry="22" />
+		</clipPath>
+		<style>
+			/* Light: paper ground, blue a — dark: blue block, paper a.
+			   An SVG in a &lt;link rel="icon"&gt; is its own document and cannot see the
+			   page's custom properties, so these four are hand copies of
+			   --color-surface-page, --color-surface-alt, --color-primary-600 and
+			   --color-primary-800. Shares its geometry with the Auratwin mark; only
+			   the palette differs. */
+			.bg {
+				fill: #f4f1ea;
+			}
+			.diag {
+				fill: #ebe7dd;
+			}
+			.glyph {
+				fill: #2f4ec0;
+			}
+			@media (prefers-color-scheme: dark) {
+				.bg {
+					fill: #2f4ec0;
+				}
+				.diag {
+					fill: #203385;
+				}
+				.glyph {
+					fill: #f4f1ea;
+				}
+			}
+		</style>
 	</defs>
-	<rect width="64" height="64" rx="16" fill="url(#bg)" />
-	<circle cx="32" cy="32" r="22" fill="none" stroke="#aebfff" stroke-opacity="0.45" stroke-width="1.4" />
-	<ellipse cx="32" cy="32" rx="22" ry="8.5" fill="none" stroke="#d3ddff" stroke-opacity="0.55" stroke-width="1.4" transform="rotate(-22 32 32)" />
-	<circle cx="32" cy="32" r="9.5" fill="url(#core)" />
-	<circle cx="32" cy="32" r="9.5" fill="none" stroke="#ffffff" stroke-opacity="0.5" stroke-width="0.6" />
+	<g clip-path="url(#rounded)">
+		<rect class="bg" width="108" height="108" />
+		<path class="diag" d="M0,0 L108,108 L0,108 Z" />
+		<g transform="translate(32.5,32) scale(1.1)">
+			<path
+				class="glyph"
+				d="M31.623,18.113H31.577L31.623,19.224C31.623,19.362 31.623,19.478 31.623,19.617C31.623,23.318 30.559,26.441 28.477,28.847C26.303,31.391 23.388,32.618 19.617,32.618C15.846,32.618 12.908,31.368 10.595,28.824C8.421,26.418 7.31,23.318 7.31,19.617C7.31,15.916 8.421,12.816 10.595,10.41C12.932,7.842 15.893,6.616 19.617,6.616C23.342,6.616 24.614,7.287 26.464,8.582L28.223,9.808L26.534,1.481L26.164,1.295C26.048,1.249 23.434,0 19.247,0C15.06,0 8.675,1.92 5.136,5.737C1.735,9.461 0,14.157 0,19.617C0,25.076 1.735,29.772 5.136,33.52C8.652,37.337 13.279,39.257 18.854,39.257C24.429,39.257 28.246,37.614 31.322,34.399V38.678H38.609V0.578H31.623V18.113Z"
+			/>
+		</g>
+	</g>
 </svg>

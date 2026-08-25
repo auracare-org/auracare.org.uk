@@ -12,7 +12,7 @@ Key facts:
 
 ## Products
 
-- [Auracle](https://auracare.org.uk/product): The health companion that texts you back — a personal digital twin built from your wearables and apps, delivered through your existing messaging apps.
+- [Auracle](https://auracare.org.uk/product/auracle): The health companion that texts you back — a personal digital twin built from your wearables and apps, delivered through your existing messaging apps.
 - [Auracare](https://auracare.org.uk/product/auracare): Clinician-facing clinical decision support that works inside the consultation without getting in the way. In development.
 
 ## Company
