@@ -805,7 +805,9 @@
 	/* A standalone action, so it carries a real tap height rather than just
 	   its line box. */
 	.arch-link {
-		min-height: 44px;
+		@media (pointer: coarse) {
+			min-height: 44px;
+		}
 		display: flex;
 		width: max-content;
 		margin-inline: auto;

@@ -284,7 +284,9 @@
 		align-items: center;
 		/* Matches the burger's reach, so both ends of the bar are equally
 		   tappable without moving the logo. */
-		min-height: 44px;
+		@media (pointer: coarse) {
+			min-height: 44px;
+		}
 	}
 	.nav-logo img {
 		height: 1.35rem;
@@ -434,7 +436,9 @@
 	.nav-invest {
 		display: inline-flex;
 		align-items: center;
-		min-height: 44px;
+		@media (pointer: coarse) {
+			min-height: 44px;
+		}
 		font-size: 0.72rem;
 		font-weight: 600;
 		letter-spacing: 0.14em;
@@ -448,7 +452,9 @@
 	.nav-waitlist {
 		display: inline-flex;
 		align-items: center;
-		min-height: 44px;
+		@media (pointer: coarse) {
+			min-height: 44px;
+		}
 		font-size: 0.88rem;
 		font-weight: 500;
 		color: #fff;
@@ -487,7 +493,9 @@
 		align-items: center;
 		justify-content: center;
 		min-width: 44px;
-		min-height: 44px;
+		@media (pointer: coarse) {
+			min-height: 44px;
+		}
 	}
 	.nav-mobile {
 		border-top: 1px solid var(--color-border-default);
@@ -503,7 +511,9 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		min-height: 44px;
+		@media (pointer: coarse) {
+			min-height: 44px;
+		}
 		font-size: 0.98rem;
 		font-weight: 500;
 		color: var(--color-ink-soft);

@@ -96,7 +96,9 @@
 	/* A standalone action, so it carries a real tap height rather than just
 	   its line box. */
 	.footer-ontology {
-		min-height: 44px;
+		@media (pointer: coarse) {
+			min-height: 44px;
+		}
 		display: inline-flex;
 		align-items: center;
 		gap: 0.3rem;
@@ -112,6 +114,13 @@
 		flex-direction: column;
 		gap: 0.6rem;
 	}
+	/* Where the rows grow their own height, the gap gives way to it rather than
+	   stacking both and spreading the column out. */
+	@media (pointer: coarse) {
+		.footer-col {
+			gap: 0.1rem;
+		}
+	}
 	.footer-col h4 {
 		color: #fff;
 		font-size: 0.75rem;
@@ -119,7 +128,15 @@
 		text-transform: uppercase;
 		margin-bottom: 0.3rem;
 	}
+	/* This is the site's secondary navigation and it is on every page: a column
+	   of block links a thumb has to land on. They were 22px tall — the line box
+	   and nothing else. */
 	.footer-col a {
+		display: flex;
+		align-items: center;
+		@media (pointer: coarse) {
+			min-height: 44px;
+		}
 		color: rgba(226, 232, 255, 0.7);
 		font-size: 0.9rem;
 	}
@@ -157,7 +174,9 @@
 	.footer-top {
 		display: inline-flex;
 		align-items: center;
-		min-height: 44px;
+		@media (pointer: coarse) {
+			min-height: 44px;
+		}
 		color: rgba(226, 232, 255, 0.7);
 		font-size: 0.8rem;
 		font-weight: 600;

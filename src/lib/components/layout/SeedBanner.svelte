@@ -85,7 +85,15 @@
 		font-weight: 600;
 		color: var(--color-ink);
 	}
+	/* A standalone call to action, not a link inside a sentence, so the inline
+	   exemption from the target-size rule does not cover it — and it sits on
+	   every page of the site. */
 	.seed-text a {
+		display: inline-flex;
+		align-items: center;
+		@media (pointer: coarse) {
+			min-height: 44px;
+		}
 		color: var(--color-primary-600);
 		font-weight: 600;
 		border-bottom: 1px solid var(--color-primary-600);
