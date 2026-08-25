@@ -44,6 +44,62 @@
 	const arcs = MARKET_ARCS.map((a) => ({ ...a, d: arcPath(a.from, a.to) })).filter((a) => a.d);
 	const currentWave = $derived(MARKET_WAVES[Math.min(activeWave, maxWave)]);
 
+	/* Carousel state, for the narrow layout that cannot pin.
+	 *
+	 * On a phone the section never pins, so the scroll can never drive the wave
+	 * sequence: it played itself once when the map came into view and then sat
+	 * on the last wave with no way back. It is a carousel there instead —
+	 * autoplaying, swipeable, and pausable — which is a control a thumb
+	 * understands, rather than a scroll effect that silently does not apply. */
+	let paused = $state(false);
+	let autoTimer: ReturnType<typeof setInterval> | undefined;
+	const AUTO_MS = 2600;
+
+	function stopAuto() {
+		if (autoTimer !== undefined) {
+			clearInterval(autoTimer);
+			autoTimer = undefined;
+		}
+	}
+	function startAuto() {
+		if (pinned || paused || autoTimer !== undefined || prefersReducedMotion()) return;
+		autoTimer = setInterval(() => {
+			activeWave = activeWave >= maxWave ? 0 : activeWave + 1;
+		}, AUTO_MS);
+	}
+	function step(delta: number) {
+		const n = maxWave + 1;
+		activeWave = (((activeWave + delta) % n) + n) % n;
+	}
+	/* Any deliberate move takes the carousel off autoplay: continuing to advance
+	   under someone who has just chosen a wave is the annoying part of a
+	   carousel, not the useful part. */
+	function takeOver(fn: () => void) {
+		paused = true;
+		stopAuto();
+		fn();
+	}
+	function togglePlay() {
+		paused = !paused;
+		if (paused) stopAuto();
+		else startAuto();
+	}
+
+	let touchX = 0;
+	let touchY = 0;
+	function onTouchStart(e: TouchEvent) {
+		touchX = e.touches[0].clientX;
+		touchY = e.touches[0].clientY;
+	}
+	function onTouchEnd(e: TouchEvent) {
+		const dx = e.changedTouches[0].clientX - touchX;
+		const dy = e.changedTouches[0].clientY - touchY;
+		// Horizontal intent only: a swipe that is mostly vertical is the page
+		// being scrolled past the map, not a request to change wave.
+		if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+		takeOver(() => step(dx < 0 ? 1 : -1));
+	}
+
 	let hovered = $state<{ name: string; label?: string } | null>(null);
 	let tipX = $state(0);
 	let tipY = $state(0);
@@ -88,25 +144,11 @@
 				clearInterval(timer);
 				timer = undefined;
 			}
+			stopAuto();
 		};
 		const teardownIO = () => {
 			io?.disconnect();
 			io = undefined;
-		};
-
-		// Narrow screens don't pin, so the scroll can't drive the sequence.
-		// Instead, play it once, stepping a wave at a time, when the map
-		// first comes into view.
-		const startAutoplay = () => {
-			if (timer !== undefined) return;
-			activeWave = 0;
-			timer = setInterval(() => {
-				if (activeWave >= maxWave) {
-					clearTimer();
-					return;
-				}
-				activeWave += 1;
-			}, 1600);
 		};
 
 		const apply = () => {
@@ -124,16 +166,17 @@
 				return;
 			}
 			activeWave = 0;
+			/* The carousel runs only while it is on screen: it advances when the
+			   map comes into view and stops again when it leaves, so it is not
+			   ticking away unseen at the other end of the page. */
 			io = new IntersectionObserver(
 				(entries) => {
 					for (const e of entries) {
-						if (e.isIntersecting) {
-							teardownIO();
-							startAutoplay();
-						}
+						if (e.isIntersecting) startAuto();
+						else stopAuto();
 					}
 				},
-				{ threshold: 0.5 }
+				{ threshold: 0.4 }
 			);
 			io.observe(stageEl);
 		};
@@ -168,7 +211,13 @@
 				</div>
 
 				<!-- Map in the middle -->
-				<div class="map-stage" bind:this={stageEl} style="--map-ar:{MAP_ASPECT}">
+				<div
+					class="map-stage"
+					bind:this={stageEl}
+					style="--map-ar:{MAP_ASPECT}"
+					ontouchstart={onTouchStart}
+					ontouchend={onTouchEnd}
+				>
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<svg
 						class="map-svg"
@@ -232,13 +281,47 @@
 							</div>
 						{/key}
 					</div>
+					<!-- Tappable on the carousel, so the legend doubles as the way to
+					     jump straight to a wave. -->
 					<ol class="map-legend">
 						{#each MARKET_WAVES as w}
 							<li class:active={activeWave >= w.order}>
-								<span class="dot" style="background:{toneColor[w.tone]}"></span>{w.title}
+								<button type="button" onclick={() => takeOver(() => (activeWave = w.order))}>
+									<span class="dot" style="background:{toneColor[w.tone]}"></span>{w.title}
+								</button>
 							</li>
 						{/each}
 					</ol>
+
+					{#if !pinned}
+						<div class="map-controls">
+							<button
+								type="button"
+								class="map-ctl"
+								aria-label="Previous wave"
+								onclick={() => takeOver(() => step(-1))}
+							>
+								<span aria-hidden="true">&larr;</span>
+							</button>
+							<button
+								type="button"
+								class="map-ctl map-ctl--play"
+								aria-label={paused ? 'Play the rollout sequence' : 'Pause the rollout sequence'}
+								aria-pressed={paused}
+								onclick={togglePlay}
+							>
+								{paused ? 'Play' : 'Pause'}
+							</button>
+							<button
+								type="button"
+								class="map-ctl"
+								aria-label="Next wave"
+								onclick={() => takeOver(() => step(1))}
+							>
+								<span aria-hidden="true">&rarr;</span>
+							</button>
+						</div>
+					{/if}
 				</div>
 			</div>
 		</div>
@@ -479,6 +562,47 @@
 		font-size: 0.85rem;
 	}
 
+	/* Carousel controls: only rendered where the map cannot pin. Square and
+	   ruled like every other control on the site. */
+	.map-controls {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.75rem;
+		margin-top: 1.25rem;
+	}
+	.map-ctl {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 44px;
+		min-height: 44px;
+		padding: 0 0.9rem;
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-white-alpha-80);
+		background: transparent;
+		border: 1px solid rgba(255, 255, 255, 0.28);
+		cursor: pointer;
+		transition:
+			border-color var(--duration-hover) ease,
+			color var(--duration-hover) ease;
+	}
+	.map-ctl--play {
+		min-width: 5.5rem;
+	}
+	.map-ctl:active {
+		transform: scale(0.97);
+	}
+	@media (hover: hover) and (pointer: fine) {
+		.map-ctl:hover {
+			color: #fff;
+			border-color: rgba(255, 255, 255, 0.6);
+		}
+	}
+
 	.map-legend {
 		display: flex;
 		flex-wrap: wrap;
@@ -490,14 +614,23 @@
 	}
 	.map-legend li {
 		display: inline-flex;
+	}
+	.map-legend button {
+		display: inline-flex;
 		align-items: center;
 		gap: 0.4rem;
 		font-size: 0.75rem;
 		color: var(--color-dark-overlay-40);
 		transition: color 0.3s ease;
+		cursor: pointer;
 	}
-	.map-legend li.active {
+	.map-legend li.active button {
 		color: var(--color-white-alpha-80);
+	}
+	@media (pointer: coarse) {
+		.map-legend button {
+			min-height: 44px;
+		}
 	}
 	.map-legend .dot {
 		width: 0.45rem;
@@ -505,7 +638,7 @@
 		border-radius: 999px;
 		opacity: 0.5;
 	}
-	.map-legend li.active .dot {
+	.map-legend li.active button .dot {
 		opacity: 1;
 	}
 

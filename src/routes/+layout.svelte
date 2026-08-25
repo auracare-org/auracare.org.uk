@@ -1,9 +1,9 @@
 <script lang="ts">
 	import '../app.css';
 	import { onMount } from 'svelte';
-	import { onNavigate } from '$app/navigation';
+	import { afterNavigate, onNavigate } from '$app/navigation';
 	import { dev } from '$app/environment';
-	import { prefersReducedMotion } from '$lib/actions/motion';
+	import { prefersReducedMotion, revealNow } from '$lib/actions/motion';
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 	import { cookieConsent } from '$lib/stores/cookieConsent';
 	import { loadPostHog, stopPostHog } from '$lib/analytics/posthog';
@@ -47,6 +47,45 @@
 				await navigation.complete;
 			});
 		});
+	});
+
+	/* Scroll position, which the view transition above otherwise swallows.
+	 *
+	 * SvelteKit resets the scroll itself on a normal navigation, but that reset
+	 * happens inside the transition's DOM-update callback, where the captured
+	 * old frame pins the viewport — so following a link from halfway down one
+	 * page landed halfway down the next, and an anchor link landed at the top
+	 * instead of at its target. Both are restored here, after the navigation
+	 * has actually finished.
+	 *
+	 * Back and forward are left alone: the browser restores those positions and
+	 * that is the behaviour people expect from them. */
+	afterNavigate((navigation) => {
+		if (navigation.type === 'popstate') return;
+		const hash = navigation.to?.url.hash;
+		if (hash) {
+			const target = document.querySelector(hash);
+			if (target) {
+				// The header is fixed, so an element scrolled flush to the top of
+				// the viewport sits behind it.
+				const offset =
+					parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) ||
+					0;
+				// `instant`, because `scroll-behavior: smooth` on the root would
+				// otherwise animate the jump: arriving on a page should place you,
+				// not scroll you there from wherever the last one ended.
+				window.scrollTo({
+					top: target.getBoundingClientRect().top + window.scrollY - offset - 16,
+					behavior: 'instant'
+				});
+				revealNow();
+				return;
+			}
+		}
+		window.scrollTo({ top: 0, behavior: 'instant' });
+		// After the scroll, so it measures against the viewport the reader
+		// actually lands on.
+		revealNow();
 	});
 
 	onMount(() => {

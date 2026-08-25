@@ -1,10 +1,33 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { beforeNavigate } from '$app/navigation';
+	import { flushSync } from 'svelte';
 	import { slide } from 'svelte/transition';
 
 	let mobileOpen = $state(false);
 	let ddOpen = $state(false);
 	let ddEl = $state<HTMLElement | null>(null);
+	/* Suppresses the slide-out for the one case where it should not play. */
+	let closingForNav = $state(false);
+
+	/* Shut both menus before the page changes, not as it changes.
+	 *
+	 * Each link used to close the menu from its own click handler, which set the
+	 * state at the same moment the navigation began. The slide-out then ran
+	 * across the page transition: the outgoing frame was captured with the menu
+	 * still halfway shut, so it appeared to hang there and collapse over the
+	 * incoming page. `flushSync` commits the close before the transition
+	 * captures anything, and the outro is skipped because a menu that is closing
+	 * because you left the page has nothing to animate to. */
+	beforeNavigate(() => {
+		if (!mobileOpen && !ddOpen) return;
+		flushSync(() => {
+			closingForNav = true;
+			mobileOpen = false;
+			ddOpen = false;
+		});
+		closingForNav = false;
+	});
 
 	/* The header answers the scroll instead of sitting there as a white slab.
 	   At the top it is borderless and lets the paper through; past the fold it
@@ -201,7 +224,7 @@
 	</div>
 
 	{#if mobileOpen}
-		<div class="nav-mobile" transition:slide={{ duration: 250 }}>
+		<div class="nav-mobile" transition:slide={{ duration: closingForNav ? 0 : 250 }}>
 			<div class="container-wide nav-mobile-inner">
 				<span class="nav-mobile-group">Product</span>
 				{#each productMenu as item}
