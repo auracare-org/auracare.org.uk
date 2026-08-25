@@ -222,6 +222,55 @@
 	</div>
 </section>
 
+<!-- ================= Everything it draws on ================= -->
+<section class="section-y src-sec">
+	<div class="container-wide">
+		<h2 use:reveal={{ delay: 60 }}>Your data already exists. This is where you get it back.</h2>
+		<p class="lede" use:reveal={{ delay: 120 }}>
+			The services you use collect this data every day; you just never see it in one place. Auracle
+			hands it back as one bio-psycho-social history you can read, edit, export, and share with a
+			clinician.
+		</p>
+
+		<!-- The section's claim is that this data already exists and is scattered.
+		     So the left side shows it scattered, as loose chips grouped by where
+		     it comes from, and the right side shows the single record it becomes.
+		     Three equal columns of bullet lists could not make that point. -->
+		<div class="gather">
+			<div class="gather-from">
+				<span class="gather-label">Already being collected</span>
+				{#each sources as col (col.group)}
+					<div class="src-group">
+						<h3>{col.group}</h3>
+						<ul>
+							{#each col.items as item}
+								<li>{item}</li>
+							{/each}
+						</ul>
+						<p class="src-note">{col.note}</p>
+					</div>
+				{/each}
+			</div>
+
+			<div class="gather-into">
+				<span class="gather-label">Where it ends up</span>
+				<div class="record">
+					<h3>One record</h3>
+					<p>
+						Every signal above, written in the same clinical vocabulary and stamped with when it was
+						true. Readable by you, exportable at any time, and legible to a clinician in the room.
+					</p>
+					<ul class="record-props">
+						<li>Timestamped</li>
+						<li>Encoded to SNOMED CT</li>
+						<li>Yours to export or delete</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
 <!-- ================= Replying is the logging ================= -->
 <section class="section-y log-sec">
 	<div class="container-wide">
@@ -289,55 +338,6 @@
 				</li>
 			{/each}
 		</ol>
-	</div>
-</section>
-
-<!-- ================= Everything it draws on ================= -->
-<section class="section-y src-sec">
-	<div class="container-wide">
-		<h2 use:reveal={{ delay: 60 }}>Your data already exists. This is where you get it back.</h2>
-		<p class="lede" use:reveal={{ delay: 120 }}>
-			The services you use collect this data every day; you just never see it in one place. Auracle
-			hands it back as one bio-psycho-social history you can read, edit, export, and share with a
-			clinician.
-		</p>
-
-		<!-- The section's claim is that this data already exists and is scattered.
-		     So the left side shows it scattered, as loose chips grouped by where
-		     it comes from, and the right side shows the single record it becomes.
-		     Three equal columns of bullet lists could not make that point. -->
-		<div class="gather">
-			<div class="gather-from">
-				<span class="gather-label">Already being collected</span>
-				{#each sources as col (col.group)}
-					<div class="src-group">
-						<h3>{col.group}</h3>
-						<ul>
-							{#each col.items as item}
-								<li>{item}</li>
-							{/each}
-						</ul>
-						<p class="src-note">{col.note}</p>
-					</div>
-				{/each}
-			</div>
-
-			<div class="gather-into">
-				<span class="gather-label">Where it ends up</span>
-				<div class="record">
-					<h3>One record</h3>
-					<p>
-						Every signal above, written in the same clinical vocabulary and stamped with when it was
-						true. Readable by you, exportable at any time, and legible to a clinician in the room.
-					</p>
-					<ul class="record-props">
-						<li>Timestamped</li>
-						<li>Encoded to SNOMED CT</li>
-						<li>Yours to export or delete</li>
-					</ul>
-				</div>
-			</div>
-		</div>
 	</div>
 </section>
 
