@@ -17,32 +17,48 @@
 	let progress = $state(0);
 
 	$effect(() => {
-		/* The scrollable distance is the only expensive read here, and it only
-		   changes when the document does. Caching it against a ResizeObserver
-		   leaves the scroll handler reading nothing but `scrollY`, which is
-		   cheap enough to run straight through — so this needs no rAF throttle
-		   and keeps working in a tab where rAF is throttled to nothing. */
+		/* Reading `scrollY` is cheap; reacting to it is not. This used to run on
+		   every scroll event, and each run assigned two pieces of state, so
+		   Svelte rewrote the progress bar's inline style and the browser
+		   recalculated styles once per event — and scroll events fire faster
+		   than frames. Two things fix it: a frame throttle, so the work happens
+		   at most once per painted frame, and quantising the progress so state
+		   is only assigned when the bar would actually move. The bar is 2px of
+		   scaleX, so anything finer than a few hundredths of a percent is
+		   invisible and not worth a re-render.
+
+		   The scrollable distance is the one expensive read, and it only changes
+		   when the document does, so a ResizeObserver caches it. */
 		let max = 0;
-		const update = () => {
+		let raf = 0;
+
+		const measure = () => {
+			raf = 0;
 			const y = window.scrollY;
-			scrolled = y > 8;
-			progress = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+			const isScrolled = y > 8;
+			if (isScrolled !== scrolled) scrolled = isScrolled;
+			const next = max > 0 ? Math.round(Math.min(1, Math.max(0, y / max)) * 500) / 500 : 0;
+			if (next !== progress) progress = next;
+		};
+		const onScroll = () => {
+			if (!raf) raf = requestAnimationFrame(measure);
 		};
 		const remeasure = () => {
 			max = document.documentElement.scrollHeight - window.innerHeight;
-			update();
+			measure();
 		};
 
 		const ro = new ResizeObserver(remeasure);
 		ro.observe(document.documentElement);
-		window.addEventListener('scroll', update, { passive: true });
+		window.addEventListener('scroll', onScroll, { passive: true });
 		window.addEventListener('resize', remeasure);
 		remeasure();
 
 		return () => {
 			ro.disconnect();
-			window.removeEventListener('scroll', update);
+			window.removeEventListener('scroll', onScroll);
 			window.removeEventListener('resize', remeasure);
+			if (raf) cancelAnimationFrame(raf);
 		};
 	});
 

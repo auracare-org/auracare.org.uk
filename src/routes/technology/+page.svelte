@@ -693,12 +693,13 @@
 		align-items: flex-start;
 		padding: 1.25rem 1.5rem;
 	}
+	/* primary-600, not 500: the mid blue only clears 3.58:1 on paper. */
 	.step-n {
 		flex: none;
 		font-family: var(--font-family-mono);
 		font-size: 0.9rem;
 		font-weight: 700;
-		color: var(--color-primary-500);
+		color: var(--color-primary-600);
 		padding-top: 0.15rem;
 	}
 	.twin-step h3 {
