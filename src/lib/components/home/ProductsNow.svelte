@@ -80,7 +80,14 @@
 		gap: 2.5rem;
 		border-top: 1px solid var(--color-ink);
 	}
+	/* A column, so the fact rows can be pushed to the bottom. The two panels
+	   are grid siblings and therefore equal height; without this the facts sat
+	   directly under each blurb, so one line of difference in the copy left
+	   STATUS and RUNS at two different heights across the pair. Matched copy
+	   fixes today's case, this stops the next edit from reopening it. */
 	.panel {
+		display: flex;
+		flex-direction: column;
 		padding-top: 1.75rem;
 	}
 	.panel-for {
@@ -121,7 +128,7 @@
 		color: var(--color-ink-soft);
 	}
 	.panel-facts {
-		margin: 0;
+		margin: auto 0 0;
 		border-top: 1px solid var(--color-rule);
 	}
 	.panel-facts > div {
