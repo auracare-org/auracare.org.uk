@@ -1382,3 +1382,80 @@
 		opacity: 1 !important;
 	}
 }
+
+/* ------------------------------------------------------------------- */
+/* Legal and policy prose.                                              */
+/*                                                                      */
+/* One treatment for privacy, cookies, terms, accessibility and the     */
+/* privacy centre. Each had grown its own measure, heading scale and    */
+/* body colour — some on the ink tokens, some still on the legacy       */
+/* neutral ramp — so five documents that should read identically did    */
+/* not. Centred as a block with the text left-aligned, because that is  */
+/* how a document is read.                                              */
+/* ------------------------------------------------------------------- */
+.prose {
+	max-width: 44rem;
+	margin-inline: auto;
+	color: var(--color-ink-soft);
+	font-size: 1rem;
+	line-height: 1.75;
+}
+.prose > :first-child {
+	margin-top: 0;
+}
+.prose h2 {
+	font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+	line-height: 1.35;
+	letter-spacing: -0.015em;
+	color: var(--color-ink);
+	margin: 3rem 0 0.75rem;
+	/* The rule marks a new clause of the document, which is how these pages
+	   are actually navigated. */
+	padding-top: 1.5rem;
+	border-top: 1px solid var(--color-rule);
+	max-width: none;
+	text-align: left;
+}
+.prose h3 {
+	font-size: 1.05rem;
+	line-height: 1.4;
+	color: var(--color-ink);
+	margin: 1.75rem 0 0.4rem;
+}
+.prose p,
+.prose li {
+	margin-block: 0.85rem;
+	max-width: none;
+	text-align: left;
+}
+.prose ul,
+.prose ol {
+	margin-block: 0.85rem;
+	padding-left: 1.35rem;
+	list-style: disc;
+}
+.prose ol {
+	list-style: decimal;
+}
+.prose li {
+	margin-block: 0.4rem;
+}
+.prose strong {
+	color: var(--color-ink);
+	font-weight: 600;
+}
+.prose a {
+	color: var(--color-primary-600);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+	text-decoration-thickness: 1px;
+}
+.prose a:hover {
+	color: var(--color-primary-700);
+}
+/* A document's own metadata: last-updated stamps, section notes. */
+.prose .doc-note {
+	font-size: 0.88rem;
+	line-height: 1.7;
+	color: var(--color-ink-faint);
+}

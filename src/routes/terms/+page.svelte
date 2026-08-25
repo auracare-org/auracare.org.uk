@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageHero from '$lib/components/layout/PageHero.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT, NON_DEVICE_DISCLAIMER } from '$lib/data/company';
@@ -12,18 +13,15 @@
 	path="/terms"
 />
 
+<PageHero
+	title="Terms of"
+	accent="Service."
+	sub="These terms govern the Auracare website, the Auracle waitlist and, once you’re using it, the Auracle service itself. Please read them carefully."
+	meta="Legal · Last updated {lastUpdated}"
+/>
+
 <section class="terms section-y">
 	<div class="container-wide">
-		<header class="terms-head">
-			<span class="eyebrow" use:reveal>Legal</span>
-			<h1 use:reveal={{ delay: 60 }}>Terms of Service</h1>
-			<p class="lede" use:reveal={{ delay: 140 }}>
-				These terms govern the Auracare website, the Auracle waitlist and, once you’re using it, the
-				Auracle service itself. Please read them carefully.
-			</p>
-			<p class="meta" use:reveal={{ delay: 200 }}>Last updated: {lastUpdated}</p>
-		</header>
-
 		<article class="prose">
 			<h2 id="acceptance">1. These terms, and when they apply</h2>
 			<p>
@@ -267,66 +265,5 @@
 <style>
 	.terms {
 		--measure: 44rem;
-	}
-	.terms-head {
-		max-width: var(--measure);
-		margin-inline: auto;
-	}
-	.terms-head h1 {
-		font-size: clamp(2.2rem, 5vw, 3.2rem);
-		line-height: 1.15;
-		letter-spacing: -0.02em;
-		margin-block: 0.6rem 1rem;
-	}
-	.lede {
-		font-size: clamp(1.02rem, 1.4vw, 1.18rem);
-		line-height: 1.7;
-		color: var(--color-neutral-700);
-	}
-	.meta {
-		margin-top: 1rem;
-		font-size: 0.85rem;
-		font-weight: 600;
-		letter-spacing: 0.01em;
-		color: var(--color-neutral-500);
-	}
-
-	.prose {
-		max-width: var(--measure);
-		margin-inline: auto;
-		margin-top: clamp(2rem, 4vw, 3rem);
-		color: var(--color-neutral-800);
-		line-height: 1.72;
-	}
-	.prose h2 {
-		font-size: clamp(1.15rem, 2vw, 1.4rem);
-		line-height: 1.35;
-		letter-spacing: -0.01em;
-		margin-top: 2.4rem;
-		margin-bottom: 0.75rem;
-		color: var(--color-neutral-1000);
-	}
-	.prose h2:first-child {
-		margin-top: 0;
-	}
-	.prose p {
-		margin-bottom: 1rem;
-	}
-	.prose ul {
-		margin: 0 0 1rem;
-		padding-left: 1.3rem;
-		list-style: disc;
-	}
-	.prose li {
-		margin-bottom: 0.5rem;
-	}
-	.prose a {
-		color: var(--color-primary-600);
-		text-decoration: underline;
-		text-underline-offset: 2px;
-		word-break: break-word;
-	}
-	.prose a:hover {
-		color: var(--color-primary-700);
 	}
 </style>

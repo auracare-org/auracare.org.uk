@@ -15,15 +15,30 @@
 	 */
 	let {
 		people,
-		detail
+		detail,
+		under,
+		maxWidth = ''
 	}: {
 		people: TeamMember[];
 		/** Rendered in the right-hand column for each person. */
 		detail?: Snippet<[TeamMember]>;
+		/**
+		 * Rendered directly beneath the role, in the name column. For anything
+		 * that belongs to the person rather than to what the page is saying
+		 * about them — a contact address, a handle.
+		 */
+		under?: Snippet<[TeamMember]>;
+		/**
+		 * Caps the roster and centres it. A page whose detail column is two
+		 * short lines leaves most of a full-width roster empty; the homepage,
+		 * whose detail is a full bio, wants the whole width and leaves this
+		 * unset.
+		 */
+		maxWidth?: string;
 	} = $props();
 </script>
 
-<ul class="roster" role="list">
+<ul class="roster" role="list" style={maxWidth ? `--roster-max:${maxWidth}` : ''}>
 	{#each people as member (member.id)}
 		<li class="member" use:reveal={{ delay: 40 }}>
 			<div class="avatar">
@@ -37,6 +52,7 @@
 			<div class="who">
 				<h3>{member.name}</h3>
 				<p class="role">{member.role}</p>
+				{@render under?.(member)}
 			</div>
 
 			<div class="detail">
@@ -49,7 +65,8 @@
 <style>
 	.roster {
 		list-style: none;
-		margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+		max-width: var(--roster-max, none);
+		margin: clamp(2.5rem, 5vw, 4rem) auto 0;
 		padding: 0;
 		border-top: 1px solid var(--color-ink);
 	}

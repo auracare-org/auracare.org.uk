@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageHero from '$lib/components/layout/PageHero.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT } from '$lib/data/company';
@@ -58,20 +59,13 @@
 
 <Seo title="Cookies" description="How Auracare uses cookies and analytics." path="/cookies" />
 
-<section class="cookies-hero aura-space">
-	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Cookie policy</span>
-		<h1 use:reveal={{ delay: 60 }}>
-			A short, honest note about <span class="text-gradient-l">cookies</span>.
-		</h1>
-		<p class="lede" use:reveal={{ delay: 140 }}>
-			We keep this site deliberately light. We use a few small pieces of storage to make it work
-			properly, plus optional, privacy-conscious analytics you can decline. No advertising, no
-			ad-network tracking, no selling your data.
-		</p>
-		<p class="updated" use:reveal={{ delay: 200 }}>Last updated: {LAST_UPDATED}</p>
-	</div>
-</section>
+<PageHero
+	title="A short, honest note"
+	accent="about cookies."
+	accentOwnLine
+	sub="We keep this site deliberately light. We use a few small pieces of storage to make it work properly, plus optional, privacy-conscious analytics you can decline. No advertising, no ad-network tracking, no selling your data."
+	meta="Cookie policy · Last updated {LAST_UPDATED}"
+/>
 
 <section class="section-y cookies-body">
 	<div class="container-wide prose">
@@ -226,33 +220,6 @@
 </section>
 
 <style>
-	.cookies-hero {
-		padding-block: clamp(6rem, 12vw, 9rem) clamp(3rem, 6vw, 4.5rem);
-	}
-	.cookies-hero h1 {
-		font-size: clamp(2.2rem, 5vw, 3.4rem);
-		line-height: 1.15;
-		letter-spacing: -0.02em;
-		margin-block: 0.75rem 1.25rem;
-		max-width: 20ch;
-	}
-	.text-gradient-l {
-		background: linear-gradient(100deg, #8aa0ff, #cdd9ff);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-	.cookies-hero .lede {
-		font-size: clamp(1rem, 1.6vw, 1.18rem);
-		line-height: 1.65;
-		max-width: 44rem;
-	}
-	.cookies-hero .updated {
-		margin-top: 1.5rem;
-		font-size: 0.85rem;
-		opacity: 0.7;
-	}
-
 	.prose {
 		max-width: 46rem;
 	}
@@ -261,14 +228,14 @@
 		letter-spacing: -0.01em;
 		margin-top: 2.75rem;
 		margin-bottom: 0.75rem;
-		color: var(--color-neutral-900);
+		color: var(--color-ink);
 	}
 	.prose :global(h2:first-child) {
 		margin-top: 0;
 	}
 	.prose :global(p) {
 		line-height: 1.7;
-		color: var(--color-neutral-700);
+		color: var(--color-ink-soft);
 		margin-bottom: 1rem;
 	}
 	.prose :global(ul) {
@@ -279,10 +246,10 @@
 	}
 	.prose :global(li) {
 		line-height: 1.7;
-		color: var(--color-neutral-700);
+		color: var(--color-ink-soft);
 	}
 	.prose :global(strong) {
-		color: var(--color-neutral-900);
+		color: var(--color-ink);
 		font-weight: 600;
 	}
 	.prose :global(a) {
@@ -342,7 +309,7 @@
 		padding: 0.85rem 1rem;
 		vertical-align: top;
 		border-bottom: 1px solid var(--color-neutral-100);
-		color: var(--color-neutral-700);
+		color: var(--color-ink-soft);
 		line-height: 1.6;
 	}
 	tbody tr:last-child th,

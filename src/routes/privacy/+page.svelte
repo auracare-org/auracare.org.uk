@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageHero from '$lib/components/layout/PageHero.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT } from '$lib/data/company';
@@ -11,25 +12,13 @@
 	noindex={false}
 />
 
-<section class="page-hero aura-space">
-	<span
-		class="bubble"
-		style="--bubble-size:420px;--bubble-color:rgba(97,128,255,.30);--bubble-blur:20px; top:-14%; right:-6%"
-		aria-hidden="true"
-	></span>
-	<div class="container-wide hero-inner">
-		<span class="eyebrow" use:reveal>Privacy</span>
-		<h1 use:reveal={{ delay: 60 }}>
-			Your health data, <span class="text-gradient-l">on your terms</span>.
-		</h1>
-		<p class="lede" use:reveal={{ delay: 140 }}>
-			This policy explains what we collect, why, and the control you keep over it. Auracle connects
-			only the sources you choose, and your consent is explicit, per-source and revocable at any
-			time.
-		</p>
-		<p class="meta" use:reveal={{ delay: 200 }}>Last updated: 6 August 2026</p>
-	</div>
-</section>
+<PageHero
+	title="Your health data,"
+	accent="on your terms."
+	accentOwnLine
+	sub="This policy explains what we collect, why, and the control you keep over it. Auracle connects only the sources you choose, and your consent is explicit, per-source and revocable at any time."
+	meta="Privacy · Last updated 6 August 2026"
+/>
 
 <section class="policy section-y">
 	<div class="container-wide">
@@ -196,10 +185,10 @@
 
 			<h2 id="connectors">Wearable connectors</h2>
 			<p>
-				Auracle only pulls data from the sources you explicitly connect. Nothing is collected from
-				a source you have not authorised. Connections use each provider’s standard authorisation
-				flow, and the access tokens we hold on your behalf are encrypted at rest. When you
-				disconnect a source, we stop pulling new data from it.
+				Auracle only pulls data from the sources you explicitly connect. Nothing is collected from a
+				source you have not authorised. Connections use each provider’s standard authorisation flow,
+				and the access tokens we hold on your behalf are encrypted at rest. When you disconnect a
+				source, we stop pulling new data from it.
 			</p>
 
 			<h2 id="residency">Where your data is processed</h2>
@@ -387,11 +376,11 @@
 
 			<h3 id="ireland-privacy">Ireland &amp; the EEA</h3>
 			<p>
-				Auracle is not currently available in Ireland or the wider EEA. This release does not
-				launch there, and we do not offer the service to, or collect data from, people in the EEA.
-				When we do open an EEA market, we will appoint and name our EU representative (Article 27 EU
-				GDPR) here, set out the EU-specific rights and the relevant supervisory authority (such as
-				the Irish
+				Auracle is not currently available in Ireland or the wider EEA. This release does not launch
+				there, and we do not offer the service to, or collect data from, people in the EEA. When we
+				do open an EEA market, we will appoint and name our EU representative (Article 27 EU GDPR)
+				here, set out the EU-specific rights and the relevant supervisory authority (such as the
+				Irish
 				<a href="https://www.dataprotection.ie/" rel="noopener noreferrer" target="_blank"
 					>Data Protection Commission</a
 				>), and update this section before any EEA launch.
@@ -407,83 +396,11 @@
 </section>
 
 <style>
-	.page-hero {
-		position: relative;
-		padding-block: clamp(6rem, 12vw, 9rem) clamp(2.5rem, 6vw, 4rem);
-		overflow: hidden;
-	}
-	.hero-inner {
-		position: relative;
-		z-index: 1;
-		max-width: 46rem;
-	}
-	.page-hero h1 {
-		font-size: clamp(2.2rem, 5.5vw, 3.6rem);
-		line-height: 1.15;
-		letter-spacing: -0.02em;
-		margin-block: 0.75rem 1.1rem;
-	}
-	.text-gradient-l {
-		background: linear-gradient(100deg, #8aa0ff, #cdd9ff);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-	.lede {
-		font-size: clamp(1rem, 1.6vw, 1.18rem);
-		line-height: 1.7;
-		max-width: 40rem;
-	}
-	.meta {
-		margin-top: 1.25rem;
-		font-size: 0.85rem;
-		color: rgba(226, 232, 255, 0.6) !important;
-	}
-
-	.prose {
-		max-width: 44rem;
-		margin-inline: auto;
-		color: var(--color-neutral-700);
-		line-height: 1.7;
-	}
-	.prose :global(h2) {
-		font-size: clamp(1.35rem, 2.6vw, 1.7rem);
-		letter-spacing: -0.01em;
-		margin-top: 2.75rem;
-		margin-bottom: 0.75rem;
-		color: var(--color-neutral-900);
-	}
-	.prose :global(h3) {
-		font-size: 1.05rem;
-		margin-top: 1.5rem;
-		margin-bottom: 0.4rem;
-		color: var(--color-neutral-900);
-	}
-	.prose :global(p) {
-		margin-block: 0.75rem;
-	}
-	.prose :global(ul) {
-		margin-block: 0.75rem;
-		padding-left: 1.25rem;
-		list-style: disc;
-	}
-	.prose :global(li) {
-		margin-block: 0.4rem;
-	}
-	.prose :global(a) {
-		color: var(--color-primary-600);
-		text-decoration: underline;
-		text-underline-offset: 2px;
-	}
-	.prose :global(a:hover) {
-		color: var(--color-primary-700);
-	}
-
 	.evolving {
 		background: var(--color-primary-50);
 		border: 1px solid color-mix(in srgb, var(--color-primary-600) 18%, transparent);
 		border-radius: var(--radius-md);
 		padding: 1rem 1.25rem;
-		color: var(--color-neutral-700);
+		color: var(--color-ink-soft);
 	}
 </style>

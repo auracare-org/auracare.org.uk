@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageHero from '$lib/components/layout/PageHero.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT } from '$lib/data/company';
@@ -39,20 +40,13 @@
 	path="/accessibility"
 />
 
-<section class="acc-hero aura-space">
-	<div class="container-wide">
-		<span class="eyebrow" use:reveal>Accessibility</span>
-		<h1 use:reveal={{ delay: 60 }}>
-			Built to be used by <span class="text-gradient">everyone</span>.
-		</h1>
-		<p class="lede" use:reveal={{ delay: 140 }}>
-			We want the whole Auracare site to be perceivable, operable and understandable, whatever
-			device, browser or assistive technology you use. This statement sets out what we aim for, what
-			we have done, and how to tell us where we fall short.
-		</p>
-		<p class="updated" use:reveal={{ delay: 200 }}>Last updated: {lastUpdated}</p>
-	</div>
-</section>
+<PageHero
+	title="Built to be used"
+	accent="by everyone."
+	accentOwnLine
+	sub="We want the whole Auracare site to be perceivable, operable and understandable, whatever device, browser or assistive technology you use. This statement sets out what we aim for, what we have done, and how to tell us where we fall short."
+	meta="Accessibility · Last updated {lastUpdated}"
+/>
 
 <section class="acc-body section-y">
 	<div class="container-wide prose">
@@ -117,27 +111,6 @@
 </section>
 
 <style>
-	.acc-hero {
-		padding-block: clamp(7rem, 12vw, 10rem) clamp(3rem, 7vw, 5rem);
-	}
-	.acc-hero h1 {
-		font-size: clamp(2.2rem, 5.5vw, 3.6rem);
-		line-height: 1.15;
-		letter-spacing: -0.02em;
-		margin-block: 0.75rem 1.25rem;
-		max-width: 20ch;
-	}
-	.lede {
-		font-size: clamp(1rem, 1.6vw, 1.2rem);
-		line-height: 1.65;
-		max-width: 46rem;
-	}
-	.updated {
-		margin-top: 1.5rem;
-		font-size: 0.85rem;
-		opacity: 0.7;
-	}
-
 	.prose {
 		max-width: 54rem;
 	}
@@ -152,7 +125,7 @@
 	.prose p {
 		font-size: 1.02rem;
 		line-height: 1.7;
-		color: var(--color-neutral-700);
+		color: var(--color-ink-soft);
 	}
 	.prose p + p {
 		margin-top: 1rem;

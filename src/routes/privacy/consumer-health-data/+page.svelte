@@ -196,7 +196,7 @@
 	.prose {
 		max-width: 44rem;
 		margin-inline: auto;
-		color: var(--color-neutral-700);
+		color: var(--color-ink-soft);
 		line-height: 1.7;
 	}
 	.prose :global(h2) {
@@ -204,7 +204,7 @@
 		letter-spacing: -0.01em;
 		margin-top: 2.75rem;
 		margin-bottom: 0.75rem;
-		color: var(--color-neutral-900);
+		color: var(--color-ink);
 	}
 	.prose :global(p) {
 		margin-block: 0.75rem;
