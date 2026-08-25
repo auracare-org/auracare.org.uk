@@ -159,18 +159,54 @@ function stopListening() {
 }
 
 /**
- * Run the sweep now, synchronously.
+ * Show everything already on screen, immediately and without animating.
  *
- * A page arriving through a client-side navigation mounts with every revealable
- * node at `opacity: 0` and its first sweep queued for the next frame. Inside a
- * view transition that frame can land after the incoming page has been
- * captured, so the new page cross-fades in empty and its content appears
- * afterwards. Calling this once the navigation has settled reveals whatever is
- * already in view before that capture, and the entrance still plays because the
- * class change drives a CSS transition either way.
+ * Used when a page is entered through a client-side navigation. Sweeping and
+ * letting the entrance play was not enough there: the reveal is a CSS
+ * transition from `opacity: 0`, and a transition needs the browser to paint the
+ * starting frame and then animate away from it. A page arriving inside a view
+ * transition is not being painted normally at that moment, so the first screen
+ * could sit at zero opacity with the class already applied — content present,
+ * correct, and invisible until a scroll knocked it awake.
+ *
+ * So this does not start an animation, it ends one: `reveal--done` carries
+ * `transition: none`, and applying it alongside `reveal--in` puts the node
+ * straight at its final state in the same frame. You lose the entrance on the
+ * first screen of a navigation, which is the right trade — that content has to
+ * be there when the page arrives, and everything below the fold still animates
+ * in on scroll as before.
  */
 export function revealNow(): void {
-	if (pending.size) sweep();
+	if (typeof document === 'undefined') return;
+	const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+
+	/* Queried from the DOM rather than from `pending`, which is the detail that
+	   made the first attempt at this do nothing. The microtask sweep runs first,
+	   during mount: it adds `reveal--in` and — because these reveal once — drops
+	   the node from `pending` immediately. By the time the navigation settled
+	   there was nothing left in the set to act on, while the nodes themselves
+	   were still sitting at zero opacity waiting for a transition that the view
+	   transition was never going to let them paint. */
+	const nodes = document.querySelectorAll<HTMLElement>('.reveal:not(.reveal--done)');
+	const showNow: HTMLElement[] = [];
+	for (const node of nodes) {
+		const r = node.getBoundingClientRect();
+		if (r.top < vh && r.bottom > 0) showNow.push(node);
+	}
+	for (const node of showNow) node.classList.add('reveal--in', 'reveal--done');
+
+	// Anything still queued that is now on screen is settled here too, so it
+	// does not animate in a second time.
+	for (const entry of [...pending]) {
+		if (!showNow.includes(entry.node)) continue;
+		if (entry.onEnter) {
+			const fire = entry.onEnter;
+			entry.onEnter = undefined;
+			fire();
+		}
+		if (entry.once) pending.delete(entry);
+	}
+	if (pending.size === 0) stopListening();
 }
 
 /**
