@@ -31,38 +31,19 @@
 		}
 	});
 
-	/* Cross-fade between pages.
+	/* Put the arriving page where it belongs, and make its first screen solid.
 	 *
-	 * A client-side navigation used to swap the document instantly, which is
-	 * the one moment on the site that reads as a hard cut. The View Transitions
-	 * API hands the browser both frames and lets CSS dissolve between them; the
-	 * `startViewTransition` guard means a browser without it simply navigates
-	 * the way it always did. Resolving the promise is what tells the browser
-	 * the new page is ready to be captured. */
-	onNavigate((navigation) => {
-		if (!document.startViewTransition || prefersReducedMotion()) return;
-		return new Promise((resolve) => {
-			document.startViewTransition(async () => {
-				resolve();
-				await navigation.complete;
-			});
-		});
-	});
-
-	/* Scroll position, which the view transition above otherwise swallows.
+	 * Both jobs have to happen before the view transition captures the incoming
+	 * page, which is why this is called from inside the transition callback
+	 * rather than only afterwards. Doing it in `afterNavigate` alone left a
+	 * window — the capture had already been taken, so for the length of the
+	 * cross-fade the new page was shown mid-entrance, with its first screen
+	 * still blank, and only settled once the animation ended.
 	 *
-	 * SvelteKit resets the scroll itself on a normal navigation, but that reset
-	 * happens inside the transition's DOM-update callback, where the captured
-	 * old frame pins the viewport — so following a link from halfway down one
-	 * page landed halfway down the next, and an anchor link landed at the top
-	 * instead of at its target. Both are restored here, after the navigation
-	 * has actually finished.
-	 *
-	 * Back and forward are left alone: the browser restores those positions and
-	 * that is the behaviour people expect from them. */
-	afterNavigate((navigation) => {
-		if (navigation.type === 'popstate') return;
-		const hash = navigation.to?.url.hash;
+	 * It is safe to run twice: `revealNow` skips anything already finished, and
+	 * the scroll is idempotent. */
+	function settlePage(url: URL | undefined) {
+		const hash = url?.hash;
 		if (hash) {
 			const target = document.querySelector(hash);
 			if (target) {
@@ -86,6 +67,39 @@
 		// After the scroll, so it measures against the viewport the reader
 		// actually lands on.
 		revealNow();
+	}
+
+	/* Cross-fade between pages.
+	 *
+	 * A client-side navigation used to swap the document instantly, which is
+	 * the one moment on the site that reads as a hard cut. The View Transitions
+	 * API hands the browser both frames and lets CSS dissolve between them; the
+	 * `startViewTransition` guard means a browser without it simply navigates
+	 * the way it always did. Resolving the promise is what tells the browser
+	 * the new page is ready to be captured — so everything that has to be true
+	 * of the incoming page happens before this callback returns. */
+	onNavigate((navigation) => {
+		if (!document.startViewTransition || prefersReducedMotion()) return;
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+				settlePage(navigation.to?.url);
+			});
+		});
+	});
+
+	/* The same work for the paths the transition does not cover: a browser
+	   without the API, reduced motion, and as a backstop if the viewport has
+	   changed size since the capture — a mobile toolbar collapsing after the
+	   navigation grows the viewport and can uncover a band that measured as
+	   below the fold a moment earlier.
+	
+	   Back and forward are left alone: the browser restores those positions and
+	   that is the behaviour people expect from them. */
+	afterNavigate((navigation) => {
+		if (navigation.type === 'popstate') return;
+		settlePage(navigation.to?.url);
 	});
 
 	onMount(() => {
