@@ -50,8 +50,8 @@
 
 		<div class="engine" use:reveal>
 			<p class="engine-lead">
-				Both run on <strong>one patient model</strong>: a single, timestamped picture of a person,
-				grounded in the terminology medicine already agrees on. {model.blurb}
+				Both build <strong>one SNOMED-encoded patient model</strong>: a continuous, timestamped
+				record of a person rather than a folder of snapshots. {model.blurb}
 			</p>
 			<a class="engine-link" href={model.href} target="_blank" rel="noopener">
 				Explore the graph <span aria-hidden="true">&#8599;</span>
