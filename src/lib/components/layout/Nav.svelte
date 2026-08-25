@@ -282,6 +282,9 @@
 	.nav-logo {
 		display: inline-flex;
 		align-items: center;
+		/* Matches the burger's reach, so both ends of the bar are equally
+		   tappable without moving the logo. */
+		min-height: 44px;
 	}
 	.nav-logo img {
 		height: 1.35rem;
@@ -402,7 +405,7 @@
 	}
 	.nav-sub-tag {
 		font-family: var(--font-family-mono);
-		font-size: 0.6rem;
+		font-size: 0.7rem;
 		font-weight: 700;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
@@ -429,6 +432,9 @@
 		margin-left: auto;
 	}
 	.nav-invest {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
 		font-size: 0.72rem;
 		font-weight: 600;
 		letter-spacing: 0.14em;
@@ -440,6 +446,9 @@
 		color: var(--color-ink);
 	}
 	.nav-waitlist {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
 		font-size: 0.88rem;
 		font-weight: 500;
 		color: #fff;
@@ -466,10 +475,19 @@
 			color: #fff;
 		}
 	}
+	/* The tap area is the button, not the glyph. This was 24x24 — the bare size
+	   of the icon — which is the smallest thing on the page and the one control
+	   a phone visitor has to hit first. The negative margin keeps the icon
+	   optically where it was while the hit area grows around it. */
 	.nav-burger {
 		margin-left: auto;
-		color: var(--color-neutral-900);
+		margin-right: -0.625rem;
+		color: var(--color-ink);
 		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 44px;
+		min-height: 44px;
 	}
 	.nav-mobile {
 		border-top: 1px solid var(--color-border-default);
@@ -482,14 +500,18 @@
 		padding-block: 1rem;
 	}
 	.nav-mobile-item {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-height: 44px;
 		font-size: 0.98rem;
 		font-weight: 500;
-		color: var(--color-neutral-800);
+		color: var(--color-ink-soft);
 		padding: 0.6rem 0;
 	}
 	.nav-mobile-group {
 		font-family: var(--font-family-mono);
-		font-size: 0.68rem;
+		font-size: 0.7rem;
 		font-weight: 700;
 		letter-spacing: 0.12em;
 		text-transform: uppercase;

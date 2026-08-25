@@ -148,7 +148,10 @@
 	.cta-primary:active {
 		transform: scale(0.98);
 	}
+	/* A standalone action, so it carries a real tap height rather than just
+	   its line box. */
 	.cta-ghost {
+		min-height: 44px;
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
@@ -200,7 +203,7 @@
 		border-bottom: 1px solid var(--color-rule);
 	}
 	.standing dt {
-		font-size: 0.64rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.18em;
 		text-transform: uppercase;

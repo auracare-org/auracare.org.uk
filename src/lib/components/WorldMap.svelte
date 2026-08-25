@@ -461,7 +461,7 @@
 	.cap-badge {
 		flex: none;
 		font-family: var(--font-family-mono);
-		font-size: 0.68rem;
+		font-size: 0.7rem;
 		font-weight: 700;
 		letter-spacing: 0.06em;
 		text-transform: uppercase;

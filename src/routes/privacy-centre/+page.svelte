@@ -302,7 +302,11 @@
 		border: 1px solid var(--color-rule-strong);
 		padding: 0.8rem 0.9rem;
 		color: var(--color-ink);
-		font-size: 0.95rem;
+		/* Exactly 16px, not 0.95rem. Below 16px, iOS Safari zooms the whole page
+		   in when the field takes focus and leaves it zoomed — so the one form on
+		   the site would throw a phone visitor out of the layout on their first
+		   tap. This is the only place it can happen; these are the only inputs. */
+		font-size: 1rem;
 		font-family: inherit;
 		transition: border-color var(--duration-hover) ease;
 		width: 100%;

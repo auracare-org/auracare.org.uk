@@ -116,7 +116,7 @@
 		margin: 0.15rem 0 0.3rem;
 	}
 	.step-actor {
-		font-size: 0.6rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.16em;
 		text-transform: uppercase;

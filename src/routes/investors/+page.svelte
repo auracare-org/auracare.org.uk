@@ -304,7 +304,7 @@
 	.founder-covers {
 		display: block;
 		font-family: var(--font-family-sans);
-		font-size: 0.62rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.2em;
 		text-transform: uppercase;
@@ -317,7 +317,10 @@
 		line-height: 1.65;
 		color: var(--color-ink-soft);
 	}
+	/* A standalone action, so it carries a real tap height rather than just
+	   its line box. */
 	.founder-write {
+		min-height: 44px;
 		margin-top: 0.9rem;
 		display: inline-flex;
 		align-items: center;
@@ -387,7 +390,7 @@
 	.model-eyebrow {
 		display: block;
 		text-align: center;
-		font-size: 0.66rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.2em;
 		text-transform: uppercase;
@@ -451,7 +454,7 @@
 	}
 	.model-badge {
 		display: block;
-		font-size: 0.66rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.2em;
 		text-transform: uppercase;

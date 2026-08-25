@@ -390,7 +390,7 @@
 				<LoopDial
 					labels={LOOP.map((stage) => stage.short)}
 					centre="Round again, until another question would not change the answer"
-					nodeSize="clamp(4.25rem, 16vw, 6.5rem)"
+					nodeSize="clamp(5rem, 16vw, 6.5rem)"
 				/>
 			</div>
 		</div>
@@ -621,7 +621,7 @@
 	.churn-axis-label {
 		display: block;
 		font-family: var(--font-family-heading);
-		font-size: 0.68rem;
+		font-size: 0.7rem;
 		font-weight: 700;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
@@ -850,7 +850,7 @@
 		padding-top: 1.75rem;
 	}
 	.col-role {
-		font-size: 0.68rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.2em;
 		text-transform: uppercase;
@@ -924,7 +924,7 @@
 	}
 	.sources-label {
 		display: block;
-		font-size: 0.66rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.2em;
 		text-transform: uppercase;
@@ -971,7 +971,7 @@
 	.state-label {
 		display: block;
 		font-family: var(--font-family-sans);
-		font-size: 0.66rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.2em;
 		text-transform: uppercase;
@@ -1033,7 +1033,7 @@
 	}
 	.standards-label {
 		display: block;
-		font-size: 0.66rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.2em;
 		text-transform: uppercase;
@@ -1126,7 +1126,7 @@
 	.clinician-stage {
 		display: inline-block;
 		font-family: var(--font-family-mono);
-		font-size: 0.66rem;
+		font-size: 0.7rem;
 		font-weight: 700;
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
@@ -1172,7 +1172,7 @@
 	}
 	.safety-stage {
 		display: block;
-		font-size: 0.66rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
