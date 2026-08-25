@@ -6,15 +6,10 @@
 	   through the formatter, so "532k" animates as 532 with the k pinned to it
 	   rather than being skipped for not parsing as a number. */
 	const standings = [
-		{ label: 'Ontology, live today', value: 532, suffix: 'k', note: 'SNOMED CT concepts' },
+		{ label: 'Clinical trials', value: 2, suffix: '', note: 'Institutions signed' },
 		{ label: 'Pharmacy partnerships', value: 28, suffix: '', note: 'From our prior venture' },
 		{ label: 'Examination devices', value: 3, suffix: '', note: 'Built, awaiting certification' },
-		{
-			label: 'Operating from',
-			value: 3,
-			suffix: '',
-			note: 'London, Hong Kong, San Francisco'
-		}
+		{ label: 'Ontology, live today', value: 532, suffix: 'k', note: 'SNOMED CT concepts' }
 	];
 </script>
 
