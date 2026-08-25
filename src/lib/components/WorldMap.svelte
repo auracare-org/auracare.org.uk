@@ -603,12 +603,16 @@
 		align-items: center;
 		gap: 0.4rem;
 		font-size: 0.75rem;
-		color: var(--color-dark-overlay-40);
+		text-align: left;
+		/* Was 40% white, which on this ground is under AA and, with five of the
+		   six waves inactive early in the sequence, made most of the key look
+		   switched off rather than simply not reached yet. */
+		color: rgba(255, 255, 255, 0.62);
 		transition: color 0.3s ease;
 		cursor: pointer;
 	}
 	.map-legend li.active button {
-		color: var(--color-white-alpha-80);
+		color: #fff;
 	}
 	@media (pointer: coarse) {
 		.map-legend button {
@@ -638,6 +642,19 @@
 	}
 
 	@media (max-width: 779px) {
+		/* A two-column key rather than six chips wrapping where they happen to
+		   fit. Giving each a 44px tap height turned that ragged wrap into three
+		   loosely-spaced rows that read as drifting apart; on a grid the dots
+		   line up and it reads as one block. */
+		.map-legend {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			justify-items: start;
+			gap: 0 1rem;
+			max-width: 22rem;
+			margin-inline: auto;
+			text-align: left;
+		}
 		.map-svg {
 			/* On mobile the section isn't pinned, so let the map take its natural
 			   width-driven height instead of the fixed desktop frame. */
