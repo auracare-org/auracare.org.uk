@@ -78,6 +78,13 @@
 		padding-block: 1.5rem;
 		border-bottom: 1px solid var(--color-rule);
 	}
+	/* Three children in a two-column grid: the avatar and the name take row one,
+	   and the detail auto-placed into the next free cell — column one of row
+	   two, which is the 52px avatar column. A 150-character bio was rendering
+	   one word per line. It spans the full row until the third column exists. */
+	.detail {
+		grid-column: 1 / -1;
+	}
 	.avatar {
 		width: 3.25rem;
 		height: 3.25rem;
@@ -116,6 +123,9 @@
 			grid-template-columns: 3.25rem 16rem minmax(0, 1fr);
 			gap: 1.5rem;
 			align-items: center;
+		}
+		.detail {
+			grid-column: auto;
 		}
 	}
 </style>
