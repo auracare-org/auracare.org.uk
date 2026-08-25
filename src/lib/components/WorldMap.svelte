@@ -665,5 +665,14 @@
 			justify-content: center;
 			text-align: center;
 		}
+		/* The captions are one or two lines depending on the wave, and once the
+		   slide wraps into a stack that difference is 20px — enough to push the
+		   legend and the controls up and down every time the wave changes. The
+		   reserved height covers the tallest, measured at 320 and 375 where the
+		   captions wrap earliest, so the block never resizes. */
+		.wave-info {
+			min-height: 5rem;
+			align-items: flex-start;
+		}
 	}
 </style>
