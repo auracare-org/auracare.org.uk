@@ -71,15 +71,20 @@
 		{#each arrows as arrow (arrow.i)}
 			<span class="dial-arrow" style="--x:{arrow.x}; --y:{arrow.y}; --rot:{arrow.rot}deg"></span>
 		{/each}
-
-		{#if centre}<span class="dial-centre">{centre}</span>{/if}
 	</div>
+
+	<!-- Outside the dial, so it can sit under the diagram on a narrow screen
+	     instead of on top of it. It is also the one piece of text here that is
+	     not repeated in the list beside it, so unlike the dial it is left
+	     readable rather than hidden. -->
+	{#if centre}<p class="dial-centre">{centre}</p>{/if}
 </div>
 
 <style>
 	/* Half of each node hangs outside the box, so the width subtracts a whole
 	   node and the wrapper's padding does the same vertically. */
 	.dial-wrap {
+		position: relative;
 		display: grid;
 		place-items: center;
 		padding-block: calc(var(--node) / 2);
@@ -144,15 +149,30 @@
 		transform: translate(-50%, -50%) rotate(var(--rot));
 	}
 
+	/* A caption beneath the dial by default. At a fixed 11rem inside the middle
+	   it was wider than the clear space between the left and right nodes on a
+	   phone — 176px of text in 135px of gap — and overlapped both of them. */
 	.dial-centre {
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
-		width: 11rem;
+		/* Half of the bottom node hangs below the dial's edge, so the caption
+		   clears that overhang before its own spacing starts. */
+		margin: calc(var(--node) / 2 + 1.25rem) auto 0;
+		max-width: 30ch;
 		text-align: center;
 		font-size: 0.82rem;
 		line-height: 1.6;
 		color: var(--dial-muted, var(--color-ink-faint));
+	}
+	/* Into the middle only once the ring is wide enough to hold it clear of the
+	   nodes: the padding on the wrap is symmetric, so its centre is the dial's. */
+	@media (min-width: 700px) {
+		.dial-centre {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			margin: 0;
+			width: 11rem;
+			max-width: none;
+		}
 	}
 </style>
