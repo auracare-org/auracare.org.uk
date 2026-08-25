@@ -393,20 +393,28 @@
 		white-space: nowrap;
 	}
 
+	/* The readout is centred on the canvas and absolutely positioned, so it has
+	   no container to be bounded by. With `white-space: nowrap` the longest
+	   entry — "United Kingdom · Samaritans 116 123 · Mental health" — was wider
+	   than a phone and bled out of the box on both sides. It wraps and stays
+	   inside the canvas now; nowrap comes back only where there is room. */
 	.routing-info {
 		position: absolute;
 		bottom: -4%;
 		left: 50%;
 		transform: translateX(-50%);
 		display: flex;
-		align-items: center;
-		gap: 0.6rem;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: center;
+		gap: 0.25rem 0.6rem;
+		max-width: 100%;
 		padding: 0.5rem 1rem;
+		text-align: center;
 		border-radius: var(--radius-md);
 		background: #fff;
-		border: 1px solid var(--color-border-default);
+		border: 1px solid var(--color-rule);
 		box-shadow: var(--shadow-xs);
-		white-space: nowrap;
 	}
 	.routing-info-region {
 		font-size: 0.72rem;
@@ -417,7 +425,9 @@
 	}
 	.routing-info-num {
 		font-size: 0.9rem;
-		color: #dc2626;
+		/* Matches the red used elsewhere on the page, which was darkened to
+		   clear AA. */
+		color: #c81e1e;
 	}
 	.routing-info-type {
 		font-size: 0.78rem;
@@ -425,6 +435,10 @@
 	}
 
 	@media (min-width: 720px) {
+		.routing-info {
+			flex-wrap: nowrap;
+			white-space: nowrap;
+		}
 		.does-grid {
 			grid-template-columns: 1fr 1fr;
 		}
@@ -459,9 +473,10 @@
 		.routing-canvas {
 			margin-bottom: 2.75rem;
 		}
+		/* The narrowest screens are exactly where it must be free to wrap. */
 		.routing-info {
 			bottom: -2.5rem;
-			max-width: 100%;
+			font-size: 0.9em;
 		}
 	}
 </style>

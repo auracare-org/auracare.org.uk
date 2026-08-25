@@ -44,6 +44,7 @@ interface PendingReveal {
 const pending = new Set<PendingReveal>();
 let sweepQueued = 0;
 let sweepTimer = 0;
+let microQueued = false;
 let listening = false;
 
 function show(entry: PendingReveal) {
@@ -68,6 +69,7 @@ function sweep() {
 	if (sweepTimer) clearTimeout(sweepTimer);
 	sweepQueued = 0;
 	sweepTimer = 0;
+	microQueued = false;
 	const vh = window.innerHeight || document.documentElement.clientHeight || 0;
 
 	/* Every rect is read before a single class is written. Reading and writing
@@ -88,6 +90,30 @@ function sweep() {
 	}
 	for (const entry of leaving) entry.node.classList.remove('reveal--in');
 	for (const entry of entering) show(entry);
+}
+
+/**
+ * The first sweep after a batch of nodes registers.
+ *
+ * This used to go through the same rAF the scroll handler uses, which made
+ * whether a page renders depend on a frame callback arriving — and it does not
+ * always. A tab that is throttled, or a page arriving inside a view transition,
+ * can have that frame land after the reader is already looking at the page, and
+ * since every node starts at `opacity: 0` what they see is a blank body under a
+ * header until something makes them scroll.
+ *
+ * A microtask runs at the end of the current task instead: after every action
+ * in this render has registered, and before the browser paints. One batched
+ * sweep, no frame dependency, and the entrance still animates because adding
+ * the class is what drives the CSS transition.
+ */
+function scheduleFirstSweep() {
+	if (microQueued || sweepQueued || sweepTimer) return;
+	microQueued = true;
+	queueMicrotask(() => {
+		if (!microQueued) return;
+		sweep();
+	});
 }
 
 function onScroll() {
@@ -129,6 +155,7 @@ function stopListening() {
 		clearTimeout(sweepTimer);
 		sweepTimer = 0;
 	}
+	microQueued = false;
 }
 
 /**
@@ -175,9 +202,7 @@ export const reveal: Action<HTMLElement, RevealParams | undefined> = (node, para
 	const entry: PendingReveal = { node, once: opts.once, onEnter };
 	pending.add(entry);
 	startListening();
-	// Evaluate straight away so anything already in view on load reveals without
-	// waiting for the visitor to move.
-	onScroll();
+	scheduleFirstSweep();
 
 	return {
 		destroy() {

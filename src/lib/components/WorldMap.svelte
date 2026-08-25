@@ -71,20 +71,15 @@
 		const n = maxWave + 1;
 		activeWave = (((activeWave + delta) % n) + n) % n;
 	}
-	/* Any deliberate move takes the carousel off autoplay: continuing to advance
-	   under someone who has just chosen a wave is the annoying part of a
-	   carousel, not the useful part. */
+	/* Any deliberate move takes the carousel off autoplay for good. There is no
+	   control to resume it, and there should not be: once someone is steering,
+	   having it start moving again on its own is the thing that makes a carousel
+	   irritating. */
 	function takeOver(fn: () => void) {
 		paused = true;
 		stopAuto();
 		fn();
 	}
-	function togglePlay() {
-		paused = !paused;
-		if (paused) stopAuto();
-		else startAuto();
-	}
-
 	let touchX = 0;
 	let touchY = 0;
 	function onTouchStart(e: TouchEvent) {
@@ -302,15 +297,6 @@
 								onclick={() => takeOver(() => step(-1))}
 							>
 								<span aria-hidden="true">&larr;</span>
-							</button>
-							<button
-								type="button"
-								class="map-ctl map-ctl--play"
-								aria-label={paused ? 'Play the rollout sequence' : 'Pause the rollout sequence'}
-								aria-pressed={paused}
-								onclick={togglePlay}
-							>
-								{paused ? 'Play' : 'Pause'}
 							</button>
 							<button
 								type="button"
@@ -589,9 +575,6 @@
 		transition:
 			border-color var(--duration-hover) ease,
 			color var(--duration-hover) ease;
-	}
-	.map-ctl--play {
-		min-width: 5.5rem;
 	}
 	.map-ctl:active {
 		transform: scale(0.97);
