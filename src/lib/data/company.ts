@@ -206,7 +206,7 @@ export const CARE_LOOP: CareLoopStage[] = [
 		name: 'Live',
 		actor: 'auracle',
 		title: 'Auracle builds the picture',
-		body: 'Connectors and conversation become one living bio-psycho-social history, ready before the appointment starts.',
+		body: 'Connectors and conversation become one living, SNOMED-encoded bio-psycho-social history, ready before the appointment starts.',
 		steps: ['Sources and conversation encoded as you go', 'A complete history, ready to share']
 	},
 	{
