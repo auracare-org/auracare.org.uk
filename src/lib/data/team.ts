@@ -53,7 +53,7 @@ export const team: Record<string, TeamMember> = {
 		name: 'Ahnaf Kabir',
 		img: '/JPG/ahnaf-kabir.jpg',
 		role: 'CISO',
-		bio: 'Former software lead at Slate and co-founder of Auracle Ltd, a medtech company bringing aural health to the home. Manages security operations, technical infrastructure and backend engineering.',
+		bio: 'Former software lead at Slate and previously co-founder of a medtech company bringing aural health to the home. Manages security operations, technical infrastructure and backend engineering.',
 		linkedin: 'https://www.linkedin.com/in/akn101',
 		website: 'https://akn.me.uk/'
 	},
