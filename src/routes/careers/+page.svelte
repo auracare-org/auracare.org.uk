@@ -106,6 +106,12 @@
 </section>
 
 <style>
+	/* A hairline between the pitch and the roles. Every other section boundary
+	   on the site is ruled; these two ran together as one column of copy. */
+	.roles {
+		border-top: 1px solid var(--color-rule);
+	}
+
 	/* Roles as a ruled list. The apply link sits at the end of the row on a wide
 	   screen and under the copy on a narrow one, so the row never has to choose
 	   between wrapping the title and wrapping the button. */
