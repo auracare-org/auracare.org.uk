@@ -130,7 +130,7 @@ export const PRODUCTS: Product[] = [
 		name: 'One patient model',
 		tagline: '532,000 concepts you can see',
 		blurb:
-			'Both products share one model of the patient, grounded in the terminology medicine already agrees on: SNOMED CT, ICD-11, HPO and LOINC. It is live and explorable today.',
+			'Every observation lands on the terminology medicine already agrees on, SNOMED CT, ICD-11, HPO and LOINC, so both products read and write the same graph. It is live and explorable today.',
 		status: 'live',
 		statusLabel: 'Live',
 		href: CONTACT.ontologyUrl,
