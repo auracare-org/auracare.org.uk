@@ -5,8 +5,8 @@
 	/* The institutions behind the two points below. Heights are set per logo
 	   rather than uniformly: a two-line lockup and a one-line wordmark set to
 	   the same height do not read as the same size. All three are recoloured to
-	   one ink tone so they sit as a set on the paper rather than as three
-	   pasted screenshots. */
+	   one navy (--color-primary-900) so they sit as a set rather than as three
+	   pasted screenshots in three different brand colours. */
 	const crests = [
 		{ src: '/logos/imperial-college-london.png', alt: 'Imperial College London', h: '2.6rem' },
 		{ src: '/logos/uc-berkeley.png', alt: 'UC Berkeley', h: '1.6rem' },
@@ -91,7 +91,7 @@
 	}
 	h2 {
 		font-size: clamp(1.9rem, 3.6vw, 3rem);
-		line-height: 1.06;
+		line-height: 1.15;
 		letter-spacing: -0.03em;
 		margin: 0 0 1.25rem;
 	}
@@ -147,9 +147,13 @@
 	.foundation h3 {
 		font-size: clamp(1.15rem, 2vw, 1.5rem);
 		letter-spacing: -0.02em;
-		margin: 0 auto 2rem;
+		margin: 0 auto;
 		max-width: 34ch;
 	}
+	/* The heading and the logo row are one unit: the heading names the
+	   institutions and the row shows them. The space between them is therefore
+	   tighter than the space separating the pair from the copy below. It used
+	   to be a flat 2rem that sat between the two and belonged to neither. */
 	.crests {
 		list-style: none;
 		display: flex;
@@ -157,16 +161,13 @@
 		align-items: center;
 		justify-content: center;
 		gap: clamp(2rem, 5vw, 4rem);
-		margin: 0 0 clamp(2.5rem, 5vw, 3.5rem);
+		margin: clamp(1.5rem, 2.5vw, 1.75rem) 0 clamp(2.75rem, 5vw, 3.75rem);
 		padding: 0;
 	}
 	.crests img {
 		display: block;
 		height: var(--h);
 		width: auto;
-		/* The logos are already one ink tone; the opacity keeps them from
-		   competing with the figures above, which are the actual claim. */
-		opacity: 0.65;
 	}
 	.points {
 		display: grid;

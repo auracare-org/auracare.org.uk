@@ -221,28 +221,41 @@
 		letter-spacing: var(--tracking-lg);
 	}
 
+	/* One leading scale, applied everywhere.
+	   Display type was set between 1.02 and 1.12 across twenty-odd rules, which
+	   is fine for a heading that holds one line and far too tight for one that
+	   wraps: at 1.02 the second line's ascenders very nearly touch the first
+	   line's descenders. These values give a wrapped heading room without
+	   loosening a single-line one enough to notice. */
 	h1 {
 		font-size: clamp(2.25rem, 5vw, 3.5rem);
-		line-height: 1.04;
+		line-height: 1.08;
 		letter-spacing: var(--tracking-xxl);
 	}
 
 	h2 {
 		font-size: clamp(1.75rem, 3.4vw, 2.75rem);
-		line-height: 1.1;
+		line-height: 1.15;
 		letter-spacing: var(--tracking-xl);
 	}
 
 	h3 {
 		font-size: clamp(1.1rem, 1.8vw, 1.35rem);
-		line-height: 1.3;
+		line-height: 1.35;
 		letter-spacing: var(--tracking-md);
 	}
 
 	h4 {
 		font-size: 1rem;
-		line-height: 1.4;
+		line-height: 1.45;
 		letter-spacing: var(--tracking-md);
+	}
+
+	/* Tailwind's preflight zeroes heading margins, so a heading whose component
+	   never set one sat directly on the paragraph below it. Layered, so any
+	   component rule still overrides it. */
+	:where(h1, h2, h3, h4) {
+		margin-block: 0 0.55em;
 	}
 
 	p {
@@ -632,7 +645,7 @@
 
 @utility roadmap-title {
 	margin: 0;
-	line-height: 1.25;
+	line-height: 1.35;
 	align-self: start;
 	justify-self: center;
 	display: block;
@@ -742,7 +755,7 @@
 
 @utility hero-title {
 	font-size: 3.5rem;
-	line-height: 1.05;
+	line-height: 1.08;
 	font-weight: 600;
 	letter-spacing: -0.03em;
 	margin-bottom: 1.5rem;

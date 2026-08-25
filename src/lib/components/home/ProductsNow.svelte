@@ -69,7 +69,7 @@
 	   the one section whose heading sat off the page's centre line. */
 	.products h2 {
 		font-size: clamp(1.9rem, 3.6vw, 3rem);
-		line-height: 1.06;
+		line-height: 1.15;
 		letter-spacing: -0.03em;
 		margin: 0 auto clamp(2.5rem, 5vw, 4rem);
 	}

@@ -64,7 +64,7 @@
 	}
 	.story-head h2 {
 		font-size: clamp(1.7rem, 3.6vw, 2.9rem);
-		line-height: 1.12;
+		line-height: 1.15;
 		margin-block: 0.6rem 0.9rem;
 	}
 	.story-head p {

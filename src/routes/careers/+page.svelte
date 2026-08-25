@@ -159,7 +159,7 @@
 	}
 	.closing h2 {
 		font-size: clamp(1.7rem, 3.4vw, 2.4rem);
-		line-height: 1.12;
+		line-height: 1.15;
 		letter-spacing: -0.015em;
 		max-width: none;
 	}

@@ -122,7 +122,7 @@
 	}
 	.acc-hero h1 {
 		font-size: clamp(2.2rem, 5.5vw, 3.6rem);
-		line-height: 1.06;
+		line-height: 1.15;
 		letter-spacing: -0.02em;
 		margin-block: 0.75rem 1.25rem;
 		max-width: 20ch;
