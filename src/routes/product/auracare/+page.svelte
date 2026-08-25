@@ -36,7 +36,7 @@
 		{
 			k: '01',
 			title: 'The context is already in the room',
-			body: 'The patient arrives with a complete lifestyle summary from Auracle, and acute vitals stream live from our own devices, so nothing is dug up on the spot.'
+			body: 'The patient arrives with a complete lifestyle summary from Auracle, and acute vitals stream live from our own devices, so nothing is dug up on the spot. Every one of those signals is already coded to the clinical ontology, so the core reads them as clinical fact rather than loose text.'
 		},
 		{
 			k: '02',
