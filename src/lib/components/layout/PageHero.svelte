@@ -70,7 +70,7 @@
 	}
 	.meta {
 		margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
-		font-size: 0.68rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.18em;
 		text-transform: uppercase;

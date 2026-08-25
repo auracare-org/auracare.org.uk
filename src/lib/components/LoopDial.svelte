@@ -118,7 +118,7 @@
 		transform: translate(-50%, -50%);
 		text-align: center;
 		/* Tracks the node, so the label stays in proportion as it scales. */
-		font-size: clamp(0.68rem, calc(var(--node) * 0.125), 1rem);
+		font-size: clamp(0.75rem, calc(var(--node) * 0.125), 1rem);
 		font-weight: 600;
 		line-height: 1.3;
 		letter-spacing: -0.01em;

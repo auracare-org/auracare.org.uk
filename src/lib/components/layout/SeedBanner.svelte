@@ -97,12 +97,17 @@
 	}
 	.seed-close {
 		position: absolute;
+		/* Flush with the container edge: a negative offset grew the hit area
+		   past it, where the banner's own `overflow: hidden` clipped part of the
+		   target away again. The box grows inward instead. */
 		right: 0;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 1.75rem;
-		height: 1.75rem;
+		/* 28x28 was under every tap-target guideline; the icon inside is
+		   unchanged, only the area around it grows. */
+		width: 44px;
+		height: 44px;
 		color: var(--color-ink-faint);
 		transition:
 			background var(--duration-hover) ease,
@@ -114,7 +119,7 @@
 	}
 	@media (max-width: 640px) {
 		.seed-close {
-			right: 0.25rem;
+			right: 0;
 		}
 	}
 </style>

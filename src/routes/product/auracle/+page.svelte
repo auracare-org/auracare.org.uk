@@ -511,6 +511,29 @@
 	   above it rather than the narrower shared lede width. The class is doubled
 	   to outrank `.section-y > .container-wide > p`, which is a more specific
 	   selector than a scoped single class and was pinning this to 40rem. */
+	/* On a phone the gutter is not affordable: 5.5rem of a 327px column is a
+	   quarter of the width spent on a timestamp, which squeezed the body copy
+	   to 239px. Below 640px the time sits above its entry and the rule runs
+	   down the left edge instead. */
+	@media (max-width: 640px) {
+		.day {
+			padding-left: 1.25rem;
+		}
+		.day::before {
+			left: 0;
+		}
+		.day-row::before {
+			left: -1.5rem;
+			top: 1.5rem;
+		}
+		.day-time {
+			position: static;
+			display: block;
+			margin-bottom: 0.35rem;
+			color: var(--color-primary-600);
+		}
+	}
+
 	.day-quiet.day-quiet {
 		margin: 1.75rem auto 0;
 		max-width: 44rem;
@@ -529,7 +552,7 @@
 	}
 	.gather-label {
 		display: block;
-		font-size: 0.66rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.2em;
 		text-transform: uppercase;
@@ -637,7 +660,7 @@
 	}
 	.keep-hook {
 		display: block;
-		font-size: 0.64rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.18em;
 		text-transform: uppercase;
@@ -684,7 +707,7 @@
 	}
 	.example-label {
 		display: block;
-		font-size: 0.66rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.2em;
 		text-transform: uppercase;
@@ -827,7 +850,7 @@
 	}
 	.price-tag {
 		display: block;
-		font-size: 0.68rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.18em;
 		text-transform: uppercase;

@@ -93,7 +93,10 @@
 		font-size: 0.9rem;
 		margin-bottom: 1rem;
 	}
+	/* A standalone action, so it carries a real tap height rather than just
+	   its line box. */
 	.footer-ontology {
+		min-height: 44px;
 		display: inline-flex;
 		align-items: center;
 		gap: 0.3rem;
@@ -148,7 +151,13 @@
 		color: rgba(226, 232, 255, 0.5) !important;
 		font-size: 0.8rem;
 	}
+	/* A real control, not a line of text: it was 19px tall, which is under any
+	   touch guideline and it sits at the very bottom of a long page where a
+	   thumb reaches for it. */
 	.footer-top {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
 		color: rgba(226, 232, 255, 0.7);
 		font-size: 0.8rem;
 		font-weight: 600;

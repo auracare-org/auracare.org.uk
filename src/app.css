@@ -1028,7 +1028,7 @@
 	display: inline-flex;
 	align-items: center;
 	font-family: var(--font-family-mono);
-	font-size: 0.68rem;
+	font-size: 0.7rem;
 	font-weight: 600;
 	letter-spacing: 0.2em;
 	text-transform: uppercase;
@@ -1106,7 +1106,7 @@
 	align-items: center;
 	gap: 0.45rem;
 	font-family: var(--font-family-mono);
-	font-size: 0.66rem;
+	font-size: 0.7rem;
 	font-weight: 600;
 	letter-spacing: 0.16em;
 	text-transform: uppercase;

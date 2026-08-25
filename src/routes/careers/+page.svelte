@@ -148,7 +148,10 @@
 		margin: 0;
 		max-width: 62ch;
 	}
+	/* A standalone action, so it carries a real tap height rather than just
+	   its line box. */
 	.role-apply {
+		min-height: 44px;
 		grid-column: 2;
 		justify-self: start;
 		display: inline-flex;

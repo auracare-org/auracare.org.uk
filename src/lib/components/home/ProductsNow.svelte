@@ -92,7 +92,7 @@
 	}
 	.panel-for {
 		display: block;
-		font-size: 0.66rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.2em;
 		text-transform: uppercase;
@@ -139,7 +139,7 @@
 		border-bottom: 1px solid var(--color-rule);
 	}
 	.panel-facts dt {
-		font-size: 0.66rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.16em;
 		text-transform: uppercase;
@@ -175,7 +175,10 @@
 		font-weight: 600;
 		color: var(--color-primary-600);
 	}
+	/* A standalone action, so it carries a real tap height rather than just
+	   its line box. */
 	.engine-link {
+		min-height: 44px;
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;

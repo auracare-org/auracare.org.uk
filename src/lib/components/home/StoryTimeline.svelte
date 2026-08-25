@@ -149,7 +149,7 @@
 	/* The entry the company is actually in. Without it every date read as
 	   equally distant, which made a shipped month look like a projection. */
 	.tl-now {
-		font-size: 0.6rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.16em;
 		text-transform: uppercase;
@@ -200,7 +200,7 @@
 		background: var(--color-primary-600);
 		color: #fff;
 		font-family: var(--font-family-mono);
-		font-size: 0.62rem;
+		font-size: 0.7rem;
 		font-weight: 700;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;

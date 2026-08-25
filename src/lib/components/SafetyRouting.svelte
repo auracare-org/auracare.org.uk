@@ -388,7 +388,7 @@
 		color: #dc2626;
 	}
 	.help-node-label {
-		font-size: 0.58rem;
+		font-size: 0.7rem;
 		color: var(--color-ink-faint);
 		white-space: nowrap;
 	}
@@ -454,7 +454,7 @@
 			font-size: 0.7rem;
 		}
 		.help-node-label {
-			font-size: 0.55rem;
+			font-size: 0.7rem;
 		}
 		.routing-canvas {
 			margin-bottom: 2.75rem;

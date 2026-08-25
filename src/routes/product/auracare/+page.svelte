@@ -523,7 +523,7 @@
 	}
 	.link-label {
 		display: block;
-		font-size: 0.64rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.2em;
 		text-transform: uppercase;
@@ -666,7 +666,7 @@
 		color: var(--color-ink);
 	}
 	.demo-tag {
-		font-size: 0.6rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.16em;
 		text-transform: uppercase;
@@ -710,7 +710,7 @@
 		padding-bottom: 0.5rem;
 		border-bottom: 1px solid var(--color-border-default);
 		font-family: var(--font-family-mono);
-		font-size: 0.6rem;
+		font-size: 0.7rem;
 		font-weight: 700;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
@@ -802,7 +802,10 @@
 	}
 	/* Centred under the centred note above it. `inline-flex` cannot be centred
 	   by auto margins, so it becomes a flex box sized to its own content. */
+	/* A standalone action, so it carries a real tap height rather than just
+	   its line box. */
 	.arch-link {
+		min-height: 44px;
 		display: flex;
 		width: max-content;
 		margin-inline: auto;
