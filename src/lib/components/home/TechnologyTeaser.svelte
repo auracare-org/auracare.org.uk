@@ -26,7 +26,8 @@
 			</h2>
 			<p class="tech-lead" use:reveal={{ delay: 120 }}>
 				Every signal is encoded onto the terminology medicine already agrees on, so every answer
-				traces back to a named source rather than to a model's confidence.
+				traces back to a named source rather than to a model's confidence. A clinician can follow
+				the reasoning back to those sources and stay in the loop.
 			</p>
 			<div class="tech-cta" use:reveal={{ delay: 180 }}>
 				<a class="link-rule" href={CONTACT.ontologyUrl} target="_blank" rel="noopener">
