@@ -13,6 +13,7 @@ const routes: { path: string; priority: number; changefreq: string }[] = [
 	{ path: '/careers', priority: 0.6, changefreq: 'weekly' },
 	{ path: '/privacy-centre', priority: 0.6, changefreq: 'yearly' },
 	{ path: '/privacy', priority: 0.3, changefreq: 'yearly' },
+	{ path: '/privacy/consumer-health-data', priority: 0.3, changefreq: 'yearly' },
 	{ path: '/terms', priority: 0.3, changefreq: 'yearly' },
 	{ path: '/cookies', priority: 0.3, changefreq: 'yearly' },
 	{ path: '/accessibility', priority: 0.3, changefreq: 'yearly' }
