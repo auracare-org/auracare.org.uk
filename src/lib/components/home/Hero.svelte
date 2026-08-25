@@ -1,6 +1,21 @@
 <script lang="ts">
-	import { reveal } from '$lib/actions/motion';
+	import { reveal, countUp } from '$lib/actions/motion';
 	import { CONTACT } from '$lib/data/company';
+
+	/* The standing figures. `value` is what counts and `suffix` is carried
+	   through the formatter, so "532k" animates as 532 with the k pinned to it
+	   rather than being skipped for not parsing as a number. */
+	const standings = [
+		{ label: 'Ontology, live today', value: 532, suffix: 'k', note: 'SNOMED CT concepts' },
+		{ label: 'Pharmacy partnerships', value: 28, suffix: '', note: 'From our prior venture' },
+		{ label: 'Examination devices', value: 3, suffix: '', note: 'Built, awaiting certification' },
+		{
+			label: 'Operating from',
+			value: 3,
+			suffix: '',
+			note: 'London, Hong Kong, San Francisco'
+		}
+	];
 </script>
 
 <!--
@@ -37,27 +52,28 @@
 		</div>
 	</div>
 
-	<dl class="standings">
-		<div class="standing" use:reveal={{ delay: 260 }}>
-			<dt>Ontology, live today</dt>
-			<dd>532k</dd>
-			<span class="standing-note">SNOMED CT concepts</span>
-		</div>
-		<div class="standing" use:reveal={{ delay: 300 }}>
-			<dt>Pharmacy partnerships</dt>
-			<dd>28</dd>
-			<span class="standing-note">From our prior venture</span>
-		</div>
-		<div class="standing" use:reveal={{ delay: 340 }}>
-			<dt>Examination devices</dt>
-			<dd>3</dd>
-			<span class="standing-note">Built, awaiting certification</span>
-		</div>
-		<div class="standing" use:reveal={{ delay: 380 }}>
-			<dt>Operating from</dt>
-			<dd>3</dd>
-			<span class="standing-note">London, Hong Kong, San Francisco</span>
-		</div>
+	<!-- The rail is revealed as a whole, not just cell by cell. Its top rule is
+	     the strongest line in the hero and it lands just below the fold on a
+	     laptop, so on load it read as a stray divider ruled across the bottom of
+	     the screen with nothing under it. Revealing the container means the rule
+	     arrives with the figures it belongs to. -->
+	<dl class="standings" use:reveal={{ delay: 240 }}>
+		{#each standings as s, i (s.label)}
+			<div class="standing" use:reveal={{ delay: 260 + i * 40 }}>
+				<dt>{s.label}</dt>
+				<!-- Seeded with the final value so the figure is present before the
+				     count-up runs, and without JavaScript at all. -->
+				<dd
+					use:countUp={{
+						value: s.value,
+						format: (v) => Math.round(v).toLocaleString() + s.suffix
+					}}
+				>
+					{s.value}{s.suffix}
+				</dd>
+				<span class="standing-note">{s.note}</span>
+			</div>
+		{/each}
 	</dl>
 </section>
 

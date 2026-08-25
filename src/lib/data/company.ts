@@ -631,11 +631,14 @@ export const MARKET_ARCS: MarketArc[] = [
 /* Market & traction                                                   */
 /* ------------------------------------------------------------------ */
 
+/* Labels are kept short enough to hold one line at the ledger's type size.
+   Two of them ran to 46 and 60 characters and wrapped, which put a ragged
+   second line under a figure set on a single baseline. */
 export const TRACTION: { stat: string; label: string }[] = [
-	{ stat: '28', label: 'UK pharmacy partnerships from our prior venture' },
+	{ stat: '28', label: 'UK pharmacy partnerships, prior venture' },
 	{ stat: '$134k', label: 'UK government funding awarded' },
-	{ stat: '$400k', label: 'angel investment, Hong Kong' },
-	{ stat: '~$400k', label: 'in resources from the Founders Factory Healthcare accelerator' }
+	{ stat: '$400k', label: 'Angel investment, Hong Kong' },
+	{ stat: '~$400k', label: 'Founders Factory Healthcare resources' }
 ];
 
 /**

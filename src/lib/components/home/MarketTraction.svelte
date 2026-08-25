@@ -2,6 +2,21 @@
 	import { reveal, countUp } from '$lib/actions/motion';
 	import { TRACTION, FOUNDATION_TITLE, FOUNDATION_POINTS } from '$lib/data/company';
 
+	/* The institutions behind the two points below. Heights are set per logo
+	   rather than uniformly: a two-line lockup and a one-line wordmark set to
+	   the same height do not read as the same size. All three are recoloured to
+	   one ink tone so they sit as a set on the paper rather than as three
+	   pasted screenshots. */
+	const crests = [
+		{ src: '/logos/imperial-college-london.png', alt: 'Imperial College London', h: '2.6rem' },
+		{ src: '/logos/uc-berkeley.png', alt: 'UC Berkeley', h: '1.6rem' },
+		{
+			src: '/logos/chinese-academy-of-sciences.png',
+			alt: 'Chinese Academy of Sciences',
+			h: '2.2rem'
+		}
+	];
+
 	/* Pull the number out of a stat however it is written, so "$134k" and
 	   "~$400k" animate too. Previously only a bare integer matched, which is
 	   why 28 was the only figure that moved. The prefix and suffix are kept so
@@ -51,11 +66,16 @@
 			{/each}
 		</dl>
 
-		<div class="foundation" use:reveal>
-			<h3>{FOUNDATION_TITLE}</h3>
+		<div class="foundation">
+			<h3 use:reveal>{FOUNDATION_TITLE}</h3>
+			<ul class="crests" use:reveal={{ delay: 60 }}>
+				{#each crests as crest (crest.src)}
+					<li><img src={crest.src} alt={crest.alt} style="--h:{crest.h}" loading="lazy" /></li>
+				{/each}
+			</ul>
 			<div class="points">
-				{#each FOUNDATION_POINTS as point (point.title)}
-					<div class="point">
+				{#each FOUNDATION_POINTS as point, i (point.title)}
+					<div class="point" use:reveal={{ delay: 100 + i * 70 }}>
 						<h4>{point.title}</h4>
 						<p>{point.body}</p>
 					</div>
@@ -101,7 +121,7 @@
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
 		color: var(--color-ink-faint);
-		max-width: 46ch;
+		max-width: 52ch;
 	}
 	.row dd {
 		margin: 0;
@@ -114,19 +134,47 @@
 		white-space: nowrap;
 	}
 
+	/* Centred as a block under a centred heading. It used to run hard left while
+	   everything above it sat on the page's centre line, which read as a section
+	   that had come loose. The body copy inside stays left-aligned, because
+	   centred prose in two columns is not readable. */
 	.foundation {
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		margin-top: clamp(3rem, 6vw, 4.5rem);
+		padding-top: clamp(2rem, 4vw, 3rem);
+		border-top: 1px solid var(--color-ink);
+		text-align: center;
 	}
 	.foundation h3 {
 		font-size: clamp(1.15rem, 2vw, 1.5rem);
 		letter-spacing: -0.02em;
-		margin: 0 0 1.5rem;
+		margin: 0 auto 2rem;
 		max-width: 34ch;
+	}
+	.crests {
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: clamp(2rem, 5vw, 4rem);
+		margin: 0 0 clamp(2.5rem, 5vw, 3.5rem);
+		padding: 0;
+	}
+	.crests img {
+		display: block;
+		height: var(--h);
+		width: auto;
+		/* The logos are already one ink tone; the opacity keeps them from
+		   competing with the figures above, which are the actual claim. */
+		opacity: 0.65;
 	}
 	.points {
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: 1.75rem;
+		text-align: left;
+		max-width: 62rem;
+		margin-inline: auto;
 	}
 	.point h4 {
 		font-size: 0.98rem;
