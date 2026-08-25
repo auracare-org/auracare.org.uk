@@ -505,12 +505,16 @@
 		color: var(--color-ink-soft);
 		max-width: 52ch;
 	}
-	/* Two paths, one above the other, so the length of each is the argument. */
+	/* Two paths, side by side, so the length of each is the argument.
+	   Capped and centred: at the full container width each column was 576px
+	   holding a 140px box, so three quarters of the diagram was empty ground
+	   and the two chains sat marooned at opposite ends of the section. */
 	.link {
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: 2rem;
-		margin-top: clamp(2rem, 4vw, 3rem);
+		max-width: 46rem;
+		margin: clamp(2rem, 4vw, 3rem) auto 0;
 		padding-block: clamp(1.75rem, 3vw, 2.25rem);
 		border-block: 1px solid rgba(255, 255, 255, 0.16);
 	}
@@ -547,9 +551,14 @@
 		margin: 0;
 		padding: 0;
 	}
+	/* The boxes take the column rather than shrinking to their own text, so the
+	   chain reads as one flow with a consistent gauge instead of five labels of
+	   five different widths stacked loosely on a line. */
 	.link-steps li {
 		position: relative;
-		padding: 0.55rem 0.9rem;
+		width: min(100%, 15rem);
+		padding: 0.6rem 0.9rem;
+		text-align: center;
 		font-size: 0.88rem;
 		font-weight: 500;
 		color: #fff;
@@ -581,7 +590,7 @@
 		font-size: 0.88rem;
 		line-height: 1.7;
 		color: rgba(226, 230, 240, 0.72);
-		max-width: 40ch;
+		max-width: 30ch;
 	}
 	@media (min-width: 860px) {
 		.link {
@@ -592,7 +601,7 @@
 		   content box's centre sat 1.5rem off the column's, so centring the
 		   chain inside it put the chain visibly off-centre in its half. */
 		.link-path {
-			padding-inline: 3rem;
+			padding-inline: 2rem;
 		}
 		.link-path--us {
 			border-left: 1px solid rgba(255, 255, 255, 0.16);

@@ -123,7 +123,18 @@
 			We split coverage three ways and each founder answers their own mail. Whoever you write to is
 			the person you will be dealing with, in your timezone, with no inbox in between.
 		</p>
-		<Roster people={founderPeople}>
+		<!-- The address sits under the role, where it belongs to the person, and
+		     the right-hand column carries only what this page is saying about
+		     them: the region they cover. The roster is capped and centred,
+		     because two short lines of detail in a 1200px row left most of the
+		     right-hand side empty. -->
+		<Roster people={founderPeople} maxWidth="54rem">
+			{#snippet under(member)}
+				{@const contact = contactFor(member.id)}
+				{#if contact}
+					<a class="founder-mail" href={mailto(contact.email)}>{contact.email}</a>
+				{/if}
+			{/snippet}
 			{#snippet detail(member)}
 				{@const contact = contactFor(member.id)}
 				{#if contact}
@@ -132,12 +143,9 @@
 						{contact.coverage}
 					</p>
 					<p class="founder-base">Based in {contact.basedIn}</p>
-					<p class="founder-links">
-						<a class="founder-write" href={mailto(contact.email)}>
-							Write to {member.name.split(' ')[0]} <span aria-hidden="true">&rarr;</span>
-						</a>
-						<a class="founder-mail" href={mailto(contact.email)}>{contact.email}</a>
-					</p>
+					<a class="founder-write" href={mailto(contact.email)}>
+						Write to {member.name.split(' ')[0]} <span aria-hidden="true">&rarr;</span>
+					</a>
 				{/if}
 			{/snippet}
 		</Roster>
@@ -309,14 +317,8 @@
 		line-height: 1.65;
 		color: var(--color-ink-soft);
 	}
-	.founder-links {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: baseline;
-		gap: 0.5rem 1.5rem;
-		margin: 0.9rem 0 0;
-	}
 	.founder-write {
+		margin-top: 0.9rem;
 		display: inline-flex;
 		align-items: center;
 		gap: 0.45rem;
@@ -335,9 +337,12 @@
 		transition: transform var(--duration-hover) var(--ease-out);
 	}
 	.founder-mail {
+		display: inline-block;
+		margin-top: 0.4rem;
 		font-size: 0.82rem;
 		color: var(--color-ink-faint);
 		transition: color var(--duration-hover) ease;
+		overflow-wrap: anywhere;
 	}
 
 	/* Traction: a ledger, one figure per row. The figure column used to be a
@@ -376,8 +381,12 @@
 	}
 
 	/* The business model: three sequenced arguments, divided by rules. */
+	/* Centred above the heading it introduces. app.css centres `.eyebrow`
+	   specifically; this one carries its own name, so the shared rule never
+	   reached it and it sat hard left over a centred h2. */
 	.model-eyebrow {
 		display: block;
+		text-align: center;
 		font-size: 0.66rem;
 		font-weight: 600;
 		letter-spacing: 0.2em;
@@ -451,10 +460,14 @@
 	}
 
 	/* Quick links: ruled rows, not cards. */
+	/* A centred measure rather than the full container. The rows carried a
+	   60ch description inside a 1200px grid, so every row ended halfway across
+	   and the right half of the block was empty. */
 	.catchup-grid {
 		display: grid;
 		grid-template-columns: 1fr;
-		margin-top: clamp(2.5rem, 5vw, 3.5rem);
+		max-width: 52rem;
+		margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
 		border-top: 1px solid var(--color-ink);
 	}
 	.catchup-row {
@@ -482,7 +495,6 @@
 		font-size: 0.92rem;
 		line-height: 1.7;
 		color: var(--color-ink-soft);
-		max-width: 60ch;
 	}
 
 	/* FAQ: ruled rows with a plus that turns. */

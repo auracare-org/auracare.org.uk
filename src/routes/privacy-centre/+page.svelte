@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageHero from '$lib/components/layout/PageHero.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { reveal } from '$lib/actions/motion';
 	import { CONTACT } from '$lib/data/company';
@@ -74,161 +75,118 @@
 	noindex={false}
 />
 
-<section class="page-hero aura-space">
-	<span
-		class="bubble"
-		style="--bubble-size:380px;--bubble-color:rgba(97,128,255,.25);--bubble-blur:20px; top:-10%; right:-4%"
-		aria-hidden="true"
-	></span>
-	<div class="container-wide hero-inner">
-		<span class="eyebrow" use:reveal>Privacy Centre</span>
-		<h1 use:reveal={{ delay: 60 }}>
-			Your rights, <span class="text-gradient-l">on your terms</span>.
-		</h1>
-		<p class="lede" use:reveal={{ delay: 140 }}>
-			You have the right to access, correct, export or permanently delete any data Auracare holds
-			about you. Submit a request below and we will respond within 30 days.
-		</p>
-	</div>
-</section>
+<PageHero
+	title="Your rights,"
+	accent="on your terms."
+	accentOwnLine
+	sub="You have the right to access, correct, export or permanently delete any data Auracare holds about you. Submit a request below and we will respond within 30 days."
+	meta="Privacy Centre"
+/>
 
 <section class="centre section-y">
 	<div class="container-narrow">
 		<div class="rights-grid" use:reveal>
-				{#each rights as right}
-					<button
-						class="right-card {selectedRight === right.key ? 'right-card--active' : ''}"
-						onclick={() => (selectedRight = right.key)}
-						type="button"
-					>
-						<span class="right-label">{right.label}</span>
-					</button>
-				{/each}
-			</div>
-
-			<div class="selected-desc" use:reveal={{ delay: 60 }}>
-				<p>{selected.description}</p>
-			</div>
-
-			<form class="request-form" onsubmit={handleSubmit} use:reveal={{ delay: 120 }}>
-				<input type="hidden" name="type" value={selectedRight} />
-
-				<div class="field">
-					<label for="phone">Phone number <span class="required">*</span></label>
-					<p class="field-hint">
-						The phone number linked to your Auracle account (the number you message Auracle from).
-					</p>
-					<input
-						id="phone"
-						type="tel"
-						name="phone"
-						placeholder="+44 7700 900000"
-						bind:value={phoneNumber}
-						required
-						autocomplete="tel"
-					/>
-				</div>
-
-				<div class="field">
-					<label for="email">Email address <span class="required">*</span></label>
-					<p class="field-hint">
-						Where we should send your confirmation and any follow-up.
-					</p>
-					<input
-						id="email"
-						type="email"
-						name="email"
-						placeholder="you@example.com"
-						bind:value={email}
-						required
-						autocomplete="email"
-					/>
-				</div>
-
-				{#if selectedRight !== 'delete'}
-					<div class="field">
-						<label for="info">Additional details <span class="optional">(optional)</span></label>
-						<textarea
-							id="info"
-							name="info"
-							rows="4"
-							placeholder="Any additional context that would help us process your request…"
-							bind:value={additionalInfo}
-						></textarea>
-					</div>
-				{/if}
-
-				{#if selectedRight === 'delete'}
-					<div class="delete-warning">
-						<strong>This action is permanent.</strong> Deleting your account will erase your twin's
-						memory, all connected health sources, and your conversation history. This cannot be
-						undone.
-					</div>
-				{/if}
-
-				<button type="submit" class="btn-primary submit-btn">
-					Open email to submit
+			{#each rights as right}
+				<button
+					class="right-card {selectedRight === right.key ? 'right-card--active' : ''}"
+					onclick={() => (selectedRight = right.key)}
+					type="button"
+				>
+					<span class="right-label">{right.label}</span>
 				</button>
-			</form>
+			{/each}
+		</div>
 
-			<div class="info-panels" use:reveal={{ delay: 180 }}>
-				<div class="info-panel">
-					<h3>What happens next</h3>
-					<ol>
-						<li>We send a confirmation to your email within 24 hours.</li>
-						<li>We may contact you to verify your identity before processing sensitive requests.</li>
-						<li>We complete your request within 30 days (or tell you if we need more time).</li>
-					</ol>
-				</div>
-				<div class="info-panel">
-					<h3>Other ways to reach us</h3>
-					<p>
-						You can also email <a href="mailto:{CONTACT.privacy}">{CONTACT.privacy}</a> directly with
-						your request.
-					</p>
-					<p>
-						For questions about our privacy practices, see our <a href="/privacy">Privacy Policy</a>
-						and our
-						<a href="/privacy/consumer-health-data">Consumer Health Data Policy</a>.
-					</p>
-					<p>
-						If you are a Washington or Nevada resident, the Consumer Health Data Policy describes
-						additional rights and how to exercise them.
-					</p>
-				</div>
+		<div class="selected-desc" use:reveal={{ delay: 60 }}>
+			<p>{selected.description}</p>
+		</div>
+
+		<form class="request-form" onsubmit={handleSubmit} use:reveal={{ delay: 120 }}>
+			<input type="hidden" name="type" value={selectedRight} />
+
+			<div class="field">
+				<label for="phone">Phone number <span class="required">*</span></label>
+				<p class="field-hint">
+					The phone number linked to your Auracle account (the number you message Auracle from).
+				</p>
+				<input
+					id="phone"
+					type="tel"
+					name="phone"
+					placeholder="+44 7700 900000"
+					bind:value={phoneNumber}
+					required
+					autocomplete="tel"
+				/>
 			</div>
+
+			<div class="field">
+				<label for="email">Email address <span class="required">*</span></label>
+				<p class="field-hint">Where we should send your confirmation and any follow-up.</p>
+				<input
+					id="email"
+					type="email"
+					name="email"
+					placeholder="you@example.com"
+					bind:value={email}
+					required
+					autocomplete="email"
+				/>
 			</div>
+
+			{#if selectedRight !== 'delete'}
+				<div class="field">
+					<label for="info">Additional details <span class="optional">(optional)</span></label>
+					<textarea
+						id="info"
+						name="info"
+						rows="4"
+						placeholder="Any additional context that would help us process your request…"
+						bind:value={additionalInfo}
+					></textarea>
+				</div>
+			{/if}
+
+			{#if selectedRight === 'delete'}
+				<div class="delete-warning">
+					<strong>This action is permanent.</strong> Deleting your account will erase your twin's memory,
+					all connected health sources, and your conversation history. This cannot be undone.
+				</div>
+			{/if}
+
+			<button type="submit" class="btn-primary submit-btn"> Open email to submit </button>
+		</form>
+
+		<div class="info-panels" use:reveal={{ delay: 180 }}>
+			<div class="info-panel">
+				<h3>What happens next</h3>
+				<ol>
+					<li>We send a confirmation to your email within 24 hours.</li>
+					<li>We may contact you to verify your identity before processing sensitive requests.</li>
+					<li>We complete your request within 30 days (or tell you if we need more time).</li>
+				</ol>
+			</div>
+			<div class="info-panel">
+				<h3>Other ways to reach us</h3>
+				<p>
+					You can also email <a href="mailto:{CONTACT.privacy}">{CONTACT.privacy}</a> directly with your
+					request.
+				</p>
+				<p>
+					For questions about our privacy practices, see our <a href="/privacy">Privacy Policy</a>
+					and our
+					<a href="/privacy/consumer-health-data">Consumer Health Data Policy</a>.
+				</p>
+				<p>
+					If you are a Washington or Nevada resident, the Consumer Health Data Policy describes
+					additional rights and how to exercise them.
+				</p>
+			</div>
+		</div>
+	</div>
 </section>
 
 <style>
-	.page-hero {
-		padding-block: clamp(5rem, 10vw, 8rem) clamp(3rem, 5vw, 4rem);
-		position: relative;
-		overflow: hidden;
-	}
-
-	.hero-inner {
-		position: relative;
-		z-index: 1;
-	}
-
-	.lede {
-		max-width: 52rem;
-		font-size: clamp(1rem, 1.2vw, 1.15rem);
-		color: var(--color-text-body-secondary);
-		margin-top: 1.25rem;
-	}
-
-	.bubble {
-		position: absolute;
-		width: var(--bubble-size);
-		height: var(--bubble-size);
-		border-radius: 50%;
-		background: var(--bubble-color);
-		filter: blur(var(--bubble-blur));
-		pointer-events: none;
-	}
-
 	.centre {
 		padding-block: clamp(2rem, 4vw, 3.5rem) clamp(4rem, 8vw, 7rem);
 	}
@@ -263,7 +221,7 @@
 		transition:
 			background 0.15s,
 			border-color 0.15s;
-		color: var(--color-text-body-primary);
+		color: var(--color-ink-soft);
 		font-size: 0.88rem;
 		font-weight: 500;
 	}
@@ -271,7 +229,7 @@
 	.right-card:hover {
 		background: var(--color-primary-50);
 		border-color: var(--color-primary-300);
-		color: var(--color-text-body-primary);
+		color: var(--color-ink-soft);
 	}
 
 	.right-card--active {
@@ -292,7 +250,7 @@
 		padding: 0.9rem 1.1rem;
 		margin-bottom: 2rem;
 		font-size: 0.92rem;
-		color: var(--color-text-body-primary);
+		color: var(--color-ink-soft);
 	}
 
 	.selected-desc p {
@@ -316,21 +274,21 @@
 	.field label {
 		font-size: 0.88rem;
 		font-weight: 600;
-		color: var(--color-text-body-primary);
+		color: var(--color-ink-soft);
 	}
 
 	.field-hint {
 		font-size: 0.82rem;
-		color: var(--color-text-body-secondary);
+		color: var(--color-ink-faint);
 		margin: 0;
 	}
 
 	.required {
-		color: #f87171;
+		color: #c81e1e;
 	}
 
 	.optional {
-		color: var(--color-text-body-secondary);
+		color: var(--color-ink-faint);
 		font-weight: 400;
 	}
 
@@ -340,7 +298,7 @@
 		border: 1px solid var(--color-neutral-300);
 		border-radius: 0.5rem;
 		padding: 0.7rem 0.9rem;
-		color: var(--color-text-body-primary);
+		color: var(--color-ink-soft);
 		font-size: 0.95rem;
 		font-family: inherit;
 		transition: border-color 0.15s;
@@ -394,14 +352,14 @@
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
-		color: var(--color-text-body-secondary);
+		color: var(--color-ink-faint);
 		margin-bottom: 0.8rem;
 	}
 
 	.info-panel p,
 	.info-panel li {
 		font-size: 0.88rem;
-		color: var(--color-text-body-primary);
+		color: var(--color-ink-soft);
 		line-height: 1.65;
 	}
 

@@ -70,9 +70,13 @@
 			Titles are a rough guide, not a checklist. Close enough? Interestingly different? Email us
 			anyway. We hire people, not job descriptions.
 		</p>
-		<div class="role-grid">
+		<!-- A ruled list, like every other list on the site. These were bordered
+		     cards in a two-up grid with pill buttons, which is the treatment the
+		     rest of the site moved off. -->
+		<ol class="role-list">
 			{#each roles as role, i}
-				<article class="glass-card role-card" use:reveal={{ delay: 140 + i * 70 }}>
+				<li class="role" use:reveal={{ delay: 100 + i * 60 }}>
+					<span class="role-n">{String(i + 1).padStart(2, '0')}</span>
 					<div class="role-body">
 						<h3>{role.title}</h3>
 						<p>{role.body}</p>
@@ -80,114 +84,149 @@
 					<a class="role-apply" href={mailto(role.subject)}>
 						Apply <span aria-hidden="true">→</span>
 					</a>
-				</article>
+				</li>
 			{/each}
-		</div>
+		</ol>
 	</div>
 </section>
 
 <!-- 5) Closing CTA -->
-<section class="section-y closing aura-space">
-	<div class="container-wide closing-inner" use:reveal>
-		<h2>Don’t see your role? Invent it.</h2>
-		<p>
+<section class="closing aura-space">
+	<div class="container-wide closing-inner">
+		<h2 use:reveal>Don’t see your role? Invent it.</h2>
+		<p use:reveal={{ delay: 60 }}>
 			If you're great at something we forgot to list, tell us the problem you'd want to work on.
 			Worst case, we say no and you've written one short email.
 		</p>
-		<a class="cta-primary" href={mailto('Careers: speculative application')}> Get in touch </a>
-		<p class="closing-address">{CONTACT.general}</p>
+		<div class="closing-actions" use:reveal={{ delay: 120 }}>
+			<a class="btn-solid" href={mailto('Careers: speculative application')}>Get in touch</a>
+			<a class="closing-address" href="mailto:{CONTACT.general}">{CONTACT.general}</a>
+		</div>
 	</div>
 </section>
 
 <style>
-	@media (hover: hover) and (pointer: fine) {
-		.cta-primary:hover {
-			color: var(--color-primary-800);
-			transform: translateY(-2px);
-			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.32);
-		}
-		.cta-primary:hover:active {
-			transform: translateY(-2px) scale(0.97);
-		}
+	/* Roles as a ruled list. The apply link sits at the end of the row on a wide
+	   screen and under the copy on a narrow one, so the row never has to choose
+	   between wrapping the title and wrapping the button. */
+	.role-list {
+		list-style: none;
+		margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+		padding: 0;
+		max-width: 60rem;
+		border-top: 1px solid var(--color-ink);
 	}
-	@media (hover: hover) and (pointer: fine) {
-	}
-	.role-grid {
+	.role {
 		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.25rem;
-		margin-top: 2rem;
+		grid-template-columns: 2.5rem minmax(0, 1fr);
+		gap: 0.75rem 1rem;
+		padding-block: 1.6rem;
+		border-bottom: 1px solid var(--color-rule);
 	}
-	.role-card {
-		display: flex;
-		flex-direction: column;
-		gap: 1.25rem;
-		padding: 1.7rem 1.8rem;
-		border-radius: var(--radius-2xl);
+	.role-n {
+		font-size: 0.7rem;
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+		color: var(--color-ink-faint);
+		padding-top: 0.3rem;
 	}
-	.role-card h3 {
-		font-size: 1.22rem;
-		margin-bottom: 0.5rem;
+	.role h3 {
+		font-size: 1.1rem;
+		letter-spacing: -0.015em;
+		margin: 0 0 0.35rem;
 	}
-	.role-card p {
+	.role-body p {
+		font-size: 0.94rem;
 		line-height: 1.7;
-		color: var(--color-neutral-700);
+		color: var(--color-ink-soft);
+		margin: 0;
+		max-width: 62ch;
 	}
 	.role-apply {
-		align-self: flex-start;
+		grid-column: 2;
+		justify-self: start;
 		display: inline-flex;
 		align-items: center;
-		gap: 0.4rem;
+		gap: 0.45rem;
+		font-size: 0.72rem;
 		font-weight: 600;
-		color: var(--color-primary-600);
-		padding: 0.6rem 1.25rem;
-		border-radius: 999px;
-		border: 1px solid var(--color-primary-600);
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-ink);
+		border-bottom: 1px solid var(--color-ink);
+		padding-bottom: 0.25rem;
 		transition:
-			background 0.2s ease,
-			color 0.2s ease,
-			transform 0.2s ease;
+			color var(--duration-hover) ease,
+			border-color var(--duration-hover) ease;
 	}
-	.role-apply:hover {
-		background: var(--color-primary-600);
-		color: #fff;
-		transform: translateY(-1px);
-	}
-	.closing-inner {
-		max-width: 42rem;
-		margin-inline: auto;
-	}
-	.closing h2 {
-		font-size: clamp(1.7rem, 3.4vw, 2.4rem);
-		line-height: 1.15;
-		letter-spacing: -0.015em;
-		max-width: none;
-	}
-	.closing p {
-		margin-top: 1rem;
-		line-height: 1.65;
-	}
-	.closing .cta-primary {
-		display: inline-block;
-		margin-top: 1.75rem;
-	}
-	.closing-address {
-		margin-top: 1.1rem;
-		font-size: 0.9rem;
-		opacity: 0.7;
+	.role-apply span {
+		transition: transform var(--duration-hover) var(--ease-out);
 	}
 
-	@media (min-width: 900px) {
-		.role-grid {
-			grid-template-columns: 1fr 1fr;
+	/* The closing band, matched to the one on the Auracle page. */
+	.closing {
+		padding-block: clamp(4rem, 8vw, 6.5rem);
+		border-top: 1px solid var(--color-rule);
+	}
+	.closing-inner {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+	.closing h2 {
+		font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+		line-height: 1.15;
+		letter-spacing: -0.035em;
+		margin: 0;
+		max-width: 20ch;
+		color: #fff;
+		text-wrap: balance;
+	}
+	.closing p {
+		margin: clamp(1.25rem, 3vw, 1.75rem) 0 0;
+		font-size: clamp(1rem, 1.35vw, 1.14rem);
+		line-height: 1.7;
+		max-width: 48ch;
+		text-wrap: pretty;
+	}
+	.closing-actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem 2rem;
+		margin-top: clamp(2rem, 4vw, 2.75rem);
+	}
+	.closing-address {
+		font-size: 0.9rem;
+		color: rgba(226, 230, 240, 0.7);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+		padding-bottom: 0.15rem;
+		transition: color var(--duration-hover) ease;
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.role-apply:hover {
+			color: var(--color-primary-600);
+			border-color: var(--color-primary-600);
 		}
-		.role-card {
-			flex-direction: row;
+		.role-apply:hover span {
+			transform: translateX(3px);
+		}
+		.closing-address:hover {
+			color: #fff;
+		}
+	}
+	@media (min-width: 800px) {
+		.role {
+			grid-template-columns: 2.5rem minmax(0, 1fr) auto;
 			align-items: center;
-			justify-content: space-between;
+			gap: 1.5rem;
 		}
-		.role-card .role-apply {
-			flex-shrink: 0;
+		.role-apply {
+			grid-column: 3;
+			justify-self: end;
 		}
 	}
 </style>
