@@ -120,7 +120,7 @@ export const PRODUCTS: Product[] = [
 		name: 'Auracare CDSS',
 		tagline: 'Decision support inside the consultation',
 		blurb:
-			'Clinical decision support that runs in the background during the appointment, reasoning over Auracle’s history, live vitals from our own devices and the conversation itself. The clinician keeps their eyes on the patient.',
+			'Clinical decision support that runs in the background, reasoning over Auracle’s history, live vitals from our own devices and the conversation itself. The clinician never looks away.',
 		status: 'in-development',
 		statusLabel: 'Expected May 2027',
 		href: '/product/auracare'
