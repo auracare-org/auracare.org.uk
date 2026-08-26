@@ -12,12 +12,12 @@
 		},
 		{
 			title: 'Full Stack Engineer',
-			body: 'Own the surfaces Auracle lives on: a shared Kotlin Multiplatform core and Svelte web, from device connections to the daily check-in.',
+			body: 'Own the surfaces the patient portal lives on: a shared Kotlin Multiplatform core and Svelte web, from device connections to the daily check-in.',
 			subject: 'Careers: Full Stack Engineer'
 		},
 		{
 			title: 'Data / Connectors Engineer',
-			body: 'Turn wearables, apps, health platforms and our own devices into clean, comparable signals for Auracle and the clinical core. Consent and privacy are built in from the start, which means automating data requests and sign-on.',
+			body: 'Turn wearables, apps, health platforms and our own devices into clean, comparable signals for the patient portal and the clinical core. Consent and privacy are built in from the start, which means automating data requests and sign-on.',
 			subject: 'Careers: Data / Connectors Engineer'
 		},
 		{
@@ -174,7 +174,7 @@
 		transition: transform var(--duration-hover) var(--ease-out);
 	}
 
-	/* The closing band, matched to the one on the Auracle page. */
+	/* The closing band, matched to the old product-page treatment. */
 	.closing {
 		padding-block: clamp(4rem, 8vw, 6.5rem);
 		border-top: 1px solid var(--color-rule);

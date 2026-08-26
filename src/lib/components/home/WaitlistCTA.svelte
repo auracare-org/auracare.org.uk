@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/motion';
-	import { AURACLE_URL, CONTACT, NON_DEVICE_DISCLAIMER, WAITLIST_URL } from '$lib/data/company';
+	import { CONTACT, NON_DEVICE_DISCLAIMER, WAITLIST_URL } from '$lib/data/company';
 </script>
 
 <!--
@@ -44,10 +44,8 @@
 		     text that lined up with nothing else in the section. -->
 		<div class="closing-foot">
 			<p class="aside" use:reveal>
-				Auracle, our consumer product, launches on iMessage, WhatsApp and RCS. The waitlist is open
-				at
-				<a href={WAITLIST_URL} rel="noopener">app.auracle.health</a>, and the consumer site is
-				<a href={AURACLE_URL} rel="noopener">auracle.health</a>.
+				The patient portal, the first stage of the pipeline, launches in September 2026.
+				<a href={WAITLIST_URL} rel="noopener">Join the waitlist</a>.
 			</p>
 			<p class="fineprint" use:reveal={{ delay: 60 }}>{NON_DEVICE_DISCLAIMER}</p>
 		</div>

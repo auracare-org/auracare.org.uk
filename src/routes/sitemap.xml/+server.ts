@@ -6,8 +6,6 @@ const BASE = 'https://auracare.org.uk';
 
 const routes: { path: string; priority: number; changefreq: string }[] = [
 	{ path: '/', priority: 1.0, changefreq: 'weekly' },
-	{ path: '/product/auracle', priority: 0.9, changefreq: 'weekly' },
-	{ path: '/product/auracare', priority: 0.9, changefreq: 'weekly' },
 	{ path: '/technology', priority: 0.8, changefreq: 'monthly' },
 	{ path: '/investors', priority: 0.7, changefreq: 'monthly' },
 	{ path: '/careers', priority: 0.6, changefreq: 'weekly' },

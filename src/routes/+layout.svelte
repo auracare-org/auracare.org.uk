@@ -126,7 +126,7 @@
 					"@id": "https://auracare.org.uk/#organization",
 					"name": "Auracare Health Ltd",
 					"alternateName": "Auracare AI",
-					"description": "Auracare builds two products on one patient model: Auracle, a wellness companion that lives in your messages, and Auracare, clinical decision support that works inside the consultation.",
+					"description": "Auracare builds one pipeline for healthcare providers: a patient portal aggregates daily life into coded history, the Auracare CDSS reasons over it in the consultation, and the outputs land in the clinic's own systems.",
 					"url": "https://auracare.org.uk",
 					"logo": {
 						"@type": "ImageObject",
@@ -152,7 +152,7 @@
 					"@id": "https://auracare.org.uk/#website",
 					"name": "Auracare AI",
 					"url": "https://auracare.org.uk",
-					"description": "Two products on one patient model: Auracle, a wellness companion in your messages, and Auracare, clinical decision support inside the consultation.",
+					"description": "One pipeline for frontline care: aggregation, clinical reasoning and outputs, built on the terminology medicine already uses.",
 					"publisher": { "@id": "https://auracare.org.uk/#organization" },
 					"inLanguage": "en-GB"
 				}

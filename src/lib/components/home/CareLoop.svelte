@@ -35,7 +35,7 @@
 							<h3>
 								{stage.name}
 								<span class="step-actor"
-									>{stage.actor === 'auracle' ? 'Auracle' : 'Auracare CDSS'}</span
+									>{stage.actor === 'portal' ? 'Patient portal' : 'Auracare CDSS'}</span
 								>
 							</h3>
 							<p>{stage.body}</p>

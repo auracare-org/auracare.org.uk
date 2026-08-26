@@ -7,10 +7,10 @@
 	import {
 		CONTACT,
 		INVESTOR_CONTACTS,
+		PIPELINE_ROLE,
+		PIPELINE_ROLE_EYEBROW,
+		PIPELINE_ROLE_HEADING,
 		TRACTION,
-		TWIN_ROLE,
-		TWIN_ROLE_EYEBROW,
-		TWIN_ROLE_HEADING,
 		type InvestorContactKey
 	} from '$lib/data/company';
 	import { getMember } from '$lib/data/team';
@@ -60,14 +60,9 @@
 
 	const quickLinks = [
 		{
-			href: '/product/auracle',
-			title: 'Auracle',
-			desc: 'The consumer product: a wellness companion in your messages. Launches September 2026.'
-		},
-		{
-			href: '/product/auracare',
-			title: 'Auracare CDSS, the clinical product',
-			desc: 'Decision support inside the consultation, fed by our own devices. In development.'
+			href: '/#pipeline',
+			title: 'The pipeline',
+			desc: 'The three stages providers buy: aggregation, reasoning and outputs.'
 		},
 		{
 			href: '/technology',
@@ -89,15 +84,15 @@
 		},
 		{
 			q: 'What’s live today, and what isn’t?',
-			a: 'The ontology is live and explorable: 532,000 clinical concepts. Auracle launches to the public in September 2026. The Auracare CDSS, the clinical product, is in development and targeted for May 2027.'
+			a: 'The ontology is live and explorable: 532,000 clinical concepts. The patient portal, the aggregation stage, launches in September 2026. The CDSS core is in development, with clinical trials signed with EC Healthcare (December 2026) and the Chinese Academy of Sciences (February 2027), and the full pipeline targeted for clinics in 2027.'
 		},
 		{
 			q: 'Who’s already backing you?',
-			a: 'A $400k angel investment from Hong Kong, around $400k in resources from the Founders Factory Healthcare accelerator, and $134k in UK government funding. Our prior venture also built 28 UK pharmacy partnerships.'
+			a: 'A $400k angel investment from Hong Kong, around $400k in resources from the Founders Factory Healthcare accelerator, and $134k in UK government funding. Our prior venture built 28 UK pharmacy partnerships, and two Chinese OEM partnerships build our examination hardware.'
 		},
 		{
 			q: 'How do you handle regulation?',
-			a: 'Auracle ships as a general-wellness product under the FD&C Act §520(o)(1)(B) exclusion, so it never diagnoses or treats. The Auracare CDSS is clinical decision support; its regulatory pathway is under active review.'
+			a: 'The patient portal ships as a general-wellness product under the FD&C Act §520(o)(1)(B) exclusion, so it never diagnoses or treats. The Auracare CDSS is clinical decision support; its regulatory pathway is under active review.'
 		}
 	];
 </script>
@@ -112,7 +107,7 @@
 <PageHero
 	title="We are raising our"
 	accent="seed round."
-	sub="Auracle launches to the public in September 2026, and our first clinical trials in Asia begin in February 2027. This round pays for the launch, the trials, and device certification."
+	sub="The patient portal launches in September 2026 and our first clinical trial begins in December 2026. This round builds the clinical core, certifies the hardware, and takes the portal to launch."
 />
 
 <!-- ================= Who to talk to ================= -->
@@ -184,15 +179,15 @@
 <!-- ================= Business model ================= -->
 <section class="section-y model">
 	<div class="container-wide">
-		<span class="model-eyebrow" use:reveal>{TWIN_ROLE_EYEBROW}</span>
-		<h2 use:reveal={{ delay: 60 }}>{TWIN_ROLE_HEADING}</h2>
+		<span class="model-eyebrow" use:reveal>{PIPELINE_ROLE_EYEBROW}</span>
+		<h2 use:reveal={{ delay: 60 }}>{PIPELINE_ROLE_HEADING}</h2>
 		<!-- A numbered argument, not three columns. These are three steps of one
 		     case — revenue starts here, it feeds that, and this is the number to
 		     hold us to — and side-by-side columns of equal weight flattened the
 		     sequence out of it. Rows carry the order; the stat sits on the right
 		     as the fact each step turns on. -->
 		<ol class="model-grid">
-			{#each TWIN_ROLE as role, i (role.title)}
+			{#each PIPELINE_ROLE as role, i (role.title)}
 				<li class="model-row" use:reveal={{ delay: 100 + i * 70 }}>
 					<span class="model-n">{String(i + 1).padStart(2, '0')}</span>
 					<div class="model-text">
