@@ -120,7 +120,10 @@
 	}
 	.spec-row {
 		display: flex;
-		align-items: baseline;
+		/* Centred, not baseline-aligned, for the same reason as the traction
+		   ledger: a 0.78rem label sharing a baseline with a figure that clamps to
+		   2.4rem gets pinned to the bottom of the row. */
+		align-items: center;
 		justify-content: space-between;
 		gap: 1.5rem;
 		padding-block: 1.15rem;
