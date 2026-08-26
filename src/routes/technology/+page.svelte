@@ -218,20 +218,20 @@
 					<text class="bps-item" x="260" y="101">Physical health</text>
 					<text class="bps-item" x="260" y="116">Brain chemistry</text>
 
-					<text class="bps-name" x="150" y="238">Social</text>
-					<text class="bps-item" x="150" y="258">Peers and family</text>
-					<text class="bps-item" x="150" y="273">Socioeconomic</text>
-					<text class="bps-item" x="150" y="288">Culture</text>
+					<text class="bps-name" x="160" y="238">Social</text>
+					<text class="bps-item" x="160" y="258">Peers and family</text>
+					<text class="bps-item" x="160" y="273">Socioeconomic</text>
+					<text class="bps-item" x="160" y="288">Culture</text>
 
-					<text class="bps-name" x="368" y="238">Psychological</text>
-					<text class="bps-item" x="368" y="258">Emotions</text>
-					<text class="bps-item" x="368" y="273">Beliefs</text>
-					<text class="bps-item" x="368" y="288">Coping skills</text>
+					<text class="bps-name" x="360" y="238">Psychological</text>
+					<text class="bps-item" x="360" y="258">Emotions</text>
+					<text class="bps-item" x="360" y="273">Beliefs</text>
+					<text class="bps-item" x="360" y="288">Coping skills</text>
 
-					<text class="bps-overlap" x="216" y="180">Lifestyle</text>
-					<text class="bps-overlap" x="304" y="180">Stress</text>
-					<text class="bps-overlap" x="260" y="272">Behaviour</text>
-					<text class="bps-health" x="260" y="212">Health</text>
+					<text class="bps-overlap" x="205" y="168">Lifestyle</text>
+					<text class="bps-overlap" x="315" y="168">Stress</text>
+					<text class="bps-overlap" x="260" y="269">Behaviour</text>
+					<text class="bps-health" x="260" y="202">Health</text>
 				</svg>
 			</div>
 
