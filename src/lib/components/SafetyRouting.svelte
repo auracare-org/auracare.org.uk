@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { reveal } from '$lib/actions/motion';
+	import { prefersReducedMotion, reveal } from '$lib/actions/motion';
 	import {
 		TWIN_DOES,
 		TWIN_NEVER,
 		EMERGENCY_ROUTING,
 		NON_DEVICE_DISCLAIMER
 	} from '$lib/data/company';
-	import { onMount } from 'svelte';
 
 	// Flatten all helplines into a single list with region info
 	const helplines = EMERGENCY_ROUTING.flatMap((r) =>
@@ -41,11 +40,54 @@
 
 	let activeNode = $state(0);
 
-	onMount(() => {
-		const interval = setInterval(() => {
-			activeNode = (activeNode + 1) % helplines.length;
-		}, 3500);
-		return () => clearInterval(interval);
+	let cycleEl = $state<HTMLElement | null>(null);
+
+	/* The cycle ran from mount for the life of the page: off-screen, in a
+	   background tab, and for visitors who asked for no motion. Each tick
+	   re-renders this subtree, so it was work being done on every page that
+	   carries this section whether or not anyone could see it. It now runs only
+	   while the section is actually on screen. */
+	$effect(() => {
+		const el = cycleEl;
+		if (!el || prefersReducedMotion()) return;
+
+		let interval: ReturnType<typeof setInterval> | undefined;
+		/* Both conditions have to hold, and either can change independently: a
+		   tab can be hidden while the section is on screen, and the section can
+		   scroll away while the tab is hidden. Tracking intersection separately
+		   and re-deciding on each event is what makes the cycle resume — an
+		   earlier version only ever stopped on hide, so a page opened in a
+		   background tab came back with the animation dead for good. */
+		let onScreen = false;
+
+		const stop = () => {
+			if (interval !== undefined) clearInterval(interval);
+			interval = undefined;
+		};
+		const sync = () => {
+			const shouldRun = onScreen && !document.hidden;
+			if (shouldRun && interval === undefined) {
+				interval = setInterval(() => {
+					activeNode = (activeNode + 1) % helplines.length;
+				}, 3500);
+			} else if (!shouldRun) {
+				stop();
+			}
+		};
+
+		const io = new IntersectionObserver(([e]) => {
+			onScreen = e.isIntersecting;
+			sync();
+		});
+		io.observe(el);
+		const onVis = () => sync();
+		document.addEventListener('visibilitychange', onVis);
+
+		return () => {
+			io.disconnect();
+			document.removeEventListener('visibilitychange', onVis);
+			stop();
+		};
 	});
 </script>
 
@@ -110,7 +152,11 @@
 				</ul>
 			</div>
 
-			<div class="routing-canvas" aria-label="Auracle routing to emergency helplines">
+			<div
+				class="routing-canvas"
+				bind:this={cycleEl}
+				aria-label="Auracle routing to emergency helplines"
+			>
 				<svg class="routing-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
 					<defs>
 						<linearGradient id="flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">

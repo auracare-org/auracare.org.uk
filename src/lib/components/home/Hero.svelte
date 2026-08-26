@@ -74,14 +74,25 @@
 
 <style>
 	.hero {
+		--hero-pad: clamp(4rem, 11vw, 9rem);
 		position: relative;
-		padding-top: clamp(4rem, 11vw, 9rem);
+		padding-top: var(--hero-pad);
 	}
+	/* The statement fills the first screen, so the rail below it starts at the
+	   fold rather than partway up it. At certain window heights the rail's top
+	   rule landed just inside the viewport with its figures below the cut, which
+	   read as a stray hairline ruled across the bottom of the page. `svh` rather
+	   than `vh` so a mobile toolbar collapsing does not leave a gap. */
 	.hero-inner {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		justify-content: center;
 		text-align: center;
+		min-height: calc(100svh - var(--header-h, 92px) - var(--hero-pad));
+		/* Keeps the buttons off the rule on a short window, where the centred
+		   content would otherwise sit flush against it. */
+		padding-bottom: clamp(2rem, 4vw, 3.5rem);
 	}
 
 	.kicker {
@@ -185,7 +196,10 @@
 	.standings {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		margin: clamp(4rem, 9vw, 7rem) 0 0;
+		/* No top margin: the hero above already fills the screen and centres its
+		   own content, so the rule lands exactly on the fold. A margin on top of
+		   that just pushed the figures further out of sight. */
+		margin: 0;
 		border-top: 1px solid var(--color-ink);
 		border-bottom: 1px solid var(--color-rule);
 	}

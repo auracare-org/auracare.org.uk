@@ -24,7 +24,11 @@
 
 		<div class="timeline" use:scrollProgress={{ onProgress: (p) => (progress = p) }}>
 			<div class="tl-track" aria-hidden="true"></div>
-			<div class="tl-fill" style="height:{Math.min(100, progress * 118)}%" aria-hidden="true"></div>
+			<div
+				class="tl-fill"
+				style="transform:scaleY({Math.min(1, progress * 1.18)})"
+				aria-hidden="true"
+			></div>
 
 			<ol class="tl-list">
 				{#each TIMELINE as m, i}
@@ -99,9 +103,24 @@
 		-webkit-mask-image: linear-gradient(to bottom, #000 0 82%, transparent 100%);
 		mask-image: linear-gradient(to bottom, #000 0 82%, transparent 100%);
 	}
+	/* Driven by `transform`, not `height`.
+	   The spine was resized by writing an inline height on every scroll frame,
+	   with a transition running on that height and a mask over the top. Height
+	   is a layout property, so each frame of every scroll on the homepage forced
+	   a reflow of this element and a re-rasterise of its mask — the single most
+	   expensive thing happening during a scroll. A scale is composited: no
+	   layout, no repaint, same picture. */
 	.tl-fill {
+		top: 6px;
+		bottom: 0;
+		height: auto;
+		transform-origin: top center;
+		/* The one element on the site that earns this. It is masked, and a scale
+		   on a masked element otherwise re-rasterises the mask each frame; its
+		   own layer makes the scale purely a compositor operation. One 3px-wide
+		   layer, not the 63 this was mistakenly spread across once before. */
+		will-change: transform;
 		background: var(--color-primary-400);
-		transition: height 0.15s linear;
 		-webkit-mask-image: linear-gradient(to bottom, #000 0 82%, transparent 100%);
 		mask-image: linear-gradient(to bottom, #000 0 82%, transparent 100%);
 	}
@@ -209,10 +228,15 @@
 
 	/* Desktop: centre spine with alternating cards */
 	@media (min-width: 820px) {
-		.tl-track,
-		.tl-fill {
+		.tl-track {
 			left: 50%;
 			transform: translateX(-50%);
+		}
+		/* The fill's transform carries the scale, so the centring is done with a
+		   margin instead of a second transform that would overwrite it. */
+		.tl-fill {
+			left: 50%;
+			margin-left: -1.5px;
 		}
 		.tl-list {
 			gap: 0.5rem;
