@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { scrollProgress, prefersReducedMotion } from '$lib/actions/motion';
-	import { VIEWBOX, MAP_ASPECT, countryPaths, arcPath } from '$lib/map/geo';
+	import { VIEWBOX, MAP_ASPECT, countryPaths, arcPath, project } from '$lib/map/geo';
 	import { MARKET_WAVES, MARKET_POINTS, MARKET_ARCS, type MarketTone } from '$lib/data/company';
 
 	const toneColor: Record<MarketTone, string> = {
@@ -35,6 +35,18 @@
 	}
 
 	const countries = countryPaths.map((c) => ({ ...c, market: marketByCountry.get(c.name) }));
+
+	/* Markets with no polygon in the atlas — the city-states — drawn as hub
+	   markers at their own coordinates. At the old 50m resolution Hong Kong and
+	   Singapore did have outlines, technically: a couple of pixels each, which
+	   never read as lit. A dot is visible where the polygon was not. */
+	const atlasNames = new Set(countryPaths.map((c) => c.name));
+	const hubMarkets = MARKET_POINTS.filter((p) => !atlasNames.has(ATLAS_ALIAS[p.name] ?? p.name))
+		.map((p) => {
+			const xy = project(p.coords);
+			return xy && { name: p.name, label: p.label, tone: p.tone, wave: p.wave, x: xy[0], y: xy[1] };
+		})
+		.filter((h): h is NonNullable<typeof h> => h !== null);
 
 	const maxWave = MARKET_WAVES.length - 1;
 	const deferredWave = MARKET_WAVES.find((w) => w.tone === 'deferred')?.order ?? maxWave;
@@ -245,6 +257,19 @@
 							{/each}
 						</g>
 
+						{#each hubMarkets as h (h.name)}
+							<circle
+								class="map-hub"
+								class:lit={activeWave >= h.wave}
+								cx={h.x}
+								cy={h.y}
+								r="5"
+								data-name={h.name}
+								data-label={h.label}
+								style="--tone:{toneColor[h.tone]}"
+							/>
+						{/each}
+
 						{#each arcs as a}
 							<path
 								class="map-arc"
@@ -444,6 +469,21 @@
 	}
 	.map-countries path.lit:hover {
 		fill: var(--tone);
+		fill-opacity: 1;
+	}
+
+	/* City-state hub markers: same lighting rules as a country polygon. */
+	.map-hub {
+		fill: var(--tone);
+		fill-opacity: 0.12;
+		stroke: var(--color-white-alpha-20);
+		stroke-width: 0.4;
+		transition: fill-opacity 0.6s ease;
+	}
+	.map-hub.lit {
+		fill-opacity: 0.85;
+	}
+	.map-hub:hover {
 		fill-opacity: 1;
 	}
 
