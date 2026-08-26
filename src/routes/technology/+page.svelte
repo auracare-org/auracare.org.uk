@@ -101,8 +101,7 @@
 		{ name: 'SNOMED CT', note: 'The anchor' },
 		{ name: 'ICD-11', note: 'Diagnoses' },
 		{ name: 'HPO', note: 'Phenotypes' },
-		{ name: 'LOINC', note: 'Lab codes' },
-		{ name: 'NICE', note: 'UK guidance' }
+		{ name: 'LOINC', note: 'Lab codes' }
 	];
 
 	/* --- Safety overlay: one gate on every stage ------------------ */

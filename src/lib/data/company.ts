@@ -4,7 +4,7 @@
  * Framing (Aug 2026): Auracare sells ONE pipeline to healthcare providers, in
  * three stages. Stage 1 aggregates (the patient-facing data aggregation
  * engine, referred to on the site only as "the patient portal"). Stage 2
- * reasons (the CDSS core, plus our own exam hardware and NICE/MIMS reference).
+ * reasons (the CDSS core, plus our own exam hardware and prescribing reference).
  * Stage 3 outputs (ranked differentials, finished documentation, stock
  * optimisation) and feeds back into stage 1. The portal is a component of the
  * provider package, not a standalone consumer product; never lead with it.
@@ -114,7 +114,7 @@ export const STAGES: PipelineStage[] = [
 		name: 'Reason',
 		tagline: 'The CDSS core',
 		blurb:
-			'Reasons over the aggregated history, live vitals from our own examination devices, and the consultation itself, with NICE and MIMS prescribing guidance built in.',
+			'Reasons over the aggregated history, live vitals from our own examination devices, and the consultation itself, with prescribing guidance built in.',
 		status: 'in-development',
 		statusLabel: 'MVP targeted 2027'
 	},
