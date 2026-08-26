@@ -261,6 +261,13 @@ interface ProgressParams {
 export const scrollProgress: Action<HTMLElement, ProgressParams> = (node, params) => {
 	let onProgress = params.onProgress;
 	let raf = 0;
+	/* Only measure while the node is anywhere near the screen.
+	   Every frame of every scroll on a page used to cost a
+	   `getBoundingClientRect` per user of this action plus the state write that
+	   follows it, whether or not the element was within a thousand pixels of the
+	   viewport. The observer's margin is deliberately generous so the value is
+	   already correct by the time the element appears. */
+	let near = true;
 
 	const compute = () => {
 		raf = 0;
@@ -272,8 +279,23 @@ export const scrollProgress: Action<HTMLElement, ProgressParams> = (node, params
 	};
 
 	const onScroll = () => {
-		if (!raf) raf = requestAnimationFrame(compute);
+		if (!near || raf) return;
+		raf = requestAnimationFrame(compute);
 	};
+
+	let io: IntersectionObserver | undefined;
+	if (typeof IntersectionObserver !== 'undefined') {
+		io = new IntersectionObserver(
+			(entries) => {
+				for (const e of entries) {
+					near = e.isIntersecting;
+					if (near) onScroll();
+				}
+			},
+			{ rootMargin: '100% 0px' }
+		);
+		io.observe(node);
+	}
 
 	window.addEventListener('scroll', onScroll, { passive: true });
 	window.addEventListener('resize', onScroll);
@@ -284,6 +306,7 @@ export const scrollProgress: Action<HTMLElement, ProgressParams> = (node, params
 			onProgress = p.onProgress;
 		},
 		destroy() {
+			io?.disconnect();
 			window.removeEventListener('scroll', onScroll);
 			window.removeEventListener('resize', onScroll);
 			if (raf) cancelAnimationFrame(raf);
