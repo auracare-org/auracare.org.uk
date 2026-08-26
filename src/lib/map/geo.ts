@@ -1,6 +1,12 @@
 import { geoNaturalEarth1, geoPath, type GeoProjection } from 'd3-geo';
 import { feature } from 'topojson-client';
-import worldData from 'world-atlas/countries-50m.json';
+/* 110m, not 50m. The 50m atlas is 739KB of topojson that decoded into 1.4MB
+   of SVG path data — every wave change and hover repainted all of it, and the
+   whole file shipped in the page's JS. At a 1000px-wide frame the two are
+   indistinguishable; the coastline detail 50m adds lives below one pixel.
+   City-states the 110m atlas drops entirely (Hong Kong, Singapore) are drawn
+   by the map as projected hub markers instead. */
+import worldData from 'world-atlas/countries-110m.json';
 
 /**
  * Fixed internal coordinate space: the SVG scales responsively via viewBox,
@@ -46,7 +52,10 @@ const projection: GeoProjection = geoNaturalEarth1().fitExtent(
 	INHABITED
 );
 
-const pathGen = geoPath(projection);
+/* One decimal place is a tenth of a viewBox unit — a tenth of a pixel at the
+   map's largest rendered size. The default three decimals tripled the length
+   of every `d` string for precision nothing can see. */
+const pathGen = geoPath(projection).digits(1);
 
 export interface CountryPath {
 	id: string;
