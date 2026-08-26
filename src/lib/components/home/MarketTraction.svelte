@@ -109,7 +109,10 @@
 	}
 	.row {
 		display: flex;
-		align-items: baseline;
+		/* Centred, not baseline-aligned. The label is 0.82rem and the figure runs
+		   to 2.6rem, so sharing a baseline pinned the label to the bottom of the
+		   row and left it sitting well below the middle of its own rule. */
+		align-items: center;
 		justify-content: space-between;
 		gap: 1.5rem;
 		padding-block: 1.35rem;
