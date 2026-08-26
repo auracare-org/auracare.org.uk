@@ -1,19 +1,23 @@
 /**
  * Single source of truth for Auracare marketing-site content.
  *
- * Naming: "Auracare" unqualified is the company. The products are "Auracle"
- * (consumer, ships first) and "Auracare CDSS" (clinical, in development); expand
- * "clinical decision support system (CDSS)" once per page. One shared patient
- * model underneath both.
+ * Framing (Aug 2026): Auracare sells ONE pipeline to healthcare providers, in
+ * three stages. Stage 1 aggregates (the patient-facing data aggregation
+ * engine, referred to on the site only as "the patient portal"). Stage 2
+ * reasons (the CDSS core, plus our own exam hardware and NICE/MIMS reference).
+ * Stage 3 outputs (ranked differentials, finished documentation, stock
+ * optimisation) and feeds back into stage 1. The portal is a component of the
+ * provider package, not a standalone consumer product; never lead with it.
  *
- * The homepage is the umbrella: it states the structure once and routes out.
- * Product detail lives on /product and /product/auracare; the raise lives on
- * /investors; the consumer sell lives on auracle.health.
+ * Naming: the portal's product name (Auracle) must NOT appear anywhere in
+ * rendered copy, only in these comments and in the URLs it lives at. Call it
+ * "the patient portal" or "the data aggregation engine".
  *
- * Nothing here should overclaim: the reasoning core is in development, the CDSS
- * regulatory pathway is not yet confirmed, and Auracle is a general-wellness
- * product, not a medical device. Only the ontology graph is live today. Keep
- * unevidenced deck claims (e.g. CDSS performance percentages) off the site.
+ * Nothing here should overclaim: the reasoning core is in development, the
+ * CDSS regulatory pathway is not yet confirmed, and the portal is a
+ * general-wellness product, not a medical device. Only the ontology graph is
+ * live today. Keep unevidenced deck claims (e.g. CDSS performance percentages)
+ * off the site.
  */
 
 export const CONTACT = {
@@ -31,18 +35,8 @@ export const CONTACT = {
 
 export const WAITLIST_URL = 'https://app.auracle.health/waitlist';
 
-/** Auracle's own consumer home, linked from the investor-facing pages. */
-export const AURACLE_URL = 'https://auracle.health';
-
-/**
- * The "want to try it?" aside that sits under the investor CTA on the home and
- * Auracle pages. Split so the trailing link can be rendered as an anchor.
- */
-export const TRY_TWIN_NOTE = {
-	text: 'Auracle v1 launches on iMessage, WhatsApp and RCS. The waitlist is open at',
-	linkLabel: 'auracle.health',
-	href: AURACLE_URL
-} as const;
+/** The patient portal's own home, linked from the investor-facing pages. */
+export const PORTAL_URL = 'https://auracle.health';
 
 /* ------------------------------------------------------------------ */
 /* Investors: who covers which region, and the deck                    */
@@ -88,99 +82,91 @@ export const DECK = {
 } as const;
 
 /* ------------------------------------------------------------------ */
-/* Two products, one patient model                                    */
+/* One pipeline, three stages                                          */
 /* ------------------------------------------------------------------ */
 
-export type ProductStatus = 'live' | 'ships-soon' | 'in-development';
+export type StageStatus = 'live' | 'ships-soon' | 'in-development';
 
-export interface Product {
+export interface PipelineStage {
 	key: string;
+	n: string;
 	name: string;
 	tagline: string;
 	blurb: string;
-	status: ProductStatus;
+	status: StageStatus;
 	statusLabel: string;
-	href?: string;
-	external?: boolean;
 }
 
-export const PRODUCTS: Product[] = [
+export const STAGES: PipelineStage[] = [
 	{
-		key: 'auracle',
-		name: 'Auracle',
-		tagline: 'A companion in your messages',
+		key: 'aggregate',
+		n: '01',
+		name: 'Aggregate',
+		tagline: 'The data aggregation engine',
 		blurb:
-			'Auracare’s social-history engine, shipped as a wellness companion in your messages. It learns your daily life in conversation and builds a SNOMED CT-encoded history you can share at an appointment.',
+			'A patient-facing portal that learns daily life from the sources a person already has, adds their past records, and encodes all of it into SNOMED CT before the appointment starts.',
 		status: 'ships-soon',
-		statusLabel: 'Expected September 2026',
-		href: '/product/auracle'
+		statusLabel: 'Launches September 2026'
 	},
 	{
-		key: 'auracare',
-		name: 'Auracare CDSS',
-		tagline: 'Decision support inside the consultation',
+		key: 'reason',
+		n: '02',
+		name: 'Reason',
+		tagline: 'The CDSS core',
 		blurb:
-			'Clinical decision support that runs in the background, reasoning over Auracle’s history, live vitals from our own devices and the conversation itself. The clinician never looks away.',
+			'Reasons over the aggregated history, live vitals from our own examination devices, and the consultation itself, with NICE and MIMS prescribing guidance built in.',
 		status: 'in-development',
-		statusLabel: 'Expected May 2027',
-		href: '/product/auracare'
+		statusLabel: 'MVP targeted 2027'
 	},
 	{
-		key: 'ontology',
-		name: 'One patient model',
-		tagline: '532,000 concepts you can see',
+		key: 'output',
+		n: '03',
+		name: 'Output',
+		tagline: 'What the clinic gets back',
 		blurb:
-			'Every observation lands on the terminology medicine already agrees on, SNOMED CT, ICD-11, HPO and LOINC, so both products read and write the same graph. It is live and explorable today.',
-		status: 'live',
-		statusLabel: 'Live',
-		href: CONTACT.ontologyUrl,
-		external: true
+			'Differentials ranked against the patient’s own history, documentation written into the provider’s existing systems, and prescribing that cuts stock wastage. Insights feed back to stage one.',
+		status: 'in-development',
+		statusLabel: 'Clinics in 2027'
 	}
 ];
 
-/* ------------------------------------------------------------------ */
-/* The consumer problem Auracle answers (rendered on /product)        */
-/* ------------------------------------------------------------------ */
-
-export const TWIN_PROBLEM = {
-	stat: '4%',
-	line: 'of wellness-app installers are still active a month later. They fail the moment they demand effort: an app for every habit, a form for every log, a streak to keep alive.',
-	answer: 'Auracle removes the effort instead.'
-} as const;
+/** The closing statement under the pipeline: the shared encoding. */
+export const PIPELINE_FOUNDATION =
+	'Every stage reads and writes the same terminology: SNOMED CT, ICD-11, LOINC and HPO. The graph is live and explorable today.';
 
 /* ------------------------------------------------------------------ */
-/* Why the consumer product leads: rendered on /investors              */
+/* How the business is sequenced: rendered on /investors               */
 /* ------------------------------------------------------------------ */
 
-export interface TwinRole {
+export interface PipelineRole {
 	stat: string;
 	title: string;
 	body: string;
 }
 
-export const TWIN_ROLE_EYEBROW = 'How the business is sequenced';
-export const TWIN_ROLE_HEADING = 'The consumer product leads.';
+export const PIPELINE_ROLE_EYEBROW = 'How the business is sequenced';
+export const PIPELINE_ROLE_HEADING = 'One pipeline, sold to providers.';
 
-export const TWIN_ROLE: TwinRole[] = [
+export const PIPELINE_ROLE: PipelineRole[] = [
 	{
 		stat: 'Sep 2026',
-		title: 'Revenue starts with Auracle',
-		body: 'Auracle subscriptions begin earning at launch in September 2026. The CDSS cannot earn before certification in May 2027, so the consumer product carries revenue first.'
+		title: 'Stage one ships first',
+		body: 'The patient portal launches in September 2026 and starts building coded patient histories, the input everything downstream depends on.'
 	},
 	{
-		stat: 'One model',
-		title: 'The consumer product feeds the clinical one',
-		body: 'Auracle builds the bio-psycho-social history a consultation has no time to gather. The patient shares it, and the CDSS reasons over it.'
+		stat: 'Dec 2026',
+		title: 'The clinical core goes to trial',
+		body: 'Clinical trials are signed with EC Healthcare for December 2026 and the Chinese Academy of Sciences for February 2027.'
 	},
 	{
-		stat: 'Continuous',
-		title: 'Retention is the data pipeline',
-		body: 'Every reply keeps the history current, so CDSS input quality tracks consumer product quality. Retention is the number to hold us to.'
+		stat: '2027',
+		title: 'The package reaches clinics',
+		body: 'With the hardware certified, providers buy the full pipeline: aggregation, reasoning and outputs, priced on the clinician time it saves.'
 	}
 ];
 
 /* ------------------------------------------------------------------ */
-/* One patient-centred care loop: Auracle + Auracare                  */
+/* One patient-centred care loop: portal + CDSS                        */
 /* ------------------------------------------------------------------ */
 
 export interface CareLoopStage {
@@ -188,8 +174,8 @@ export interface CareLoopStage {
 	name: string;
 	title: string;
 	body: string;
-	/** Which product is doing the work at this stage. */
-	actor: 'auracle' | 'auracare';
+	/** Which side of the pipeline is doing the work at this stage. */
+	actor: 'portal' | 'cdss';
 	/** The two original steps this stage folds together. */
 	steps: string[];
 }
@@ -199,35 +185,35 @@ export const CARE_LOOP_LINE = 'One continuous loop: the picture keeps getting ri
 /* Four stages on a closed ring, clockwise from the top. The eight original
    steps survive as the two sub-steps under each stage; folding them into four
    is what lets the shape be a loop rather than a list, and it splits the ring
-   diagonally: Auracle owns the top and left, the CDSS owns the right and
+   diagonally: the portal owns the top and left, the CDSS owns the right and
    bottom. The two lane changes are the two labelled handoffs between them. */
 export const CARE_LOOP: CareLoopStage[] = [
 	{
 		name: 'Live',
-		actor: 'auracle',
-		title: 'Auracle builds the picture',
+		actor: 'portal',
+		title: 'The portal builds the picture',
 		body: 'Connectors and conversation become one living, SNOMED-encoded bio-psycho-social history, ready before the appointment starts.',
 		steps: ['Sources and conversation encoded as you go', 'A complete history, ready to share']
 	},
 	{
 		name: 'Reason',
-		actor: 'auracare',
+		actor: 'cdss',
 		title: 'The CDSS works the case',
 		body: 'Shared history, acute vitals, transcription, labs and records reasoned over together. It asks only what is worth asking.',
 		steps: ['Reasons over everything at once', 'A differential, ordered by likelihood']
 	},
 	{
 		name: 'Decide',
-		actor: 'auracare',
+		actor: 'cdss',
 		title: 'The clinician decides',
 		body: 'A lifestyle plan, a referral or a guideline-aligned medication package, matched to the clinician\u2019s jurisdiction. Their judgement makes the call.',
 		steps: ['Three outputs, jurisdiction-matched', 'Notes and reasoning chain written for you']
 	},
 	{
 		name: 'Return',
-		actor: 'auracle',
+		actor: 'portal',
 		title: 'The plan becomes routine',
-		body: 'Advice returns to Auracle as reminders tuned to how the person actually lives, and Auracle watches the follow-through.',
+		body: 'Advice returns to the portal as reminders tuned to how the person actually lives, and the portal watches the follow-through.',
 		steps: ['Advice tuned to how you live', 'Change flagged before the next appointment']
 	}
 ];
@@ -304,40 +290,40 @@ export const TIMELINE: Milestone[] = [
 	},
 	{
 		date: 'May 2026',
-		title: 'We pivot to building the Auracare CDSS',
-		body: 'A new direction: a clinical decision support system for clinicians, with Auracle as the consumer front on the same patient model.',
+		title: 'We pivot to the pipeline',
+		body: 'A new direction: a clinical decision support system for providers, with a patient-facing portal as the first stage of the same pipeline.',
 		era: 'pivot',
 		fork: true
 	},
 	{
 		date: 'Jul 2026',
-		title: 'Auracle MVP',
-		body: 'The consumer product reached its first build: a wellness companion in your messages.',
+		title: 'The data aggregation engine',
+		body: 'Stage one reached its first build: the patient portal, aggregating daily life and encoding it into SNOMED CT.',
 		era: 'ai'
 	},
 	{
 		date: 'Sep 2026',
-		title: 'Auracle public launch',
-		body: 'Auracle opens to the public on iMessage, WhatsApp and RCS, and the ontology goes live for anyone to explore.',
+		title: 'The portal launches',
+		body: 'The patient portal opens to the public, and the ontology goes live for anyone to explore.',
 		era: 'ai',
 		now: true
 	},
 	{
-		date: 'Late 2026',
-		title: 'The core and the hardware',
-		body: 'The reasoning core moves from a validated design into build, while our stethoscope, BP monitor and otoscope head toward certification.',
+		date: 'Dec 2026',
+		title: 'First clinical trial',
+		body: 'Trials begin with EC Healthcare in Hong Kong, while our stethoscope, BP monitor and otoscope head toward certification.',
 		era: 'ai'
 	},
 	{
 		date: 'Feb 2027',
-		title: 'First clinical trials',
-		body: 'Trials begin with hospitals and institutions across Hong Kong and China.',
+		title: 'Chinese Academy of Sciences trial',
+		body: 'A second trial begins with the CAS, and the CDSS moves toward its MVP.',
 		era: 'ai'
 	},
 	{
-		date: 'Jun 2027 onward',
-		title: 'Clinical rollout',
-		body: 'With the devices certified, the CDSS rolls out clinician-side, China-forward via the Greater Bay Area.',
+		date: '2027',
+		title: 'Clinics',
+		body: 'With the devices certified, the full pipeline rolls out to providers, China-forward via the Greater Bay Area.',
 		era: 'ai'
 	}
 ];
@@ -378,7 +364,7 @@ export const MARKET_WAVES: MarketWave[] = [
 		key: 'launch',
 		tone: 'launch',
 		title: 'Wellness launch',
-		caption: 'Auracle goes direct-to-consumer across our first four markets.'
+		caption: 'The patient portal goes direct-to-consumer across our first four markets.'
 	},
 	{
 		order: 1,
@@ -394,7 +380,7 @@ export const MARKET_WAVES: MarketWave[] = [
 		tone: 'crossover',
 		title: 'Product crossover',
 		caption:
-			'Auracare follows Auracle into its wellness markets; Auracle follows Auracare into the CAS markets.'
+			'The CDSS follows the portal into its wellness markets; the portal follows the CDSS into the CAS markets.'
 	},
 	{
 		order: 3,
@@ -426,7 +412,7 @@ export const MARKET_POINTS: MarketPoint[] = [
 		coords: [-0.1278, 51.5074],
 		tone: 'launch',
 		wave: 0,
-		label: 'Auracle launches here'
+		label: 'The patient portal launches here'
 	},
 	{
 		name: 'United States',
@@ -470,7 +456,7 @@ export const MARKET_POINTS: MarketPoint[] = [
 		coords: [103.8198, 1.3521],
 		tone: 'crossover',
 		wave: 2,
-		label: 'Auracare and Auracle now both operate here'
+		label: 'The CDSS and the portal now both operate here'
 	},
 	// Wave 4: Southeast Asia
 	{
@@ -638,7 +624,9 @@ export const TRACTION: { stat: string; label: string }[] = [
 	{ stat: '28', label: 'UK pharmacy partnerships, prior venture' },
 	{ stat: '$134k', label: 'UK government funding awarded' },
 	{ stat: '$400k', label: 'Angel investment, Hong Kong' },
-	{ stat: '~$400k', label: 'Founders Factory Healthcare resources' }
+	{ stat: '~$400k', label: 'Founders Factory Healthcare resources' },
+	{ stat: '2', label: 'Clinical trials signed in Hong Kong and China' },
+	{ stat: '2', label: 'Hardware OEM partnerships in China' }
 ];
 
 /**
@@ -680,46 +668,5 @@ export const ONTOLOGY_STATS: { value: string; label: string }[] = [
 /* Consent & safety                                                    */
 /* ------------------------------------------------------------------ */
 
-export const TWIN_DOES = [
-	'Connects the everyday-life signals you choose to share',
-	'Learns your baselines and spots meaningful changes',
-	'Checks in with a morning brief and an evening wrap',
-	'Nudges you only when your data says something worth saying'
-];
-
-export const TWIN_NEVER = [
-	'Diagnoses, treats or prescribes',
-	'Interprets a reading as a clinical result',
-	'Replaces your doctor, pharmacist or emergency services',
-	'Shares your data without your explicit, per-source consent'
-];
-
-export interface EmergencyRegion {
-	region: string;
-	lines: { label: string; value: string }[];
-}
-
-export const EMERGENCY_ROUTING: EmergencyRegion[] = [
-	{
-		region: 'United Kingdom',
-		lines: [
-			{ label: 'Emergency', value: '999' },
-			{ label: 'Urgent advice', value: 'NHS 111' },
-			{ label: 'Mental health', value: 'Samaritans 116 123' }
-		]
-	},
-	{
-		region: 'United States',
-		lines: [
-			{ label: 'Emergency', value: '911' },
-			{ label: 'Mental health', value: '988' },
-			{ label: 'Poison control', value: '1-800-222-1222' }
-		]
-	}
-];
-
 export const NON_DEVICE_DISCLAIMER =
-	'Auracle is a general-wellness product, not a medical device. It does not diagnose, treat, cure or prevent any disease. Always seek professional medical advice for health concerns.';
-
-export const PLATFORM_NOTE =
-	'Auracle v1 launches on iMessage (iOS), plus WhatsApp and RCS for Android. Join the waitlist and we’ll tell you the moment it’s ready for you.';
+	'Our patient portal is a general-wellness product, not a medical device. It does not diagnose, treat, cure or prevent any disease. Always seek professional medical advice for health concerns.';

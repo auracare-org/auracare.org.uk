@@ -8,7 +8,7 @@
 		<div class="footer-grid">
 			<div class="footer-brand">
 				<img src="/SVG/auracare-white.svg" alt="Auracare" class="footer-logo" />
-				<p class="footer-tag">The world's most personalized healthcare.</p>
+				<p class="footer-tag">Revolutionizing frontline care.</p>
 				<a class="footer-ontology" href={CONTACT.ontologyUrl} target="_blank" rel="noopener">
 					Explore the ontology
 					<svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"
@@ -23,12 +23,11 @@
 				</a>
 			</div>
 
-			<nav class="footer-col" aria-label="Product">
-				<h4>Product</h4>
-				<a href="/product/auracle">Auracle</a>
-				<a href="/product/auracare">Auracare CDSS</a>
+			<nav class="footer-col" aria-label="Platform">
+				<h4>Platform</h4>
+				<a href="/technology">Technology</a>
 				<a href={CONTACT.ontologyUrl} target="_blank" rel="noopener">Ontology explorer</a>
-				<a href={WAITLIST_URL}>Join the waitlist</a>
+				<a href={WAITLIST_URL}>Patient portal waitlist</a>
 			</nav>
 
 			<nav class="footer-col" aria-label="Company">

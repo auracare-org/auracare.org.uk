@@ -24,16 +24,16 @@
 -->
 <section class="hero">
 	<div class="container-wide hero-inner">
-		<span class="kicker" use:reveal>Clinical decision support infrastructure</span>
+		<span class="kicker" use:reveal>Revolutionizing frontline care</span>
 
 		<h1 use:reveal={{ delay: 80 }}>
-			The world's most<br />
-			<em>personalized healthcare.</em>
+			Personalized medicine<br />
+			<em>needs the full picture.</em>
 		</h1>
 
 		<p class="hero-sub" use:reveal={{ delay: 160 }}>
-			Encoding, reasoning and documentation that runs inside the appointment, grounded in the
-			terminology medicine already uses.
+			We build the infrastructure that supplies it: one pipeline that encodes a patient's daily
+			life, the exam and the conversation, reasons over all of it, and hands the clinic the output.
 		</p>
 
 		<div class="hero-cta" use:reveal={{ delay: 220 }}>

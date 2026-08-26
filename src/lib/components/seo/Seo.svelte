@@ -2,7 +2,7 @@
 	interface Props {
 		title: string;
 		description: string;
-		/** Path beginning with "/", e.g. "/product". */
+		/** Path beginning with "/", e.g. "/technology". */
 		path?: string;
 		/** Absolute or root-relative OG image URL. */
 		image?: string;
@@ -17,7 +17,7 @@
 		description,
 		path = '/',
 		image = '/og/auracare-og.png',
-		imageAlt = 'Auracare AI: two products on one patient model',
+		imageAlt = 'Auracare AI: one pipeline for frontline care',
 		type = 'website',
 		noindex = false
 	}: Props = $props();

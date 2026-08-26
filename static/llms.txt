@@ -1,24 +1,21 @@
 # Auracare AI
 
-> Auracare Health Ltd is a UK healthcare AI company building two products on one patient model: Auracle, a consumer wellness companion that lives in the messaging apps you already use, and Auracare, clinician-facing clinical decision support that works in the background during the consultation. Both are in development. The company was founded in 2025 and is currently raising its seed round.
+> Auracare Health Ltd is a UK healthcare AI company building one pipeline for healthcare providers, in three stages: a patient-facing portal aggregates a person's daily life and past records into a SNOMED CT-coded history, a clinical decision support system (CDSS) reasons over that history, live vitals from the company's own examination devices and the consultation itself, and the outputs (ranked differentials, finished documentation, stock optimisation) land in the provider's existing systems. The company was founded in 2025 and is currently raising its seed round.
 
 Key facts:
 
 - Company: Auracare Health Ltd, registered in the United Kingdom, founded 2025.
-- Founders: Tanush Pandey, Stephen Okita (CTO), and Hinlun Chen.
-- Auracle (consumer): turns data from wearables and apps you already use (Apple, Google, Oura, Whoop, Fitbit, Garmin, Withings, Dexcom, Samsung) into a living model of you — a digital twin — then checks in over your messaging apps with a morning brief, nudges only when they matter, and an evening wrap. Replying is the logging. It is a general-wellness product, not a medical device.
-- Auracare (clinical): decision support for clinicians that reasons over the twin's lifestyle summary, live vitals, and the conversation itself, using a neuro-symbolic reasoning loop for grounded, traceable suggestions — so the clinician keeps their eyes on the patient.
+- Founders: Tanush Pandey (CEO & CMO), Stephen Okita (CTO), and Hinlun Chen (COO).
+- Stage 1, aggregation: a patient portal that turns data from wearables and apps a person already uses into one coded bio-psycho-social history, ready before the appointment starts. It is a general-wellness product, not a medical device. Launches September 2026.
+- Stage 2, reasoning: the CDSS core reasons over the aggregated history, vitals from Auracare's own stethoscope, blood-pressure monitor and otoscope, and the live consultation, with NICE and MIMS prescribing guidance built in. In development; clinical trials signed with EC Healthcare (December 2026) and the Chinese Academy of Sciences (February 2027).
+- Stage 3, outputs: differentials ranked against the patient's own history, documentation written into the provider's systems, and prescribing that reduces stock wastage. Targeted for clinics in 2027.
+- Everything is encoded in the terminology medicine already uses: SNOMED CT, ICD-11, LOINC and HPO. The ontology is live at https://ontology.auracare.org.uk.
 - Contact: hello@auracare.org.uk
-
-## Products
-
-- [Auracle](https://auracare.org.uk/product/auracle): The health companion that texts you back — a personal digital twin built from your wearables and apps, delivered through your existing messaging apps.
-- [Auracare](https://auracare.org.uk/product/auracare): Clinician-facing clinical decision support that works inside the consultation without getting in the way. In development.
 
 ## Company
 
-- [Home](https://auracare.org.uk/): Overview of both products, the team, and how to get in touch.
-- [Technology](https://auracare.org.uk/technology): How Auracle builds a high-context digital twin, and how Auracare's neuro-symbolic reasoning loop turns it into grounded, traceable clinical decision support.
+- [Home](https://auracare.org.uk/): The pipeline, the care loop, the company story, and how to get in touch.
+- [Technology](https://auracare.org.uk/technology): How the patient portal builds a high-context history, and how the CDSS core's neuro-symbolic reasoning loop turns it into grounded, traceable clinical decision support.
 - [Investors](https://auracare.org.uk/investors): Auracare is raising its seed round; founder contacts by region (North America, Asia-Pacific, Europe).
 - [Careers](https://auracare.org.uk/careers): Hiring across ML, mobile, data, hardware, and clinical/regulatory.
 
@@ -26,6 +23,6 @@ Key facts:
 
 - [Privacy](https://auracare.org.uk/privacy): How Auracare handles data across the UK, US, Canada, and Australia.
 - [Consumer health data privacy](https://auracare.org.uk/privacy/consumer-health-data): Policy for Washington (My Health My Data Act) and Nevada residents.
-- [Terms](https://auracare.org.uk/terms): Terms of service for the website, the Auracle waitlist, and the Auracle service.
-- [Cookies](https://auracare.org.uk/cookies): Cookie and analytics policy — analytics are off until the visitor opts in.
+- [Terms](https://auracare.org.uk/terms): Terms of service for the website, the patient portal waitlist, and the portal service.
+- [Cookies](https://auracare.org.uk/cookies): Cookie and analytics policy: analytics are off until the visitor opts in.
 - [Accessibility](https://auracare.org.uk/accessibility): Accessibility commitment and measures taken.

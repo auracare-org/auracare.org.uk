@@ -7,7 +7,7 @@
 
 <Seo
 	title="Consumer Health Data Privacy Policy"
-	description="Auracle's Consumer Health Data Privacy Policy for Washington (My Health My Data Act) and Nevada residents: what we collect, why, your rights, and how to exercise them."
+	description="Our patient portal's Consumer Health Data Privacy Policy for Washington (My Health My Data Act) and Nevada residents: what we collect, why, your rights, and how to exercise them."
 	path="/privacy/consumer-health-data"
 	noindex={false}
 />
@@ -16,7 +16,7 @@
 	title="Consumer Health Data"
 	accent="Privacy Policy."
 	accentOwnLine
-	sub="This policy is for residents of Washington and Nevada, and anyone whose consumer health data is collected in those states. It supplements our main Privacy Policy and explains what consumer health data Auracle collects, why, and the rights you have over it."
+	sub="This policy is for residents of Washington and Nevada, and anyone whose consumer health data is collected in those states. It supplements our main Privacy Policy and explains what consumer health data our patient portal (the “Portal”) collects, why, and the rights you have over it."
 	meta="Consumer Health Data · Last updated 24 July 2026"
 />
 
@@ -41,7 +41,7 @@
 			</p>
 
 			<h2 id="what-we-collect">The consumer health data we collect</h2>
-			<p>With your consent, Auracle may collect:</p>
+			<p>With your consent, the Portal may collect:</p>
 			<ul>
 				<li>
 					Health and wellness measurements from sources you connect: sleep, activity, heart rate,
@@ -49,14 +49,15 @@
 				</li>
 				<li>
 					Things you tell Aura in conversation about how you feel, what you ate, and your habits,
-					and the wellness inferences Auracle draws from them (for example, your sleep baseline);
+					and the wellness inferences the Portal draws from them (for example, your sleep baseline);
 				</li>
 				<li>
 					Reproductive health data, only if you choose to tell Aura about your menstrual cycle (such
-					as when a period starts), and the cycle context Auracle derives from it to interpret your
-					other measurements. You are never asked for it, and Auracle works fully without it. Aura
-					does not predict fertile windows or ovulation, does not give contraception or conception
-					guidance, and does not tell you what a change in your cycle might mean medically;
+					as when a period starts), and the cycle context the Portal derives from it to interpret
+					your other measurements. You are never asked for it, and the Portal works fully without
+					it. Aura does not predict fertile windows or ovulation, does not give contraception or
+					conception guidance, and does not tell you what a change in your cycle might mean
+					medically;
 				</li>
 				<li>
 					Precise location, only if you separately opt in, used to give your guidance context such

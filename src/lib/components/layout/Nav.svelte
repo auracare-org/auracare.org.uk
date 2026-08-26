@@ -5,12 +5,10 @@
 	import { slide } from 'svelte/transition';
 
 	let mobileOpen = $state(false);
-	let ddOpen = $state(false);
-	let ddEl = $state<HTMLElement | null>(null);
 	/* Suppresses the slide-out for the one case where it should not play. */
 	let closingForNav = $state(false);
 
-	/* Shut both menus before the page changes, not as it changes.
+	/* Shut the menu before the page changes, not as it changes.
 	 *
 	 * Each link used to close the menu from its own click handler, which set the
 	 * state at the same moment the navigation began. The slide-out then ran
@@ -20,11 +18,10 @@
 	 * captures anything, and the outro is skipped because a menu that is closing
 	 * because you left the page has nothing to animate to. */
 	beforeNavigate(() => {
-		if (!mobileOpen && !ddOpen) return;
+		if (!mobileOpen) return;
 		flushSync(() => {
 			closingForNav = true;
 			mobileOpen = false;
-			ddOpen = false;
 		});
 		closingForNav = false;
 	});
@@ -85,39 +82,6 @@
 		};
 	});
 
-	/* Close on an outside click or Escape. Without this the menu stays open
-	   after you click past it, which reads as a stuck UI. */
-	$effect(() => {
-		if (!ddOpen) return;
-		const onDown = (e: MouseEvent) => {
-			if (ddEl && !ddEl.contains(e.target as Node)) ddOpen = false;
-		};
-		const onKey = (e: KeyboardEvent) => {
-			if (e.key === 'Escape') ddOpen = false;
-		};
-		document.addEventListener('mousedown', onDown);
-		document.addEventListener('keydown', onKey);
-		return () => {
-			document.removeEventListener('mousedown', onDown);
-			document.removeEventListener('keydown', onKey);
-		};
-	});
-
-	const productMenu = [
-		{
-			href: '/product/auracare',
-			label: 'Auracare CDSS',
-			desc: 'Decision support inside the consultation',
-			tag: 'Clinical'
-		},
-		{
-			href: '/product/auracle',
-			label: 'Auracle',
-			desc: 'The social history the record cannot supply',
-			tag: 'Consumer'
-		}
-	];
-
 	const links = [
 		{ href: '/technology', label: 'Technology' },
 		{ href: '/investors', label: 'Investors' },
@@ -126,9 +90,6 @@
 
 	const isActive = (href: string) =>
 		page.url.pathname === href || (href !== '/' && page.url.pathname.startsWith(href + '/'));
-
-	// The Product tab is active on /product and any product sub-page.
-	const productActive = () => page.url.pathname.startsWith('/product');
 </script>
 
 <nav class="nav" class:nav--scrolled={scrolled} aria-label="Primary">
@@ -138,54 +99,6 @@
 		</a>
 
 		<div class="nav-links">
-			<div class="nav-dd" bind:this={ddEl}>
-				<!-- A button, not a link. As an <a href="/product"> a click navigated
-				     away before the menu could be used, and a tap on touch opened
-				     nothing at all: the menu was CSS :hover only. -->
-				<button
-					type="button"
-					class="nav-item nav-dd-trigger"
-					class:active={productActive()}
-					aria-expanded={ddOpen}
-					aria-haspopup="true"
-					onclick={() => (ddOpen = !ddOpen)}
-				>
-					Products
-					<svg
-						class="nav-caret"
-						width="10"
-						height="10"
-						viewBox="0 0 12 12"
-						fill="none"
-						aria-hidden="true"
-					>
-						<path
-							d="M3 4.5L6 7.5L9 4.5"
-							stroke="currentColor"
-							stroke-width="1.6"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
-					</svg>
-				</button>
-				<div class="nav-submenu" class:open={ddOpen} role="menu">
-					{#each productMenu as item}
-						<a
-							href={item.href}
-							class="nav-sub-item"
-							class:active={page.url.pathname === item.href}
-							role="menuitem"
-							onclick={() => (ddOpen = false)}
-						>
-							<span class="nav-sub-top">
-								<span class="nav-sub-label">{item.label}</span>
-								<span class="nav-sub-tag">{item.tag}</span>
-							</span>
-							<span class="nav-sub-desc">{item.desc}</span>
-						</a>
-					{/each}
-				</div>
-			</div>
 			{#each links as link}
 				<a href={link.href} class="nav-item" class:active={isActive(link.href)}>{link.label}</a>
 			{/each}
@@ -226,17 +139,6 @@
 	{#if mobileOpen}
 		<div class="nav-mobile" transition:slide={{ duration: closingForNav ? 0 : 250 }}>
 			<div class="container-wide nav-mobile-inner">
-				<span class="nav-mobile-group">Product</span>
-				{#each productMenu as item}
-					<a
-						href={item.href}
-						class="nav-mobile-item nav-mobile-sub"
-						onclick={() => (mobileOpen = false)}
-					>
-						<span class="nav-mobile-sub-label">{item.label}</span>
-						<span class="nav-mobile-sub-desc">{item.desc}</span>
-					</a>
-				{/each}
 				{#each links as link}
 					<a href={link.href} class="nav-mobile-item" onclick={() => (mobileOpen = false)}
 						>{link.label}</a
@@ -337,119 +239,6 @@
 		color: var(--color-ink);
 		font-weight: 600;
 	}
-	/* Product dropdown */
-	.nav-dd {
-		position: relative;
-		display: inline-flex;
-	}
-	.nav-dd-trigger {
-		background: none;
-		border: 0;
-		cursor: pointer;
-		font-family: inherit;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.28rem;
-	}
-	.nav-caret {
-		transition: transform var(--duration-popover) var(--ease-out);
-		opacity: 0.7;
-	}
-	.nav-dd-trigger[aria-expanded='true'] .nav-caret,
-	.nav-dd:focus-within .nav-caret {
-		transform: rotate(180deg);
-	}
-	.nav-submenu {
-		position: absolute;
-		top: calc(100% + 0.6rem);
-		left: 50%;
-		/* Anchored to the trigger above, so it grows from the trigger rather
-		   than from its own centre. */
-		transform-origin: top center;
-		transform: translateX(-50%) translateY(4px) scale(0.97);
-		width: 20rem;
-		display: grid;
-		gap: 0.15rem;
-		padding: 0.5rem;
-		background: rgba(252, 252, 253, 0.98);
-		backdrop-filter: blur(14px);
-		-webkit-backdrop-filter: blur(14px);
-		border: 1px solid var(--color-border-default);
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-lg, 0 20px 40px rgba(15, 23, 42, 0.14));
-		opacity: 0;
-		visibility: hidden;
-		pointer-events: none;
-		transition:
-			opacity var(--duration-popover) var(--ease-out),
-			transform var(--duration-popover) var(--ease-out),
-			visibility var(--duration-popover);
-		z-index: 20;
-	}
-	/* Invisible bridge so the menu doesn't close when crossing the gap. */
-	.nav-submenu::before {
-		content: '';
-		position: absolute;
-		top: -0.7rem;
-		left: 0;
-		right: 0;
-		height: 0.7rem;
-	}
-	.nav-submenu.open,
-	.nav-dd:focus-within .nav-submenu {
-		opacity: 1;
-		visibility: visible;
-		pointer-events: auto;
-		transform: translateX(-50%) translateY(0) scale(1);
-	}
-	.nav-sub-item {
-		display: flex;
-		flex-direction: column;
-		gap: 0.15rem;
-		padding: 0.7rem 0.8rem;
-		border-radius: 8px;
-		transition: background 0.15s ease;
-	}
-	.nav-sub-item:hover,
-	.nav-sub-item.active {
-		background: var(--color-primary-50);
-	}
-	.nav-sub-top {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-	}
-	.nav-sub-label {
-		font-size: 0.92rem;
-		font-weight: 600;
-		color: var(--color-ink);
-	}
-	.nav-sub-item:hover .nav-sub-label,
-	.nav-sub-item.active .nav-sub-label {
-		color: var(--color-primary-700);
-	}
-	.nav-sub-tag {
-		font-family: var(--font-family-mono);
-		font-size: 0.7rem;
-		font-weight: 700;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--color-primary-600);
-		background: var(--color-primary-50);
-		border: 1px solid var(--color-primary-100);
-		padding: 0.1rem 0.4rem;
-		border-radius: 999px;
-	}
-	.nav-sub-item:hover .nav-sub-tag,
-	.nav-sub-item.active .nav-sub-tag {
-		background: #fff;
-	}
-	.nav-sub-desc {
-		font-size: 0.78rem;
-		line-height: 1.35;
-		color: var(--color-ink-faint);
-	}
-
 	.nav-cta {
 		display: none;
 		align-items: center;
@@ -541,30 +330,6 @@
 		font-weight: 500;
 		color: var(--color-ink-soft);
 		padding: 0.6rem 0;
-	}
-	.nav-mobile-group {
-		font-family: var(--font-family-mono);
-		font-size: 0.7rem;
-		font-weight: 700;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-		color: var(--color-ink-faint);
-		padding: 0.6rem 0 0.15rem;
-	}
-	.nav-mobile-sub {
-		display: flex;
-		flex-direction: column;
-		gap: 0.1rem;
-		padding: 0.5rem 0 0.5rem 0.9rem;
-		border-left: 2px solid var(--color-border-default);
-	}
-	.nav-mobile-sub-label {
-		font-weight: 600;
-		color: var(--color-neutral-900);
-	}
-	.nav-mobile-sub-desc {
-		font-size: 0.8rem;
-		color: var(--color-ink-faint);
 	}
 	.nav-mobile-cta {
 		display: flex;

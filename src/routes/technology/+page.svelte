@@ -5,7 +5,7 @@
 	import LoopDial from '$lib/components/LoopDial.svelte';
 	import { CONTACT, ONTOLOGY_STATS } from '$lib/data/company';
 
-	/* --- Auracle: how the history gets built ------------------------ */
+	/* --- The patient portal: how the history gets built ------------- */
 	const TWIN_STEPS = [
 		{
 			n: '01',
@@ -15,16 +15,16 @@
 		{
 			n: '02',
 			label: 'Normalise',
-			body: 'Every source records data its own way. Auracle translates each record into one shared format, removes duplicates across devices, and timestamps every reading in your local time. One consistent stream instead of a dozen feeds that do not line up.'
+			body: 'Every source records data its own way. The portal translates each record into one shared format, removes duplicates across devices, and timestamps every reading in your local time. One consistent stream instead of a dozen feeds that do not line up.'
 		},
 		{
 			n: '03',
 			label: 'Converse',
-			body: 'Auracle watches the normalised stream and messages you first when something shifts, then answers when you text back. Reply in plain language; that is the logging. No new app, no forms, no streaks.'
+			body: 'The portal watches the normalised stream and messages you first when something shifts, then answers when you text back. Reply in plain language; that is the logging. No new app, no forms, no streaks.'
 		}
 	];
 
-	/* Signals Auracle ingests. Categories, not a device list, so it
+	/* Signals the portal ingests. Categories, not a device list, so it
 	   holds regardless of which watch or ring a person owns. */
 	const TWIN_SIGNALS = [
 		{ name: 'Sleep', note: 'Duration, efficiency, deep and REM' },
@@ -41,7 +41,7 @@
 			key: 'input',
 			label: 'Input',
 			short: 'Input',
-			body: 'One timeline: everyday-life signals from Auracle, clinical history, and vitals captured live in the room, all on a single timestamped record.'
+			body: 'One timeline: everyday-life signals from the patient portal, clinical history, and vitals captured live in the room, all on a single timestamped record.'
 		},
 		{
 			key: 'encoding',
@@ -89,7 +89,7 @@
 
 	/* --- The patient state ---------------------------------------- */
 	const STATE_SOURCES = [
-		'Everyday-life signals from Auracle',
+		'Everyday-life signals from the patient portal',
 		'Acute vitals, streamed from our own devices',
 		'Lab results & records',
 		'Clinical notes & history',
@@ -152,7 +152,7 @@
 
 <Seo
 	title="Technology"
-	description="Two products on one patient model: how Auracle builds a high-context patient history, and how the Auracare CDSS turns it into grounded, traceable clinical decision support."
+	description="One pipeline on one patient model: how the patient portal aggregates a high-context history, and how the CDSS core turns it into grounded, traceable clinical decision support."
 	path="/technology"
 />
 
@@ -160,117 +160,84 @@
 <!-- Hero                                                          -->
 <!-- ============================================================ -->
 <PageHero
-	title="Two products."
+	title="One pipeline."
 	accent="One patient model."
 	accentOwnLine
-	sub="Everything both products know about a person lives in one timestamped record, written in the terminology medicine already agrees on."
+	sub="Everything the pipeline knows about a person lives in one timestamped record, written in the terminology medicine already agrees on."
 />
 
 <!-- ============================================================ -->
-<!-- PART ONE · AURACLE                                           -->
+<!-- PART ONE · THE PATIENT PORTAL                                -->
 <!-- ============================================================ -->
-<section id="auracle" class="section-y twin-product">
+<section id="portal" class="section-y twin-product">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracle · the consumer product</span>
+		<span class="eyebrow" use:reveal={{ delay: 40 }}>Stage 1 · the data aggregation engine</span>
 		<h2 use:reveal={{ delay: 80 }}>The half of your health a clinic never sees.</h2>
 		<p class="lede" use:reveal={{ delay: 140 }}>
 			Most of a person's health happens between appointments, and almost none of it gets written
-			down. Auracle collects it without asking anyone to keep a diary: the signals your devices
-			already produce arrive on their own, and anything they cannot see takes one reply.
+			down. Our patient portal collects it without asking anyone to keep a diary: the signals your
+			devices already produce arrive on their own, and anything they cannot see takes one reply.
 		</p>
 
-		<!-- The churn curve behind that first sentence: the same figure as the
-			 deck, redrawn. Left column carries the number, right column the shape. -->
-		<figure class="churn" use:reveal={{ delay: 160 }}>
-			<div class="churn-stat">
-				<span class="churn-only">Only</span>
+		<!-- The biopsychosocial figure from the deck, redrawn: the number on the
+			 left, the three-circle model on the right. -->
+		<figure class="bps" use:reveal={{ delay: 160 }}>
+			<div class="bps-stat">
+				<span class="bps-eyebrow">Biopsychosocial model</span>
 				<span
-					class="churn-big"
-					use:countUp={{ value: 4, format: (n: number) => `${Math.round(n)}%` }}>4%</span
+					class="bps-big"
+					use:countUp={{ value: 90, format: (n: number) => `${Math.round(n)}%` }}>90%</span
 				>
-				<p class="churn-say">
-					of people who install a health app are still active a month later. The other 96% have
-					churned, and almost all of them go in the first two weeks: not because the advice was
-					wrong, but because logging it was work.
+				<p class="bps-say">
+					of a person's health is influenced by non-medical factors, excluding genetics. Those
+					factors live in daily life: lifestyle, stress and behaviour, not the few minutes of a
+					consultation.
 				</p>
 			</div>
 
-			<div class="churn-chart">
-				<span class="churn-axis-label">Share of installers still active</span>
+			<div class="bps-chart">
 				<svg
-					class="churn-svg"
-					viewBox="0 0 520 230"
+					class="bps-svg"
+					viewBox="0 0 520 360"
 					preserveAspectRatio="xMidYMid meet"
 					role="img"
-					aria-labelledby="churn-title churn-desc"
+					aria-labelledby="bps-title bps-desc"
 				>
-					<title id="churn-title">Health-app retention decay over the first 30 days</title>
-					<desc id="churn-desc">
-						Of everyone who installs a health app, 20-30% are still active on day one and only 3-4%
-						on day thirty, with the steepest fall in the first two weeks.
+					<title id="bps-title">The biopsychosocial model of health</title>
+					<desc id="bps-desc">
+						Three overlapping circles, biology, social and psychological, with health at the centre.
+						Lifestyle, stress and behaviour sit in the overlaps between them.
 					</desc>
-					<defs>
-						<linearGradient
-							id="churnLine"
-							x1="0"
-							y1="0"
-							x2="520"
-							y2="0"
-							gradientUnits="userSpaceOnUse"
-						>
-							<stop offset="0%" stop-color="#6180ff" />
-							<stop offset="100%" stop-color="#387ff5" />
-						</linearGradient>
-						<linearGradient
-							id="churnFill"
-							x1="0"
-							y1="20"
-							x2="0"
-							y2="190"
-							gradientUnits="userSpaceOnUse"
-						>
-							<stop offset="0%" stop-color="rgba(97,128,255,.22)" />
-							<stop offset="100%" stop-color="rgba(97,128,255,0)" />
-						</linearGradient>
-					</defs>
 
-					<!-- axes -->
-					<line class="churn-ax" x1="40" y1="14" x2="40" y2="190" />
-					<line class="churn-ax" x1="40" y1="190" x2="504" y2="190" />
+					<circle class="bps-circle" cx="260" cy="122" r="108" />
+					<circle class="bps-circle" cx="192" cy="232" r="108" />
+					<circle class="bps-circle" cx="328" cy="232" r="108" />
 
-					<!-- area under the curve, then the curve itself -->
-					<path
-						class="churn-area"
-						d="M40 20 C 52 20 62 96 74 148 C 150 176 300 183 500 185 L 500 190 L 40 190 Z"
-						fill="url(#churnFill)"
-					/>
-					<path
-						class="churn-curve"
-						d="M40 20 C 52 20 62 96 74 148 C 150 176 300 183 500 185"
-						fill="none"
-						stroke="url(#churnLine)"
-						stroke-width="3"
-						stroke-linecap="round"
-					/>
+					<text class="bps-name" x="260" y="66">Biology</text>
+					<text class="bps-item" x="260" y="86">Genetics</text>
+					<text class="bps-item" x="260" y="101">Physical health</text>
+					<text class="bps-item" x="260" y="116">Brain chemistry</text>
 
-					<!-- the three points the source actually reports -->
-					<circle class="churn-dot" cx="40" cy="20" r="4.5" />
-					<circle class="churn-dot" cx="74" cy="148" r="4.5" />
-					<circle class="churn-dot" cx="500" cy="185" r="4.5" />
+					<text class="bps-name" x="150" y="238">Social</text>
+					<text class="bps-item" x="150" y="258">Peers and family</text>
+					<text class="bps-item" x="150" y="273">Socioeconomic</text>
+					<text class="bps-item" x="150" y="288">Culture</text>
 
-					<text class="churn-pt" x="52" y="17">100% · install</text>
-					<text class="churn-pt" x="86" y="145">20-30% · day 1</text>
-					<text class="churn-pt churn-pt-end" x="490" y="176">3-4% · day 30</text>
-					<text class="churn-note" x="120" y="112">steepest drop: the first two weeks</text>
+					<text class="bps-name" x="368" y="238">Psychological</text>
+					<text class="bps-item" x="368" y="258">Emotions</text>
+					<text class="bps-item" x="368" y="273">Beliefs</text>
+					<text class="bps-item" x="368" y="288">Coping skills</text>
 
-					<text class="churn-tick" x="40" y="206">day 0</text>
-					<text class="churn-tick churn-pt-end" x="504" y="206">day 30</text>
+					<text class="bps-overlap" x="216" y="180">Lifestyle</text>
+					<text class="bps-overlap" x="304" y="180">Stress</text>
+					<text class="bps-overlap" x="260" y="272">Behaviour</text>
+					<text class="bps-health" x="260" y="212">Health</text>
 				</svg>
 			</div>
 
-			<figcaption class="churn-src">
-				Source: Sahha, health-app churn and retention. Day-1 retention averages 20-30% of
-				installers; day-30 averages 3-4%.
+			<figcaption class="bps-src">
+				Source: Hayes and Delk, Understanding the Social Determinants of Health, American Action
+				Forum, 2018.
 			</figcaption>
 		</figure>
 
@@ -293,7 +260,7 @@
 				the same thing whichever device reported it. Two people with different watches get
 				comparable numbers.
 			</p>
-			<ul class="signals-grid" use:reveal={{ delay: 100 }} aria-label="Signals Auracle ingests">
+			<ul class="signals-grid" use:reveal={{ delay: 100 }} aria-label="Signals the portal ingests">
 				{#each TWIN_SIGNALS as sig, i}
 					<li class="signal-chip" style="--i:{i}">
 						<span class="sig-name">{sig.name}</span>
@@ -302,9 +269,9 @@
 				{/each}
 			</ul>
 			<p class="ehr-note" use:reveal>
-				Health records can be read into Auracle but never acted on by it. Auracle is a
+				Health records can be read into the portal but never acted on by it. The portal is a
 				general-wellness product under the FD&amp;C Act §520(o)(1)(B) exclusion, not a medical
-				device: Auracle gives wellness guidance, not diagnosis.
+				device: it gives wellness guidance, not diagnosis.
 			</p>
 		</div>
 	</div>
@@ -359,7 +326,7 @@
 <!-- ============================================================ -->
 <section id="auracare" class="section-y loop-section">
 	<div class="container-wide">
-		<span class="eyebrow" use:reveal={{ delay: 40 }}>Auracare CDSS · clinical reasoning</span>
+		<span class="eyebrow" use:reveal={{ delay: 40 }}>Stage 2 · the CDSS core</span>
 		<h2 use:reveal={{ delay: 80 }}>A loop, not a pipeline.</h2>
 		<p class="lede" use:reveal={{ delay: 120 }}>
 			Most health AI answers whatever it is asked, once. A clinician does something else: they form
@@ -580,7 +547,7 @@
 		background: var(--color-surface-alt);
 	}
 
-	.churn {
+	.bps {
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: clamp(1.75rem, 4vw, 3rem);
@@ -589,10 +556,10 @@
 		padding-block: clamp(1.75rem, 3vw, 2.5rem);
 		border-block: 1px solid var(--color-rule);
 	}
-	.churn-stat {
+	.bps-stat {
 		max-width: 46ch;
 	}
-	.churn-only {
+	.bps-eyebrow {
 		display: block;
 		font-family: var(--font-family-heading);
 		font-size: 0.72rem;
@@ -601,7 +568,7 @@
 		text-transform: uppercase;
 		color: var(--color-ink-faint);
 	}
-	.churn-big {
+	.bps-big {
 		display: block;
 		font-family: var(--font-family-heading);
 		font-size: clamp(3.2rem, 8vw, 4.5rem);
@@ -612,71 +579,55 @@
 		color: var(--color-primary-600);
 		margin: 0.15rem 0 0.7rem;
 	}
-	.churn-say {
+	.bps-say {
 		font-size: 0.95rem;
 		line-height: 1.7;
 		color: var(--color-ink-soft);
 		max-width: 30rem;
 	}
-	.churn-axis-label {
-		display: block;
-		font-family: var(--font-family-heading);
-		font-size: 0.7rem;
-		font-weight: 700;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: var(--color-ink-faint);
-		margin-bottom: 0.6rem;
-	}
-	.churn-svg {
+	.bps-svg {
 		width: 100%;
+		max-width: 34rem;
 		height: auto;
+		margin-inline: auto;
+		display: block;
 		overflow: visible;
 	}
-	.churn-ax {
-		stroke: var(--color-border-default);
-		stroke-width: 1;
+	.bps-circle {
+		fill: none;
+		stroke: var(--color-rule-strong, var(--color-border-default));
+		stroke-width: 1.5;
 	}
-	.churn-dot {
-		fill: #fff;
-		stroke: var(--color-primary-500);
-		stroke-width: 2.5;
+	.bps-svg text {
+		text-anchor: middle;
 	}
-	.churn-pt {
-		font-family: var(--font-family-mono);
-		font-size: 12px;
+	.bps-name {
+		font-family: var(--font-family-heading);
+		font-size: 14px;
+		font-weight: 700;
 		fill: var(--color-ink);
 	}
-	.churn-pt-end {
-		text-anchor: end;
-	}
-	.churn-note {
-		font-size: 12px;
-		font-style: italic;
-		fill: var(--color-ink-faint);
-	}
-	.churn-tick {
-		font-family: var(--font-family-mono);
+	.bps-item {
 		font-size: 11px;
 		fill: var(--color-ink-faint);
 	}
-	.churn-src {
+	.bps-overlap {
+		font-size: 11.5px;
+		fill: var(--color-ink-soft);
+	}
+	.bps-health {
+		font-family: var(--font-family-heading);
+		font-size: 14px;
+		font-weight: 700;
+		fill: var(--color-primary-600);
+	}
+	.bps-src {
 		grid-column: 1 / -1;
 		border-top: 1px solid var(--color-border-default);
 		padding-top: 0.9rem;
 		font-size: 0.8rem;
 		line-height: 1.65;
 		color: var(--color-ink-faint);
-	}
-	@keyframes churn-draw {
-		to {
-			stroke-dashoffset: 0;
-		}
-	}
-	@keyframes churn-fade {
-		to {
-			opacity: 1;
-		}
 	}
 
 	.twin-steps {
@@ -761,7 +712,7 @@
 		color: var(--color-neutral-600, #6b7280);
 	}
 	@media (min-width: 720px) {
-		.churn {
+		.bps {
 			grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
 		}
 		.twin-steps {

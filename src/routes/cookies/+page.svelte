@@ -119,8 +119,8 @@
 				this site, so we can see where a page confuses people, along with anything the site logs to
 				your browser console. Everything you type is masked before it leaves your browser, so the
 				email address you put in the waitlist form is never part of a replay. Replays cover this
-				website only, never the Auracle service or anything you tell Aura, and they are deleted
-				after 30 days.
+				website only, never the patient portal service or anything you tell Aura, and they are
+				deleted after 30 days.
 			</p>
 			<p use:reveal={{ delay: 160 }}>
 				Because PostHog needs to recognise a returning visitor, accepting analytics sets the
