@@ -4,7 +4,6 @@
 	import { afterNavigate, onNavigate } from '$app/navigation';
 	import { dev } from '$app/environment';
 	import { prefersReducedMotion, revealNow } from '$lib/actions/motion';
-	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 	import { cookieConsent } from '$lib/stores/cookieConsent';
 	import { loadPostHog, stopPostHog } from '$lib/analytics/posthog';
 	import SeedBanner from '$lib/components/layout/SeedBanner.svelte';
@@ -22,7 +21,6 @@
 	$effect(() => {
 		if ($cookieConsent === 'accepted' && !analyticsLoaded) {
 			analyticsLoaded = true;
-			injectAnalytics({ mode: dev ? 'development' : 'production' });
 			loadPostHog();
 		} else if ($cookieConsent === 'rejected') {
 			// Only does anything if they accepted earlier in the session and then
