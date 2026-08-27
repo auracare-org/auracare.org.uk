@@ -28,15 +28,32 @@ jobs:
       - name: Build
         run: yarn build
 
+      # The adapter emits an Azure Functions v4 app that needs @azure/functions at
+      # runtime but ships no node_modules, and skip_api_build stops Oryx installing
+      # them. Without this the render function deploys as nothing and every route
+      # it serves — /relay included — returns 404.
+      - name: Install render function dependencies
+        run: yarn --cwd build/server install --production
+
+      # The adapter writes staticwebapp.config.json to build/, but the deployed
+      # artifact root is build/static, so Azure never reads it there. Staging it in
+      # is what makes the route, header and mimeTypes rules take effect.
+      - name: Stage Static Web Apps config
+        run: cp build/staticwebapp.config.json build/static/staticwebapp.config.json
+
       - name: Deploy to Azure SWA
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: upload
-          app_location: "/"
-          output_location: "build"
+          # skip_app_build makes the action treat app_location as the finished
+          # artifact and ignore output_location, so this must point at the built
+          # static output rather than the repo root.
+          app_location: "build/static"
+          api_location: "build/server"
           skip_app_build: true
+          skip_api_build: true
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
