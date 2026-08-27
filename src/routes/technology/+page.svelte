@@ -990,9 +990,11 @@
 		color: rgba(226, 232, 255, 0.55);
 		margin-bottom: 1.25rem;
 	}
-	/* Five equal columns spanning the full width, matched to the four figures
-	   above them. As a wrapping flex row the chips hugged the left edge at
-	   their content width and left most of the band empty. */
+	/* One column per chip, matched to the four figures above them. As a
+	   wrapping flex row the chips hugged the left edge at their content width
+	   and left most of the band empty; the fix for that asked for five columns
+	   to hold four chips, so the empty fifth pushed the whole group off centre
+	   and out of line with the figures it is meant to sit under. */
 	.standards-strip {
 		list-style: none;
 		margin: 0;
@@ -1040,7 +1042,7 @@
 			border-left: 1px solid rgba(255, 255, 255, 0.12);
 		}
 		.standards-strip {
-			grid-template-columns: repeat(5, minmax(0, 1fr));
+			grid-template-columns: repeat(4, minmax(0, 1fr));
 		}
 	}
 	.standard-chip {
