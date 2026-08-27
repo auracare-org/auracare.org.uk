@@ -123,6 +123,27 @@
 			border-color: #fff;
 		}
 	}
+	/* The two cards share one grid track, and a `1fr` track will not shrink
+	   below the widest item's min-content. Both CTAs are `white-space: nowrap`
+	   with 32px of padding a side, so "Write to our clinical team" demanded
+	   297px inside a 273px column at 320px wide and pushed the whole document
+	   1px past the viewport — enough for the page to scroll sideways.
+	   `minmax(0, …)` lets the track shrink, and the buttons go full width so
+	   they have somewhere to shrink to. */
+	@media (max-width: 420px) {
+		.paths {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.path :global(.btn-solid),
+		.path :global(.btn-ghost) {
+			display: flex;
+			width: 100%;
+			white-space: normal;
+			text-align: center;
+			padding-inline: 1rem;
+		}
+	}
+
 	@media (min-width: 800px) {
 		.paths {
 			grid-template-columns: repeat(2, 1fr);

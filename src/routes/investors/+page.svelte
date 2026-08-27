@@ -48,7 +48,13 @@
 	/* Traction figures arrive as display strings ("$134k", "~$400k", "28"). Split
 	   off whatever brackets the number so the digits can be counted up and the
 	   prefix and suffix put back around them unchanged. */
+	/* A date is not a quantity. "Dec 2026" parses as the number 2026, so without
+	   this the ledger counted a year up from zero like a score. Anything shaped
+	   like a month and a year renders as written. */
+	const DATE_STAT = /^[A-Z][a-z]{2}\s+\d{4}$/;
+
 	function splitStat(stat: string): { prefix: string; num: number; suffix: string } | null {
+		if (DATE_STAT.test(stat)) return null;
 		const m = stat.match(/^([^\d]*)([\d.,]+)(.*)$/);
 		if (!m) return null;
 		const num = parseFloat(m[2].replace(/,/g, ''));
@@ -88,7 +94,7 @@
 		},
 		{
 			q: 'Who’s already backing you?',
-			a: 'A $400k angel investment from Hong Kong, around $400k in resources from the Founders Factory Healthcare accelerator, and $134k in UK government funding. Our prior venture built 28 UK pharmacy partnerships, and two Chinese OEM partnerships build our examination hardware.'
+			a: 'A $400k angel investment from Hong Kong, around $400k in resources from the Founders Factory Healthcare accelerator, and $134k in UK government funding. We built 28 UK pharmacy partnerships and piloted the CDSS across them, and two Chinese OEM partnerships build our examination hardware.'
 		},
 		{
 			q: 'How do you handle regulation?',

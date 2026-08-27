@@ -7,8 +7,8 @@
 	   rather than being skipped for not parsing as a number. */
 	const standings = [
 		{ label: 'Clinical trials', value: 2, suffix: '', note: 'Institutions signed' },
-		{ label: 'Pharmacy partnerships', value: 28, suffix: '', note: 'From our prior venture' },
-		{ label: 'Examination devices', value: 3, suffix: '', note: 'Built, awaiting certification' },
+		{ label: 'Pharmacy partnerships', value: 28, suffix: '', note: 'Where we piloted the CDSS' },
+		{ label: 'Examination devices', value: 3, suffix: '', note: 'Built, certification targeted 2027' },
 		{ label: 'Ontology, live today', value: 532, suffix: 'k', note: 'SNOMED CT concepts' }
 	];
 </script>

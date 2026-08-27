@@ -21,7 +21,13 @@
 	   "~$400k" animate too. Previously only a bare integer matched, which is
 	   why 28 was the only figure that moved. The prefix and suffix are kept so
 	   the currency symbol and the "k" render around the counting digits. */
+	/* A date is not a quantity. "Dec 2026" parses as the number 2026, so without
+	   this the ledger counted a year up from zero like a score. Anything shaped
+	   like a month and a year renders as written. */
+	const DATE_STAT = /^[A-Z][a-z]{2}\s+\d{4}$/;
+
 	function parseStat(stat: string): { prefix: string; num: number; suffix: string } | null {
+		if (DATE_STAT.test(stat)) return null;
 		const m = stat.match(/^([^\d]*)([\d,.]+)(.*)$/);
 		if (!m) return null;
 		const num = Number(m[2].replace(/,/g, ''));
@@ -40,7 +46,7 @@
 	<div class="container-wide">
 		<h2 use:reveal>Early days, real momentum.</h2>
 		<p class="market-sub" use:reveal={{ delay: 60 }}>
-			Funding, partnerships and clinical pilots already in place, before this round.
+			Funding, partnerships and clinical pilots already in place.
 		</p>
 
 		<dl class="ledger">
@@ -126,6 +132,20 @@
 		color: var(--color-ink-faint);
 		max-width: 52ch;
 	}
+	/* Below 375px the longest label is squeezed into 141px beside a date and
+	   wraps to four lines, leaving that row half again as tall as every other
+	   and breaking the even rhythm the ledger depends on. Stacked, the label
+	   gets the full column back and the rows even out. 375px because the rows
+	   are already uniform at that width and above: only the genuinely narrow
+	   phones need this. */
+	@media (max-width: 374px) {
+		.row {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.4rem;
+		}
+	}
+
 	.row dd {
 		margin: 0;
 		font-size: clamp(1.6rem, 3.2vw, 2.6rem);
