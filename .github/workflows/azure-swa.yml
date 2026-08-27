@@ -34,8 +34,11 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: upload
-          app_location: "/"
-          output_location: "build"
+          # skip_app_build makes the action treat app_location as the finished
+          # artifact and ignore output_location, so pointing it at "/" made it look
+          # for index.html in the repo root and fail every run. adapter-static
+          # writes to build/, so that is the artifact.
+          app_location: "build"
           skip_app_build: true
 
   close_pull_request:
