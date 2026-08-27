@@ -88,6 +88,30 @@
 		white-space: nowrap;
 	}
 
+	/* The two buttons stop fitting side by side well before the layout's own
+	   720px switch: both carry `white-space: nowrap`, so at 320px "Accept
+	   analytics" ran 56px past the right edge of the screen. Stacked and full
+	   width, which also makes them the easiest targets on the page — right for
+	   the first thing a visitor is asked to answer. */
+	@media (max-width: 430px) {
+		.cookie-actions {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 0.75rem;
+		}
+		.cookie-decline {
+			justify-content: center;
+			text-align: center;
+			border-bottom: none;
+			border: 1px solid var(--color-rule-strong);
+			padding: 0.85rem 1rem;
+		}
+		.cookie-actions :global(.btn-solid) {
+			width: 100%;
+			text-align: center;
+		}
+	}
+
 	/* Both are primary controls on a consent dialog, and the decline in
 	   particular must not be the harder one to hit. */
 	@media (pointer: coarse) {

@@ -124,7 +124,7 @@ export const STAGES: PipelineStage[] = [
 		name: 'Output',
 		tagline: 'What the clinic gets back',
 		blurb:
-			'Differentials ranked against the patient’s own history, documentation written into the provider’s existing systems, and prescribing that cuts stock wastage. Insights feed back to stage one.',
+			'Differentials ranked against the patient’s own history, documentation written into the provider’s existing systems, and prescribing that cuts stock wastage and tailors drug selection. Insights feed back to stage one.',
 		status: 'in-development',
 		statusLabel: 'Clinics in 2027'
 	}
@@ -279,7 +279,7 @@ export const TIMELINE: Milestone[] = [
 	{
 		date: '2025 → early 2026',
 		title: '28 pharmacy partnerships',
-		body: 'Our prior venture reached twenty-eight UK pharmacies, including a regional director, and showed us the structural gaps inside a public health system first-hand.',
+		body: 'We reached twenty-eight UK pharmacies, including a regional director, and piloted clinical decision support across them. It showed us the structural gaps inside a public health system first-hand.',
 		era: 'nhs'
 	},
 	{
@@ -617,16 +617,23 @@ export const MARKET_ARCS: MarketArc[] = [
 /* Market & traction                                                   */
 /* ------------------------------------------------------------------ */
 
-/* Labels are kept short enough to hold one line at the ledger's type size.
-   Two of them ran to 46 and 60 characters and wrapped, which put a ragged
-   second line under a figure set on a single baseline. */
+/* Mirrors the traction slide of the seed deck, row for row, so the two never
+   drift apart again. Labels are kept short enough to hold one line at the
+   ledger's type size: two of them once ran to 46 and 60 characters and
+   wrapped, which put a ragged second line under a figure.
+
+   The two trials are listed separately, by the date each is signed for, rather
+   than summed into a single "2". A count says less than the dates do, and the
+   dates are the thing an investor is actually reading for. `stat` is free text
+   for exactly this reason: the ledger animates a figure that parses as a
+   number and renders anything else as it stands. */
 export const TRACTION: { stat: string; label: string }[] = [
-	{ stat: '28', label: 'UK pharmacy partnerships, prior venture' },
+	{ stat: '28', label: 'UK pharmacy partnerships, CDSS pilot' },
 	{ stat: '$134k', label: 'UK government funding awarded' },
 	{ stat: '$400k', label: 'Angel investment, Hong Kong' },
-	{ stat: '~$400k', label: 'Founders Factory Healthcare resources' },
-	{ stat: '2', label: 'Clinical trials signed in Hong Kong and China' },
-	{ stat: '2', label: 'Hardware OEM partnerships in China' }
+	{ stat: 'Dec 2026', label: 'Clinical trial, EC Healthcare' },
+	{ stat: 'Feb 2027', label: 'Clinical trial, Chinese Academy of Sciences' },
+	{ stat: '2', label: 'Hardware partnerships, Chinese OEMs' }
 ];
 
 /**
